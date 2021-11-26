@@ -7,7 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreFranchiseeProfileRequest;
 use App\Http\Requests\UpdateFranchiseeProfileRequest;
 use App\Http\Resources\Admin\FranchiseeProfileResource;
-use App\Models\FranchiseeProfile;
+use App\Models\VendorProfile;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,12 +20,12 @@ class FranchiseeProfileApiController extends Controller
     {
         abort_if(Gate::denies('franchisee_profile_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FranchiseeProfileResource(FranchiseeProfile::with(['franchisee', 'organization_state', 'organization_district', 'organization_city', 'representative_state', 'representative_district', 'representative_city'])->get());
+        return new FranchiseeProfileResource(VendorProfile::with(['franchisee', 'organization_state', 'organization_district', 'organization_city', 'representative_state', 'representative_district', 'representative_city'])->get());
     }
 
     public function store(StoreFranchiseeProfileRequest $request)
     {
-        $franchiseeProfile = FranchiseeProfile::create($request->all());
+        $franchiseeProfile = VendorProfile::create($request->all());
 
         if ($request->input('image', false)) {
             $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
@@ -52,14 +52,14 @@ class FranchiseeProfileApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show(FranchiseeProfile $franchiseeProfile)
+    public function show(VendorProfile $franchiseeProfile)
     {
         abort_if(Gate::denies('franchisee_profile_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new FranchiseeProfileResource($franchiseeProfile->load(['franchisee', 'organization_state', 'organization_district', 'organization_city', 'representative_state', 'representative_district', 'representative_city']));
     }
 
-    public function update(UpdateFranchiseeProfileRequest $request, FranchiseeProfile $franchiseeProfile)
+    public function update(UpdateFranchiseeProfileRequest $request, VendorProfile $franchiseeProfile)
     {
         $franchiseeProfile->update($request->all());
 
@@ -128,7 +128,7 @@ class FranchiseeProfileApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy(FranchiseeProfile $franchiseeProfile)
+    public function destroy(VendorProfile $franchiseeProfile)
     {
         abort_if(Gate::denies('franchisee_profile_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 

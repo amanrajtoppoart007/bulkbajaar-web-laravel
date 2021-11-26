@@ -71,7 +71,7 @@
                                     id="role" required>
                                 <option value
                                         disabled {{ old('role', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\Franchisee::ROLE_SELECT as $key => $label)
+                                @foreach(App\Models\Vendor::ROLE_SELECT as $key => $label)
                                     <option
                                         value="{{ $key }}" {{ old('role', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach

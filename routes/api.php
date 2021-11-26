@@ -173,3 +173,17 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     Route::apiResource('enquiries', 'EnquiryApiController');
 });
+
+Route::prefix('v1')->group(function (){
+    Route::get('get-states', [\App\Http\Controllers\Api\V1\RegionController::class, 'getStates']);
+    Route::get('get-districts', [\App\Http\Controllers\Api\V1\RegionController::class, 'getDistricts']);
+    Route::prefix('vendor')->group(function (){
+        Route::post('registration_step_one', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepOne']);
+
+        Route::middleware('auth:sanctum')->group(function (){
+            Route::post('registration_step_two', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepTwo']);
+            Route::post('registration_step_three', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepThree']);
+            Route::post('registration_step_four', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepFour']);
+        });
+    });
+});

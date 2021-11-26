@@ -17,27 +17,27 @@ class AdminsTableSeeder extends Seeder
         $admins = [
             [
                 'id'                 => 1,
-                'name'               => 'Creatrix Admin',
-                'email'              => 'creatrix.health@gmail.com',
+                'name'               => 'Admin',
+                'email'              => 'admin@bulkbajaar.com',
                 'password'           => bcrypt('password'),
                 'remember_token'     => null,
                 'approved'           => 1,
                 'verified'           => 1,
                 'verified_at'        => date("Y-m-d H:i:s"),
                 'verification_token' => '',
-                'mobile'             => '9827951979',
+                'mobile'             => '0123456789',
             ],
             [
                 'id'                 => 2,
-                'name'               => 'Admin',
-                'email'              => 'administrator@krishakvikas.com',
+                'name'               => 'Demo',
+                'email'              => 'demo@bulkbajaar.com',
                 'password'           => bcrypt('password'),
                 'remember_token'     => null,
                 'approved'           => 1,
                 'verified'           => 1,
                 'verified_at'        => date("Y-m-d H:i:s"),
                 'verification_token' => '',
-                'mobile'             => '8839421623',
+                'mobile'             => '0123456788',
             ],
         ];
 

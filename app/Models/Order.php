@@ -105,7 +105,7 @@ class Order extends Model
 
     public function assignee()
     {
-        return $this->belongsTo(Franchisee::class, 'franchisee_id');
+        return $this->belongsTo(Vendor::class, 'franchisee_id');
     }
 
     public function invoice()

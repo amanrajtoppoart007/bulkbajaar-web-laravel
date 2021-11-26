@@ -92,7 +92,7 @@
                             {{ trans('cruds.franchisee.fields.role') }}
                         </th>
                         <td>
-                            {{ App\Models\Franchisee::ROLE_SELECT[$franchisee->role] ?? '' }}
+                            {{ App\Models\Vendor::ROLE_SELECT[$franchisee->role] ?? '' }}
                         </td>
                     </tr>
                 </tbody>

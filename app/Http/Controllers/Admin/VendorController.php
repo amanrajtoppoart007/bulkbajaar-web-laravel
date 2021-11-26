@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\FranchiseeRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Http\Requests\MassDestroyVendorRequest;
-use App\Http\Requests\StoreVendorRequest;
-use App\Http\Requests\UpdateVendorRequest;
+use App\Http\Requests\MassDestroyFranchiseeRequest;
+use App\Http\Requests\StoreFranchiseeRequest;
+use App\Http\Requests\UpdateFranchiseeRequest;
+use App\Models\Block;
+use App\Models\District;
 use App\Models\Vendor;
+use App\Models\FranchiseeArea;
+use App\Models\Pincode;
+use App\Models\State;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -20,7 +27,7 @@ class VendorController extends Controller
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('vendor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('franchisee_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Vendor::query()->select(sprintf('%s.*', (new Vendor)->table));
@@ -30,10 +37,10 @@ class VendorController extends Controller
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $viewGate      = 'vendor_show';
-                $editGate      = 'vendor_edit';
-                $deleteGate    = 'vendor_delete';
-                $crudRoutePart = 'vendors';
+                $viewGate = 'franchisee_show';
+                $editGate = 'franchisee_edit';
+                $deleteGate = 'franchisee_delete';
+                $crudRoutePart = 'franchisees';
 
                 return view('partials.datatablesActions', compact(
                     'viewGate',
@@ -57,68 +64,149 @@ class VendorController extends Controller
                 return $row->mobile ? $row->mobile : "";
             });
 
+            $table->editColumn('role', function ($row) {
+                return $row->role ? Vendor::ROLE_SELECT[$row->role] : '';
+            });
+
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
         }
 
-        return view('admin.vendors.index');
+        return view('admin.franchisees.index');
     }
 
     public function create()
     {
-        abort_if(Gate::denies('vendor_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.vendors.create');
+        abort_if(Gate::denies('franchisee_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $states = State::all();
+        return view('admin.franchisees.create', compact('states'));
     }
 
-    public function store(StoreVendorRequest $request)
+    public function store(StoreFranchiseeRequest $request)
     {
-        if($request->password){
-            $request->request->set('password', Hash::make($request->password));
+        DB::beginTransaction();
+        try {
+            $franchisee = new Vendor();
+            $franchisee->name = $request->name;
+            $franchisee->email = $request->email;
+            $franchisee->mobile = $request->mobile;
+            $franchisee->password = Hash::make($request->password);
+            $franchisee->approved = true;
+            $franchisee->verified = true;
+            $franchisee->verified_at = now();
+            $franchisee->save();
+            $areas = $request->area;
+            if(isset($areas)){
+                foreach ($areas as $key => $value) {
+                    foreach ($value as $area) {
+                        $data = [
+                            'franchisee_id' => $franchisee->id,
+                            'pincode_id' => $key,
+                            'area_id' => $area,
+                        ];
+                        FranchiseeArea::create($data);
+                    }
+                }
+            }
+
+            DB::commit();
+            $data['name'] = $franchisee->name;
+            $data['email'] = $franchisee->email;
+            $data['username'] = $franchisee->email;
+            $data['password'] = request()->input('password');
+            $data['mobile'] = $franchisee->mobile;
+            event(new FranchiseeRegistered($data));
+            return redirect()->route('admin.franchisees.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors()->withInput();
         }
-        $request->request->set('password', Hash::make($request->password));
-        $vendor = Vendor::create($request->all());
-
-        return redirect()->route('admin.vendors.index');
     }
 
-    public function edit(Vendor $vendor)
+    public function edit(Vendor $franchisee)
     {
-        abort_if(Gate::denies('vendor_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.vendors.edit', compact('vendor'));
-    }
-
-    public function update(UpdateVendorRequest $request, Vendor $vendor)
-    {
-        if($request->password){
-            $request->request->set('password', Hash::make($request->password));
-        }else{
-            $request->request->set('password', $vendor->password);
+        abort_if(Gate::denies('franchisee_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $franchiseeAreas = [];
+        $blockId = null;
+        $districtId = null;
+        $stateId = null;
+        foreach ($franchisee->serviceAreas as $area){
+            $pincode = Pincode::find($area->pincode_id);
+            $blockId = $pincode->block_id;
+            $franchiseeAreas[] = [
+                'id' => $area->id,
+                'franchisee_id' => $area->franchisee_id,
+                'pincode_id' => $area->pincode_id,
+                'area_id' => $area->area_id,
+            ];
         }
-        $vendor->update($request->all());
 
-        return redirect()->route('admin.vendors.index');
+        if($blockId){
+            $block = Block::find($blockId);
+            $districtId = $block->district_id;
+        }
+        if($districtId){
+            $district = District::find($districtId);
+            $stateId = $district->state_id;
+        }
+        $states = State::all();
+        return view('admin.franchisees.edit', compact('franchisee', 'states', 'stateId', 'districtId', 'blockId', 'franchiseeAreas'));
     }
 
-    public function show(Vendor $vendor)
+    public function update(UpdateFranchiseeRequest $request, Vendor $franchisee)
     {
-        abort_if(Gate::denies('vendor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        DB::beginTransaction();
+        try {
+            $franchisee->name = $request->name;
+            $franchisee->email = $request->email;
+            $franchisee->mobile = $request->mobile;
+            $franchisee->password = $request->password ?  Hash::make($request->password) : $franchisee->password;
+            $franchisee->approved = true;
+            $franchisee->verified = true;
+            $franchisee->verified_at = now();
+            $franchisee->save();
+            $areas = $request->area;
+            FranchiseeArea::where('franchisee_id', $franchisee->id)->delete();
+            if(isset($areas)){
 
-        return view('admin.vendors.show', compact('vendor'));
+                foreach ($areas as $key => $value) {
+                    foreach ($value as $area) {
+                        $data = [
+                            'franchisee_id' => $franchisee->id,
+                            'pincode_id' => $key,
+                            'area_id' => $area,
+                        ];
+                        FranchiseeArea::create($data);
+                    }
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('admin.franchisees.index');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors()->withInput();
+        }
     }
 
-    public function destroy(Vendor $vendor)
+    public function show(Vendor $franchisee)
     {
-        abort_if(Gate::denies('vendor_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('franchisee_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $vendor->delete();
+        return view('admin.franchisees.show', compact('franchisee'));
+    }
+
+    public function destroy(Vendor $franchisee)
+    {
+        abort_if(Gate::denies('franchisee_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $franchisee->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroyVendorRequest $request)
+    public function massDestroy(MassDestroyFranchiseeRequest $request)
     {
         Vendor::whereIn('id', request('ids'))->delete();
 

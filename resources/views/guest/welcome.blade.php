@@ -41,7 +41,7 @@
     <!-- AOS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <!-- Website Title -->
-    <title>Krishak Vikas | A One Stop Solution For All Your Farming Needs</title>
+    <title>{{ config('app.name', 'Bulkbajaar') }} {{ isset($pageName) ?  ' | ' .$pageName : ''  }}</title>
 
 </head>
 

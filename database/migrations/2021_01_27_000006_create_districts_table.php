@@ -11,9 +11,20 @@ class CreateDistrictsTable extends Migration
         Schema::create('districts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->foreignId('state_id')->nullable()->constrained();
             $table->boolean('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('districts');
     }
 }

@@ -193,7 +193,7 @@ class HomeController
             'chart_title'           => trans('global.total') . ' ' . trans('cruds.franchisee.title'),
             'chart_type'            => 'number_block',
             'report_type'           => 'group_by_date',
-            'model'                 => 'App\Models\Franchisee',
+            'model'                 => 'App\Models\Vendor',
             'group_by_field'        => 'created_at',
             'group_by_period'       => 'day',
             'aggregate_function'    => 'count',

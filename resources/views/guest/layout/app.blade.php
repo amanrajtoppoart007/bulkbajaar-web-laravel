@@ -41,7 +41,7 @@
 
 
     <!-- Website Title -->
-    <title>Krishak Vikas | A One Stop Solution For All Your Farming Needs</title>
+    <title>{{ config('app.name', 'Bulkbajaar') }} {{ isset($pageName) ?  ' | ' .$pageName : ''  }}</title>
     @yield("styles")
 </head>
 

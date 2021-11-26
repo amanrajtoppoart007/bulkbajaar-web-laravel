@@ -268,7 +268,7 @@
                             {{ trans('cruds.franchiseeProfile.fields.payment_method') }}
                         </th>
                         <td>
-                            {{ App\Models\FranchiseeProfile::PAYMENT_METHOD_RADIO[$franchiseeProfile->payment_method] ?? '' }}
+                            {{ App\Models\VendorProfile::PAYMENT_METHOD_RADIO[$franchiseeProfile->payment_method] ?? '' }}
                         </td>
                     </tr>
                     <tr>

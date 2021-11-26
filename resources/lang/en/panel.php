@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'KV PRO',
+    'site_title' => 'Bulk Bajaar',
 ];

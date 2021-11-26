@@ -8,7 +8,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\Franchisee;
+use App\Models\Vendor;
 use App\Models\FranchiseeArea;
 use App\Models\Invoice;
 use App\Models\MasterStock;
@@ -131,7 +131,7 @@ class OrderController extends Controller
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $order->load('user', 'address', 'orderCarts', 'orderTransactions');
-        $franchisees = Franchisee::whereApproved(true)->whereVerified(true)->get();
+        $franchisees = Vendor::whereApproved(true)->whereVerified(true)->get();
 
         return view('admin.orders.show', compact('order', 'franchisees'));
     }

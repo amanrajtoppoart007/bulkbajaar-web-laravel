@@ -1032,8 +1032,8 @@ return [
         'title_singular' => 'Organisation',
     ],
     'helpCenter' => [
-        'title' => 'KV PRO Help Centers',
-        'title_singular' => 'KV PRO Help Center',
+        'title' => env('APP_NAME', 'Demo Site') . ' Help Centers',
+        'title_singular' => env('APP_NAME', 'Demo Site') . ' Help Center',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
@@ -1066,8 +1066,8 @@ return [
         ],
     ],
     'helpCenterProfile' => [
-        'title' => 'KV PRO Help Center Profile',
-        'title_singular' => 'KV PRO Help Center Profile',
+        'title' => env('APP_NAME', 'Demo Site'). '  Help Center Profile',
+        'title_singular' => env('APP_NAME', 'Demo Site') . ' Help Center Profile',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',

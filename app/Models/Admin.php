@@ -35,7 +35,6 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
         'email_verified_at',
         'approved',
         'verified',

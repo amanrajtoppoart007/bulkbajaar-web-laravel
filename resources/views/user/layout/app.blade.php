@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>KRISHAKVIKAS-An One Stop Solution For All Your Farming Needs</title>
+  <title>Site Title</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 

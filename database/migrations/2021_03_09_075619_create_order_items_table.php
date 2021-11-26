@@ -16,6 +16,7 @@ class CreateOrderItemsTable extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained();
+            $table->string('order_number')->nullable();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('product_price_id')->constrained();
             $table->unsignedSmallInteger('quantity');
@@ -23,6 +24,7 @@ class CreateOrderItemsTable extends Migration
             $table->double('gst');
             $table->double('discount');
             $table->double('total_amount');
+            $table->string('status')->default('PENDING');
             $table->timestamps();
         });
     }

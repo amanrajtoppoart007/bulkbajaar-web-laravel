@@ -18,7 +18,7 @@ class VendorTableSeeder extends Seeder
             [
                 'id'                 => 1,
                 'name'               => 'Demo Vendor',
-                'email'              => 'vendor@krishakvikas.com',
+                'email'              => 'vendor@bulkbajaar.com',
                 'password'           => bcrypt('password'),
                 'remember_token'     => null,
                 'approved'           => 1,
