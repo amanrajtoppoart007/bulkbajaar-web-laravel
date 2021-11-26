@@ -1,0 +1,77 @@
+[2021-05-31 09:13:06][1] Processing: App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 09:13:08][1] Processed:  App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 09:13:08][2] Processing: App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 09:13:09][2] Processed:  App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 09:13:09][3] Processing: App\Listeners\SendProductCreatedPushNotification
+[2021-05-31 09:13:09][3] Processed:  App\Listeners\SendProductCreatedPushNotification
+[2021-05-31 09:13:09][4] Processing: App\Listeners\PushNotificationCreatedListener
+[2021-05-31 09:13:09][4] Processed:  App\Listeners\PushNotificationCreatedListener
+[2021-05-31 09:13:09][5] Processing: App\Listeners\SendOrderAssignedMail
+[2021-05-31 09:13:09][5] Processed:  App\Listeners\SendOrderAssignedMail
+[2021-05-31 09:13:09][6] Processing: App\Listeners\SendOrderAssignedMail
+[2021-05-31 09:13:10][6] Processed:  App\Listeners\SendOrderAssignedMail
+[2021-05-31 09:13:10][7] Processing: App\Listeners\SendFranchiseeRegisteredMessage
+[2021-05-31 09:13:11][7] Processed:  App\Listeners\SendFranchiseeRegisteredMessage
+[2021-05-31 09:13:11][8] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:32][23] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:32][23] Failed:     Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:32][24] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:33][24] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:33][25] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:33][25] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-05-31 11:54:33][26] Processing: App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 11:54:34][26] Processed:  App\Listeners\SendFarmerRegisteredMessage
+[2021-05-31 11:54:34][27] Processing: App\Listeners\SendOrderAssignedMail
+[2021-06-01 16:00:53][27] Processing: App\Listeners\SendOrderAssignedMail
+[2021-06-01 16:00:53][27] Failed:     App\Listeners\SendOrderAssignedMail
+[2021-06-01 16:00:53][28] Processing: App\Listeners\SendOrderAssignedMail
+[2021-06-01 16:00:55][28] Processed:  App\Listeners\SendOrderAssignedMail
+[2021-06-01 16:00:55][29] Processing: App\Listeners\SendFranchiseeRegisteredMessage
+[2021-06-01 16:00:56][29] Processed:  App\Listeners\SendFranchiseeRegisteredMessage
+[2021-06-01 16:00:56][30] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 11:38:26][1] Processing: App\Listeners\SendOrderAssignedMail
+[2021-06-02 11:38:28][1] Processed:  App\Listeners\SendOrderAssignedMail
+[2021-06-02 11:41:16][2] Processing: App\Listeners\SendFarmerRegisteredMessage
+[2021-06-02 11:41:17][2] Processed:  App\Listeners\SendFarmerRegisteredMessage
+[2021-06-02 13:18:28][3] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:18:28][3] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:36:06][4] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:36:06][4] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:37:00][5] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:37:01][5] Processed:  Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+[2021-06-02 13:42:55][6] Processing: Spatie\MediaLibrary\Conversions\Jobs\PerformConversionsJob
+
+   Symfony\Component\ErrorHandler\Error\FatalError 
+
+  Allowed memory size of 33554432 bytes exhausted (tried to allocate 8192 bytes)
+
+  at vendor/intervention/image/src/Intervention/Image/Gd/Decoder.php:138
+    134▕         $width = imagesx($resource);
+    135▕         $height = imagesy($resource);
+    136▕ 
+    137▕         // new canvas
+  ➜ 138▕         $canvas = imagecreatetruecolor($width, $height);
+    139▕ 
+    140▕         // fill with transparent color
+    141▕         imagealphablending($canvas, false);
+    142▕         $transparent = imagecolorallocatealpha($canvas, 255, 255, 255, 127);
+
+
+   Whoops\Exception\ErrorException 
+
+  Allowed memory size of 33554432 bytes exhausted (tried to allocate 8192 bytes)
+
+  at vendor/intervention/image/src/Intervention/Image/Gd/Decoder.php:138
+    134▕         $width = imagesx($resource);
+    135▕         $height = imagesy($resource);
+    136▕ 
+    137▕         // new canvas
+  ➜ 138▕         $canvas = imagecreatetruecolor($width, $height);
+    139▕ 
+    140▕         // fill with transparent color
+    141▕         imagealphablending($canvas, false);
+    142▕         $transparent = imagecolorallocatealpha($canvas, 255, 255, 255, 127);
+
+      [2m+1 vendor frames [22m
+  2   [internal]:0
+      Whoops\Run::handleShutdown()
