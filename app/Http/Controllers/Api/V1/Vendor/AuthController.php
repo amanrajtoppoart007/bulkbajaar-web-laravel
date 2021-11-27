@@ -57,7 +57,6 @@ class AuthController extends Controller
                     'status' => 1,
                     'response' => 'success',
                     'action' => 'step2',
-                    'otp' => $otp,
                     "data" => [
                         'otp' => $otp,
                         'user' => $vendor
@@ -158,7 +157,7 @@ class AuthController extends Controller
                 $isSame = $request->boolean('pickup_address_same');
                 $user->profile()->updateOrCreate([
                     'vendor_id' => auth()->id()
-                ],[
+                ], [
                     'company_name' => $request->company_name,
                     'representative_name' => $request->representative_name,
                     'email' => $request->email,
@@ -219,7 +218,114 @@ class AuthController extends Controller
                     'status' => 1,
                     'response' => 'success',
                     'action' => 'registered',
-                    'message' => 'Registration completed please wait, you account is under admin review.'
+                    'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
+                ];
+                //Send notification to admin for approval
+            } catch (\Exception $exception) {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'message' => $exception->getMessage()
+                ];
+            }
+        }
+
+        return response()->json($result, 200);
+    }
+
+    public function loginStepOne(Request $request)
+    {
+        $validator = Validator::make($request->json()->all(), [
+            'mobile' => 'required|exists:vendors,mobile',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
+        } else {
+            $vendor = Vendor::where('mobile', $request->mobile)->first();
+            if (!Hash::check($request->password, $vendor->password)) {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'retry',
+                    'message' => 'Credentials do not match our record.'
+                ];
+            } else {
+                try {
+                    Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
+                    $otp = rand(1000, 9999);
+                    $data['otp'] = $otp;
+                    $data['service_type'] = "login";
+                    $data['mobile'] = $request->input('mobile');
+
+//                $gatewayResponse = $this->sendOtpSms($data);
+                    $otpObj = new Otp();
+                    $otpObj->vendor_id = $vendor->id;
+                    $otpObj->mobile = $request->mobile;
+                    $otpObj->otp = $otp;
+                    $otpObj->sms_status = null;
+//                $otpObj->gateway_response = json_encode($gatewayResponse);
+                    $otpObj->save();
+
+                    $result = [
+                        'status' => 1,
+                        'response' => 'success',
+                        'action' => 'step2',
+                        "data" => [
+                            'otp' => $otp,
+                        ],
+                        'message' => 'Please check your mobile for OTP'
+                    ];
+                } catch (\Exception $exception) {
+                    $result = [
+                        'status' => 0,
+                        'response' => 'error',
+                        'message' => $exception->getMessage()
+                    ];
+                }
+            }
+
+        }
+
+        return response()->json($result, 200);
+    }
+
+    public function loginStepTwo(Request $request)
+    {
+        $validator = Validator::make($request->json()->all(), [
+            'mobile' => 'required|exists:vendors,mobile',
+            'otp' => 'required|numeric',
+            'device_token' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
+        } else {
+            try {
+                Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
+                $vendor = Vendor::where('mobile', $request->mobile)->first();
+                $vendor->device_token = $request->device_token;
+                $access_token = $vendor->createToken('user_token')->plainTextToken;
+                $vendor['access_token'] = $access_token;
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'logged_in',
+                    "data" => [
+                        'user' => $vendor,
+                    ],
+                    'message' => 'You are logged in successfully.'
                 ];
             } catch (\Exception $exception) {
                 $result = [

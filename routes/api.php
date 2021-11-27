@@ -177,13 +177,22 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 Route::prefix('v1')->group(function (){
     Route::get('get-states', [\App\Http\Controllers\Api\V1\RegionController::class, 'getStates']);
     Route::get('get-districts', [\App\Http\Controllers\Api\V1\RegionController::class, 'getDistricts']);
+    Route::get('get-categories', [\App\Http\Controllers\Api\V1\ProductController::class, 'getCategories']);
+    Route::get('get-sub-categories', [\App\Http\Controllers\Api\V1\ProductController::class, 'getSubCategories']);
+
     Route::prefix('vendor')->group(function (){
         Route::post('registration_step_one', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepOne']);
+        Route::post('login_step_one', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'loginStepOne']);
+        Route::post('login_step_two', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'loginStepTwo']);
 
         Route::middleware('auth:sanctum')->group(function (){
             Route::post('registration_step_two', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepTwo']);
             Route::post('registration_step_three', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepThree']);
             Route::post('registration_step_four', [\App\Http\Controllers\Api\V1\Vendor\AuthController::class, 'registrationStepFour']);
+            Route::post('store-product', [\App\Http\Controllers\Api\V1\Vendor\ProductController::class, 'storeProduct']);
+            Route::get('get-product', [\App\Http\Controllers\Api\V1\Vendor\ProductController::class, 'getProduct']);
+            Route::post('update-product', [\App\Http\Controllers\Api\V1\Vendor\ProductController::class, 'updateProduct']);
+            Route::get('get-products', [\App\Http\Controllers\Api\V1\Vendor\ProductController::class, 'getProducts']);
         });
     });
 });
