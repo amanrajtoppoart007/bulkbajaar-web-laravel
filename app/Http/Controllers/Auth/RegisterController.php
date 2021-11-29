@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Events\FarmerRegistered;
-use App\Events\FranchiseeRegistered;
+use App\Events\VendorRegistered;
 use App\Events\HelpCenterRegistered;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\FranchiseeRegistrationRequest;
+use App\Http\Requests\VendorRegistrationRequest;
 use App\Http\Requests\HelpCenterRegistrationRequest;
 use App\Library\TextLocal\TextLocal;
 use App\Mail\FranchiseeWelcomeMessage;
@@ -79,7 +79,8 @@ class RegisterController extends Controller
             $request->request->add(['registration_number' => $this->generateRegistrationNumber()]);
             $user = User::create($request->all());
             $profile = UserProfile::createProfile(array_merge($request->all(), ['user_id' => $user->id]));
-            $address = UserAddress::create(array_merge($request->all(), ['user_id' => $user->id,'address_type' => 'billing']));
+            $address = UserAddress::create(array_merge($request->all(),
+                ['user_id' => $user->id, 'address_type' => 'billing']));
 
 //            Mail::to($user)->send(new UserWelcomeMessage());
 
@@ -100,7 +101,12 @@ class RegisterController extends Controller
                     'token' => Crypt::encryptString(request()->input('password')),
                 ]);
             DB::commit();
-            $result = ["status" => 1, "response" => "success", "url" => $url, "message" => "Farmer registration successful"];
+            $result = [
+                "status" => 1,
+                "response" => "success",
+                "url" => $url,
+                "message" => "Farmer registration successful"
+            ];
         } catch (\Exception $exception) {
             DB::rollBack();
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
@@ -112,57 +118,28 @@ class RegisterController extends Controller
 
     public function vendor()
     {
-        $organization_states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $organization_districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $organization_cities = City::all()->pluck('city_name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $representative_states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $representative_districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $representative_cities = City::all()->pluck('city_name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $representativePincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('guest.auth.register.vendor', compact('organization_states', 'organization_districts', 'organization_cities', 'representative_states', 'representative_districts', 'representative_cities', 'representativePincodes'));
-
+        $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('guest.auth.register.vendor', compact('states'));
     }
 
-    public function storeFranchisee(FranchiseeRegistrationRequest $request)
+    public function storeVendor(VendorRegistrationRequest $request)
     {
-        $request->validated();
+        $validated = $request->validated();
         DB::beginTransaction();
         try {
-            $request->request->add(['verified' => 1]);
-            $request->request->add(['approved' => 1]);
-            $request->request->add(['password' => Hash::make($request->input('password'))]);
-            $franchisee = Vendor::create($request->all());
-            $request->request->add(['franchisee_id' => $franchisee->id, 'primary_contact' => $request->input('mobile')]);
-            $franchiseeProfile = VendorProfile::create($request->all());
+            $validated['password'] = Hash::make($request->input('password'));
+            $validated['name'] = $request->company_name;
+            $validated['verified'] = 1;
+            $vendor = Vendor::create($validated);
+            $validated['vendor_id'] = $vendor->id;
+            $vendorProfile = VendorProfile::create($validated);
 
-            if ($request->input('image', false)) {
-                $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
+            if ($request->hasFile('gst')) {
+                $vendorProfile->addMedia($request->file('gst'))->toMediaCollection('gst');
             }
 
-            if ($request->input('aadhaar_card', false)) {
-                $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('aadhaar_card')))->toMediaCollection('aadhaar_card');
-            }
-
-            if ($request->input('pan_card', false)) {
-                $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('pan_card')))->toMediaCollection('pan_card');
-            }
-
-            if ($request->input('address_proof', false)) {
-                $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('address_proof')))->toMediaCollection('address_proof');
-            }
-
-            if ($request->input('signature', false)) {
-                $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
-            }
-
-            if ($media = $request->input('ck-media', false)) {
-                Media::whereIn('id', $media)->update(['model_id' => $franchiseeProfile->id]);
+            if ($request->hasFile('pan_card')) {
+                $vendorProfile->addMedia($request->file('pan_card'))->toMediaCollection('pan_card');
             }
 
 //            if ($franchisee->id && $franchisee->email) {
@@ -176,26 +153,33 @@ class RegisterController extends Controller
 //                $this->sendRegisteredFranchiseeSms($data);
 //            }
 
-            $data['name'] = $franchisee->name;
-            $data['email'] = $franchisee->email;
-            $data['username'] = $franchisee->email;
+            //Send notification to admin
+
+            //Send welcome emial to vendor
+            $data['name'] = $vendor->name;
+            $data['email'] = $vendor->email;
+            $data['username'] = $vendor->email;
             $data['password'] = request()->input('password');
-            $data['mobile'] = $franchisee->mobile;
-            event(new FranchiseeRegistered($data));
+            $data['mobile'] = $vendor->mobile;
+//            event(new VendorRegistered($data));
 
             $url = route("registration.message",
                 [
-                    'user' => 'franchisee',
-                    'entity_id' => Crypt::encryptString($franchisee->id),
+                    'user' => 'vendor',
+                    'entity_id' => Crypt::encryptString($vendor->id),
                     'token' => Crypt::encryptString(request()->input('password')),
                 ]);
             DB::commit();
-            $result = ["status" => 1, "response" => "success", "url" => $url, "message" => "Registration Successfully",];
+            $result = [
+                "status" => 1,
+                "response" => "success",
+                "url" => $url,
+                "message" => "Registration Successfully",
+            ];
         } catch (\Exception $exception) {
             DB::rollBack();
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
-
 
         return response()->json($result, 200);
 
@@ -205,7 +189,7 @@ class RegisterController extends Controller
     {
         $id = Crypt::decryptString($entity_id);
         switch ($user) {
-            case "franchisee":
+            case "vendor":
                 $user = Vendor::find($id);
                 break;
             case "help-center":

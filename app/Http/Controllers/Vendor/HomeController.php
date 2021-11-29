@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FranchiseeUploadDocumentRequest;
+use App\Http\Requests\VendorUploadDocumentRequest;
 use App\Models\Block;
-use App\Models\City;
 use App\Models\District;
 use App\Models\Vendor;
-use App\Models\FranchiseeArea;
 use App\Models\VendorProfile;
-use App\Models\MembershipPlan;
 use App\Models\Pincode;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -21,54 +18,37 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("auth:franchisee");
+        $this->middleware("auth:vendor");
     }
 
     public function index()
     {
-        return view("franchisee.dashboard");
+        return view("vendor.dashboard");
     }
 
     public function showDocumentsUploadForm()
     {
         $franchiseeProfile = auth()->user()->profile;
-        return view('franchisee.uploadDocuments', compact('franchiseeProfile'));
+        return view('vendor.uploadDocuments', compact('franchiseeProfile'));
     }
 
-    public function uploadDocuments(FranchiseeUploadDocumentRequest $request)
+    public function uploadDocuments(VendorUploadDocumentRequest $request)
     {
-        $franchiseeProfile = VendorProfile::where('franchisee_id', auth()->user()->id)->first();
+        $vendorProfile = VendorProfile::where('vendor_id', auth()->user()->id)->first();
 
-        if ($request->input('image', false)) {
-            $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
-        }
 
-        if ($request->input('aadhaar_card', false)) {
-            $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('aadhaar_card')))->toMediaCollection('aadhaar_card');
+        if ($request->input('gst', false)) {
+            $vendorProfile->addMedia(storage_path('tmp/uploads/' . $request->input('gst')))->toMediaCollection('gst');
         }
 
         if ($request->input('pan_card', false)) {
-            $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('pan_card')))->toMediaCollection('pan_card');
+            $vendorProfile->addMedia(storage_path('tmp/uploads/' . $request->input('pan_card')))->toMediaCollection('pan_card');
         }
 
-        if ($request->input('address_proof', false)) {
-            $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('address_proof')))->toMediaCollection('address_proof');
-        }
 
-        if ($request->input('signature', false)) {
-            $franchiseeProfile->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
-        }
-
-        return redirect()->route('franchisee.dashboard');
+        return redirect()->route('vendor.dashboard');
     }
 
-    public function showMembershipPaymentForm()
-    {
-        $profile = VendorProfile::whereFranchiseeId(auth()->user()->id)->first();
-        $membership = auth()->user()->memberships()->latest()->first();
-        $membershipPlans = MembershipPlan::whereMemberType('FRANCHISEE')->whereStatus('ACTIVE')->get();
-        return view('franchisee.membershipPayment', compact('profile', 'membership',  'membershipPlans'));
-    }
 
     public function showProfileForm()
     {
@@ -83,7 +63,7 @@ class HomeController extends Controller
 
         $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('franchisee.myProfile', compact('franchisee', 'profile', 'states', 'districts', 'cities', 'pincodes'));
+        return view('vendor.myProfile', compact('franchisee', 'profile', 'states', 'districts', 'cities', 'pincodes'));
     }
 
     public function updateProfile(Request $request)
@@ -132,7 +112,7 @@ class HomeController extends Controller
 
     public function showChangePasswordForm()
     {
-        return view('franchisee.changePassword');
+        return view('vendor.changePassword');
     }
 
     public function changePassword(Request $request)

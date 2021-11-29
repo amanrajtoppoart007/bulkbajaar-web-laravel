@@ -29,7 +29,7 @@ class LoginController extends Controller
         {
 
             if (Auth::guard('vendor')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $request->input('remember'))) {
-                return redirect()->intended(route('franchisee.dashboard'));
+                return redirect()->intended(route('vendor.dashboard'));
             }
             else
             {

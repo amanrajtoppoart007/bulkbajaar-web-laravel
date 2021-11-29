@@ -13,11 +13,13 @@
                             <div class="card-body">
                                 <div class="text-theme-1" role="alert">
                                     <h4 class="alert-heading">Well done!</h4>
-                                    <p>Welcome to KV PRO , you are successfully registered with us.</p>
+                                    <p>Welcome to {{ env('APP_NAME', 'Bulk Bajaar') }} , you are successfully registered with us.</p>
                                     <p>Your login credential is as follows.</p>
                                     <p>Email    - <span>{{$user->email}}</span>.</p>
                                     <p>password - <span>{{$token}}</span></p>
                                     <hr>
+                                    <span>Your account is currently under review. You will be notified in 24-48 hours.</span>
+                                    <br>
                                     <span class="text-danger">Please do not share your login credentials with anyone for your account security,In case of password compromise please reset your password or contact us.</span>
                                     <p class="mb-0">Thank You For Joining Us.</p>
                                 </div>

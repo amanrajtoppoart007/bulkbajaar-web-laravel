@@ -104,7 +104,7 @@
 
 
         </main>
-        <form id="logoutform" action="{{ route('franchisee.logout') }}" method="POST" style="display: none;">
+        <form id="logoutform" action="{{ route('vendor.logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
         </form>
     </div>

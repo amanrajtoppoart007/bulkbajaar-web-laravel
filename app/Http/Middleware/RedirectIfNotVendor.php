@@ -16,11 +16,11 @@ class RedirectIfNotVendor
      * @param string $guard
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = 'franchisee')
+    public function handle(Request $request, Closure $next, $guard = 'vendor')
     {
         if (!Auth::guard($guard)->check())
         {
-            return redirect()->route('franchisee.login');
+            return redirect()->route('vendor.login');
         }
 
         return $next($request);

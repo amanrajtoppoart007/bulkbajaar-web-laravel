@@ -37,17 +37,18 @@
 <div id="sidebar" class="c-sidebar c-sidebar-fixed c-sidebar-lg-show bg-white">
 
     <div class="c-sidebar-brand d-md-down-none bg-white">
-        <a class="c-sidebar-brand-full" href="{{ route("franchisee.dashboard") }}">
-            <img
-                style="height: 80px"
-                src="{{ asset('assets/assets/images/logo-1.png') }}" alt="logo">
+        <a class="c-sidebar-brand-full" href="{{ route("vendor.dashboard") }}">
+{{--            <img--}}
+{{--                style="height: 80px"--}}
+{{--                src="{{ asset('assets/assets/images/logo-1.png') }}" alt="logo">--}}
+            {{ env('APP_NAME', 'Bulk Bajaar') }}
         </a>
     </div>
 
     <ul class="c-sidebar-nav">
 
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.dashboard") }}" class="c-sidebar-nav-link">
+            <a href="{{ route("vendor.dashboard") }}" class="c-sidebar-nav-link">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-tachometer-alt">
 
                 </i>
@@ -56,7 +57,7 @@
         </li>
 
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.orders.index") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/orders") || request()->is("franchisee/orders/*") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.orders.index") }}" class="c-sidebar-nav-link {{ request()->is("vendor/orders") || request()->is("vendor/orders/*") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-shopping-basket">
 
                 </i>
@@ -64,7 +65,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.assigned-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/assigned-orders") || request()->is("franchisee/assigned-orders/*") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.assigned-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("vendor/assigned-orders") || request()->is("franchisee/assigned-orders/*") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-shopping-basket">
 
                 </i>
@@ -72,16 +73,16 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.product-stocks.index") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/product-stocks") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.products.index") }}" class="c-sidebar-nav-link {{ request()->is("vendor/products*") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-shopping-basket">
 
                 </i>
-                {{ trans('cruds.productStock.title') }}
+                {{ trans('cruds.product.title') }}
             </a>
         </li>
 
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.profile") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/profile") || request()->is("franchisee/upload-documents") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.profile") }}" class="c-sidebar-nav-link {{ request()->is("vendor/profile") || request()->is("vendor/upload-documents") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-user">
 
                 </i>
@@ -89,15 +90,7 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.show.service.area.form") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/service-area")  ? "c-active" : "" }}">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-map-marked">
-
-                </i>
-                {{ trans('cruds.serviceArea.title') }}
-            </a>
-        </li>
-        <li class="c-sidebar-nav-item">
-            <a href="{{ route("franchisee.show.change.password.form") }}" class="c-sidebar-nav-link {{ request()->is("franchisee/change-password") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.show.change.password.form") }}" class="c-sidebar-nav-link {{ request()->is("vendor/change-password") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-asterisk">
 
                 </i>

@@ -24,11 +24,8 @@ class VendorProfile extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'image',
-        'aadhaar_card',
         'pan_card',
-        'address_proof',
-        'signature',
+        'gst',
     ];
 
     const PAYMENT_METHOD_RADIO = [
@@ -125,23 +122,13 @@ class VendorProfile extends Model implements HasMedia
         return $file;
     }
 
-    public function getAadhaarCardAttribute()
+    public function getGstAttribute()
     {
-        return $this->getMedia('aadhaar_card')->last();
+        return $this->getMedia('gst')->last();
     }
 
     public function getPanCardAttribute()
     {
         return $this->getMedia('pan_card')->last();
-    }
-
-    public function getAddressProofAttribute()
-    {
-        return $this->getMedia('address_proof')->last();
-    }
-
-    public function getSignatureAttribute()
-    {
-        return $this->getMedia('signature')->last();
     }
 }

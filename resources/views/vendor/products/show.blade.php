@@ -67,6 +67,16 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.product.fields.sub_category') }}
+                        </th>
+                        <td>
+                            @foreach($product->subCategories as $key => $subCategory)
+                                <span class="label label-info">{{ $subCategory->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.product.fields.tag') }}
                         </th>
                         <td>
@@ -113,7 +123,23 @@
         </div>
     </div>
 </div>
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#product_prices" role="tab" data-toggle="tab">
+                {{ trans('cruds.productPrice.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="product_prices">
+            @includeIf('admin.products.relationships.productPrices', ['productPrices' => $product->productPrices])
+        </div>
+    </div>
+</div>
 
 
 @endsection

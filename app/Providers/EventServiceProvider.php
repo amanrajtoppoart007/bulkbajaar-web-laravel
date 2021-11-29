@@ -11,7 +11,7 @@ use App\Events\OrderNotAssigned;
 use App\Events\ProductCreated;
 use App\Events\FarmerRegistered;
 use App\Events\HelpCenterRegistered;
-use App\Events\FranchiseeRegistered;
+use App\Events\VendorRegistered;
 use App\Events\PushNotificationCreated;
 use App\Events\OrderCreated;
 use App\Listeners\SendOrderAssignedMail;
@@ -53,7 +53,7 @@ class EventServiceProvider extends ServiceProvider
         HelpCenterRegistered::class => [
             SendHelpCenterRegisteredMessage::class
         ],
-        FranchiseeRegistered::class => [
+        VendorRegistered::class => [
             SendFranchiseeRegisteredMessage::class
         ],
         OrderCreated::class => [

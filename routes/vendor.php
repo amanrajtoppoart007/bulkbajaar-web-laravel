@@ -1,7 +1,7 @@
 <?php
 
-Route::middleware([ \App\Http\Middleware\CheckIfVendorHasActiveMembershipPlan::class, \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class,])->group(function () {
-    Route::get('/', 'Franchisee\HomeController@index')->name("dashboard");
+Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class,])->group(function () {
+    Route::get('/', 'Vendor\HomeController@index')->name("dashboard");
     Route::resource('orders', 'Franchisee\OrderController');
     Route::post('cancel-order', [\App\Http\Controllers\Vendor\OrderController::class, 'cancelOrder'])->name('orders.cancel');
     Route::get('get-product-prices-by-product', [\App\Http\Controllers\Vendor\ProductController::class, 'getProductPricesByProduct'])->name('get.product.prices.by.product');
@@ -16,10 +16,13 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorHasActiveMembershipPlan::c
     Route::get('service-area', 'Franchisee\HomeController@showServiceAreaForm')->name('show.service.area.form');
     Route::post('save-service-area', 'Franchisee\HomeController@saveServiceArea')->name('service.area.save');
     Route::resource('product-stocks', 'Franchisee\ProductStockController');
+    Route::resource('products', 'Vendor\ProductController');
+    Route::post('products/media', 'Vendor\ProductController@storeMedia')->name('products.storeMedia');
+    Route::post('products/update', 'Vendor\ProductController@update')->name('products.update');
 });
 
-Route::get('/upload-documents', 'Franchisee\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");
-Route::post('/upload-documents', 'Franchisee\HomeController@uploadDocuments')->name("upload.documents");
-Route::get('/membership-payment', 'Franchisee\HomeController@showMembershipPaymentForm')->name("show.membership.payment.form");
-Route::post('/membership-store', 'Franchisee\TransactionController@storeMembership')->name("store.membership");
-Route::post('/membership-payment/make', 'Franchisee\TransactionController@makeMembershipPayment')->name("make.membership.payment");
+Route::get('/upload-documents', 'Vendor\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");
+Route::post('/upload-documents', 'Vendor\HomeController@uploadDocuments')->name("upload.documents");
+Route::get('/membership-payment', 'Vendor\HomeController@showMembershipPaymentForm')->name("show.membership.payment.form");
+Route::post('/membership-store', 'Vendor\TransactionController@storeMembership')->name("store.membership");
+Route::post('/membership-payment/make', 'Vendor\TransactionController@makeMembershipPayment')->name("make.membership.payment");

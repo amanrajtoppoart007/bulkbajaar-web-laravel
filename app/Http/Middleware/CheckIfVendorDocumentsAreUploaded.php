@@ -17,10 +17,10 @@ class CheckIfVendorDocumentsAreUploaded
     public function handle(Request $request, Closure $next)
     {
         if(!is_null(auth()->user()->profile)){
-            if (auth()->user()->profile->aadhaar_card && auth()->user()->profile->pan_card && auth()->user()->profile->address_proof) {
+            if (auth()->user()->profile->pan_card && auth()->user()->profile->gst) {
                 return $next($request);
             }
         }
-        return redirect()->route('franchisee.show.upload.documents.form');
+        return redirect()->route('vendor.show.upload.documents.form');
     }
 }

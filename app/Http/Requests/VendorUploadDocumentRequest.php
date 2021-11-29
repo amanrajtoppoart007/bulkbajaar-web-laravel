@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FranchiseeUploadDocumentRequest extends FormRequest
+class VendorUploadDocumentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,11 @@ class FranchiseeUploadDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'image'                      => [
-                'nullable',
-            ],
-            'aadhaar_card'                     => [
+            'gst'                     => [
                 'required',
             ],
             'pan_card'                    => [
                 'required',
-            ],
-            'address_proof'                  => [
-                'required',
-            ],
-            'signature'                      => [
-                'nullable',
             ]
         ];
     }

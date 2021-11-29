@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\FranchiseeRegistered;
+use App\Events\VendorRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyFranchiseeRequest;
@@ -116,7 +116,7 @@ class VendorController extends Controller
             $data['username'] = $franchisee->email;
             $data['password'] = request()->input('password');
             $data['mobile'] = $franchisee->mobile;
-            event(new FranchiseeRegistered($data));
+            event(new VendorRegistered($data));
             return redirect()->route('admin.franchisees.index');
         } catch (Exception $e) {
             DB::rollBack();
