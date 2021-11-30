@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFranchiseeRequest;
-use App\Http\Requests\UpdateFranchiseeRequest;
+use App\Http\Requests\StoreVendorRequest;
+use App\Http\Requests\UpdateVendorRequest;
 use App\Http\Resources\Admin\FranchiseeResource;
 use App\Models\Vendor;
 use Gate;
@@ -20,7 +20,7 @@ class FranchiseeApiController extends Controller
         return new FranchiseeResource(Vendor::all());
     }
 
-    public function store(StoreFranchiseeRequest $request)
+    public function store(StoreVendorRequest $request)
     {
         $franchisee = Vendor::create($request->all());
 
@@ -36,7 +36,7 @@ class FranchiseeApiController extends Controller
         return new FranchiseeResource($franchisee);
     }
 
-    public function update(UpdateFranchiseeRequest $request, Vendor $franchisee)
+    public function update(UpdateVendorRequest $request, Vendor $franchisee)
     {
         $franchisee->update($request->all());
 

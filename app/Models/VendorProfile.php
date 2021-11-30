@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -130,5 +131,25 @@ class VendorProfile extends Model implements HasMedia
     public function getPanCardAttribute()
     {
         return $this->getMedia('pan_card')->last();
+    }
+
+    public function billingState(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function billingDistrict(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function pickupState(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function pickupDistrict(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
     }
 }

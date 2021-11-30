@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title' => 'Farmers management',
-        'title_singular' => 'Farmer management',
+        'title' => 'Buyers Management',
+        'title_singular' => 'Buyer Management',
     ],
     'permission' => [
         'title' => 'Permissions',
@@ -40,8 +40,8 @@ return [
         ],
     ],
     'user' => [
-        'title' => 'Farmers',
-        'title_singular' => 'Farmer',
+        'title' => 'Buyers',
+        'title_singular' => 'Buyer',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
@@ -568,7 +568,7 @@ return [
         ],
     ],
     'vendor' => [
-        'title' => 'Vendor',
+        'title' => 'Vendors',
         'title_singular' => 'Vendor',
         'fields' => [
             'id' => 'ID',
@@ -592,17 +592,19 @@ return [
         ],
     ],
     'franchisee' => [
-        'title' => 'Franchisee',
-        'title_singular' => 'Franchisee',
+        'title' => 'Sellers',
+        'title_singular' => 'Seller',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'name' => 'Name',
+            'name' => 'Company Name',
             'name_helper' => ' ',
             'email' => 'Email',
             'email_helper' => ' ',
             'password' => 'Password',
             'password_helper' => ' ',
+            'mobile' => 'Mobile',
+            'mobile_helper' => ' ',
             'mobile' => 'Mobile',
             'mobile_helper' => ' ',
             'created_at' => 'Created at',
@@ -621,7 +623,7 @@ return [
             'mobile_verification_token_helper' => ' ',
             'remember_token' => 'Remember Token',
             'remember_token_helper' => ' ',
-            'role' => 'Role',
+            'role' => 'User Type',
             'role_helper' => ' ',
         ],
     ],

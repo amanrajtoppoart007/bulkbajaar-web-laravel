@@ -1,41 +1,47 @@
 @extends('layouts.admin')
 @section('content')
-@can('vendor_create')
+@can('franchisee_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.vendors.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.vendor.title_singular') }}
+                {{ trans('global.add') }} {{ trans('cruds.franchisee.title_singular') }}
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button>
-            @include('csvImport.modal', ['model' => 'Vendor', 'route' => 'admin.vendors.parseCsvImport'])
+            @include('csvImport.modal', ['model' => 'Franchisee', 'route' => 'admin.vendors.parseCsvImport'])
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.vendor.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.franchisee.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Vendor">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Franchisee">
             <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.vendor.fields.id') }}
+                        {{ trans('cruds.franchisee.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.vendor.fields.name') }}
+                        {{ trans('cruds.franchisee.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.vendor.fields.email') }}
+                        {{ trans('cruds.franchisee.fields.email') }}
                     </th>
                     <th>
-                        {{ trans('cruds.vendor.fields.mobile') }}
+                        {{ trans('cruds.franchisee.fields.mobile') }}
+                    </th>
+                    <th>
+                        User Type
+                    </th>
+                    <th>
+                        Approval Status
                     </th>
                     <th>
                         &nbsp;
@@ -45,6 +51,12 @@
                     <td>
                     </td>
                     <td></td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
@@ -70,7 +82,7 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('vendor_delete')
+@can('franchisee_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
@@ -113,13 +125,15 @@
 { data: 'name', name: 'name' },
 { data: 'email', name: 'email' },
 { data: 'mobile', name: 'mobile' },
+{ data: 'user_type', name: 'user_type' },
+{ data: 'approval_status', name: 'approved' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,
   };
-  let table = $('.datatable-Vendor').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-Franchisee').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
