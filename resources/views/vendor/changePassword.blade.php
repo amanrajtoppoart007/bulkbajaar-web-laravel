@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form method="post" action="{{ route('franchisee.change.password') }}">
+            <form method="post" action="{{ route('vendor.change.password') }}">
                 @csrf
                 <div class="row">
                     <div class="col-6">

@@ -10,7 +10,6 @@ use App\Http\Requests\Vendor\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
-use App\Models\ProductPrice;
 use App\Models\ProductSubCategory;
 use App\Models\UnitType;
 use App\Traits\SlugGeneratorTrait;
@@ -41,7 +40,7 @@ class ProductController extends Controller
                 $deleteGate = 'product_delete';
                 $crudRoutePart = 'products';
 
-                return view('partials.datatablesActions', compact(
+                return view('vendor.include.datatablesActions', compact(
                     'viewGate',
                     'editGate',
                     'deleteGate',
@@ -103,9 +102,9 @@ class ProductController extends Controller
     {
         //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'tags', 'brand');
+        $product->load('productCategory', 'productSubCategory', 'productOptions');
 
-        return view('franchisee.products.show', compact('product'));
+        return view('vendor.products.show', compact('product'));
     }
 
     public function store(StoreProductRequest $request)
@@ -173,14 +172,14 @@ class ProductController extends Controller
             compact('categories', 'product', 'unitTypes', 'subCategories', 'productOptions'));
     }
 
-    public function update(\App\Http\Requests\Vendor\UpdateProductRequest $request)
+    public function update(UpdateProductRequest $request)
     {
-
         DB::beginTransaction();
         try {
             $validated = $request->validated();
             $product = Product::findOrFail($request->id);
             $validated['quantity'] = null;
+            $validated['approval_status'] = 'PENDING';
             $product->update($validated);
 
             if (count($product->images) > 0) {

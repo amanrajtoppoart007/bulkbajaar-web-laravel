@@ -13,6 +13,7 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
@@ -52,55 +53,43 @@ class HomeController extends Controller
 
     public function showProfileForm()
     {
-        $franchisee = auth()->user();
+        $vendor = auth()->user();
         $profile = auth()->user()->profile;
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $cities = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('vendor.myProfile', compact('franchisee', 'profile', 'states', 'districts', 'cities', 'pincodes'));
+        return view('vendor.myProfile', compact('profile', 'states', 'districts', 'vendor'));
     }
 
     public function updateProfile(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
-            'mobile' => 'required|regex:/^([6-9]{1}[0-9]{9})$/|unique:franchisees,mobile,' . auth()->user()->id,
-            'email' => 'required|unique:franchisees,email,' . auth()->user()->id,
-            'secondary_contact' => 'required|regex:/^([6-9]{1}[0-9]{9})$/',
-            'gst_number' => 'nullable|string',
-            'work_area' => 'nullable|string',
-            'organization_name' => 'nullable|string',
-            'organization_address' => 'nullable|string',
-            'organization_address_line_two' => 'nullable|string',
-            'organization_street' => 'nullable|string',
-            'organization_state_id' => 'nullable|integer',
-            'organization_district_id' => 'nullable|integer',
-            'organization_city_id' => 'nullable|integer',
-            'organization_pincode_id' => 'nullable|integer',
+            'mobile' => 'required|numeric|digits:10|unique:users|unique:vendors,mobile,' . auth()->id(),
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique:vendors,email,' . auth()->id()],
+            'company_name' => 'required|string',
+            'user_type' => ['required', 'string', Rule::in(['MANUFACTURER', 'WHOLESALER'])],
             'representative_name' => 'required|string',
-            'representative_designation' => 'nullable|string',
-            'representative_address' => 'required|string',
-            'representative_address_line_two' => 'nullable|string',
-            'representative_street' => 'required|string',
-            'representative_state_id' => 'required|integer',
-            'representative_district_id' => 'required|integer',
-            'representative_city_id' => 'required|integer',
-            'representative_pincode_id' => 'required|integer',
+            'billing_address' => 'required|string',
+            'billing_address_two' => 'nullable|string',
+            'billing_state_id' => 'required|exists:states,id',
+            'billing_district_id' => 'required|exists:districts,id',
+            'billing_pincode' => 'required',
+            'pickup_address' => 'required|string',
+            'pickup_address_two' => 'nullable|string',
+            'pickup_state_id' => 'required|exists:states,id',
+            'pickup_district_id' => 'required|exists:districts,id',
+            'pickup_pincode' => 'required',
+            'pan_number' => 'required|string',
+            'gst_number' => 'required|string',
         ]);
 
         DB::beginTransaction();
         try {
-            Vendor::find(auth()->user()->id)->update($request->all());
-            $request->request->add(['primary_contact' => $request->input('mobile')]);
-            $request->request->add(['franchisee_id' => auth()->user()->id]);
+            $request->request->add(['name' => $request->company_name]);
+            $request->request->add(['approved' => 0]);
+            Vendor::find(auth()->id())->update($request->all());
+            $request->request->add(['vendor' => auth()->id()]);
             VendorProfile::updateOrCreate([
-                'id' => auth()->user()->profile->id ?? null
+                'vendor_id' => auth()->id()
             ], $request->all());
             DB::commit();
             return back()->with('message' ,'Profile updated successfully!');
@@ -130,59 +119,31 @@ class HomeController extends Controller
         return back()->with('message' ,'Password changed successfully!');
     }
 
-    public function showServiceAreaForm()
+    public function showBankAccountForm()
     {
-
-        $franchiseeAreas = [];
-        $blockId = null;
-        $districtId = null;
-        $stateId = null;
-        foreach (auth()->user()->serviceAreas as $area){
-            $pincode = Pincode::find($area->pincode_id);
-            $blockId = $pincode->block_id;
-            $franchiseeAreas[] = [
-                'id' => $area->id,
-                'franchisee_id' => $area->franchisee_id,
-                'pincode_id' => $area->pincode_id,
-                'area_id' => $area->area_id,
-            ];
-        }
-
-        if($blockId){
-            $block = Block::find($blockId);
-            $districtId = $block->district_id;
-        }
-        if($districtId){
-            $district = District::find($districtId);
-            $stateId = $district->state_id;
-        }
-        $states = State::all();
-        return view('franchisee.serviceArea', compact('stateId', 'districtId', 'blockId', 'states', 'franchiseeAreas'));
+        $vendor = auth()->user();
+        $profile = auth()->user()->profile;
+        $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('vendor.bankAccount', compact('profile', 'states', 'districts', 'vendor'));
     }
 
-    public function saveServiceArea(Request $request)
+    public function updateBankAccount(Request $request)
     {
-        DB::beginTransaction();
+        $validatedData = $request->validate([
+            'bank_name' => 'required|string',
+            'account_number' => 'required|string',
+            'account_holder_name' => 'required|string',
+            'ifsc_code' => 'required|string',
+        ]);
         try {
-
-            $areas = $request->area;
-            FranchiseeArea::where('franchisee_id', auth()->user()->id)->delete();
-            foreach ($areas as $key => $value) {
-                foreach ($value as $area) {
-                    $data = [
-                        'franchisee_id' => auth()->user()->id,
-                        'pincode_id' => $key,
-                        'area_id' => $area,
-                    ];
-                    FranchiseeArea::create($data);
-                }
-            }
-
-            DB::commit();
-            return back()->with('message' ,'Service saved successfully!');
-        } catch (Exception $e) {
-            DB::rollBack();
-            return back()->withErrors()->withInput();
+            $request->request->add(['vendor' => auth()->id()]);
+            VendorProfile::updateOrCreate([
+                'vendor_id' => auth()->id()
+            ], $request->all());
+            return back()->with('message' ,'Bank details updated successfully!');
+        }catch (\Exception $exception){
+            return back()->withInput()->withErrors($exception->getMessage());
         }
     }
 }

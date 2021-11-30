@@ -1,15 +1,8 @@
 @extends('vendor.layout.main')
 @section('content')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('franchisee.orders.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.franchiseeOrder.title_singular') }}
-            </a>
-        </div>
-    </div>
     <div class="card">
         <div class="card-header">
-            {{ trans('cruds.franchiseeOrder.title_singular') }} {{ trans('global.list') }}
+            My Order {{ trans('global.list') }}
         </div>
 
         <div class="card-body">
@@ -48,7 +41,7 @@
                     <td>
                         <select class="search" strict="true">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\FranchiseeOrder::PAYMENT_TYPE_SELECT as $key => $item)
+                            @foreach(App\Models\Order::PAYMENT_TYPE_SELECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
@@ -60,7 +53,7 @@
                     <td>
                         <select class="search" strict="true">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\FranchiseeOrder::STATUS_SELECT as $key => $item)
+                            @foreach(App\Models\Order::STATUS_SELECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
@@ -83,7 +76,7 @@
                 serverSide: true,
                 retrieve: true,
                 aaSorting: [],
-                ajax: "{{ route('franchisee.orders.index') }}",
+                ajax: "{{ route('vendor.orders.index') }}",
                 columns: [
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'order_number', name: 'order_number'},

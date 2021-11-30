@@ -82,6 +82,13 @@
 
 
             <div class="container-fluid">
+                @if(!auth()->user()->approved)
+                <div class="row mb-2">
+                    <div class="col-lg-12">
+                        <div class="alert alert-warning" role="alert">Your account is currently under review. You will be notified once reviewed.</div>
+                    </div>
+                </div>
+                @endif
                 @if(session('message'))
                     <div class="row mb-2">
                         <div class="col-lg-12">

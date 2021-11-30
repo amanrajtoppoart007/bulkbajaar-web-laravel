@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('vendor.layout.main')
 @section('content')
 
 <div class="card">
@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.mrp') }}
-                        </th>
-                        <td>
-                            {{ $product->mrp }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.product.fields.price') }}
                         </th>
                         <td>
@@ -57,40 +49,44 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.category') }}
+                            Minimum Price Quantity
                         </th>
                         <td>
-                            @foreach($product->categories as $key => $category)
-                                <span class="label label-info">{{ $category->name }}</span>
-                            @endforeach
+                            {{ $product->moq ?? 0 }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.sub_category') }}
+                            Category
                         </th>
                         <td>
-                            @foreach($product->subCategories as $key => $subCategory)
-                                <span class="label label-info">{{ $subCategory->name }}</span>
-                            @endforeach
+                            {{ $product->productCategory->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.tag') }}
+                            Sub Category
                         </th>
                         <td>
-                            @foreach($product->tags as $key => $tag)
-                                <span class="label label-info">{{ $tag->name }}</span>
-                            @endforeach
+                            {{ $product->productSubCategory->name ?? '' }}
                         </td>
                     </tr>
+
                     <tr>
                         <th>
                             {{ trans('cruds.product.fields.discount') }}
                         </th>
                         <td>
                             {{ $product->discount }}
+                        </td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <th>
+                            Expected Dispatch Time
+                        </th>
+                        <td>
+                            {{ $product->dispatch_time ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -107,16 +103,16 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.brand') }}
+                            Refund & Return Policy
                         </th>
                         <td>
-                            {{ $product->brand->title ?? '' }}
+                            {{ $product->rrp ?? '' }}
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.products.index') }}">
+                <a class="btn btn-default" href="{{ route('vendor.products.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -129,14 +125,14 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#product_prices" role="tab" data-toggle="tab">
-                {{ trans('cruds.productPrice.title') }}
+            <a class="nav-link active" href="#product_options" role="tab" data-toggle="tab">
+                Options
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="product_prices">
-            @includeIf('admin.products.relationships.productPrices', ['productPrices' => $product->productPrices])
+        <div class="tab-pane active show" role="tabpanel" id="product_options">
+            @includeIf('vendor.products.relationships.productOptions', ['productOptions' => $product->productOptions])
         </div>
     </div>
 </div>

@@ -65,14 +65,6 @@
             </a>
         </li>
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("vendor.assigned-orders.index") }}" class="c-sidebar-nav-link {{ request()->is("vendor/assigned-orders") || request()->is("franchisee/assigned-orders/*") ? "c-active" : "" }}">
-                <i class="c-sidebar-nav-icon fas fa-fw fa-shopping-basket">
-
-                </i>
-                {{ trans('global.assigned_orders') }}
-            </a>
-        </li>
-        <li class="c-sidebar-nav-item">
             <a href="{{ route("vendor.products.index") }}" class="c-sidebar-nav-link {{ request()->is("vendor/products*") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-shopping-basket">
 
@@ -82,7 +74,7 @@
         </li>
 
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("vendor.profile") }}" class="c-sidebar-nav-link {{ request()->is("vendor/profile") || request()->is("vendor/upload-documents") ? "c-active" : "" }}">
+            <a href="{{ route("vendor.profile") }}" class="c-sidebar-nav-link {{ request()->is("vendor/profile") || request()->is("vendor/bank-account") || request()->is("vendor/upload-documents") ? "c-active" : "" }}">
                 <i class="c-sidebar-nav-icon fas fa-fw fa-user">
 
                 </i>
