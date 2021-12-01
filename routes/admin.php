@@ -40,9 +40,11 @@
     Route::post('products/ckmedia', 'Admin\ProductController@storeCKEditorImages')->name('products.storeCKEditorImages');
     Route::post('products/parse-csv-import', 'Admin\ProductController@parseCsvImport')->name('products.parseCsvImport');
     Route::post('products/process-csv-import', 'Admin\ProductController@processCsvImport')->name('products.processCsvImport');
+    Route::post('products/mass-approve', 'Admin\ProductController@massApprove')->name('products.massApprove');
+    Route::post('products/approve/{product}', 'Admin\ProductController@approve')->name('products.approve');
     Route::resource('products', 'Admin\ProductController');
-    Route::post('products/add', 'Admin\ProductController@addProduct')->name('products.add');
-    Route::post('products/update', 'Admin\ProductController@updateProduct')->name('products.update');
+    Route::post('products/update', 'Admin\ProductController@update')->name('products.update');
+
 
 
 // User Alerts
@@ -113,6 +115,7 @@
 
     // Vendors
     Route::delete('vendors/destroy', 'Admin\VendorController@massDestroy')->name('vendors.massDestroy');
+    Route::post('vendors/mass-approve', 'Admin\VendorController@massApprove')->name('vendors.massApprove');
     Route::post('vendors/parse-csv-import', 'Admin\VendorController@parseCsvImport')->name('vendors.parseCsvImport');
     Route::post('vendors/process-csv-import', 'Admin\VendorController@processCsvImport')->name('vendors.processCsvImport');
     Route::post('vendors/approve/{vendor}', 'Admin\VendorController@approve')->name('vendors.approve');

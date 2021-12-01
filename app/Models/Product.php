@@ -50,6 +50,12 @@ class Product extends Model implements HasMedia
         'deleted_at',
     ];
 
+    public const APPROVAL_STATUS_SELECT = [
+        'PENDING' => 'Pending',
+        'APPROVED' => 'Approved',
+        'REJECTED' => 'Reject',
+    ];
+
 
     protected function serializeDate(DateTimeInterface $date)
     {

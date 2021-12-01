@@ -4,6 +4,12 @@
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.product.title') }}
+        @if($product->approval_status == 'PENDING')
+            <form action="{{ route('admin.products.approve', $product) }}" method="post" class="float-right">
+                @csrf
+                <button class="btn btn-success">Approve</button>
+            </form>
+        @endif
     </div>
 
     <div class="card-body">
@@ -15,104 +21,108 @@
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $product->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $product->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.description') }}
-                        </th>
-                        <td>
-                            {{ $product->description }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.mrp') }}
-                        </th>
-                        <td>
-                            {{ $product->mrp }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.price') }}
-                        </th>
-                        <td>
-                            {{ $product->price }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.category') }}
-                        </th>
-                        <td>
-                            @foreach($product->categories as $key => $category)
-                                <span class="label label-info">{{ $category->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.sub_category') }}
-                        </th>
-                        <td>
-                            @foreach($product->subCategories as $key => $subCategory)
-                                <span class="label label-info">{{ $subCategory->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.tag') }}
-                        </th>
-                        <td>
-                            @foreach($product->tags as $key => $tag)
-                                <span class="label label-info">{{ $tag->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.discount') }}
-                        </th>
-                        <td>
-                            {{ $product->discount }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.images') }}
-                        </th>
-                        <td>
-                            @foreach($product->images as $key => $media)
-                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $media->getUrl('thumb') }}">
-                                </a>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.product.fields.brand') }}
-                        </th>
-                        <td>
-                            {{ $product->brand->title ?? '' }}
-                        </td>
-                    </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.id') }}
+                    </th>
+                    <td>
+                        {{ $product->id }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Seller
+                    </th>
+                    <td>
+                        {{ $product->vendor->name ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.name') }}
+                    </th>
+                    <td>
+                        {{ $product->name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.description') }}
+                    </th>
+                    <td>
+                        {{ $product->description }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.price') }}
+                    </th>
+                    <td>
+                        {{ $product->price }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Minimum Price Quantity
+                    </th>
+                    <td>
+                        {{ $product->moq ?? 0 }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Category
+                    </th>
+                    <td>
+                        {{ $product->productCategory->name ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Sub Category
+                    </th>
+                    <td>
+                        {{ $product->productSubCategory->name ?? '' }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.discount') }}
+                    </th>
+                    <td>
+                        {{ $product->discount }}
+                    </td>
+                </tr>
+                <tr>
+                <tr>
+                    <th>
+                        Expected Dispatch Time
+                    </th>
+                    <td>
+                        {{ $product->dispatch_time ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.images') }}
+                    </th>
+                    <td>
+                        @foreach($product->images as $key => $media)
+                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                <img src="{{ $media->getUrl('thumb') }}">
+                            </a>
+                        @endforeach
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Refund & Return Policy
+                    </th>
+                    <td>
+                        {{ $product->rrp ?? '' }}
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -27,6 +27,11 @@ class Vendor extends Authenticatable
         'WHOLESALER' => 'Wholesaler',
     ];
 
+    const APPROVAL_STATUS_SELECT = [
+        '1' => 'Approved',
+        '0' => 'Un Approved',
+    ];
+
     public $table = 'vendors';
 
     protected $hidden = [

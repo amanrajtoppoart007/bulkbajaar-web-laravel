@@ -32,7 +32,13 @@
                         {{ trans('cruds.product.fields.name') }}
                     </th>
                     <th>
+                        Seller
+                    </th>
+                    <th>
                         {{ trans('cruds.product.fields.category') }}
+                    </th>
+                    <th>
+                        Approval Status
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.image') }}
@@ -45,8 +51,9 @@
                 <tr>
                     <td>
                     </td>
+                    <td></td>
                     <td>
-
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -60,8 +67,14 @@
                         </select>
                     </td>
                     <td>
-
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach(\App\Models\Product::APPROVAL_STATUS_SELECT as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </td>
+                    <td></td>
                     <td>
                     </td>
                 </tr>
@@ -110,6 +123,35 @@
             }
             dtButtons.push(deleteButton)
             @endcan
+            let approveButton = {
+                text: "Approve selected",
+                url: "{{ route('admin.products.massApprove') }}",
+                className: 'btn-success',
+                action: function (e, dt, node, config) {
+                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                        return entry.id
+                    });
+
+                    if (ids.length === 0) {
+                        alert('{{ trans('global.datatables.zero_selected') }}')
+
+                        return
+                    }
+
+                    if (confirm('{{ trans('global.areYouSure') }}')) {
+                        $.ajax({
+                            headers: {'x-csrf-token': _token},
+                            method: 'POST',
+                            url: config.url,
+                            data: {ids: ids, _method: 'POST'}
+                        })
+                            .done(function () {
+                                location.reload()
+                            })
+                    }
+                }
+            }
+            dtButtons.push(approveButton)
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,
@@ -122,7 +164,9 @@
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
-                    {data: 'category', name: 'categories.name'},
+                    {data: 'vendor', name: 'vendor.name'},
+                    {data: 'category', name: 'productCategory.name'},
+                    {data: 'approval_status', name: 'approval_status'},
                     {data: 'image', name: 'image', orderable:false},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],

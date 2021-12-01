@@ -23,8 +23,6 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules()
     {
-//        echo "<pre>";
-//        print_r($this->all());die;
         return [
             'id' => 'required|exists:products',
             'name' => 'required|string',
@@ -34,8 +32,8 @@ class UpdateProductRequest extends FormRequest
             'discount' => 'nullable|numeric|max:100',
             'dispatch_time' => 'nullable|string',
             'rrp' => 'nullable',
-            'category_id' => 'nullable|exists:product_categories,id',
-            'sub_category_id' => 'nullable|exists:product_sub_categories,id',
+            'product_category_id' => 'nullable|exists:product_categories,id',
+            'product_sub_category_id' => 'nullable|exists:product_sub_categories,id',
             'description' => 'nullable',
             'option.*' => 'nullable',
             'unit.*' => 'nullable',

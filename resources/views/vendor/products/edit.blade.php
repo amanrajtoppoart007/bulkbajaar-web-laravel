@@ -190,7 +190,7 @@
                                             <td>
                                                 <input type="hidden" name="pu_id[]" value="{{$productOption->id}}">
 
-                                                <input class="form-control" style="min-width: 100px" type="text" value="{{ $productOption->option }}" name="option[]"
+                                                <input class="form-control option" style="min-width: 100px" type="text" value="{{ $productOption->option }}" name="option[]"
                                                        required>
                                             </td>
                                             <td>
@@ -218,7 +218,8 @@
                                     @empty
                                         <tr>
                                             <td>
-                                                <input class="form-control" type="text"
+                                                <input type="hidden" name="pu_id[]">
+                                                <input class="form-control option" type="text"
                                                        name="option[]" style="min-width: 100px">
                                             </td>
                                             <td>
@@ -320,14 +321,14 @@
 
         const addProductUnitTemplate = () => {
             let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px" required>`;
+            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px">`;
             $.each(unitTypes, (i, e) => {
                 unitSelect += `<option value="${e.name}">${e.name}</option>`;
             })
             unitSelect += "</select>";
 
             let template = `<tr>`+
-                `<td><input type="hidden" name="pu_id[]"><input class="form-control" type="text" step="1" name="option[]" style="min-width: 100px"></td>`+
+                `<td><input type="hidden" name="pu_id[]"><input class="form-control option" type="text" name="option[]" style="min-width: 100px"></td>`+
                 `<td>${unitSelect}</td>`+
                 `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px"></td>`+
                 `<td><button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button></td>`+
@@ -339,7 +340,7 @@
         $(document).on('click', '.add-button', function (){
             let tr = $(this).closest('tr');
 
-            let isNotEmpty = $($(tr).find('input')).filter(function () {
+            let isNotEmpty = $($(tr).find('.option')).filter(function () {
                 return $.trim($(this).val()).length == 0
             }).length == 0;
 
