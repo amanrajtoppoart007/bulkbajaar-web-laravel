@@ -250,8 +250,8 @@ return [
         ]
     ],
     'userAlert' => [
-        'title' => 'Farmer Alerts',
-        'title_singular' => 'Farmer Alert',
+        'title' => 'User Alerts',
+        'title_singular' => 'User Alert',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
@@ -259,7 +259,7 @@ return [
             'alert_text_helper' => ' ',
             'alert_link' => 'Alert Link',
             'alert_link_helper' => ' ',
-            'user' => 'Farmers',
+            'user' => 'Users',
             'user_helper' => ' ',
             'created_at' => 'Created at',
             'created_at_helper' => ' ',
@@ -411,7 +411,7 @@ return [
             'id_helper' => ' ',
             'order_number' => 'Order Number',
             'order_number_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'Users',
             'user_helper' => ' ',
             'help_center' => 'Help Center',
             'help_center_helper' => ' ',
@@ -761,7 +761,7 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'Users',
             'user_helper' => ' ',
             'title' => 'Title',
             'title_helper' => ' ',
@@ -807,7 +807,7 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
             'comment' => 'Comment',
             'comment_helper' => ' ',
@@ -829,7 +829,7 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
             'follow' => 'Follow',
             'follow_helper' => ' ',
@@ -847,7 +847,7 @@ return [
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
             'article' => 'Article',
             'article_helper' => ' ',
@@ -899,7 +899,7 @@ return [
             'id_helper' => ' ',
             'order' => 'Order',
             'order_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
             'status' => 'Status',
             'status_helper' => ' ',
@@ -916,14 +916,14 @@ return [
         ],
     ],
     'userAddress' => [
-        'title' => 'Farmer Address',
-        'title_singular' => 'Farmer Address',
+        'title' => 'User Address',
+        'title_singular' => 'User Address',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
-            'name' => 'Farmer',
+            'name' => 'User',
             'name_helper' => ' ',
             'pincode' => 'Pincode',
             'pincode_helper' => ' ',
@@ -1146,8 +1146,8 @@ return [
         'title_singular' => 'Upload Document',
     ],
     'userProfile' => [
-        'title' => 'Farmer Profile',
-        'title_singular' => 'Farmer Profile',
+        'title' => 'User Profile',
+        'title_singular' => 'User Profile',
         'fields' => [
             'id' => 'ID',
             'id_helper' => ' ',
@@ -1171,7 +1171,7 @@ return [
             'deleted_at_helper' => ' ',
             'image' => 'Profile Picture',
             'image_helper' => ' ',
-            'user' => 'Farmer',
+            'user' => 'User',
             'user_helper' => ' ',
             'crops' => 'What crops do farmers grows',
             'crops_helper' => ' ',
