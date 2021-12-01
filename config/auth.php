@@ -44,13 +44,9 @@ return [
             'driver'   => 'session',
             'provider' => 'admins',
         ],
-        'help_center' => [
+         'vendor' => [
             'driver'   => 'session',
-            'provider' => 'help_centers',
-        ],
-         'franchisee' => [
-            'driver'   => 'session',
-            'provider' => 'franchisees',
+            'provider' => 'vendors',
         ],
         'logistics' => [
             'driver'   => 'session',
@@ -89,13 +85,9 @@ return [
             'driver' => 'eloquent',
             'model'  => App\Models\Admin::class,
         ],
-        'help_centers' => [
+        'vendors' => [
             'driver' => 'eloquent',
-            'model'  => App\Models\HelpCenter::class,
-        ],
-        'franchisees' => [
-            'driver' => 'eloquent',
-            'model'  => App\Models\Franchisee::class,
+            'model'  => App\Models\Vendor::class,
         ],
         'logistics' => [
             'driver' => 'eloquent',
@@ -129,13 +121,8 @@ return [
             'table'    => 'password_resets',
             'expire'   => 60,
         ],
-         'help_centers' => [
-            'provider' => 'help_centers',
-            'table'    => 'password_resets',
-            'expire'   => 60,
-        ],
-        'franchisees' => [
-            'provider' => 'franchisees',
+        'vendors' => [
+            'provider' => 'vendors',
             'table'    => 'password_resets',
             'expire'   => 60,
         ],

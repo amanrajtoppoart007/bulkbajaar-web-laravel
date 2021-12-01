@@ -1,4 +1,4 @@
-@extends('franchisee.layout.main')
+@extends('vendor.layout.main')
 @section('content')
 
     <div class="card">

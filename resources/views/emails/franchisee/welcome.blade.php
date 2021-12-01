@@ -10,7 +10,7 @@ www.krishakvikas.com में आपका स्वागत है।
 पासवर्ड :- {{ $data['password'] }}<br>
 
 
-@component('mail::button', ['url' => route('franchisee.login')])
+@component('mail::button', ['url' => route('vendor.login')])
     लॉगिन करें
 @endcomponent
 

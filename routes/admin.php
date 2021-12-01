@@ -115,13 +115,8 @@
     Route::delete('vendors/destroy', 'Admin\VendorController@massDestroy')->name('vendors.massDestroy');
     Route::post('vendors/parse-csv-import', 'Admin\VendorController@parseCsvImport')->name('vendors.parseCsvImport');
     Route::post('vendors/process-csv-import', 'Admin\VendorController@processCsvImport')->name('vendors.processCsvImport');
+    Route::post('vendors/approve/{vendor}', 'Admin\VendorController@approve')->name('vendors.approve');
     Route::resource('vendors', 'Admin\VendorController');
-
-    // Franchisees
-    Route::delete('franchisees/destroy', 'Admin\FranchiseeController@massDestroy')->name('franchisees.massDestroy');
-    Route::post('franchisees/parse-csv-import', 'Admin\FranchiseeController@parseCsvImport')->name('franchisees.parseCsvImport');
-    Route::post('franchisees/process-csv-import', 'Admin\FranchiseeController@processCsvImport')->name('franchisees.processCsvImport');
-    Route::resource('franchisees', 'Admin\FranchiseeController');
 
     // Pincodes
     Route::delete('pincodes/destroy', 'Admin\PincodeController@massDestroy')->name('pincodes.massDestroy');

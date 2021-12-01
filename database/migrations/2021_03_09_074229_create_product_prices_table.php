@@ -18,11 +18,8 @@ class CreateProductPricesTable extends Migration
             $table->foreignId('product_id')->constrained();
             $table->string('unit');
             $table->unsignedSmallInteger('quantity');
-            $table->double('purchase_price');
             $table->double('price');
-            $table->double('bulk_price');
             $table->unsignedTinyInteger('discount')->default(0);
-            $table->unsignedTinyInteger('bulk_discount')->default(0);
             $table->timestamps();
         });
     }

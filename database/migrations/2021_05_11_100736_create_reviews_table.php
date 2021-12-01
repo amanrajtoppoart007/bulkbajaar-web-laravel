@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('franchisee_id')->nullable()->constrained();
+            $table->foreignId('vendor_id')->nullable()->constrained();
             $table->text('review')->nullable();
             $table->unsignedTinyInteger('star')->comment('star between 1 to 5');
             $table->timestamps();

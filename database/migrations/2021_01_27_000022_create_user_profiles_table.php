@@ -10,12 +10,12 @@ class CreateUserProfilesTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('shop_name')->nullable();
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
-            $table->string('secondary_mobile')->nullable();
-            $table->float('agricultural_land', 15, 2)->nullable();
-            $table->text('crops')->nullable();
+            $table->string('owner_name')->nullable();
+            $table->string('pan_no')->nullable();
+            $table->string('gst_no')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

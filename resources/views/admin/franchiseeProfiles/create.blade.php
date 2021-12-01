@@ -525,7 +525,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>{{ trans('cruds.franchiseeProfile.fields.payment_method') }}</label>
-                                    @foreach(App\Models\FranchiseeProfile::PAYMENT_METHOD_RADIO as $key => $label)
+                                    @foreach(App\Models\VendorProfile::PAYMENT_METHOD_RADIO as $key => $label)
                                         <div
                                             class="form-check {{ $errors->has('payment_method') ? 'is-invalid' : '' }}">
                                             <input class="form-check-input" type="radio" id="payment_method_{{ $key }}"

@@ -18,7 +18,6 @@ class AddMoreColumnsToOrderItemsTable extends Migration
             $table->string('unit')->nullable();
             $table->string('unit_quantity')->nullable();
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('help_center_id')->nullable()->constrained();
             $table->decimal('discount_amount')->default(0.00);
         });
     }

@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -28,16 +30,26 @@ class Product extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'vendor_id',
         'name',
+        'slug',
         'description',
-        'mrp',
         'price',
-        'created_at',
+        'mop',
+        'moq',
         'discount',
+        'product_category_id',
+        'product_sub_category_id',
+        'dispatch_time',
+        'rrp',
+        'approval_status',
+        'quantity',
         'brand_id',
+        'created_at',
         'updated_at',
         'deleted_at',
     ];
+
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -100,5 +112,25 @@ class Product extends Model implements HasMedia
     public function getLowestAttribute()
     {
         return $this->productPrices->where('price', '>=', 0)->min('price');
+    }
+
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    public function productCategory(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function productSubCategory(): BelongsTo
+    {
+        return $this->belongsTo(ProductSubCategory::class);
+    }
+
+    public function productOptions(): HasMany
+    {
+        return $this->hasMany(ProductOption::class);
     }
 }

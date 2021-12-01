@@ -1373,7 +1373,7 @@
 
                                 @can('franchisee_access')
                                     <div class="col-4">
-                                        <a href="{{ route("admin.franchisees.index") }}"
+                                        <a href="{{ route("admin.vendors.index") }}"
                                            class="text-dark underline-none">
                                             <svg class="align-middle" height="30" viewBox="0 0 64 64" width="30"
                                                  xmlns="http://www.w3.org/2000/svg">
@@ -2223,7 +2223,7 @@
                                 <br/>
                             </div>
                         </a>
-                        <a href="{{ route('admin.franchisees.index') }}" class="card text-white bg-info text-center">
+                        <a href="{{ route('admin.vendors.index') }}" class="card text-white bg-info text-center">
                             <div class="card-body pb-0">
                                 <div class="text-value font-20">{{ number_format($settings5['total_number']) }}</div>
                                 <div>{{ $settings5['chart_title'] }}</div>

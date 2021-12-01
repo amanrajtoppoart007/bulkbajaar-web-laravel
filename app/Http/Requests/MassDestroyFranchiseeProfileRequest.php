@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\FranchiseeProfile;
+use App\Models\VendorProfile;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Response;

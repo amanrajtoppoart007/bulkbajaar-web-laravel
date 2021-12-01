@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\FranchiseeRegistered;
+use App\Events\VendorRegistered;
 use App\Mail\FranchiseeWelcomeMessage;
 use App\Mail\UserWelcomeMessage;
 use App\Traits\SmsSenderTrait;
@@ -26,10 +26,10 @@ class SendFranchiseeRegisteredMessage implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  FranchiseeRegistered  $event
+     * @param  VendorRegistered  $event
      * @return void
      */
-    public function handle(FranchiseeRegistered $event)
+    public function handle(VendorRegistered $event)
     {
         Mail::to($event->data['email'])->send(new FranchiseeWelcomeMessage($event->data));
         $this->sendRegisteredFranchiseeSms($event->data);

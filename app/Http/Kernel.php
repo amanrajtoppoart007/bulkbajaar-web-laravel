@@ -31,12 +31,11 @@ class Kernel extends HttpKernel
         'help_center.guest' => \App\Http\Middleware\RedirectIfHelpCenter::class,
         'logistics' => \App\Http\Middleware\RedirectIfNotLogistics::class,
         'logistics.guest' => \App\Http\Middleware\RedirectIfLogistics::class,
-        'franchisee' => \App\Http\Middleware\RedirectIfNotFranchisee::class,
-        'franchisee.guest' => \App\Http\Middleware\RedirectIfFranchisee::class,
+        'vendor' => \App\Http\Middleware\RedirectIfNotVendor::class,
+        'vendor.guest' => \App\Http\Middleware\RedirectIfVendor::class,
         'check_if_help_center_documents_are_uploaded' => \App\Http\Middleware\CheckIfHelpCenterDocumentsAreUploaded::class,
-        'check_if_franchisee_documents_are_uploaded' => \App\Http\Middleware\CheckIfFranchiseeDocumentsAreUploaded::class,
+        'check_if_franchisee_documents_are_uploaded' => \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class,
         'check_if_help_center_has_active_membership_plan' => \App\Http\Middleware\CheckIfHelpCenterHasActiveMembershipPlan::class,
-        'check_if_franchisee_has_active_membership_plan' => \App\Http\Middleware\CheckIfFranchiseeHasActiveMembershipPlan::class,
     ];
 
     protected $middlewareGroups = [

@@ -3,7 +3,13 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.vendor.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.franchisee.title') }}
+        @if(!$vendor->approved)
+        <form action="{{ route('admin.vendors.approve', $vendor) }}" method="post" class="float-right">
+            @csrf
+            <button class="btn btn-success">Approve</button>
+        </form>
+        @endif
     </div>
 
     <div class="card-body">
@@ -17,7 +23,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.vendor.fields.id') }}
+                            {{ trans('cruds.franchisee.fields.id') }}
                         </th>
                         <td>
                             {{ $vendor->id }}
@@ -25,15 +31,15 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.vendor.fields.name') }}
+                            {{ trans('cruds.franchisee.fields.name') }}
                         </th>
                         <td>
-                            {{ $vendor->name }}
+                            {{ $profile->company_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.vendor.fields.email') }}
+                            {{ trans('cruds.franchisee.fields.email') }}
                         </th>
                         <td>
                             {{ $vendor->email }}
@@ -41,7 +47,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.vendor.fields.mobile') }}
+                            {{ trans('cruds.franchisee.fields.mobile') }}
                         </th>
                         <td>
                             {{ $vendor->mobile }}
@@ -49,12 +55,156 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.vendor.fields.address') }}
+                            Representative name
                         </th>
                         <td>
-                            {{ $vendor->address }}
+                            {{ $profile->representative_name ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            GST Number
+                        </th>
+                        <td>
+                            {{ $profile->gst_number ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            PAN Number
+                        </th>
+                        <td>
+                            {{ $profile->pan_number ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            User Type
+                        </th>
+                        <td>
+                            {{ \App\Models\Vendor::USER_TYPE_SELECT[$vendor->user_type] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Billing Address</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Address
+                        </th>
+                        <td>
+                            {{ $profile->billing_address ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Address Line 2
+                        </th>
+                        <td>
+                            {{ $profile->billing_address_line_two ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            State
+                        </th>
+                        <td>
+                            {{ $profile->billingState->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            District
+                        </th>
+                        <td>
+                            {{ $profile->billingDistrict->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Pincode
+                        </th>
+                        <td>
+                            {{ $profile->billing_pincode ?? '' }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="2">Pickup Address</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Address
+                        </th>
+                        <td>
+                            {{ $profile->pickup_address ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Address Line 2
+                        </th>
+                        <td>
+                            {{ $profile->pickup_address_line_two ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            State
+                        </th>
+                        <td>
+                            {{ $profile->pickupState->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            District
+                        </th>
+                        <td>
+                            {{ $profile->pickupDistrict->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Pincode
+                        </th>
+                        <td>
+                            {{ $profile->pickup_pincode ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Bank Name
+                        </th>
+                        <td>
+                            {{ $profile->bank_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Account Number
+                        </th>
+                        <td>
+                            {{ $profile->account_number ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Account Holder Name
+                        </th>
+                        <td>
+                            {{ $profile->account_holder_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            IFSC Code
+                        </th>
+                        <td>
+                            {{ $profile->ifsc_code ?? '' }}
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             <div class="form-group">

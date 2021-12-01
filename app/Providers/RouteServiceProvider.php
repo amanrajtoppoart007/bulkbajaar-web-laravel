@@ -53,17 +53,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/admin.php'));
 
-            Route::prefix('help-center')
-                ->as("helpCenter.")
-                ->middleware(['web','help_center','auth:help_center'])
+            Route::prefix('vendor')
+                ->as("vendor.")
+                ->middleware(['web','vendor','auth:vendor'])
                 ->namespace($this->namespace)
-                ->group(base_path('routes/help_center.php'));
-
-            Route::prefix('franchisee')
-                ->as("franchisee.")
-                ->middleware(['web','franchisee','auth:franchisee'])
-                ->namespace($this->namespace)
-                ->group(base_path('routes/franchisee.php'));
+                ->group(base_path('routes/vendor.php'));
 
             Route::prefix('logistics')
                 ->as("logistics.")

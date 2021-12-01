@@ -15,7 +15,7 @@ class CreateProductStocksTable extends Migration
     {
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('franchisee_id')->nullable()->constrained();
+            $table->foreignId('vendor_id')->nullable()->constrained();
             $table->foreignId('product_id')->nullable()->constrained();
             $table->foreignId('product_price_id')->nullable()->constrained();
             $table->string('unit');

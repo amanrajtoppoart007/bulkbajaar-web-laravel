@@ -18,7 +18,7 @@ class LogisticsTableSeeder extends Seeder
             [
                 'id'                 => 1,
                 'name'               => 'Logistics',
-                'email'              => 'logistics@krishakvikas.com',
+                'email'              => 'logistics@bulkbajaar.com',
                 'password'           => bcrypt('password'),
                 'remember_token'     => null,
                 'approved'           => 1,

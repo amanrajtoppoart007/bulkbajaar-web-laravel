@@ -23,31 +23,19 @@
                                         <div class="card-body">
                                             <img src="{{ asset('assets/assets/icons/panjikaran/farmer.svg') }}"
                                                  alt="farmer" class="img-fluid img-thumbnail p-3 bg-white shadow">
-                                            <h5 class="font-weight-bolder text-theme-1 mt-4">किसान पंजीकरण</h5>
+                                            <h5 class="font-weight-bolder text-theme-1 mt-4">Buyer</h5>
                                         </div>
                                     </div>
                                 </a>
                             </div>
 
                             <div class="col-lg-4 col-md-2 col-sm-12">
-                                <a href="{{route('helpCenter.register')}}" class="card-link">
-                                    <div class="card panjikaran-card">
-                                        <div class="card-body">
-                                            <img src="{{ asset('assets/assets/icons/panjikaran/helpcenter.svg') }}"
-                                                 alt="helpcenter" class="img-fluid img-thumbnail p-3 bg-white shadow">
-                                            <h5 class="font-weight-bolder text-theme-1 mt-4">सहायता केंद्र पंजीकरण</h5>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col-lg-4 col-md-2 col-sm-12">
-                                <a href="{{route('franchisee.register')}}" class="card-link">
+                                <a href="{{route('vendor.register')}}" class="card-link">
                                     <div class="card panjikaran-card">
                                         <div class="card-body">
                                             <img src="{{ asset('assets/assets/icons/panjikaran/franchise.svg') }}"
                                                  alt="franchise" class="img-fluid img-thumbnail p-3 bg-white shadow">
-                                            <h5 class="font-weight-bolder text-theme-1 mt-4">फ्रेंचाइजी पंजीकरण</h5>
+                                            <h5 class="font-weight-bolder text-theme-1 mt-4">Seller</h5>
                                         </div>
                                     </div>
                                 </a>

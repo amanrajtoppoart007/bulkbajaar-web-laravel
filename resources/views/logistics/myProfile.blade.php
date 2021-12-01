@@ -67,7 +67,7 @@
                             <label class="required">{{ trans('cruds.franchisee.fields.role') }}</label>
                             <select class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}" name="role" id="role">
                                 <option value disabled {{ old('role', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Models\Franchisee::ROLE_SELECT as $key => $label)
+                                @foreach(App\Models\Vendor::ROLE_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('role', $franchisee->role) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
