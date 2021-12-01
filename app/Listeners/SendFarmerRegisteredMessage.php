@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Mail\UserWelcomeMessage;
 use App\Traits\SmsSenderTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,10 +25,10 @@ class SendFarmerRegisteredMessage implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  FarmerRegistered  $event
+     * @param  UserRegistered  $event
      * @return void
      */
-    public function handle(FarmerRegistered $event)
+    public function handle(UserRegistered $event)
     {
         Mail::to($event->data['email'])->send(new UserWelcomeMessage($event->data));
         $this->sendRegisteredUserSms($event->data);

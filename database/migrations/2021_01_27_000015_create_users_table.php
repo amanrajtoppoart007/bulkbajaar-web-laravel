@@ -12,6 +12,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('email')->nullable()->unique();
+            $table->string('mobile')->nullable()->unique();
             $table->datetime('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('remember_token')->nullable();
@@ -19,11 +20,21 @@ class CreateUsersTable extends Migration
             $table->boolean('verified')->default(0)->nullable();
             $table->datetime('verified_at')->nullable();
             $table->string('verification_token')->nullable();
-            $table->string('mobile')->nullable()->unique();
             $table->datetime('mobile_verified_at')->nullable();
             $table->string('referral_code')->nullable();
+            $table->string('device_token')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('users');
     }
 }

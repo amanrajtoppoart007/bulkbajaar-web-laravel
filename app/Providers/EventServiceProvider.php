@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Event;
 use App\Events\OrderAssigned;
 use App\Events\OrderNotAssigned;
 use App\Events\ProductCreated;
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Events\HelpCenterRegistered;
 use App\Events\VendorRegistered;
 use App\Events\PushNotificationCreated;
@@ -47,7 +47,7 @@ class EventServiceProvider extends ServiceProvider
         PushNotificationCreated::class => [
             PushNotificationCreatedListener::class
         ],
-        FarmerRegistered::class => [
+        UserRegistered::class => [
             SendFarmerRegisteredMessage::class
         ],
         HelpCenterRegistered::class => [

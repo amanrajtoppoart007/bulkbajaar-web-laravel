@@ -33,15 +33,14 @@ class UserProfile extends Model implements HasMedia
 
     protected $fillable = [
         'user_id',
-        'name',
+        'company_name',
+        'representative_name',
         'email',
         'mobile',
-        'secondary_mobile',
-        'agricultural_land',
-        'crops',
+        'pan_number',
+        'gst_number',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

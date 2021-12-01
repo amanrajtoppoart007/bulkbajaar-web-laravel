@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyUserRequest;
@@ -148,7 +148,7 @@ class UsersController extends Controller
             $data['password'] = request()->input('password');
             $data['mobile'] = $user->mobile;
             DB::commit();
-            event(new FarmerRegistered($data));
+            event(new UserRegistered($data));
             return redirect()->route('admin.users.show', $user->id);
         } catch (\Exception $exception) {
             DB::rollBack();

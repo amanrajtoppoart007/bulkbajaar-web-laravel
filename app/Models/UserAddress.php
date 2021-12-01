@@ -20,28 +20,23 @@ class UserAddress extends Model
     ];
 
     const ADDRESS_TYPE_RADIO = [
-        'organization_address'    => 'Organization Address',
-        'user_address'            => 'User Address',
-        'respresentative_address' => 'Representative Address',
-        'billing' => 'Billing',
+        'SHIPPING' => 'Shipping',
+        'BILLING' => 'Billing',
     ];
 
     protected $fillable = [
         'user_id',
-        'pincode_id',
-        'district_id',
-        'block_id',
-        'state_id',
-        'area_id',
+        'name',
         'address',
+        'address_line_two',
+        'state_id',
+        'district_id',
         'village',
         'address_type',
-        'street',
-        'address_line_two',
+        'pincode',
         'created_at',
         'updated_at',
         'deleted_at',
-        'name'
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -57,11 +52,6 @@ class UserAddress extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function pincode()
-    {
-        return $this->belongsTo(Pincode::class, 'pincode_id','id');
     }
 
     public function district()
@@ -82,10 +72,5 @@ class UserAddress extends Model
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id');
-    }
-
-    public function addressPincode()
-    {
-        return $this->belongsTo(Pincode::class, 'pincode_id', 'id');
     }
 }
