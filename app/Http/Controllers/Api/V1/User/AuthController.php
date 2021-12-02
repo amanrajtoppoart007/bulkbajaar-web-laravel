@@ -134,7 +134,6 @@ class AuthController extends BaseController
             'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
             'email' => 'required|email|unique:users,email|unique:vendors,email',
             'password' => ['required', 'string', 'confirmed'],
-            'verification_token' => 'required',
             'device_token' => 'nullable',
             'company_name' => 'required|string',
             'representative_name' => 'required|string',
@@ -157,62 +156,57 @@ class AuthController extends BaseController
             DB::beginTransaction();
             try {
                 $input = $request->json()->all();
-                $otp = Otp::where('mobile', $input['mobile'])->where('v_token', $input['verification_token'])->first();
+                $user = new User();
+                $user->name = $input['company_name'];
+                $user->email = $input['email'];
+                $user->mobile = $input['mobile'];
+                $user->password = Hash::make($input['password']);
+                $user->device_token = $input['device_token'];
+                if ($user->save()) {
+                    $userProfile = new UserProfile();
+                    $userProfile->company_name = $input['company_name'];
+                    $userProfile->representative_name = $input['representative_name'];
+                    $userProfile->email = $input['email'];
+                    $userProfile->mobile = $input['mobile'];
+                    $userProfile->user_id = $user->id;
+                    $userProfile->save();
 
-                if ($input['verification_token'] == $otp->v_token) {
+                    $billingAddressData = [
+                        'user_id' => $user->id,
+                        'address' => $request->billing_address,
+                        'address_two' => $request->billing_address_two,
+                        'state_id' => $request->billing_state_id,
+                        'district_id' => $request->billing_district_id,
+                        'pincode' => $request->billing_pincode,
+                        'address_type' => 'BILLING',
+                    ];
 
-                    $user = new User();
-                    $user->name = $input['company_name'];
-                    $user->email = $input['email'];
-                    $user->mobile = $input['mobile'];
-                    $user->password = Hash::make($input['password']);
-                    $user->device_token = $input['device_token'];
-                    if ($user->save()) {
-                        $userProfile = new UserProfile();
-                        $userProfile->company_name = $input['company_name'];
-                        $userProfile->representative_name = $input['representative_name'];
-                        $userProfile->email = $input['email'];
-                        $userProfile->mobile = $input['mobile'];
-                        $userProfile->user_id = $user->id;
-                        $userProfile->save();
+                    UserAddress::create($billingAddressData);
 
-                        $billingAddressData = [
-                            'address' => $request->billing_address,
-                            'address_two' => $request->billing_address_two,
-                            'state_id' => $request->billing_state_id,
-                            'district_id' => $request->billing_district_id,
-                            'pincode' => $request->billing_pincode,
-                            'address_type' => 'BILLING',
-                        ];
-
-                        UserAddress::create($billingAddressData);
-
-                        if ($request->shipping_address_same == 0){
-                            UserAddress::create([
-                                'address' => $request->shipping_address,
-                                'address_two' => $request->shipping_address_two,
-                                'state_id' => $request->shipping_state_id,
-                                'district_id' => $request->shipping_district_id,
-                                'pincode' => $request->shipping_pincode,
-                                'is_default' => 1,
-                                'address_type' => 'SHIPPING',
-                            ]);
-                        }else{
-                            UserAddress::create(array_merge($billingAddressData, ['is_default' => 1]));
-                        }
-
-                        $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
-                        $data['access_token'] = $user->createToken('user_token')->plainTextToken;
-                        $result = ['status' => 1, 'response' => 'success', 'action' => 'verified', 'data' => $data, 'message' => 'User register successfully'];
-                        DB::commit();
-                    } else {
-                        DB::rollBack();
-                        $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'User register failed'];
+                    if ($request->shipping_address_same == 0){
+                        UserAddress::create([
+                            'user_id' => $user->id,
+                            'address' => $request->shipping_address,
+                            'address_two' => $request->shipping_address_two,
+                            'state_id' => $request->shipping_state_id,
+                            'district_id' => $request->shipping_district_id,
+                            'pincode' => $request->shipping_pincode,
+                            'is_default' => 1,
+                            'address_type' => 'SHIPPING',
+                        ]);
+                    }else{
+                        UserAddress::create(array_merge($billingAddressData, ['is_default' => 1]));
                     }
+
+                    $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
+                    $data['access_token'] = $user->createToken('user_token')->plainTextToken;
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'verified', 'data' => $data, 'message' => 'User register successfully'];
+                    DB::commit();
                 } else {
                     DB::rollBack();
-                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'OPT verification failed'];
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'User register failed'];
                 }
+
             } catch (\Exception $exception) {
                 DB::rollBack();
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
@@ -224,7 +218,7 @@ class AuthController extends BaseController
 
     public function accessStepFour(Request $request)
     {
-        $validator = Validator::make($request->json()->all(), [
+        $validator = Validator::make($request->all(), [
             'pan_number' => 'required|string',
             'gst_number' => 'nullable|string',
             'pan' => 'required|mimes:jpeg,png',
@@ -246,6 +240,13 @@ class AuthController extends BaseController
                 ],
                     $request->all()
                 );
+
+                if ($request->hasFile('gst')) {
+                    $profile->addMedia($request->file('gst'))->toMediaCollection('gst');
+                }
+                if ($request->hasFile('pan')) {
+                    $profile->addMedia($request->file('pan'))->toMediaCollection('pan_card');
+                }
                 $result = [
                     'status' => 1,
                     'response' => 'success',

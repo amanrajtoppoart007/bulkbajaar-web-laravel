@@ -146,109 +146,51 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
     public function getProductDetails(Request $request)
     {
-        $validatable = [
+        $validator = \Illuminate\Support\Facades\Validator::make($request->json()->all(), [
             'product_id' => 'required|exists:products,id',
-        ];
-
-        $pincode = null;
-        $area = null;
-
-        if(!auth('sanctum')->check()){
-            $validatable['pincode_id'] = 'required';
-            $validatable['area_id'] = 'required';
-            $pincode = $request->input('pincode_id');
-            $area = $request->input('area_id');
-        }else{
-            $address = auth('sanctum')->user()->userUserAddresses->first();
-            if(!$address){
-                $validatable['pincode_id'] = 'required';
-                $validatable['area_id'] = 'required';
-                $pincode = $request->input('pincode_id');
-                $area = $request->input('area_id');
-            }else{
-                $pincode = $address->pincode_id;
-                $area = $request->area_id;
-            }
-        }
-        $validator = Validator::make($request->all(), $validatable);
-
+        ]);
 
         if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
-        }
-        try {
-            $product = Product::find($request->input('product_id'));
-            if ($product) {
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
+        } else {
+            $product = Product::find($request->product_id);
+            try {
 
-                $data = [];
-                $data['id'] = $product->id;
-                $data['name'] = $product->name;
-                $data['description'] = $product->description;
-                $data['stock'] = $this->checkProductStock($product->id, $pincode, $area);
-                $data['stock'] = $this->checkProductStock($product->id, $pincode, $area);
-                $data['liked'] = $this->checkIfProductLiked($product->id);
-                $data['prices'] = [];
-                $data['categories'] = [];
-                $data['sub_categories'] = [];
-                $data['rating'] = $this->calculateRatingAverage($product->id);
-                $data['reviews'] = [];
-                $data['tags'] = [];
-                $images = [];
+                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor']);
 
-                foreach ($product->images as $key => $media){
-                        $images[] = [
-                            'thumbnail' => $media->getUrl('thumb'),
-                            'preview' => $media->getUrl('preview'),
-                            'original' => $media->getUrl(),
-                        ];
-
-                }
-                $data['images'] = $images;
-
-                foreach ($product->productPrices as $productPrice) {
-                    $data['prices'][] = [
-                        'id' => $productPrice->id,
-                        'price' => $productPrice->price,
-                        'discount' => $productPrice->discount,
-                        'unit' => $productPrice->unit,
-                        'quantity' => $productPrice->quantity,
-                        'stock' => $this->checkProductPriceStock($productPrice->id, $pincode, false, $area),
-                        'liked' => $this->checkIfProductProductLiked($productPrice->id),
-                    ];
-                }
-
-                foreach ($product->categories as $category) {
-                    $data['categories'][] = [
-                        'name' => $category->name,
-                    ];
-                }
-                foreach ($product->reviews as $review) {
-                    $data['reviews'][] = [
-                        'review' => $review->review,
-                        'rating' => $review->star,
-                    ];
-                }
-                foreach ($product->tags as $tag) {
-                    $data['tags'][] = [
-                        'name' => $tag->name,
-                    ];
-                }
-                foreach ($product->subCategories as $subCategory) {
-                    $data['sub_categories'][] = [
-                        'name' => $subCategory->name,
-                    ];
-                }
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully successfully'];
-
-            } else {
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product not found'];
+                $data = [
+                    'id' => $product->id,
+                    'vendor_id' => $product->vendor_id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => applyPrice($product->price, null, $product->discount),
+                    'moq' => $product->moq,
+                    'discount' => $product->discount,
+                    'category' => $product->productCategory->name ?? '',
+                    'sub_category' => $product->productSubCategory->name ?? '',
+                    'dispatch_time' => $product->dispatch_time,
+                    'rrp' => $product->rrp,
+                    'product_options' => $product->productOptions,
+                    'vendor' => $product->vendor->name ?? '',
+                ];
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Product fetched successfully.'
+                ];
+            } catch (\Exception $exception) {
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
-        } catch (\Exception $exception) {
-            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
 
+        return response()->json($result, 200);
 
     }
 

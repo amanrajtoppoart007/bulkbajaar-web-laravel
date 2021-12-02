@@ -94,42 +94,22 @@ class CartController extends \App\Http\Controllers\Api\BaseController
 
     public function getProducts(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'keyword' => 'nullable',
-            'pincode_id' => 'required',
-            'area_id' => 'required',
-            'category_id' => 'nullable',
-            'sub_category_id' => 'nullable',
-        ]);
-
-        if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
-        }
         try {
-
             $query = Product::query();
-
             if ($request->input('keyword')) {
                 $query->where(function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%" . $request->input('keyword') . "%");
+                    $q->where('name', 'LIKE', "%".$request->input('keyword')."%");
                 });
             }
 
             if ($request->input('category_id')) {
-                $query->whereHas('categories', function ($q) use ($request) {
-                    $q->where('product_category_id', $request->input('category_id'));
-                });
+                $query->where('product_category_id', $request->input('category_id'));
             }
-
             if ($request->input('sub_category_id')) {
-                $query->whereHas('subCategories', function ($q) use ($request) {
-                    $q->where('product_sub_category_id', $request->input('sub_category_id'));
-                });
+                $query->where('product_category_id', $request->input('sub_category_id'));
             }
 
-            $products = $query->with('productPrices', 'categories', 'reviews')->paginate(10);
-
+            $products = $query->with(['productCategory', 'productSubCategory'])->paginate(10);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -137,11 +117,23 @@ class CartController extends \App\Http\Controllers\Api\BaseController
                 $data['last_page_url'] = $productList['last_page_url'];
                 $data['per_page'] = $productList['per_page'];
                 $data['total'] = $productList['total'];
-                $class = new ProductList($productList['data'], $request->input('pincode_id'), $request->input('area_id'));
+                $data['list'] = $productList['data'];
+                $class = new ProductList($productList['data']);
                 $data['list'] = $class->execute();
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Products data fetched successfully'
+                ];
             } else {
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'retry',
+                    'message' => 'No product found'
+                ];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];

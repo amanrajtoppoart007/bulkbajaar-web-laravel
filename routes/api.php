@@ -21,6 +21,7 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
 
     Route::middleware('auth:sanctum')->group(function (){
+        Route::post('access_step_four', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'accessStepFour']);
         Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
         Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
         Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
