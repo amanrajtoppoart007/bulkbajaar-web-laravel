@@ -15,36 +15,38 @@ class Order extends Model
     public $table = 'orders';
 
     const STATUS_SELECT_FOR_ADMIN = [
-        'APPROVED'    => 'APPROVED',
-        'CONFIRMED'    => 'CONFIRMED',
-        'REJECTED'    => 'REJECTED',
-        'DISPATCHED'    => 'DISPATCHED',
-        'DELIVERED'    => 'DELIVERED',
+        'PENDING'    => 'Pending',
+        'CONFIRMED'    => 'Confirmed',
+        'REJECTED'    => 'Rejected',
+        'SHIPPED'    => 'Shipped',
+        'OUT_FOR_DELIVERED'    => 'Out For Delivered',
+        'DELIVERED'    => 'Delivered',
+        'RETURN_REQUESTED'    => 'Return - Requested',
+        'RETURN_RECEIVED'    => 'Return - Received',
+        'RETURN_REFUNDED'    => 'Return - Refunded',
     ];
 
-    const STATUS_SELECT_FOR_FRANCHISEE = [
-        'APPROVED'    => 'APPROVED',
-        'CONFIRMED'    => 'CONFIRMED',
-        'REJECTED'    => 'REJECTED',
-        'DISPATCHED'    => 'DISPATCHED',
-        'DELIVERED'    => 'DELIVERED',
+    const STATUS_SELECT_FOR_VENDOR = [
+        'PENDING'    => 'Pending',
+        'CONFIRMED'    => 'Confirmed',
+        'REJECTED'    => 'Rejected',
+        'SHIPPED'    => 'Shipped',
+        'OUT_FOR_DELIVERED'    => 'Out For Delivered',
+        'DELIVERED'    => 'Delivered',
+        'RETURN_RECEIVED'    => 'Return - Received',
     ];
 
     const STATUS_SELECT = [
-        'PENDING' => 'PENDING',
-        'APPROVED'    => 'APPROVED',
-        'CONFIRMED'    => 'CONFIRMED',
-        'REJECTED'    => 'REJECTED',
-        'DISPATCHED'    => 'DISPATCHED',
-        'DELIVERED'    => 'DELIVERED',
-        'CANCELLED'    => 'CANCELLED',
-        'RECEIVED'    => 'RECEIVED',
-    ];
-
-    const STATUS_SELECT_FOR_HELP_CENTER = [
-        'DELIVERED'    => 'DELIVERED',
-        'CANCELLED'    => 'CANCELLED',
-        'RECEIVED'    => 'RECEIVED',
+        'PENDING'    => 'Pending',
+        'CONFIRMED'    => 'Confirmed',
+        'REJECTED'    => 'Rejected',
+        'SHIPPED'    => 'Shipped',
+        'OUT_FOR_DELIVERED'    => 'Out For Delivered',
+        'DELIVERED'    => 'Delivered',
+        'RETURN_REQUESTED'    => 'Return - Requested',
+        'RETURN_RECEIVED'    => 'Return - Received',
+        'RETURN_REFUNDED'    => 'Return - Refunded',
+        'CANCELLED'    => 'Cancelled',
     ];
 
     public static $searchable = [
@@ -58,19 +60,35 @@ class Order extends Model
     ];
 
     const PAYMENT_TYPE_SELECT = [
-        'ONLINE' => 'ONLINE',
+        'ONLINE' => 'Online',
         'COD'    => 'COD',
-        'CASH'    => 'CASH',
+        'HALF'    => 'HALF',
     ];
 
     protected $fillable = [
         'order_number',
+        'order_group_number',
         'user_id',
         'payment_type',
-        'address_id',
+        'billing_address_id',
+        'shipping_address_id',
+        'vendor_id',
+        'sub_total',
+        'discount_amount',
+        'charge_percent',
+        'charge_amount',
+        'grand_total',
+        'amount_paid',
+        'payment_status',
+        'status',
+        'is_invoice_generated',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $attributes = [
+        'payment_status' => 'PENDING'
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -78,14 +96,9 @@ class Order extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function orderCarts()
+    public function transactions()
     {
-        return $this->hasMany(Cart::class, 'order_id', 'id');
-    }
-
-    public function orderTransactions()
-    {
-        return $this->hasMany(Transaction::class, 'order_id', 'id');
+        return $this->hasMany(Transaction::class, 'order_group', 'order_group_number');
     }
 
     public function user()
@@ -93,9 +106,14 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function address()
+    public function billingAddress()
     {
-        return $this->belongsTo(UserAddress::class, 'address_id');
+        return $this->belongsTo(UserAddress::class, 'billing_address_id');
+    }
+
+    public function shippingAddress()
+    {
+        return $this->belongsTo(UserAddress::class, 'shipping_address_id');
     }
 
     public function orderItems()
@@ -103,18 +121,13 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function assignee()
-    {
-        return $this->belongsTo(Vendor::class, 'franchisee_id');
-    }
-
     public function invoice()
     {
         return $this->morphOne(Invoice::class, 'invoiceable');
     }
 
-    public function helpCenter()
+    public function vendor()
     {
-        return $this->belongsTo(HelpCenter::class, 'help_center_id');
+        return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 }

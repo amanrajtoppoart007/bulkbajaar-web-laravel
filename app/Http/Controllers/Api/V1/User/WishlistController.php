@@ -16,7 +16,7 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'product_price_id' => 'required|exists:product_prices,id',
+            'product_option_id' => 'nullable|exists:product_options,id',
         ]);
 
         if ($validator->fails()) {
@@ -24,28 +24,25 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-
-        if($request->input('product_price_id')){
-            $isExists = auth()->user()->wishlists()
-                ->whereProductId($request->input('product_id'))
-                ->whereProductPriceId($request->input('product_price_id'))
-                ->exists();
-            if($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in wishlist.'];
+        if ($request->product_option_id){
+            $isExists = Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+            if ($isExists){
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
                 return response()->json($result, 200);
             }
+
         }else{
-            if(auth()->user()->wishlists()->whereProductId($request->input('product_id'))->exists()){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in wishlist.'];
+            $isExists = Wishlist::where('product_id', $request->product_id)->where('user_id', auth()->id())->exists();
+            if ($isExists){
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
                 return response()->json($result, 200);
             }
         }
 
-
         try {
             $wishlist = new Wishlist();
             $wishlist->product_id = $request->input('product_id');
-            $wishlist->product_price_id = $request->input('product_price_id');
+            $wishlist->product_option_id = $request->input('product_option_id');
             $wishlist->user_id = auth()->user()->id;
 
             if ($wishlist->save()) {
@@ -63,7 +60,7 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:wishlists',
-            'product_price_id' => 'required|exists:wishlists',
+            'product_option_id' => 'nullable|exists:wishlists',
         ]);
 
         if ($validator->fails()) {
@@ -72,16 +69,19 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
         }
 
         try {
-            if(Wishlist::whereProductPriceId($request->input('product_price_id'))->whereProductId($request->input('product_id'))->whereUserId(auth()->user()->id)->exists()){
-                if (Wishlist::whereProductPriceId($request->input('product_price_id'))->whereProductId($request->input('product_id'))->whereUserId(auth()->user()->id)->delete()) {
+            if ($request->product_option_id){
+                if (Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->delete()){
                     $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
                 }else{
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
                 }
             }else{
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'This wishlist does not belong to you.'];
+                if (Wishlist::where('product_id', $request->product_id)->where('user_id', auth()->id())->delete()){
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
+                }else{
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
+                }
             }
-
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
@@ -92,20 +92,22 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
     {
         try {
             $data = [];
-            $wishlists = auth()->user()->wishlists;
+            $wishlists = Wishlist::where('user_id', auth()->id())->with(['product', 'productOption'])->get();
             foreach ($wishlists as $wishlist) {
-                $lowestPrice = $this->getLowestPrice($wishlist->product_id);
                 $product = $wishlist->product;
-                $productPrice = $wishlist->productPrice;
                 $data[] = [
                     'id' => $wishlist->id,
                     'product_id' => $wishlist->product_id,
-                    'product' => $product->name,
-                    'product_price_id' => $wishlist->product_price_id,
-                    'price' => $productPrice->price ?? ($lowestPrice->price ?? 0),
-                    'discount' => $productPrice->discount ?? ($lowestPrice->discount ?? 0),
-                    'unit' => $productPrice->unit ?? ($lowestPrice->unit ?? 0),
-                    'quantity' => $productPrice->quantity ?? ($lowestPrice->quantity ?? 0),
+                    'product' => $product->name ?? '',
+                    'product_option_id' => $wishlist->product_price_id,
+                    'product_option' => [
+                        'option' => $wishlist->productOption->option ?? null,
+                        'unit' => $wishlist->productOption->unit ?? null,
+                        'quantity' => $wishlist->productOption->quantity ?? null,
+                    ],
+                    'price' => applyPrice($product->price),
+                    'discount' => $product->discount,
+                    'discounted_amount' => applyPrice($product->price, null, $product->discount),
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null
                 ];
             }
@@ -119,7 +121,6 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
-
     }
 
 }

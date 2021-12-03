@@ -17,7 +17,7 @@ class CreateProductStocksTable extends Migration
             $table->id();
             $table->foreignId('vendor_id')->nullable()->constrained();
             $table->foreignId('product_id')->nullable()->constrained();
-            $table->foreignId('product_price_id')->nullable()->constrained();
+            $table->foreignId('product_option_id')->nullable()->constrained();
             $table->string('unit');
             $table->float('quantity');
             $table->timestamps();

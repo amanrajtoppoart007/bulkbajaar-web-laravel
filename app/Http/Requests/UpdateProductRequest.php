@@ -28,9 +28,12 @@ class UpdateProductRequest extends FormRequest
             'product_category_id' => 'nullable|exists:product_categories,id',
             'product_sub_category_id' => 'nullable|exists:product_sub_categories,id',
             'description' => 'nullable',
-            'option.*' => 'nullable',
-            'unit.*' => 'nullable',
-            'quantity.*' => 'nullable',
+            'option' => 'nullable|array',
+            'option.*' => 'nullable|string',
+            'unit' => 'nullable|array',
+            'unit.*' => 'nullable|string',
+            'quantity' => 'nullable|array',
+            'quantity.*' => 'nullable|numeric',
         ];
     }
 }

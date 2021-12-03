@@ -81,10 +81,10 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="discount">Discount</label>
+                                    <label class="required" for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
                                            type="number"
-                                           name="discount" id="discount" value="{{ old('discount', '') }}">
+                                           name="discount" id="discount" value="{{ old('discount', 0) }}" required>
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('discount') }}

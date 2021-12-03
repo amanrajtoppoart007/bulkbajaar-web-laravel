@@ -29,9 +29,12 @@ class StoreProductRequest extends FormRequest
             'product_category_id' => 'nullable|exists:product_categories,id',
             'product_sub_category_id' => 'nullable|exists:product_sub_categories,id',
             'description' => 'nullable',
-            'option.*' => 'nullable|array',
-            'unit.*' => 'nullable|array',
-            'quantity.*' => 'nullable|array',
+            'option' => 'nullable|array',
+            'option.*' => 'nullable|string',
+            'unit' => 'nullable|array',
+            'unit.*' => 'nullable|string',
+            'quantity' => 'nullable|array',
+            'quantity.*' => 'nullable|numeric',
         ];
 
     }

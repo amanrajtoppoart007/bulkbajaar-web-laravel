@@ -31,7 +31,7 @@ trait UniqueIdentityGeneratorTrait{
     public function generateOrderNumber($model, $orderNo = "")
     {
         if(empty($orderNo)){
-            $orderNo = 'KVSPORD' . rand(000001, 999999);
+            $orderNo = 'BB-ORD-' . mt_rand(0000000000000001, 9999999999999999);
         }
 
         if($model::where('order_number', $orderNo)->exists()){
@@ -43,12 +43,24 @@ trait UniqueIdentityGeneratorTrait{
     public function generateInvoiceNumber($invoiceNo = "")
     {
         if(empty($invoiceNo)){
-            $invoiceNo = 'KVSPINV' . rand(000001, 999999);
+            $invoiceNo = 'BB-INV' . rand(000001, 999999);
         }
 
         if(Invoice::where('invoice_number', $invoiceNo)->exists()){
             return $this->generateInvoiceNumber($invoiceNo);
         }
         return $invoiceNo;
+    }
+
+    public function generateOrderGroupNumber($model, $orderNo = "")
+    {
+        if(empty($orderNo)){
+            $orderNo = mt_rand(0000000000000001, 9999999999999999);
+        }
+
+        if($model::where('order_group_number', $orderNo)->exists()){
+            return $this->generateOrderNumber($model, $orderNo);
+        }
+        return $orderNo;
     }
 }

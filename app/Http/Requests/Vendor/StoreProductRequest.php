@@ -23,20 +23,25 @@ class StoreProductRequest extends FormRequest
      */
     public function rules()
     {
+//        echo "<pre>";
+//        print_r($this->all());die;
         return [
             'name' => 'required|string',
             'price' => 'required|numeric',
             'mop' => 'nullable|numeric',
             'moq' => 'required|numeric',
-            'discount' => 'nullable|numeric|max:100',
+            'discount' => 'required|numeric|max:100',
             'dispatch_time' => 'nullable|string',
             'rrp' => 'nullable',
             'product_category_id' => 'nullable|exists:product_categories,id',
             'product_sub_category_id' => 'nullable|exists:product_sub_categories,id',
             'description' => 'nullable',
-            'option.*' => 'nullable|array',
-            'unit.*' => 'nullable|array',
-            'quantity.*' => 'nullable|array',
+            'option' => 'nullable|array',
+            'option.*' => 'nullable|string',
+            'unit' => 'nullable|array',
+            'unit.*' => 'nullable|string',
+            'quantity' => 'nullable|array',
+            'quantity.*' => 'nullable|numeric',
         ];
     }
 }

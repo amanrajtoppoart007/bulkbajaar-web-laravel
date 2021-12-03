@@ -209,7 +209,7 @@ class ProductController extends Controller
                     $productUnitsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
                 }
             }
-            ProductOption::where('product_id', $request->id)->where('vendor_id', auth()->id())->whereNotIn('id', $request->pu_id)->delete();
+            ProductOption::where('product_id', $request->id)->whereNotIn('id', $request->pu_id)->delete();
             foreach ($productUnitsArr as $value) {
                 if (!empty($value['option'])) {
                     $productUnit = [

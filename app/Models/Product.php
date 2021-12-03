@@ -19,8 +19,12 @@ class Product extends Model implements HasMedia
 
     public $table = 'products';
 
-    protected $appends = [
-        'images',
+//    protected $appends = [
+//        'images',
+//    ];
+
+    protected $attributes = [
+        'discount' => 0
     ];
 
     protected $dates = [
