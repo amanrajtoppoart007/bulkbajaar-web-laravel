@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2021 at 05:47 PM
+-- Generation Time: Dec 04, 2021 at 05:40 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -193,800 +193,57 @@ CREATE TABLE `audit_logs` (
 --
 
 INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
-(1, 'created', 1, 'App\\Models\\State', NULL, '{\"name\":\"Andaman and Nicobar Island (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":1}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(2, 'created', 1, 'App\\Models\\District', NULL, '{\"name\":\"Nicobar\",\"status\":1,\"state_id\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":1}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(3, 'created', 2, 'App\\Models\\District', NULL, '{\"name\":\"North and Middle Andaman\",\"status\":1,\"state_id\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":2}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(4, 'created', 3, 'App\\Models\\District', NULL, '{\"name\":\"South Andaman\",\"status\":1,\"state_id\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":3}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(5, 'created', 2, 'App\\Models\\State', NULL, '{\"name\":\"Andhra Pradesh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":2}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(6, 'created', 4, 'App\\Models\\District', NULL, '{\"name\":\"Anantapur\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":4}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(7, 'created', 5, 'App\\Models\\District', NULL, '{\"name\":\"Chittoor\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":5}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(8, 'created', 6, 'App\\Models\\District', NULL, '{\"name\":\"East Godavari\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":6}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(9, 'created', 7, 'App\\Models\\District', NULL, '{\"name\":\"Guntur\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":7}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(10, 'created', 8, 'App\\Models\\District', NULL, '{\"name\":\"Krishna\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":8}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(11, 'created', 9, 'App\\Models\\District', NULL, '{\"name\":\"Kurnool\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":9}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(12, 'created', 10, 'App\\Models\\District', NULL, '{\"name\":\"Prakasam\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":10}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(13, 'created', 11, 'App\\Models\\District', NULL, '{\"name\":\"Srikakulam\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":11}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(14, 'created', 12, 'App\\Models\\District', NULL, '{\"name\":\"Sri Potti Sriramulu Nellore\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":12}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(15, 'created', 13, 'App\\Models\\District', NULL, '{\"name\":\"Visakhapatnam\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":13}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(16, 'created', 14, 'App\\Models\\District', NULL, '{\"name\":\"Vizianagaram\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":14}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(17, 'created', 15, 'App\\Models\\District', NULL, '{\"name\":\"West Godavari\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":15}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(18, 'created', 16, 'App\\Models\\District', NULL, '{\"name\":\"YSR District, Kadapa (Cuddapah)\",\"status\":1,\"state_id\":2,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":16}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(19, 'created', 3, 'App\\Models\\State', NULL, '{\"name\":\"Arunachal Pradesh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":3}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(20, 'created', 17, 'App\\Models\\District', NULL, '{\"name\":\"Anjaw\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":17}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(21, 'created', 18, 'App\\Models\\District', NULL, '{\"name\":\"Changlang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":18}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(22, 'created', 19, 'App\\Models\\District', NULL, '{\"name\":\"Dibang Valley\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":19}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(23, 'created', 20, 'App\\Models\\District', NULL, '{\"name\":\"East Kameng\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":20}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(24, 'created', 21, 'App\\Models\\District', NULL, '{\"name\":\"East Siang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":21}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(25, 'created', 22, 'App\\Models\\District', NULL, '{\"name\":\"Kra Daadi\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":22}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(26, 'created', 23, 'App\\Models\\District', NULL, '{\"name\":\"Kurung Kumey\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":23}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(27, 'created', 24, 'App\\Models\\District', NULL, '{\"name\":\"Lohit\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":24}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(28, 'created', 25, 'App\\Models\\District', NULL, '{\"name\":\"Longding\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":25}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(29, 'created', 26, 'App\\Models\\District', NULL, '{\"name\":\"Lower Dibang Valley\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":26}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(30, 'created', 27, 'App\\Models\\District', NULL, '{\"name\":\"Lower Siang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":27}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(31, 'created', 28, 'App\\Models\\District', NULL, '{\"name\":\"Lower Subansiri\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":28}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(32, 'created', 29, 'App\\Models\\District', NULL, '{\"name\":\"Namsai\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":29}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(33, 'created', 30, 'App\\Models\\District', NULL, '{\"name\":\"Papum Pare\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":30}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(34, 'created', 31, 'App\\Models\\District', NULL, '{\"name\":\"Siang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":31}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(35, 'created', 32, 'App\\Models\\District', NULL, '{\"name\":\"Tawang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":32}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(36, 'created', 33, 'App\\Models\\District', NULL, '{\"name\":\"Tirap\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":33}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(37, 'created', 34, 'App\\Models\\District', NULL, '{\"name\":\"Upper Siang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":34}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(38, 'created', 35, 'App\\Models\\District', NULL, '{\"name\":\"Upper Subansiri\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":35}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(39, 'created', 36, 'App\\Models\\District', NULL, '{\"name\":\"West Kameng\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":36}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(40, 'created', 37, 'App\\Models\\District', NULL, '{\"name\":\"West Siang\",\"status\":1,\"state_id\":3,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":37}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(41, 'created', 4, 'App\\Models\\State', NULL, '{\"name\":\"Assam\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":4}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(42, 'created', 38, 'App\\Models\\District', NULL, '{\"name\":\"Baksa\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":38}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(43, 'created', 39, 'App\\Models\\District', NULL, '{\"name\":\"Barpeta\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":39}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(44, 'created', 40, 'App\\Models\\District', NULL, '{\"name\":\"Biswanath\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":40}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(45, 'created', 41, 'App\\Models\\District', NULL, '{\"name\":\"Bongaigaon\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":41}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(46, 'created', 42, 'App\\Models\\District', NULL, '{\"name\":\"Cachar\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":42}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(47, 'created', 43, 'App\\Models\\District', NULL, '{\"name\":\"Charaideo\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":43}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(48, 'created', 44, 'App\\Models\\District', NULL, '{\"name\":\"Chirang\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":44}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(49, 'created', 45, 'App\\Models\\District', NULL, '{\"name\":\"Darrang\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":45}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(50, 'created', 46, 'App\\Models\\District', NULL, '{\"name\":\"Dhemaji\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":46}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(51, 'created', 47, 'App\\Models\\District', NULL, '{\"name\":\"Dhubri\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":47}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(52, 'created', 48, 'App\\Models\\District', NULL, '{\"name\":\"Dibrugarh\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":48}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(53, 'created', 49, 'App\\Models\\District', NULL, '{\"name\":\"Dima Hasao (North Cachar Hills)\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":49}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(54, 'created', 50, 'App\\Models\\District', NULL, '{\"name\":\"Goalpara\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":50}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(55, 'created', 51, 'App\\Models\\District', NULL, '{\"name\":\"Golaghat\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":51}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(56, 'created', 52, 'App\\Models\\District', NULL, '{\"name\":\"Hailakandi\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":52}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(57, 'created', 53, 'App\\Models\\District', NULL, '{\"name\":\"Hojai\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":53}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(58, 'created', 54, 'App\\Models\\District', NULL, '{\"name\":\"Jorhat\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":54}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(59, 'created', 55, 'App\\Models\\District', NULL, '{\"name\":\"Kamrup\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":55}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(60, 'created', 56, 'App\\Models\\District', NULL, '{\"name\":\"Kamrup Metropolitan\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":56}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(61, 'created', 57, 'App\\Models\\District', NULL, '{\"name\":\"Karbi Anglong\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":57}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(62, 'created', 58, 'App\\Models\\District', NULL, '{\"name\":\"Karimganj\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":58}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(63, 'created', 59, 'App\\Models\\District', NULL, '{\"name\":\"Kokrajhar\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":59}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(64, 'created', 60, 'App\\Models\\District', NULL, '{\"name\":\"Lakhimpur\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":60}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(65, 'created', 61, 'App\\Models\\District', NULL, '{\"name\":\"Majuli\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":61}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(66, 'created', 62, 'App\\Models\\District', NULL, '{\"name\":\"Morigaon\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":62}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(67, 'created', 63, 'App\\Models\\District', NULL, '{\"name\":\"Nagaon\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":63}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(68, 'created', 64, 'App\\Models\\District', NULL, '{\"name\":\"Nalbari\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":64}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(69, 'created', 65, 'App\\Models\\District', NULL, '{\"name\":\"Sivasagar\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":65}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(70, 'created', 66, 'App\\Models\\District', NULL, '{\"name\":\"Sonitpur\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":66}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(71, 'created', 67, 'App\\Models\\District', NULL, '{\"name\":\"South Salamara-Mankachar\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":67}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(72, 'created', 68, 'App\\Models\\District', NULL, '{\"name\":\"Tinsukia\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":68}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(73, 'created', 69, 'App\\Models\\District', NULL, '{\"name\":\"Udalguri\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":69}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(74, 'created', 70, 'App\\Models\\District', NULL, '{\"name\":\"West Karbi Anglong\",\"status\":1,\"state_id\":4,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":70}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(75, 'created', 5, 'App\\Models\\State', NULL, '{\"name\":\"Bihar\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":5}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(76, 'created', 71, 'App\\Models\\District', NULL, '{\"name\":\"Araria\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":71}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(77, 'created', 72, 'App\\Models\\District', NULL, '{\"name\":\"Arwal\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":72}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(78, 'created', 73, 'App\\Models\\District', NULL, '{\"name\":\"Aurangabad\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":73}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(79, 'created', 74, 'App\\Models\\District', NULL, '{\"name\":\"Banka\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":74}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(80, 'created', 75, 'App\\Models\\District', NULL, '{\"name\":\"Begusarai\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":75}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(81, 'created', 76, 'App\\Models\\District', NULL, '{\"name\":\"Bhagalpur\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":76}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(82, 'created', 77, 'App\\Models\\District', NULL, '{\"name\":\"Bhojpur\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":77}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(83, 'created', 78, 'App\\Models\\District', NULL, '{\"name\":\"Buxar\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":78}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(84, 'created', 79, 'App\\Models\\District', NULL, '{\"name\":\"Darbhanga\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":79}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(85, 'created', 80, 'App\\Models\\District', NULL, '{\"name\":\"East Champaran (Motihari)\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":80}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(86, 'created', 81, 'App\\Models\\District', NULL, '{\"name\":\"Gaya\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":81}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(87, 'created', 82, 'App\\Models\\District', NULL, '{\"name\":\"Gopalganj\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":82}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(88, 'created', 83, 'App\\Models\\District', NULL, '{\"name\":\"Jamui\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":83}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(89, 'created', 84, 'App\\Models\\District', NULL, '{\"name\":\"Jehanabad\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":84}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(90, 'created', 85, 'App\\Models\\District', NULL, '{\"name\":\"Kaimur (Bhabua)\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":85}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(91, 'created', 86, 'App\\Models\\District', NULL, '{\"name\":\"Katihar\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":86}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(92, 'created', 87, 'App\\Models\\District', NULL, '{\"name\":\"Khagaria\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":87}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(93, 'created', 88, 'App\\Models\\District', NULL, '{\"name\":\"Kishanganj\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":88}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(94, 'created', 89, 'App\\Models\\District', NULL, '{\"name\":\"Lakhisarai\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":89}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(95, 'created', 90, 'App\\Models\\District', NULL, '{\"name\":\"Madhepura\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":90}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(96, 'created', 91, 'App\\Models\\District', NULL, '{\"name\":\"Madhubani\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":91}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(97, 'created', 92, 'App\\Models\\District', NULL, '{\"name\":\"Munger (Monghyr)\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":92}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(98, 'created', 93, 'App\\Models\\District', NULL, '{\"name\":\"Muzaffarpur\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:53\",\"created_at\":\"2021-11-27 09:07:53\",\"id\":93}', '127.0.0.1', '2021-11-27 03:37:53', '2021-11-27 03:37:53'),
-(99, 'created', 94, 'App\\Models\\District', NULL, '{\"name\":\"Nalanda\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":94}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(100, 'created', 95, 'App\\Models\\District', NULL, '{\"name\":\"Nawada\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":95}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(101, 'created', 96, 'App\\Models\\District', NULL, '{\"name\":\"Patna\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":96}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(102, 'created', 97, 'App\\Models\\District', NULL, '{\"name\":\"Purnia (Purnea)\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":97}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(103, 'created', 98, 'App\\Models\\District', NULL, '{\"name\":\"Rohtas\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":98}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(104, 'created', 99, 'App\\Models\\District', NULL, '{\"name\":\"Saharsa\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":99}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(105, 'created', 100, 'App\\Models\\District', NULL, '{\"name\":\"Samastipur\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":100}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(106, 'created', 101, 'App\\Models\\District', NULL, '{\"name\":\"Saran\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":101}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(107, 'created', 102, 'App\\Models\\District', NULL, '{\"name\":\"Sheikhpura\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":102}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(108, 'created', 103, 'App\\Models\\District', NULL, '{\"name\":\"Sheohar\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":103}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(109, 'created', 104, 'App\\Models\\District', NULL, '{\"name\":\"Sitamarhi\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":104}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(110, 'created', 105, 'App\\Models\\District', NULL, '{\"name\":\"Siwan\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":105}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(111, 'created', 106, 'App\\Models\\District', NULL, '{\"name\":\"Supaul\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":106}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(112, 'created', 107, 'App\\Models\\District', NULL, '{\"name\":\"Vaishali\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":107}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(113, 'created', 108, 'App\\Models\\District', NULL, '{\"name\":\"West Champaran\",\"status\":1,\"state_id\":5,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":108}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(114, 'created', 6, 'App\\Models\\State', NULL, '{\"name\":\"Chandigarh (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":6}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(115, 'created', 109, 'App\\Models\\District', NULL, '{\"name\":\"Chandigarh\",\"status\":1,\"state_id\":6,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":109}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(116, 'created', 7, 'App\\Models\\State', NULL, '{\"name\":\"Chhattisgarh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":7}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(117, 'created', 110, 'App\\Models\\District', NULL, '{\"name\":\"Balod\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":110}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(118, 'created', 111, 'App\\Models\\District', NULL, '{\"name\":\"Baloda Bazar\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":111}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(119, 'created', 112, 'App\\Models\\District', NULL, '{\"name\":\"Balrampur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":112}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(120, 'created', 113, 'App\\Models\\District', NULL, '{\"name\":\"Bastar\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":113}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(121, 'created', 114, 'App\\Models\\District', NULL, '{\"name\":\"Bemetara\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":114}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(122, 'created', 115, 'App\\Models\\District', NULL, '{\"name\":\"Bijapur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":115}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(123, 'created', 116, 'App\\Models\\District', NULL, '{\"name\":\"Bilaspur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":116}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(124, 'created', 117, 'App\\Models\\District', NULL, '{\"name\":\"Dantewada (South Bastar)\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":117}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(125, 'created', 118, 'App\\Models\\District', NULL, '{\"name\":\"Dhamtari\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":118}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(126, 'created', 119, 'App\\Models\\District', NULL, '{\"name\":\"Durg\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":119}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(127, 'created', 120, 'App\\Models\\District', NULL, '{\"name\":\"Gariyaband\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":120}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(128, 'created', 121, 'App\\Models\\District', NULL, '{\"name\":\"Janjgir-Champa\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":121}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(129, 'created', 122, 'App\\Models\\District', NULL, '{\"name\":\"Jashpur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":122}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(130, 'created', 123, 'App\\Models\\District', NULL, '{\"name\":\"Kabirdham (Kawardha)\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":123}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(131, 'created', 124, 'App\\Models\\District', NULL, '{\"name\":\"Kanker (North Bastar)\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":124}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(132, 'created', 125, 'App\\Models\\District', NULL, '{\"name\":\"Kondagaon\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":125}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(133, 'created', 126, 'App\\Models\\District', NULL, '{\"name\":\"Korba\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":126}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(134, 'created', 127, 'App\\Models\\District', NULL, '{\"name\":\"Korea (Koriya)\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":127}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(135, 'created', 128, 'App\\Models\\District', NULL, '{\"name\":\"Mahasamund\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":128}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(136, 'created', 129, 'App\\Models\\District', NULL, '{\"name\":\"Mungeli\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":129}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(137, 'created', 130, 'App\\Models\\District', NULL, '{\"name\":\"Narayanpur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":130}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(138, 'created', 131, 'App\\Models\\District', NULL, '{\"name\":\"Raigarh\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":131}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(139, 'created', 132, 'App\\Models\\District', NULL, '{\"name\":\"Raipur\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":132}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(140, 'created', 133, 'App\\Models\\District', NULL, '{\"name\":\"Rajnandgaon\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":133}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(141, 'created', 134, 'App\\Models\\District', NULL, '{\"name\":\"Sukma\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":134}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(142, 'created', 135, 'App\\Models\\District', NULL, '{\"name\":\"Surajpur  \",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":135}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(143, 'created', 136, 'App\\Models\\District', NULL, '{\"name\":\"Surguja\",\"status\":1,\"state_id\":7,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":136}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(144, 'created', 8, 'App\\Models\\State', NULL, '{\"name\":\"Dadra and Nagar Haveli (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":8}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(145, 'created', 137, 'App\\Models\\District', NULL, '{\"name\":\"Dadra & Nagar Haveli\",\"status\":1,\"state_id\":8,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":137}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(146, 'created', 9, 'App\\Models\\State', NULL, '{\"name\":\"Daman and Diu (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":9}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(147, 'created', 138, 'App\\Models\\District', NULL, '{\"name\":\"Daman\",\"status\":1,\"state_id\":9,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":138}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(148, 'created', 139, 'App\\Models\\District', NULL, '{\"name\":\"Diu\",\"status\":1,\"state_id\":9,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":139}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(149, 'created', 10, 'App\\Models\\State', NULL, '{\"name\":\"Delhi (NCT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":10}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(150, 'created', 140, 'App\\Models\\District', NULL, '{\"name\":\"Central Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":140}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(151, 'created', 141, 'App\\Models\\District', NULL, '{\"name\":\"East Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":141}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(152, 'created', 142, 'App\\Models\\District', NULL, '{\"name\":\"New Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":142}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(153, 'created', 143, 'App\\Models\\District', NULL, '{\"name\":\"North Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":143}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(154, 'created', 144, 'App\\Models\\District', NULL, '{\"name\":\"North East  Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":144}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(155, 'created', 145, 'App\\Models\\District', NULL, '{\"name\":\"North West  Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":145}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(156, 'created', 146, 'App\\Models\\District', NULL, '{\"name\":\"Shahdara\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":146}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(157, 'created', 147, 'App\\Models\\District', NULL, '{\"name\":\"South Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":147}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(158, 'created', 148, 'App\\Models\\District', NULL, '{\"name\":\"South East Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":148}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(159, 'created', 149, 'App\\Models\\District', NULL, '{\"name\":\"South West  Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":149}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(160, 'created', 150, 'App\\Models\\District', NULL, '{\"name\":\"West Delhi\",\"status\":1,\"state_id\":10,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":150}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(161, 'created', 11, 'App\\Models\\State', NULL, '{\"name\":\"Goa\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":11}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(162, 'created', 151, 'App\\Models\\District', NULL, '{\"name\":\"North Goa\",\"status\":1,\"state_id\":11,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":151}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(163, 'created', 152, 'App\\Models\\District', NULL, '{\"name\":\"South Goa\",\"status\":1,\"state_id\":11,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":152}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(164, 'created', 12, 'App\\Models\\State', NULL, '{\"name\":\"Gujarat\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":12}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(165, 'created', 153, 'App\\Models\\District', NULL, '{\"name\":\"Ahmedabad\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":153}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(166, 'created', 154, 'App\\Models\\District', NULL, '{\"name\":\"Amreli\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":154}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(167, 'created', 155, 'App\\Models\\District', NULL, '{\"name\":\"Anand\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":155}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(168, 'created', 156, 'App\\Models\\District', NULL, '{\"name\":\"Aravalli\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":156}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(169, 'created', 157, 'App\\Models\\District', NULL, '{\"name\":\"Banaskantha (Palanpur)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":157}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(170, 'created', 158, 'App\\Models\\District', NULL, '{\"name\":\"Bharuch\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":158}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(171, 'created', 159, 'App\\Models\\District', NULL, '{\"name\":\"Bhavnagar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":159}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(172, 'created', 160, 'App\\Models\\District', NULL, '{\"name\":\"Botad\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":160}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(173, 'created', 161, 'App\\Models\\District', NULL, '{\"name\":\"Chhota Udepur\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":161}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(174, 'created', 162, 'App\\Models\\District', NULL, '{\"name\":\"Dahod\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":162}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(175, 'created', 163, 'App\\Models\\District', NULL, '{\"name\":\"Dangs (Ahwa)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":163}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(176, 'created', 164, 'App\\Models\\District', NULL, '{\"name\":\"Devbhoomi Dwarka\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":164}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(177, 'created', 165, 'App\\Models\\District', NULL, '{\"name\":\"Gandhinagar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":165}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(178, 'created', 166, 'App\\Models\\District', NULL, '{\"name\":\"Gir Somnath\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":166}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(179, 'created', 167, 'App\\Models\\District', NULL, '{\"name\":\"Jamnagar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":167}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(180, 'created', 168, 'App\\Models\\District', NULL, '{\"name\":\"Junagadh\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":168}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(181, 'created', 169, 'App\\Models\\District', NULL, '{\"name\":\"Kachchh\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":169}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(182, 'created', 170, 'App\\Models\\District', NULL, '{\"name\":\"Kheda (Nadiad)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":170}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(183, 'created', 171, 'App\\Models\\District', NULL, '{\"name\":\"Mahisagar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":171}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(184, 'created', 172, 'App\\Models\\District', NULL, '{\"name\":\"Mehsana\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":172}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(185, 'created', 173, 'App\\Models\\District', NULL, '{\"name\":\"Morbi\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":173}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(186, 'created', 174, 'App\\Models\\District', NULL, '{\"name\":\"Narmada (Rajpipla)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":174}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(187, 'created', 175, 'App\\Models\\District', NULL, '{\"name\":\"Navsari\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":175}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(188, 'created', 176, 'App\\Models\\District', NULL, '{\"name\":\"Panchmahal (Godhra)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":176}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(189, 'created', 177, 'App\\Models\\District', NULL, '{\"name\":\"Patan\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":177}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(190, 'created', 178, 'App\\Models\\District', NULL, '{\"name\":\"Porbandar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":178}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(191, 'created', 179, 'App\\Models\\District', NULL, '{\"name\":\"Rajkot\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":179}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(192, 'created', 180, 'App\\Models\\District', NULL, '{\"name\":\"Sabarkantha (Himmatnagar)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":180}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(193, 'created', 181, 'App\\Models\\District', NULL, '{\"name\":\"Surat\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":181}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(194, 'created', 182, 'App\\Models\\District', NULL, '{\"name\":\"Surendranagar\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":182}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(195, 'created', 183, 'App\\Models\\District', NULL, '{\"name\":\"Tapi (Vyara)\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":183}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54');
-INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
-(196, 'created', 184, 'App\\Models\\District', NULL, '{\"name\":\"Vadodara\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":184}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(197, 'created', 185, 'App\\Models\\District', NULL, '{\"name\":\"Valsad\",\"status\":1,\"state_id\":12,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":185}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(198, 'created', 13, 'App\\Models\\State', NULL, '{\"name\":\"Haryana\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":13}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(199, 'created', 186, 'App\\Models\\District', NULL, '{\"name\":\"Ambala\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":186}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(200, 'created', 187, 'App\\Models\\District', NULL, '{\"name\":\"Bhiwani\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":187}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(201, 'created', 188, 'App\\Models\\District', NULL, '{\"name\":\"Charkhi Dadri\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":188}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(202, 'created', 189, 'App\\Models\\District', NULL, '{\"name\":\"Faridabad\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":189}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(203, 'created', 190, 'App\\Models\\District', NULL, '{\"name\":\"Fatehabad\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":190}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(204, 'created', 191, 'App\\Models\\District', NULL, '{\"name\":\"Gurgaon\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":191}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(205, 'created', 192, 'App\\Models\\District', NULL, '{\"name\":\"Hisar\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":192}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(206, 'created', 193, 'App\\Models\\District', NULL, '{\"name\":\"Jhajjar\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":193}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(207, 'created', 194, 'App\\Models\\District', NULL, '{\"name\":\"Jind\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":194}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(208, 'created', 195, 'App\\Models\\District', NULL, '{\"name\":\"Kaithal\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":195}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(209, 'created', 196, 'App\\Models\\District', NULL, '{\"name\":\"Karnal\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":196}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(210, 'created', 197, 'App\\Models\\District', NULL, '{\"name\":\"Kurukshetra\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":197}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(211, 'created', 198, 'App\\Models\\District', NULL, '{\"name\":\"Mahendragarh\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":198}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(212, 'created', 199, 'App\\Models\\District', NULL, '{\"name\":\"Mewat\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":199}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(213, 'created', 200, 'App\\Models\\District', NULL, '{\"name\":\"Palwal\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":200}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(214, 'created', 201, 'App\\Models\\District', NULL, '{\"name\":\"Panchkula\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":201}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(215, 'created', 202, 'App\\Models\\District', NULL, '{\"name\":\"Panipat\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":202}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(216, 'created', 203, 'App\\Models\\District', NULL, '{\"name\":\"Rewari\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":203}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(217, 'created', 204, 'App\\Models\\District', NULL, '{\"name\":\"Rohtak\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":204}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(218, 'created', 205, 'App\\Models\\District', NULL, '{\"name\":\"Sirsa\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":205}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(219, 'created', 206, 'App\\Models\\District', NULL, '{\"name\":\"Sonipat\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":206}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(220, 'created', 207, 'App\\Models\\District', NULL, '{\"name\":\"Yamunanagar\",\"status\":1,\"state_id\":13,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":207}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(221, 'created', 14, 'App\\Models\\State', NULL, '{\"name\":\"Himachal Pradesh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":14}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(222, 'created', 208, 'App\\Models\\District', NULL, '{\"name\":\"Bilaspur\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":208}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(223, 'created', 209, 'App\\Models\\District', NULL, '{\"name\":\"Chamba\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":209}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(224, 'created', 210, 'App\\Models\\District', NULL, '{\"name\":\"Hamirpur\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":210}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(225, 'created', 211, 'App\\Models\\District', NULL, '{\"name\":\"Kangra\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":211}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(226, 'created', 212, 'App\\Models\\District', NULL, '{\"name\":\"Kinnaur\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":212}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(227, 'created', 213, 'App\\Models\\District', NULL, '{\"name\":\"Kullu\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":213}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(228, 'created', 214, 'App\\Models\\District', NULL, '{\"name\":\"Lahaul & Spiti\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":214}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(229, 'created', 215, 'App\\Models\\District', NULL, '{\"name\":\"Mandi\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":215}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(230, 'created', 216, 'App\\Models\\District', NULL, '{\"name\":\"Shimla\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":216}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(231, 'created', 217, 'App\\Models\\District', NULL, '{\"name\":\"Sirmaur (Sirmour)\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":217}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(232, 'created', 218, 'App\\Models\\District', NULL, '{\"name\":\"Solan\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":218}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(233, 'created', 219, 'App\\Models\\District', NULL, '{\"name\":\"Una\",\"status\":1,\"state_id\":14,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":219}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(234, 'created', 15, 'App\\Models\\State', NULL, '{\"name\":\"Jammu and Kashmir\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":15}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(235, 'created', 220, 'App\\Models\\District', NULL, '{\"name\":\"Anantnag\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":220}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(236, 'created', 221, 'App\\Models\\District', NULL, '{\"name\":\"Bandipore\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":221}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(237, 'created', 222, 'App\\Models\\District', NULL, '{\"name\":\"Baramulla\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":222}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(238, 'created', 223, 'App\\Models\\District', NULL, '{\"name\":\"Budgam\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":223}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(239, 'created', 224, 'App\\Models\\District', NULL, '{\"name\":\"Doda\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":224}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(240, 'created', 225, 'App\\Models\\District', NULL, '{\"name\":\"Ganderbal\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":225}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(241, 'created', 226, 'App\\Models\\District', NULL, '{\"name\":\"Jammu\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":226}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(242, 'created', 227, 'App\\Models\\District', NULL, '{\"name\":\"Kargil\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":227}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(243, 'created', 228, 'App\\Models\\District', NULL, '{\"name\":\"Kathua\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":228}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(244, 'created', 229, 'App\\Models\\District', NULL, '{\"name\":\"Kishtwar\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":229}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(245, 'created', 230, 'App\\Models\\District', NULL, '{\"name\":\"Kulgam\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":230}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(246, 'created', 231, 'App\\Models\\District', NULL, '{\"name\":\"Kupwara\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":231}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(247, 'created', 232, 'App\\Models\\District', NULL, '{\"name\":\"Leh\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":232}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(248, 'created', 233, 'App\\Models\\District', NULL, '{\"name\":\"Poonch\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":233}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(249, 'created', 234, 'App\\Models\\District', NULL, '{\"name\":\"Pulwama\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":234}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(250, 'created', 235, 'App\\Models\\District', NULL, '{\"name\":\"Rajouri\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":235}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(251, 'created', 236, 'App\\Models\\District', NULL, '{\"name\":\"Ramban\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":236}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(252, 'created', 237, 'App\\Models\\District', NULL, '{\"name\":\"Reasi\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":237}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(253, 'created', 238, 'App\\Models\\District', NULL, '{\"name\":\"Samba\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":238}', '127.0.0.1', '2021-11-27 03:37:54', '2021-11-27 03:37:54'),
-(254, 'created', 239, 'App\\Models\\District', NULL, '{\"name\":\"Shopian\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:54\",\"created_at\":\"2021-11-27 09:07:54\",\"id\":239}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(255, 'created', 240, 'App\\Models\\District', NULL, '{\"name\":\"Srinagar\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":240}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(256, 'created', 241, 'App\\Models\\District', NULL, '{\"name\":\"Udhampur\",\"status\":1,\"state_id\":15,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":241}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(257, 'created', 16, 'App\\Models\\State', NULL, '{\"name\":\"Jharkhand\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":16}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(258, 'created', 242, 'App\\Models\\District', NULL, '{\"name\":\"Bokaro\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":242}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(259, 'created', 243, 'App\\Models\\District', NULL, '{\"name\":\"Chatra\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":243}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(260, 'created', 244, 'App\\Models\\District', NULL, '{\"name\":\"Deoghar\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":244}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(261, 'created', 245, 'App\\Models\\District', NULL, '{\"name\":\"Dhanbad\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":245}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(262, 'created', 246, 'App\\Models\\District', NULL, '{\"name\":\"Dumka\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":246}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(263, 'created', 247, 'App\\Models\\District', NULL, '{\"name\":\"East Singhbhum\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":247}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(264, 'created', 248, 'App\\Models\\District', NULL, '{\"name\":\"Garhwa\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":248}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(265, 'created', 249, 'App\\Models\\District', NULL, '{\"name\":\"Giridih\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":249}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(266, 'created', 250, 'App\\Models\\District', NULL, '{\"name\":\"Godda\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":250}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(267, 'created', 251, 'App\\Models\\District', NULL, '{\"name\":\"Gumla\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":251}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(268, 'created', 252, 'App\\Models\\District', NULL, '{\"name\":\"Hazaribag\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":252}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(269, 'created', 253, 'App\\Models\\District', NULL, '{\"name\":\"Jamtara\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":253}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(270, 'created', 254, 'App\\Models\\District', NULL, '{\"name\":\"Khunti\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":254}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(271, 'created', 255, 'App\\Models\\District', NULL, '{\"name\":\"Koderma\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":255}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(272, 'created', 256, 'App\\Models\\District', NULL, '{\"name\":\"Latehar\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":256}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(273, 'created', 257, 'App\\Models\\District', NULL, '{\"name\":\"Lohardaga\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":257}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(274, 'created', 258, 'App\\Models\\District', NULL, '{\"name\":\"Pakur\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":258}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(275, 'created', 259, 'App\\Models\\District', NULL, '{\"name\":\"Palamu\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":259}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(276, 'created', 260, 'App\\Models\\District', NULL, '{\"name\":\"Ramgarh\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":260}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(277, 'created', 261, 'App\\Models\\District', NULL, '{\"name\":\"Ranchi\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":261}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(278, 'created', 262, 'App\\Models\\District', NULL, '{\"name\":\"Sahibganj\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":262}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(279, 'created', 263, 'App\\Models\\District', NULL, '{\"name\":\"Seraikela-Kharsawan\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":263}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(280, 'created', 264, 'App\\Models\\District', NULL, '{\"name\":\"Simdega\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":264}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(281, 'created', 265, 'App\\Models\\District', NULL, '{\"name\":\"West Singhbhum\",\"status\":1,\"state_id\":16,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":265}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(282, 'created', 17, 'App\\Models\\State', NULL, '{\"name\":\"Karnataka\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":17}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(283, 'created', 266, 'App\\Models\\District', NULL, '{\"name\":\"Bagalkot\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":266}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(284, 'created', 267, 'App\\Models\\District', NULL, '{\"name\":\"Ballari (Bellary)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":267}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(285, 'created', 268, 'App\\Models\\District', NULL, '{\"name\":\"Belagavi (Belgaum)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":268}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(286, 'created', 269, 'App\\Models\\District', NULL, '{\"name\":\"Bengaluru (Bangalore) Rural\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":269}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(287, 'created', 270, 'App\\Models\\District', NULL, '{\"name\":\"Bengaluru (Bangalore) Urban\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":270}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(288, 'created', 271, 'App\\Models\\District', NULL, '{\"name\":\"Bidar\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":271}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(289, 'created', 272, 'App\\Models\\District', NULL, '{\"name\":\"Chamarajanagar\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":272}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(290, 'created', 273, 'App\\Models\\District', NULL, '{\"name\":\"Chikballapur\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":273}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(291, 'created', 274, 'App\\Models\\District', NULL, '{\"name\":\"Chikkamagaluru (Chikmagalur)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":274}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(292, 'created', 275, 'App\\Models\\District', NULL, '{\"name\":\"Chitradurga\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":275}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(293, 'created', 276, 'App\\Models\\District', NULL, '{\"name\":\"Dakshina Kannada\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":276}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(294, 'created', 277, 'App\\Models\\District', NULL, '{\"name\":\"Davangere\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":277}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(295, 'created', 278, 'App\\Models\\District', NULL, '{\"name\":\"Dharwad\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":278}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(296, 'created', 279, 'App\\Models\\District', NULL, '{\"name\":\"Gadag\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":279}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(297, 'created', 280, 'App\\Models\\District', NULL, '{\"name\":\"Hassan\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":280}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(298, 'created', 281, 'App\\Models\\District', NULL, '{\"name\":\"Haveri\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":281}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(299, 'created', 282, 'App\\Models\\District', NULL, '{\"name\":\"Kalaburagi (Gulbarga)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":282}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(300, 'created', 283, 'App\\Models\\District', NULL, '{\"name\":\"Kodagu\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":283}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(301, 'created', 284, 'App\\Models\\District', NULL, '{\"name\":\"Kolar\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":284}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(302, 'created', 285, 'App\\Models\\District', NULL, '{\"name\":\"Koppal\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":285}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(303, 'created', 286, 'App\\Models\\District', NULL, '{\"name\":\"Mandya\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":286}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(304, 'created', 287, 'App\\Models\\District', NULL, '{\"name\":\"Mysuru (Mysore)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":287}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(305, 'created', 288, 'App\\Models\\District', NULL, '{\"name\":\"Raichur\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":288}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(306, 'created', 289, 'App\\Models\\District', NULL, '{\"name\":\"Ramanagara\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":289}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(307, 'created', 290, 'App\\Models\\District', NULL, '{\"name\":\"Shivamogga (Shimoga)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":290}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(308, 'created', 291, 'App\\Models\\District', NULL, '{\"name\":\"Tumakuru (Tumkur)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":291}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(309, 'created', 292, 'App\\Models\\District', NULL, '{\"name\":\"Udupi\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":292}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(310, 'created', 293, 'App\\Models\\District', NULL, '{\"name\":\"Uttara Kannada (Karwar)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":293}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(311, 'created', 294, 'App\\Models\\District', NULL, '{\"name\":\"Vijayapura (Bijapur)\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":294}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(312, 'created', 295, 'App\\Models\\District', NULL, '{\"name\":\"Yadgir\",\"status\":1,\"state_id\":17,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":295}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(313, 'created', 18, 'App\\Models\\State', NULL, '{\"name\":\"Kerala\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":18}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(314, 'created', 296, 'App\\Models\\District', NULL, '{\"name\":\"Alappuzha\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":296}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(315, 'created', 297, 'App\\Models\\District', NULL, '{\"name\":\"Ernakulam\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":297}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(316, 'created', 298, 'App\\Models\\District', NULL, '{\"name\":\"Idukki\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":298}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(317, 'created', 299, 'App\\Models\\District', NULL, '{\"name\":\"Kannur\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":299}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(318, 'created', 300, 'App\\Models\\District', NULL, '{\"name\":\"Kasaragod\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":300}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(319, 'created', 301, 'App\\Models\\District', NULL, '{\"name\":\"Kollam\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":301}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(320, 'created', 302, 'App\\Models\\District', NULL, '{\"name\":\"Kottayam\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":302}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(321, 'created', 303, 'App\\Models\\District', NULL, '{\"name\":\"Kozhikode\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":303}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(322, 'created', 304, 'App\\Models\\District', NULL, '{\"name\":\"Malappuram\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":304}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(323, 'created', 305, 'App\\Models\\District', NULL, '{\"name\":\"Palakkad\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":305}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(324, 'created', 306, 'App\\Models\\District', NULL, '{\"name\":\"Pathanamthitta\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":306}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(325, 'created', 307, 'App\\Models\\District', NULL, '{\"name\":\"Thiruvananthapuram\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":307}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(326, 'created', 308, 'App\\Models\\District', NULL, '{\"name\":\"Thrissur\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":308}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(327, 'created', 309, 'App\\Models\\District', NULL, '{\"name\":\"Wayanad\",\"status\":1,\"state_id\":18,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":309}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(328, 'created', 19, 'App\\Models\\State', NULL, '{\"name\":\"Lakshadweep (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":19}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(329, 'created', 310, 'App\\Models\\District', NULL, '{\"name\":\"Lakshadweep\",\"status\":1,\"state_id\":19,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":310}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(330, 'created', 20, 'App\\Models\\State', NULL, '{\"name\":\"Madhya Pradesh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":20}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(331, 'created', 311, 'App\\Models\\District', NULL, '{\"name\":\"Agar Malwa\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":311}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(332, 'created', 312, 'App\\Models\\District', NULL, '{\"name\":\"Alirajpur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":312}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(333, 'created', 313, 'App\\Models\\District', NULL, '{\"name\":\"Anuppur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":313}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(334, 'created', 314, 'App\\Models\\District', NULL, '{\"name\":\"Ashoknagar\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":314}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(335, 'created', 315, 'App\\Models\\District', NULL, '{\"name\":\"Balaghat\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":315}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(336, 'created', 316, 'App\\Models\\District', NULL, '{\"name\":\"Barwani\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":316}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(337, 'created', 317, 'App\\Models\\District', NULL, '{\"name\":\"Betul\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":317}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(338, 'created', 318, 'App\\Models\\District', NULL, '{\"name\":\"Bhind\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":318}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(339, 'created', 319, 'App\\Models\\District', NULL, '{\"name\":\"Bhopal\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":319}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(340, 'created', 320, 'App\\Models\\District', NULL, '{\"name\":\"Burhanpur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":320}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(341, 'created', 321, 'App\\Models\\District', NULL, '{\"name\":\"Chhatarpur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":321}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(342, 'created', 322, 'App\\Models\\District', NULL, '{\"name\":\"Chhindwara\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":322}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(343, 'created', 323, 'App\\Models\\District', NULL, '{\"name\":\"Damoh\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":323}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(344, 'created', 324, 'App\\Models\\District', NULL, '{\"name\":\"Datia\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":324}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(345, 'created', 325, 'App\\Models\\District', NULL, '{\"name\":\"Dewas\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":325}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(346, 'created', 326, 'App\\Models\\District', NULL, '{\"name\":\"Dhar\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":326}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(347, 'created', 327, 'App\\Models\\District', NULL, '{\"name\":\"Dindori\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":327}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(348, 'created', 328, 'App\\Models\\District', NULL, '{\"name\":\"Guna\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":328}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(349, 'created', 329, 'App\\Models\\District', NULL, '{\"name\":\"Gwalior\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":329}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(350, 'created', 330, 'App\\Models\\District', NULL, '{\"name\":\"Harda\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":330}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(351, 'created', 331, 'App\\Models\\District', NULL, '{\"name\":\"Hoshangabad\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":331}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(352, 'created', 332, 'App\\Models\\District', NULL, '{\"name\":\"Indore\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":332}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(353, 'created', 333, 'App\\Models\\District', NULL, '{\"name\":\"Jabalpur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":333}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(354, 'created', 334, 'App\\Models\\District', NULL, '{\"name\":\"Jhabua\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":334}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(355, 'created', 335, 'App\\Models\\District', NULL, '{\"name\":\"Katni\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":335}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(356, 'created', 336, 'App\\Models\\District', NULL, '{\"name\":\"Khandwa\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":336}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(357, 'created', 337, 'App\\Models\\District', NULL, '{\"name\":\"Khargone\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":337}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(358, 'created', 338, 'App\\Models\\District', NULL, '{\"name\":\"Mandla\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":338}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(359, 'created', 339, 'App\\Models\\District', NULL, '{\"name\":\"Mandsaur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":339}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(360, 'created', 340, 'App\\Models\\District', NULL, '{\"name\":\"Morena\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":340}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(361, 'created', 341, 'App\\Models\\District', NULL, '{\"name\":\"Narsinghpur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":341}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(362, 'created', 342, 'App\\Models\\District', NULL, '{\"name\":\"Neemuch\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":342}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(363, 'created', 343, 'App\\Models\\District', NULL, '{\"name\":\"Panna\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":343}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(364, 'created', 344, 'App\\Models\\District', NULL, '{\"name\":\"Raisen\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":344}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(365, 'created', 345, 'App\\Models\\District', NULL, '{\"name\":\"Rajgarh\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":345}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(366, 'created', 346, 'App\\Models\\District', NULL, '{\"name\":\"Ratlam\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":346}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(367, 'created', 347, 'App\\Models\\District', NULL, '{\"name\":\"Rewa\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":347}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(368, 'created', 348, 'App\\Models\\District', NULL, '{\"name\":\"Sagar\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":348}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(369, 'created', 349, 'App\\Models\\District', NULL, '{\"name\":\"Satna\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":349}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(370, 'created', 350, 'App\\Models\\District', NULL, '{\"name\":\"Sehore\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":350}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(371, 'created', 351, 'App\\Models\\District', NULL, '{\"name\":\"Seoni\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":351}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(372, 'created', 352, 'App\\Models\\District', NULL, '{\"name\":\"Shahdol\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":352}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(373, 'created', 353, 'App\\Models\\District', NULL, '{\"name\":\"Shajapur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":353}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(374, 'created', 354, 'App\\Models\\District', NULL, '{\"name\":\"Sheopur\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":354}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(375, 'created', 355, 'App\\Models\\District', NULL, '{\"name\":\"Shivpuri\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":355}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(376, 'created', 356, 'App\\Models\\District', NULL, '{\"name\":\"Sidhi\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":356}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(377, 'created', 357, 'App\\Models\\District', NULL, '{\"name\":\"Singrauli\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":357}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(378, 'created', 358, 'App\\Models\\District', NULL, '{\"name\":\"Tikamgarh\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":358}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(379, 'created', 359, 'App\\Models\\District', NULL, '{\"name\":\"Ujjain\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":359}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(380, 'created', 360, 'App\\Models\\District', NULL, '{\"name\":\"Umaria\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":360}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(381, 'created', 361, 'App\\Models\\District', NULL, '{\"name\":\"Vidisha\",\"status\":1,\"state_id\":20,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":361}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(382, 'created', 21, 'App\\Models\\State', NULL, '{\"name\":\"Maharashtra\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":21}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(383, 'created', 362, 'App\\Models\\District', NULL, '{\"name\":\"Ahmednagar\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":362}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(384, 'created', 363, 'App\\Models\\District', NULL, '{\"name\":\"Akola\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":363}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(385, 'created', 364, 'App\\Models\\District', NULL, '{\"name\":\"Amravati\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":364}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(386, 'created', 365, 'App\\Models\\District', NULL, '{\"name\":\"Aurangabad\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":365}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(387, 'created', 366, 'App\\Models\\District', NULL, '{\"name\":\"Beed\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":366}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(388, 'created', 367, 'App\\Models\\District', NULL, '{\"name\":\"Bhandara\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":367}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(389, 'created', 368, 'App\\Models\\District', NULL, '{\"name\":\"Buldhana\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":368}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(390, 'created', 369, 'App\\Models\\District', NULL, '{\"name\":\"Chandrapur\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":369}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55');
-INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
-(391, 'created', 370, 'App\\Models\\District', NULL, '{\"name\":\"Dhule\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":370}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(392, 'created', 371, 'App\\Models\\District', NULL, '{\"name\":\"Gadchiroli\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":371}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(393, 'created', 372, 'App\\Models\\District', NULL, '{\"name\":\"Gondia\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":372}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(394, 'created', 373, 'App\\Models\\District', NULL, '{\"name\":\"Hingoli\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":373}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(395, 'created', 374, 'App\\Models\\District', NULL, '{\"name\":\"Jalgaon\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":374}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(396, 'created', 375, 'App\\Models\\District', NULL, '{\"name\":\"Jalna\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":375}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(397, 'created', 376, 'App\\Models\\District', NULL, '{\"name\":\"Kolhapur\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":376}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(398, 'created', 377, 'App\\Models\\District', NULL, '{\"name\":\"Latur\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":377}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(399, 'created', 378, 'App\\Models\\District', NULL, '{\"name\":\"Mumbai City\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":378}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(400, 'created', 379, 'App\\Models\\District', NULL, '{\"name\":\"Mumbai Suburban\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":379}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(401, 'created', 380, 'App\\Models\\District', NULL, '{\"name\":\"Nagpur\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":380}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(402, 'created', 381, 'App\\Models\\District', NULL, '{\"name\":\"Nanded\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":381}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(403, 'created', 382, 'App\\Models\\District', NULL, '{\"name\":\"Nandurbar\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":382}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(404, 'created', 383, 'App\\Models\\District', NULL, '{\"name\":\"Nashik\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":383}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(405, 'created', 384, 'App\\Models\\District', NULL, '{\"name\":\"Osmanabad\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":384}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(406, 'created', 385, 'App\\Models\\District', NULL, '{\"name\":\"Palghar\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":385}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(407, 'created', 386, 'App\\Models\\District', NULL, '{\"name\":\"Parbhani\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":386}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(408, 'created', 387, 'App\\Models\\District', NULL, '{\"name\":\"Pune\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":387}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(409, 'created', 388, 'App\\Models\\District', NULL, '{\"name\":\"Raigad\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":388}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(410, 'created', 389, 'App\\Models\\District', NULL, '{\"name\":\"Ratnagiri\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":389}', '127.0.0.1', '2021-11-27 03:37:55', '2021-11-27 03:37:55'),
-(411, 'created', 390, 'App\\Models\\District', NULL, '{\"name\":\"Sangli\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:55\",\"created_at\":\"2021-11-27 09:07:55\",\"id\":390}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(412, 'created', 391, 'App\\Models\\District', NULL, '{\"name\":\"Satara\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":391}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(413, 'created', 392, 'App\\Models\\District', NULL, '{\"name\":\"Sindhudurg\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":392}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(414, 'created', 393, 'App\\Models\\District', NULL, '{\"name\":\"Solapur\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":393}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(415, 'created', 394, 'App\\Models\\District', NULL, '{\"name\":\"Thane\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":394}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(416, 'created', 395, 'App\\Models\\District', NULL, '{\"name\":\"Wardha\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":395}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(417, 'created', 396, 'App\\Models\\District', NULL, '{\"name\":\"Washim\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":396}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(418, 'created', 397, 'App\\Models\\District', NULL, '{\"name\":\"Yavatmal\",\"status\":1,\"state_id\":21,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":397}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(419, 'created', 22, 'App\\Models\\State', NULL, '{\"name\":\"Manipur\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":22}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(420, 'created', 398, 'App\\Models\\District', NULL, '{\"name\":\"Bishnupur\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":398}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(421, 'created', 399, 'App\\Models\\District', NULL, '{\"name\":\"Chandel\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":399}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(422, 'created', 400, 'App\\Models\\District', NULL, '{\"name\":\"Churachandpur\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":400}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(423, 'created', 401, 'App\\Models\\District', NULL, '{\"name\":\"Imphal East\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":401}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(424, 'created', 402, 'App\\Models\\District', NULL, '{\"name\":\"Imphal West\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":402}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(425, 'created', 403, 'App\\Models\\District', NULL, '{\"name\":\"Jiribam\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":403}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(426, 'created', 404, 'App\\Models\\District', NULL, '{\"name\":\"Kakching\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":404}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(427, 'created', 405, 'App\\Models\\District', NULL, '{\"name\":\"Kamjong\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":405}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(428, 'created', 406, 'App\\Models\\District', NULL, '{\"name\":\"Kangpokpi\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":406}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(429, 'created', 407, 'App\\Models\\District', NULL, '{\"name\":\"Noney\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":407}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(430, 'created', 408, 'App\\Models\\District', NULL, '{\"name\":\"Pherzawl\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":408}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(431, 'created', 409, 'App\\Models\\District', NULL, '{\"name\":\"Senapati\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":409}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(432, 'created', 410, 'App\\Models\\District', NULL, '{\"name\":\"Tamenglong\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":410}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(433, 'created', 411, 'App\\Models\\District', NULL, '{\"name\":\"Tengnoupal\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":411}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(434, 'created', 412, 'App\\Models\\District', NULL, '{\"name\":\"Thoubal\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":412}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(435, 'created', 413, 'App\\Models\\District', NULL, '{\"name\":\"Ukhrul\",\"status\":1,\"state_id\":22,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":413}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(436, 'created', 23, 'App\\Models\\State', NULL, '{\"name\":\"Meghalaya\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":23}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(437, 'created', 414, 'App\\Models\\District', NULL, '{\"name\":\"East Garo Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":414}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(438, 'created', 415, 'App\\Models\\District', NULL, '{\"name\":\"East Jaintia Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":415}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(439, 'created', 416, 'App\\Models\\District', NULL, '{\"name\":\"East Khasi Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":416}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(440, 'created', 417, 'App\\Models\\District', NULL, '{\"name\":\"North Garo Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":417}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(441, 'created', 418, 'App\\Models\\District', NULL, '{\"name\":\"Ri Bhoi\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":418}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(442, 'created', 419, 'App\\Models\\District', NULL, '{\"name\":\"South Garo Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":419}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(443, 'created', 420, 'App\\Models\\District', NULL, '{\"name\":\"South West Garo Hills \",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":420}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(444, 'created', 421, 'App\\Models\\District', NULL, '{\"name\":\"South West Khasi Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":421}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(445, 'created', 422, 'App\\Models\\District', NULL, '{\"name\":\"West Garo Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":422}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(446, 'created', 423, 'App\\Models\\District', NULL, '{\"name\":\"West Jaintia Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":423}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(447, 'created', 424, 'App\\Models\\District', NULL, '{\"name\":\"West Khasi Hills\",\"status\":1,\"state_id\":23,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":424}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(448, 'created', 24, 'App\\Models\\State', NULL, '{\"name\":\"Mizoram\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":24}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(449, 'created', 425, 'App\\Models\\District', NULL, '{\"name\":\"Aizawl\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":425}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(450, 'created', 426, 'App\\Models\\District', NULL, '{\"name\":\"Champhai\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":426}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(451, 'created', 427, 'App\\Models\\District', NULL, '{\"name\":\"Kolasib\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":427}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(452, 'created', 428, 'App\\Models\\District', NULL, '{\"name\":\"Lawngtlai\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":428}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(453, 'created', 429, 'App\\Models\\District', NULL, '{\"name\":\"Lunglei\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":429}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(454, 'created', 430, 'App\\Models\\District', NULL, '{\"name\":\"Mamit\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":430}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(455, 'created', 431, 'App\\Models\\District', NULL, '{\"name\":\"Saiha\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":431}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(456, 'created', 432, 'App\\Models\\District', NULL, '{\"name\":\"Serchhip\",\"status\":1,\"state_id\":24,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":432}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(457, 'created', 25, 'App\\Models\\State', NULL, '{\"name\":\"Nagaland\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":25}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(458, 'created', 433, 'App\\Models\\District', NULL, '{\"name\":\"Dimapur\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":433}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(459, 'created', 434, 'App\\Models\\District', NULL, '{\"name\":\"Kiphire\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":434}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(460, 'created', 435, 'App\\Models\\District', NULL, '{\"name\":\"Kohima\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":435}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(461, 'created', 436, 'App\\Models\\District', NULL, '{\"name\":\"Longleng\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":436}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(462, 'created', 437, 'App\\Models\\District', NULL, '{\"name\":\"Mokokchung\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":437}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(463, 'created', 438, 'App\\Models\\District', NULL, '{\"name\":\"Mon\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":438}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(464, 'created', 439, 'App\\Models\\District', NULL, '{\"name\":\"Peren\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":439}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(465, 'created', 440, 'App\\Models\\District', NULL, '{\"name\":\"Phek\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":440}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(466, 'created', 441, 'App\\Models\\District', NULL, '{\"name\":\"Tuensang\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":441}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(467, 'created', 442, 'App\\Models\\District', NULL, '{\"name\":\"Wokha\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":442}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(468, 'created', 443, 'App\\Models\\District', NULL, '{\"name\":\"Zunheboto\",\"status\":1,\"state_id\":25,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":443}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(469, 'created', 26, 'App\\Models\\State', NULL, '{\"name\":\"Odisha\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":26}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(470, 'created', 444, 'App\\Models\\District', NULL, '{\"name\":\"Angul\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":444}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(471, 'created', 445, 'App\\Models\\District', NULL, '{\"name\":\"Balangir\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":445}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(472, 'created', 446, 'App\\Models\\District', NULL, '{\"name\":\"Balasore\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":446}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(473, 'created', 447, 'App\\Models\\District', NULL, '{\"name\":\"Bargarh\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":447}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(474, 'created', 448, 'App\\Models\\District', NULL, '{\"name\":\"Bhadrak\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":448}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(475, 'created', 449, 'App\\Models\\District', NULL, '{\"name\":\"Boudh\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":449}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(476, 'created', 450, 'App\\Models\\District', NULL, '{\"name\":\"Cuttack\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":450}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(477, 'created', 451, 'App\\Models\\District', NULL, '{\"name\":\"Deogarh\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":451}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(478, 'created', 452, 'App\\Models\\District', NULL, '{\"name\":\"Dhenkanal\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":452}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(479, 'created', 453, 'App\\Models\\District', NULL, '{\"name\":\"Gajapati\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":453}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(480, 'created', 454, 'App\\Models\\District', NULL, '{\"name\":\"Ganjam\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":454}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(481, 'created', 455, 'App\\Models\\District', NULL, '{\"name\":\"Jagatsinghapur\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":455}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(482, 'created', 456, 'App\\Models\\District', NULL, '{\"name\":\"Jajpur\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":456}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(483, 'created', 457, 'App\\Models\\District', NULL, '{\"name\":\"Jharsuguda\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":457}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(484, 'created', 458, 'App\\Models\\District', NULL, '{\"name\":\"Kalahandi\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":458}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(485, 'created', 459, 'App\\Models\\District', NULL, '{\"name\":\"Kandhamal\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":459}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(486, 'created', 460, 'App\\Models\\District', NULL, '{\"name\":\"Kendrapara\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":460}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(487, 'created', 461, 'App\\Models\\District', NULL, '{\"name\":\"Kendujhar (Keonjhar)\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":461}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(488, 'created', 462, 'App\\Models\\District', NULL, '{\"name\":\"Khordha\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":462}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(489, 'created', 463, 'App\\Models\\District', NULL, '{\"name\":\"Koraput\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":463}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(490, 'created', 464, 'App\\Models\\District', NULL, '{\"name\":\"Malkangiri\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":464}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(491, 'created', 465, 'App\\Models\\District', NULL, '{\"name\":\"Mayurbhanj\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":465}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(492, 'created', 466, 'App\\Models\\District', NULL, '{\"name\":\"Nabarangpur\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":466}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(493, 'created', 467, 'App\\Models\\District', NULL, '{\"name\":\"Nayagarh\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":467}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(494, 'created', 468, 'App\\Models\\District', NULL, '{\"name\":\"Nuapada\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":468}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(495, 'created', 469, 'App\\Models\\District', NULL, '{\"name\":\"Puri\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":469}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(496, 'created', 470, 'App\\Models\\District', NULL, '{\"name\":\"Rayagada\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":470}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(497, 'created', 471, 'App\\Models\\District', NULL, '{\"name\":\"Sambalpur\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":471}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(498, 'created', 472, 'App\\Models\\District', NULL, '{\"name\":\"Sonepur\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":472}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(499, 'created', 473, 'App\\Models\\District', NULL, '{\"name\":\"Sundargarh\",\"status\":1,\"state_id\":26,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":473}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(500, 'created', 27, 'App\\Models\\State', NULL, '{\"name\":\"Puducherry (UT)\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":27}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(501, 'created', 474, 'App\\Models\\District', NULL, '{\"name\":\"Karaikal\",\"status\":1,\"state_id\":27,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":474}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(502, 'created', 475, 'App\\Models\\District', NULL, '{\"name\":\"Mahe\",\"status\":1,\"state_id\":27,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":475}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(503, 'created', 476, 'App\\Models\\District', NULL, '{\"name\":\"Pondicherry\",\"status\":1,\"state_id\":27,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":476}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(504, 'created', 477, 'App\\Models\\District', NULL, '{\"name\":\"Yanam\",\"status\":1,\"state_id\":27,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":477}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(505, 'created', 28, 'App\\Models\\State', NULL, '{\"name\":\"Punjab\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":28}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(506, 'created', 478, 'App\\Models\\District', NULL, '{\"name\":\"Amritsar\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":478}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(507, 'created', 479, 'App\\Models\\District', NULL, '{\"name\":\"Barnala\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":479}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(508, 'created', 480, 'App\\Models\\District', NULL, '{\"name\":\"Bathinda\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":480}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(509, 'created', 481, 'App\\Models\\District', NULL, '{\"name\":\"Faridkot\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":481}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(510, 'created', 482, 'App\\Models\\District', NULL, '{\"name\":\"Fatehgarh Sahib\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":482}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(511, 'created', 483, 'App\\Models\\District', NULL, '{\"name\":\"Fazilka\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":483}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(512, 'created', 484, 'App\\Models\\District', NULL, '{\"name\":\"Ferozepur\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":484}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(513, 'created', 485, 'App\\Models\\District', NULL, '{\"name\":\"Gurdaspur\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":485}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(514, 'created', 486, 'App\\Models\\District', NULL, '{\"name\":\"Hoshiarpur\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":486}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(515, 'created', 487, 'App\\Models\\District', NULL, '{\"name\":\"Jalandhar\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":487}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(516, 'created', 488, 'App\\Models\\District', NULL, '{\"name\":\"Kapurthala\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":488}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(517, 'created', 489, 'App\\Models\\District', NULL, '{\"name\":\"Ludhiana\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":489}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(518, 'created', 490, 'App\\Models\\District', NULL, '{\"name\":\"Mansa\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":490}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(519, 'created', 491, 'App\\Models\\District', NULL, '{\"name\":\"Moga\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":491}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(520, 'created', 492, 'App\\Models\\District', NULL, '{\"name\":\"Muktsar\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":492}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(521, 'created', 493, 'App\\Models\\District', NULL, '{\"name\":\"Nawanshahr (Shahid Bhagat Singh Nagar)\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":493}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(522, 'created', 494, 'App\\Models\\District', NULL, '{\"name\":\"Pathankot\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":494}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(523, 'created', 495, 'App\\Models\\District', NULL, '{\"name\":\"Patiala\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":495}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(524, 'created', 496, 'App\\Models\\District', NULL, '{\"name\":\"Rupnagar\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":496}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(525, 'created', 497, 'App\\Models\\District', NULL, '{\"name\":\"Sahibzada Ajit Singh Nagar (Mohali)\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":497}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(526, 'created', 498, 'App\\Models\\District', NULL, '{\"name\":\"Sangrur\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":498}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(527, 'created', 499, 'App\\Models\\District', NULL, '{\"name\":\"Tarn Taran\",\"status\":1,\"state_id\":28,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":499}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(528, 'created', 29, 'App\\Models\\State', NULL, '{\"name\":\"Rajasthan\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":29}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(529, 'created', 500, 'App\\Models\\District', NULL, '{\"name\":\"Ajmer\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":500}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(530, 'created', 501, 'App\\Models\\District', NULL, '{\"name\":\"Alwar\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":501}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(531, 'created', 502, 'App\\Models\\District', NULL, '{\"name\":\"Banswara\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":502}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(532, 'created', 503, 'App\\Models\\District', NULL, '{\"name\":\"Baran\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":503}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(533, 'created', 504, 'App\\Models\\District', NULL, '{\"name\":\"Barmer\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":504}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(534, 'created', 505, 'App\\Models\\District', NULL, '{\"name\":\"Bharatpur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":505}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(535, 'created', 506, 'App\\Models\\District', NULL, '{\"name\":\"Bhilwara\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":506}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(536, 'created', 507, 'App\\Models\\District', NULL, '{\"name\":\"Bikaner\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":507}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(537, 'created', 508, 'App\\Models\\District', NULL, '{\"name\":\"Bundi\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":508}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(538, 'created', 509, 'App\\Models\\District', NULL, '{\"name\":\"Chittorgarh\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":509}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(539, 'created', 510, 'App\\Models\\District', NULL, '{\"name\":\"Churu\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":510}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(540, 'created', 511, 'App\\Models\\District', NULL, '{\"name\":\"Dausa\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":511}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(541, 'created', 512, 'App\\Models\\District', NULL, '{\"name\":\"Dholpur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":512}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(542, 'created', 513, 'App\\Models\\District', NULL, '{\"name\":\"Dungarpur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":513}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(543, 'created', 514, 'App\\Models\\District', NULL, '{\"name\":\"Hanumangarh\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":514}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(544, 'created', 515, 'App\\Models\\District', NULL, '{\"name\":\"Jaipur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":515}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(545, 'created', 516, 'App\\Models\\District', NULL, '{\"name\":\"Jaisalmer\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":516}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(546, 'created', 517, 'App\\Models\\District', NULL, '{\"name\":\"Jalore\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":517}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(547, 'created', 518, 'App\\Models\\District', NULL, '{\"name\":\"Jhalawar\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":518}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(548, 'created', 519, 'App\\Models\\District', NULL, '{\"name\":\"Jhunjhunu\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":519}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(549, 'created', 520, 'App\\Models\\District', NULL, '{\"name\":\"Jodhpur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":520}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(550, 'created', 521, 'App\\Models\\District', NULL, '{\"name\":\"Karauli\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":521}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(551, 'created', 522, 'App\\Models\\District', NULL, '{\"name\":\"Kota\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":522}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(552, 'created', 523, 'App\\Models\\District', NULL, '{\"name\":\"Nagaur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":523}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(553, 'created', 524, 'App\\Models\\District', NULL, '{\"name\":\"Pali\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":524}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(554, 'created', 525, 'App\\Models\\District', NULL, '{\"name\":\"Pratapgarh\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":525}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(555, 'created', 526, 'App\\Models\\District', NULL, '{\"name\":\"Rajsamand\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":526}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(556, 'created', 527, 'App\\Models\\District', NULL, '{\"name\":\"Sawai Madhopur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":527}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(557, 'created', 528, 'App\\Models\\District', NULL, '{\"name\":\"Sikar\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":528}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(558, 'created', 529, 'App\\Models\\District', NULL, '{\"name\":\"Sirohi\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":529}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(559, 'created', 530, 'App\\Models\\District', NULL, '{\"name\":\"Sri Ganganagar\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":530}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(560, 'created', 531, 'App\\Models\\District', NULL, '{\"name\":\"Tonk\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":531}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(561, 'created', 532, 'App\\Models\\District', NULL, '{\"name\":\"Udaipur\",\"status\":1,\"state_id\":29,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":532}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(562, 'created', 30, 'App\\Models\\State', NULL, '{\"name\":\"Sikkim\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":30}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(563, 'created', 533, 'App\\Models\\District', NULL, '{\"name\":\"East Sikkim\",\"status\":1,\"state_id\":30,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":533}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(564, 'created', 534, 'App\\Models\\District', NULL, '{\"name\":\"North Sikkim\",\"status\":1,\"state_id\":30,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":534}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(565, 'created', 535, 'App\\Models\\District', NULL, '{\"name\":\"South Sikkim\",\"status\":1,\"state_id\":30,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":535}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(566, 'created', 536, 'App\\Models\\District', NULL, '{\"name\":\"West Sikkim\",\"status\":1,\"state_id\":30,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":536}', '127.0.0.1', '2021-11-27 03:37:56', '2021-11-27 03:37:56'),
-(567, 'created', 31, 'App\\Models\\State', NULL, '{\"name\":\"Tamil Nadu\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:56\",\"created_at\":\"2021-11-27 09:07:56\",\"id\":31}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(568, 'created', 537, 'App\\Models\\District', NULL, '{\"name\":\"Ariyalur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":537}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(569, 'created', 538, 'App\\Models\\District', NULL, '{\"name\":\"Chennai\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":538}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(570, 'created', 539, 'App\\Models\\District', NULL, '{\"name\":\"Coimbatore\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":539}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(571, 'created', 540, 'App\\Models\\District', NULL, '{\"name\":\"Cuddalore\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":540}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(572, 'created', 541, 'App\\Models\\District', NULL, '{\"name\":\"Dharmapuri\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":541}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(573, 'created', 542, 'App\\Models\\District', NULL, '{\"name\":\"Dindigul\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":542}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(574, 'created', 543, 'App\\Models\\District', NULL, '{\"name\":\"Erode\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":543}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(575, 'created', 544, 'App\\Models\\District', NULL, '{\"name\":\"Kanchipuram\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":544}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(576, 'created', 545, 'App\\Models\\District', NULL, '{\"name\":\"Kanyakumari\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":545}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(577, 'created', 546, 'App\\Models\\District', NULL, '{\"name\":\"Karur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":546}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(578, 'created', 547, 'App\\Models\\District', NULL, '{\"name\":\"Krishnagiri\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":547}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(579, 'created', 548, 'App\\Models\\District', NULL, '{\"name\":\"Madurai\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":548}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(580, 'created', 549, 'App\\Models\\District', NULL, '{\"name\":\"Nagapattinam\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":549}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(581, 'created', 550, 'App\\Models\\District', NULL, '{\"name\":\"Namakkal\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":550}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(582, 'created', 551, 'App\\Models\\District', NULL, '{\"name\":\"Nilgiris\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":551}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(583, 'created', 552, 'App\\Models\\District', NULL, '{\"name\":\"Perambalur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":552}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(584, 'created', 553, 'App\\Models\\District', NULL, '{\"name\":\"Pudukkottai\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":553}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(585, 'created', 554, 'App\\Models\\District', NULL, '{\"name\":\"Ramanathapuram\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":554}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57');
-INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
-(586, 'created', 555, 'App\\Models\\District', NULL, '{\"name\":\"Salem\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":555}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(587, 'created', 556, 'App\\Models\\District', NULL, '{\"name\":\"Sivaganga\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":556}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(588, 'created', 557, 'App\\Models\\District', NULL, '{\"name\":\"Thanjavur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":557}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(589, 'created', 558, 'App\\Models\\District', NULL, '{\"name\":\"Theni\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":558}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(590, 'created', 559, 'App\\Models\\District', NULL, '{\"name\":\"Thoothukudi (Tuticorin)\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":559}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(591, 'created', 560, 'App\\Models\\District', NULL, '{\"name\":\"Tiruchirappalli\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":560}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(592, 'created', 561, 'App\\Models\\District', NULL, '{\"name\":\"Tirunelveli\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":561}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(593, 'created', 562, 'App\\Models\\District', NULL, '{\"name\":\"Tiruppur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":562}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(594, 'created', 563, 'App\\Models\\District', NULL, '{\"name\":\"Tiruvallur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":563}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(595, 'created', 564, 'App\\Models\\District', NULL, '{\"name\":\"Tiruvannamalai\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":564}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(596, 'created', 565, 'App\\Models\\District', NULL, '{\"name\":\"Tiruvarur\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":565}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(597, 'created', 566, 'App\\Models\\District', NULL, '{\"name\":\"Vellore\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":566}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(598, 'created', 567, 'App\\Models\\District', NULL, '{\"name\":\"Viluppuram\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":567}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(599, 'created', 568, 'App\\Models\\District', NULL, '{\"name\":\"Virudhunagar\",\"status\":1,\"state_id\":31,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":568}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(600, 'created', 32, 'App\\Models\\State', NULL, '{\"name\":\"Telangana\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":32}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(601, 'created', 569, 'App\\Models\\District', NULL, '{\"name\":\"Adilabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":569}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(602, 'created', 570, 'App\\Models\\District', NULL, '{\"name\":\"Bhadradri Kothagudem\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":570}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(603, 'created', 571, 'App\\Models\\District', NULL, '{\"name\":\"Hyderabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":571}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(604, 'created', 572, 'App\\Models\\District', NULL, '{\"name\":\"Jagtial\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":572}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(605, 'created', 573, 'App\\Models\\District', NULL, '{\"name\":\"Jangaon\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":573}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(606, 'created', 574, 'App\\Models\\District', NULL, '{\"name\":\"Jayashankar Bhoopalpally\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":574}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(607, 'created', 575, 'App\\Models\\District', NULL, '{\"name\":\"Jogulamba Gadwal\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":575}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(608, 'created', 576, 'App\\Models\\District', NULL, '{\"name\":\"Kamareddy\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":576}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(609, 'created', 577, 'App\\Models\\District', NULL, '{\"name\":\"Karimnagar\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":577}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(610, 'created', 578, 'App\\Models\\District', NULL, '{\"name\":\"Khammam\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":578}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(611, 'created', 579, 'App\\Models\\District', NULL, '{\"name\":\"Komaram Bheem Asifabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":579}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(612, 'created', 580, 'App\\Models\\District', NULL, '{\"name\":\"Mahabubabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":580}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(613, 'created', 581, 'App\\Models\\District', NULL, '{\"name\":\"Mahabubnagar\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":581}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(614, 'created', 582, 'App\\Models\\District', NULL, '{\"name\":\"Mancherial\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":582}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(615, 'created', 583, 'App\\Models\\District', NULL, '{\"name\":\"Medak\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":583}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(616, 'created', 584, 'App\\Models\\District', NULL, '{\"name\":\"Medchal\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":584}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(617, 'created', 585, 'App\\Models\\District', NULL, '{\"name\":\"Nagarkurnool\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":585}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(618, 'created', 586, 'App\\Models\\District', NULL, '{\"name\":\"Nalgonda\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":586}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(619, 'created', 587, 'App\\Models\\District', NULL, '{\"name\":\"Nirmal\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":587}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(620, 'created', 588, 'App\\Models\\District', NULL, '{\"name\":\"Nizamabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":588}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(621, 'created', 589, 'App\\Models\\District', NULL, '{\"name\":\"Peddapalli\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":589}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(622, 'created', 590, 'App\\Models\\District', NULL, '{\"name\":\"Rajanna Sircilla\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":590}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(623, 'created', 591, 'App\\Models\\District', NULL, '{\"name\":\"Rangareddy\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":591}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(624, 'created', 592, 'App\\Models\\District', NULL, '{\"name\":\"Sangareddy\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":592}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(625, 'created', 593, 'App\\Models\\District', NULL, '{\"name\":\"Siddipet\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":593}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(626, 'created', 594, 'App\\Models\\District', NULL, '{\"name\":\"Suryapet\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":594}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(627, 'created', 595, 'App\\Models\\District', NULL, '{\"name\":\"Vikarabad\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":595}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(628, 'created', 596, 'App\\Models\\District', NULL, '{\"name\":\"Wanaparthy\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":596}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(629, 'created', 597, 'App\\Models\\District', NULL, '{\"name\":\"Warangal (Rural)\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":597}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(630, 'created', 598, 'App\\Models\\District', NULL, '{\"name\":\"Warangal (Urban)\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":598}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(631, 'created', 599, 'App\\Models\\District', NULL, '{\"name\":\"Yadadri Bhuvanagiri\",\"status\":1,\"state_id\":32,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":599}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(632, 'created', 33, 'App\\Models\\State', NULL, '{\"name\":\"Tripura\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":33}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(633, 'created', 600, 'App\\Models\\District', NULL, '{\"name\":\"Dhalai\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":600}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(634, 'created', 601, 'App\\Models\\District', NULL, '{\"name\":\"Gomati\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":601}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(635, 'created', 602, 'App\\Models\\District', NULL, '{\"name\":\"Khowai\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":602}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(636, 'created', 603, 'App\\Models\\District', NULL, '{\"name\":\"North Tripura\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":603}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(637, 'created', 604, 'App\\Models\\District', NULL, '{\"name\":\"Sepahijala\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":604}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(638, 'created', 605, 'App\\Models\\District', NULL, '{\"name\":\"South Tripura\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":605}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(639, 'created', 606, 'App\\Models\\District', NULL, '{\"name\":\"Unakoti\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":606}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(640, 'created', 607, 'App\\Models\\District', NULL, '{\"name\":\"West Tripura\",\"status\":1,\"state_id\":33,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":607}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(641, 'created', 34, 'App\\Models\\State', NULL, '{\"name\":\"Uttarakhand\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":34}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(642, 'created', 608, 'App\\Models\\District', NULL, '{\"name\":\"Almora\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":608}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(643, 'created', 609, 'App\\Models\\District', NULL, '{\"name\":\"Bageshwar\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":609}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(644, 'created', 610, 'App\\Models\\District', NULL, '{\"name\":\"Chamoli\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":610}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(645, 'created', 611, 'App\\Models\\District', NULL, '{\"name\":\"Champawat\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":611}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(646, 'created', 612, 'App\\Models\\District', NULL, '{\"name\":\"Dehradun\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":612}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(647, 'created', 613, 'App\\Models\\District', NULL, '{\"name\":\"Haridwar\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":613}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(648, 'created', 614, 'App\\Models\\District', NULL, '{\"name\":\"Nainital\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":614}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(649, 'created', 615, 'App\\Models\\District', NULL, '{\"name\":\"Pauri Garhwal\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":615}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(650, 'created', 616, 'App\\Models\\District', NULL, '{\"name\":\"Pithoragarh\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":616}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(651, 'created', 617, 'App\\Models\\District', NULL, '{\"name\":\"Rudraprayag\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":617}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(652, 'created', 618, 'App\\Models\\District', NULL, '{\"name\":\"Tehri Garhwal\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":618}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(653, 'created', 619, 'App\\Models\\District', NULL, '{\"name\":\"Udham Singh Nagar\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":619}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(654, 'created', 620, 'App\\Models\\District', NULL, '{\"name\":\"Uttarkashi\",\"status\":1,\"state_id\":34,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":620}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(655, 'created', 35, 'App\\Models\\State', NULL, '{\"name\":\"Uttar Pradesh\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":35}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(656, 'created', 621, 'App\\Models\\District', NULL, '{\"name\":\"Agra\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":621}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(657, 'created', 622, 'App\\Models\\District', NULL, '{\"name\":\"Aligarh\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":622}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(658, 'created', 623, 'App\\Models\\District', NULL, '{\"name\":\"Allahabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":623}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(659, 'created', 624, 'App\\Models\\District', NULL, '{\"name\":\"Ambedkar Nagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":624}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(660, 'created', 625, 'App\\Models\\District', NULL, '{\"name\":\"Amethi (Chatrapati Sahuji Mahraj Nagar)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":625}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(661, 'created', 626, 'App\\Models\\District', NULL, '{\"name\":\"Amroha (J.P. Nagar)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":626}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(662, 'created', 627, 'App\\Models\\District', NULL, '{\"name\":\"Auraiya\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":627}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(663, 'created', 628, 'App\\Models\\District', NULL, '{\"name\":\"Azamgarh\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":628}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(664, 'created', 629, 'App\\Models\\District', NULL, '{\"name\":\"Baghpat\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":629}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(665, 'created', 630, 'App\\Models\\District', NULL, '{\"name\":\"Bahraich\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":630}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(666, 'created', 631, 'App\\Models\\District', NULL, '{\"name\":\"Ballia\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":631}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(667, 'created', 632, 'App\\Models\\District', NULL, '{\"name\":\"Balrampur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":632}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(668, 'created', 633, 'App\\Models\\District', NULL, '{\"name\":\"Banda\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":633}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(669, 'created', 634, 'App\\Models\\District', NULL, '{\"name\":\"Barabanki\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":634}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(670, 'created', 635, 'App\\Models\\District', NULL, '{\"name\":\"Bareilly\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":635}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(671, 'created', 636, 'App\\Models\\District', NULL, '{\"name\":\"Basti\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":636}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(672, 'created', 637, 'App\\Models\\District', NULL, '{\"name\":\"Bhadohi\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":637}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(673, 'created', 638, 'App\\Models\\District', NULL, '{\"name\":\"Bijnor\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":638}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(674, 'created', 639, 'App\\Models\\District', NULL, '{\"name\":\"Budaun\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":639}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(675, 'created', 640, 'App\\Models\\District', NULL, '{\"name\":\"Bulandshahr\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":640}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(676, 'created', 641, 'App\\Models\\District', NULL, '{\"name\":\"Chandauli\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":641}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(677, 'created', 642, 'App\\Models\\District', NULL, '{\"name\":\"Chitrakoot\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":642}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(678, 'created', 643, 'App\\Models\\District', NULL, '{\"name\":\"Deoria\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":643}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(679, 'created', 644, 'App\\Models\\District', NULL, '{\"name\":\"Etah\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":644}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(680, 'created', 645, 'App\\Models\\District', NULL, '{\"name\":\"Etawah\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":645}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(681, 'created', 646, 'App\\Models\\District', NULL, '{\"name\":\"Faizabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":646}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(682, 'created', 647, 'App\\Models\\District', NULL, '{\"name\":\"Farrukhabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":647}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(683, 'created', 648, 'App\\Models\\District', NULL, '{\"name\":\"Fatehpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":648}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(684, 'created', 649, 'App\\Models\\District', NULL, '{\"name\":\"Firozabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":649}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(685, 'created', 650, 'App\\Models\\District', NULL, '{\"name\":\"Gautam Buddha Nagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":650}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(686, 'created', 651, 'App\\Models\\District', NULL, '{\"name\":\"Ghaziabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":651}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(687, 'created', 652, 'App\\Models\\District', NULL, '{\"name\":\"Ghazipur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":652}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(688, 'created', 653, 'App\\Models\\District', NULL, '{\"name\":\"Gonda\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":653}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(689, 'created', 654, 'App\\Models\\District', NULL, '{\"name\":\"Gorakhpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":654}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(690, 'created', 655, 'App\\Models\\District', NULL, '{\"name\":\"Hamirpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":655}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(691, 'created', 656, 'App\\Models\\District', NULL, '{\"name\":\"Hapur (Panchsheel Nagar)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":656}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(692, 'created', 657, 'App\\Models\\District', NULL, '{\"name\":\"Hardoi\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":657}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(693, 'created', 658, 'App\\Models\\District', NULL, '{\"name\":\"Hathras\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":658}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(694, 'created', 659, 'App\\Models\\District', NULL, '{\"name\":\"Jalaun\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":659}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(695, 'created', 660, 'App\\Models\\District', NULL, '{\"name\":\"Jaunpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":660}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(696, 'created', 661, 'App\\Models\\District', NULL, '{\"name\":\"Jhansi\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":661}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(697, 'created', 662, 'App\\Models\\District', NULL, '{\"name\":\"Kannauj\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":662}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(698, 'created', 663, 'App\\Models\\District', NULL, '{\"name\":\"Kanpur Dehat\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":663}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(699, 'created', 664, 'App\\Models\\District', NULL, '{\"name\":\"Kanpur Nagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":664}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(700, 'created', 665, 'App\\Models\\District', NULL, '{\"name\":\"Kanshiram Nagar (Kasganj)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":665}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(701, 'created', 666, 'App\\Models\\District', NULL, '{\"name\":\"Kaushambi\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":666}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(702, 'created', 667, 'App\\Models\\District', NULL, '{\"name\":\"Kushinagar (Padrauna)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":667}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(703, 'created', 668, 'App\\Models\\District', NULL, '{\"name\":\"Lakhimpur - Kheri\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":668}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(704, 'created', 669, 'App\\Models\\District', NULL, '{\"name\":\"Lalitpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":669}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(705, 'created', 670, 'App\\Models\\District', NULL, '{\"name\":\"Lucknow\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":670}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(706, 'created', 671, 'App\\Models\\District', NULL, '{\"name\":\"Maharajganj\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":671}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(707, 'created', 672, 'App\\Models\\District', NULL, '{\"name\":\"Mahoba\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":672}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(708, 'created', 673, 'App\\Models\\District', NULL, '{\"name\":\"Mainpuri\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":673}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(709, 'created', 674, 'App\\Models\\District', NULL, '{\"name\":\"Mathura\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":674}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(710, 'created', 675, 'App\\Models\\District', NULL, '{\"name\":\"Mau\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":675}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(711, 'created', 676, 'App\\Models\\District', NULL, '{\"name\":\"Meerut\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":676}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(712, 'created', 677, 'App\\Models\\District', NULL, '{\"name\":\"Mirzapur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":677}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(713, 'created', 678, 'App\\Models\\District', NULL, '{\"name\":\"Moradabad\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":678}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(714, 'created', 679, 'App\\Models\\District', NULL, '{\"name\":\"Muzaffarnagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":679}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(715, 'created', 680, 'App\\Models\\District', NULL, '{\"name\":\"Pilibhit\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":680}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(716, 'created', 681, 'App\\Models\\District', NULL, '{\"name\":\"Pratapgarh\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":681}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(717, 'created', 682, 'App\\Models\\District', NULL, '{\"name\":\"RaeBareli\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":682}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(718, 'created', 683, 'App\\Models\\District', NULL, '{\"name\":\"Rampur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":683}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(719, 'created', 684, 'App\\Models\\District', NULL, '{\"name\":\"Saharanpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":684}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(720, 'created', 685, 'App\\Models\\District', NULL, '{\"name\":\"Sambhal (Bhim Nagar)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":685}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(721, 'created', 686, 'App\\Models\\District', NULL, '{\"name\":\"Sant Kabir Nagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":686}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(722, 'created', 687, 'App\\Models\\District', NULL, '{\"name\":\"Shahjahanpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":687}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(723, 'created', 688, 'App\\Models\\District', NULL, '{\"name\":\"Shamali (Prabuddh Nagar)\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":688}', '127.0.0.1', '2021-11-27 03:37:57', '2021-11-27 03:37:57'),
-(724, 'created', 689, 'App\\Models\\District', NULL, '{\"name\":\"Shravasti\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:57\",\"created_at\":\"2021-11-27 09:07:57\",\"id\":689}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(725, 'created', 690, 'App\\Models\\District', NULL, '{\"name\":\"Siddharth Nagar\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":690}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(726, 'created', 691, 'App\\Models\\District', NULL, '{\"name\":\"Sitapur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":691}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(727, 'created', 692, 'App\\Models\\District', NULL, '{\"name\":\"Sonbhadra\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":692}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(728, 'created', 693, 'App\\Models\\District', NULL, '{\"name\":\"Sultanpur\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":693}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(729, 'created', 694, 'App\\Models\\District', NULL, '{\"name\":\"Unnao\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":694}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(730, 'created', 695, 'App\\Models\\District', NULL, '{\"name\":\"Varanasi\",\"status\":1,\"state_id\":35,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":695}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(731, 'created', 36, 'App\\Models\\State', NULL, '{\"name\":\"West Bengal\",\"status\":1,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":36}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(732, 'created', 696, 'App\\Models\\District', NULL, '{\"name\":\"Alipurduar\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":696}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(733, 'created', 697, 'App\\Models\\District', NULL, '{\"name\":\"Bankura\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":697}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(734, 'created', 698, 'App\\Models\\District', NULL, '{\"name\":\"Birbhum\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":698}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(735, 'created', 699, 'App\\Models\\District', NULL, '{\"name\":\"Cooch Behar\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":699}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(736, 'created', 700, 'App\\Models\\District', NULL, '{\"name\":\"Dakshin Dinajpur (South Dinajpur)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":700}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(737, 'created', 701, 'App\\Models\\District', NULL, '{\"name\":\"Darjeeling\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":701}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(738, 'created', 702, 'App\\Models\\District', NULL, '{\"name\":\"Hooghly\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":702}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(739, 'created', 703, 'App\\Models\\District', NULL, '{\"name\":\"Howrah\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":703}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(740, 'created', 704, 'App\\Models\\District', NULL, '{\"name\":\"Jalpaiguri\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":704}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(741, 'created', 705, 'App\\Models\\District', NULL, '{\"name\":\"Jhargram\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":705}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(742, 'created', 706, 'App\\Models\\District', NULL, '{\"name\":\"Kalimpong\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":706}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(743, 'created', 707, 'App\\Models\\District', NULL, '{\"name\":\"Kolkata\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":707}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(744, 'created', 708, 'App\\Models\\District', NULL, '{\"name\":\"Malda\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":708}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(745, 'created', 709, 'App\\Models\\District', NULL, '{\"name\":\"Murshidabad\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":709}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(746, 'created', 710, 'App\\Models\\District', NULL, '{\"name\":\"Nadia\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":710}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(747, 'created', 711, 'App\\Models\\District', NULL, '{\"name\":\"North 24 Parganas\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":711}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(748, 'created', 712, 'App\\Models\\District', NULL, '{\"name\":\"Paschim Medinipur (West Medinipur)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":712}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(749, 'created', 713, 'App\\Models\\District', NULL, '{\"name\":\"Paschim (West) Burdwan (Bardhaman)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":713}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(750, 'created', 714, 'App\\Models\\District', NULL, '{\"name\":\"Purba Burdwan (Bardhaman)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":714}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(751, 'created', 715, 'App\\Models\\District', NULL, '{\"name\":\"Purba Medinipur (East Medinipur)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":715}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(752, 'created', 716, 'App\\Models\\District', NULL, '{\"name\":\"Purulia\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":716}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(753, 'created', 717, 'App\\Models\\District', NULL, '{\"name\":\"South 24 Parganas\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":717}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(754, 'created', 718, 'App\\Models\\District', NULL, '{\"name\":\"Uttar Dinajpur (North Dinajpur)\",\"status\":1,\"state_id\":36,\"updated_at\":\"2021-11-27 09:07:58\",\"created_at\":\"2021-11-27 09:07:58\",\"id\":718}', '127.0.0.1', '2021-11-27 03:37:58', '2021-11-27 03:37:58'),
-(755, 'created', 1, 'App\\Models\\Vendor', NULL, '{\"mobile\":\"9109844778\",\"email\":\"homver30@gmail.com\",\"updated_at\":\"2021-11-27 09:24:49\",\"created_at\":\"2021-11-27 09:24:49\",\"id\":1}', '127.0.0.1', '2021-11-27 03:54:49', '2021-11-27 03:54:49'),
-(756, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":null,\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":0,\"verified_at\":null,\"created_at\":\"2021-11-27 09:24:49\",\"updated_at\":\"2021-11-27 09:26:06\",\"deleted_at\":null}', '127.0.0.1', '2021-11-27 03:56:06', '2021-11-27 03:56:06'),
-(757, 'created', 1, 'App\\Models\\VendorProfile', NULL, '{\"vendor_id\":1,\"company_name\":\"9109844778\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":\"1\",\"billing_district_id\":\"1\",\"billing_pincode\":25554,\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":\"1\",\"pickup_district_id\":\"1\",\"pickup_pincode\":25554,\"updated_at\":\"2021-11-27 09:26:06\",\"created_at\":\"2021-11-27 09:26:06\",\"id\":1,\"image\":null,\"aadhaar_card\":null,\"pan_card\":null,\"address_proof\":null,\"signature\":null,\"media\":[]}', '127.0.0.1', '2021-11-27 03:56:06', '2021-11-27 03:56:06'),
-(758, 'updated', 1, 'App\\Models\\VendorProfile', NULL, '{\"id\":1,\"vendor_id\":1,\"company_name\":\"9109844778\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"homver30@gmail.com\",\"pan_number\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":1,\"billing_district_id\":1,\"billing_pincode\":\"25554\",\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":1,\"pickup_district_id\":1,\"pickup_pincode\":\"25554\",\"bank_name\":\"homver30@gmail.com\",\"account_number\":\"9109844778\",\"account_holder_name\":\"9109844778\",\"ifsc_code\":\"homver30@gmail.com\",\"created_at\":\"2021-11-27 09:26:06\",\"updated_at\":\"2021-11-27 09:26:11\",\"deleted_at\":null,\"image\":null,\"aadhaar_card\":null,\"pan_card\":null,\"address_proof\":null,\"signature\":null,\"media\":[]}', '127.0.0.1', '2021-11-27 03:56:11', '2021-11-27 03:56:11'),
-(759, 'created', 1, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"9109844778\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:14:05\",\"created_at\":\"2021-11-27 10:14:05\",\"id\":1,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:44:05', '2021-11-27 04:44:05'),
-(760, 'created', 3, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447781\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:16:30\",\"created_at\":\"2021-11-27 10:16:30\",\"id\":3,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:46:30', '2021-11-27 04:46:30'),
-(761, 'created', 4, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447782\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:21:14\",\"created_at\":\"2021-11-27 10:21:14\",\"id\":4,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:51:14', '2021-11-27 04:51:14'),
-(762, 'created', 5, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447783\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:21:28\",\"created_at\":\"2021-11-27 10:21:28\",\"id\":5,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:51:28', '2021-11-27 04:51:28'),
-(763, 'created', 6, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447784\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:22:46\",\"created_at\":\"2021-11-27 10:22:46\",\"id\":6,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:52:46', '2021-11-27 04:52:46'),
-(764, 'created', 7, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447785\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:22:56\",\"created_at\":\"2021-11-27 10:22:56\",\"id\":7,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:52:56', '2021-11-27 04:52:56'),
-(765, 'created', 8, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447786\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:23:08\",\"created_at\":\"2021-11-27 10:23:08\",\"id\":8,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:53:08', '2021-11-27 04:53:08');
-INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
-(766, 'created', 9, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447787\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:23:21\",\"created_at\":\"2021-11-27 10:23:21\",\"id\":9,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:53:21', '2021-11-27 04:53:21'),
-(767, 'created', 10, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447788\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:23:45\",\"created_at\":\"2021-11-27 10:23:45\",\"id\":10,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:53:45', '2021-11-27 04:53:45'),
-(768, 'created', 11, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"91098447789\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:24:42\",\"created_at\":\"2021-11-27 10:24:42\",\"id\":11,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:54:42', '2021-11-27 04:54:42'),
-(769, 'created', 12, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"910984477810\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:25:03\",\"created_at\":\"2021-11-27 10:25:03\",\"id\":12,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:55:03', '2021-11-27 04:55:03'),
-(770, 'created', 13, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"910984477811\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 10:25:27\",\"created_at\":\"2021-11-27 10:25:27\",\"id\":13,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:55:27', '2021-11-27 04:55:27'),
-(771, 'updated', 1, 'App\\Models\\Product', NULL, '{\"id\":1,\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"9109844778\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"is_approved\":0,\"quantity\":null,\"created_at\":\"2021-11-27 10:14:05\",\"updated_at\":\"2021-11-27 10:27:18\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:57:18', '2021-11-27 04:57:18'),
-(772, 'updated', 1, 'App\\Models\\Product', NULL, '{\"id\":1,\"vendor_id\":1,\"name\":\"Name\",\"slug\":\"9109844778\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"is_approved\":0,\"quantity\":null,\"created_at\":\"2021-11-27 10:14:05\",\"updated_at\":\"2021-11-27 10:27:43\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 04:57:43', '2021-11-27 04:57:43'),
-(773, 'created', 14, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"910984477812\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":\"1\",\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 17:10:10\",\"created_at\":\"2021-11-27 17:10:10\",\"id\":14,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 11:40:11', '2021-11-27 11:40:11'),
-(774, 'created', 15, 'App\\Models\\Product', NULL, '{\"vendor_id\":1,\"name\":\"9109844778\",\"slug\":\"910984477813\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"quantity\":null,\"updated_at\":\"2021-11-27 17:34:19\",\"created_at\":\"2021-11-27 17:34:19\",\"id\":15,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 12:04:19', '2021-11-27 12:04:19'),
-(775, 'updated', 15, 'App\\Models\\Product', NULL, '{\"id\":15,\"vendor_id\":1,\"name\":\"Name\",\"slug\":\"910984477813\",\"description\":null,\"price\":\"500\",\"mop\":\"5000\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"PENDING\",\"quantity\":null,\"created_at\":\"2021-11-27 17:34:19\",\"updated_at\":\"2021-11-27 17:35:06\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-27 12:05:06', '2021-11-27 12:05:06'),
-(776, 'created', 2, 'App\\Models\\Vendor', NULL, '{\"mobile\":\"9109844777\",\"email\":\"homver30@gmail1.com\",\"user_type\":\"MANUFACTURER\",\"updated_at\":\"2021-11-29 11:53:39\",\"created_at\":\"2021-11-29 11:53:39\",\"id\":2}', '127.0.0.1', '2021-11-29 06:23:39', '2021-11-29 06:23:39'),
-(777, 'created', 2, 'App\\Models\\VendorProfile', NULL, '{\"mobile\":\"9109844777\",\"email\":\"homver30@gmail1.com\",\"company_name\":\"company\",\"representative_name\":\"representative\",\"billing_address\":\"address\",\"billing_address_two\":null,\"billing_state_id\":\"1\",\"billing_district_id\":\"1\",\"billing_pincode\":\"495555\",\"pickup_address\":\"address\",\"pickup_address_two\":null,\"pickup_state_id\":\"1\",\"pickup_district_id\":\"2\",\"pickup_pincode\":\"455555\",\"pan_number\":\"pnnnnn\",\"gst_number\":\"gstin\",\"bank_name\":\"bank\",\"account_number\":\"12345678\",\"account_holder_name\":\"acoun\",\"ifsc_code\":\"ifsc\",\"vendor_id\":2,\"updated_at\":\"2021-11-29 11:53:39\",\"created_at\":\"2021-11-29 11:53:39\",\"id\":2,\"image\":null,\"aadhaar_card\":null,\"pan_card\":null,\"address_proof\":null,\"signature\":null,\"media\":[]}', '127.0.0.1', '2021-11-29 06:23:39', '2021-11-29 06:23:39'),
-(794, 'created', 32, 'App\\Models\\Product', NULL, '{\"name\":\"Test Product\",\"price\":\"5000\",\"moq\":\"5\",\"discount\":\"41\",\"dispatch_time\":\"2 days\",\"rrp\":null,\"description\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"test-product\",\"updated_at\":\"2021-11-29 14:13:17\",\"created_at\":\"2021-11-29 14:13:17\",\"id\":32,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-29 08:43:17', '2021-11-29 08:43:17'),
-(795, 'updated', 15, 'App\\Models\\Product', NULL, '{\"id\":15,\"vendor_id\":1,\"name\":\"Name Test\",\"slug\":\"910984477813\",\"description\":null,\"price\":\"500.00\",\"mop\":\"5000.00\",\"moq\":\"5\",\"discount\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"PENDING\",\"quantity\":null,\"created_at\":\"2021-11-27 17:34:19\",\"updated_at\":\"2021-11-29 16:37:37\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-11-29 11:07:37', '2021-11-29 11:07:37'),
-(796, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":\"Company\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":1,\"verified_at\":null,\"created_at\":\"2021-11-27 09:24:49\",\"updated_at\":\"2021-11-30 06:54:57\",\"deleted_at\":null}', '127.0.0.1', '2021-11-30 01:24:57', '2021-11-30 01:24:57'),
-(797, 'updated', 1, 'App\\Models\\VendorProfile', NULL, '{\"id\":1,\"vendor_id\":1,\"company_name\":\"Company\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"homver30@gmail.com\",\"pan_number\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":\"2\",\"billing_district_id\":\"7\",\"billing_pincode\":\"25554\",\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":\"1\",\"pickup_district_id\":\"7\",\"pickup_pincode\":\"25554\",\"bank_name\":\"homver30@gmail.com\",\"account_number\":\"9109844778\",\"account_holder_name\":\"9109844778\",\"ifsc_code\":\"homver30@gmail.com\",\"created_at\":\"2021-11-27 09:26:06\",\"updated_at\":\"2021-11-30 06:54:57\",\"deleted_at\":null,\"pan_card\":{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},\"gst\":{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},\"media\":[{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"}]}', '127.0.0.1', '2021-11-30 01:24:57', '2021-11-30 01:24:57'),
-(798, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":\"Company\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"WHOLESALER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":1,\"verified_at\":null,\"created_at\":\"2021-11-27 09:24:49\",\"updated_at\":\"2021-11-30 06:55:09\",\"deleted_at\":null}', '127.0.0.1', '2021-11-30 01:25:09', '2021-11-30 01:25:09'),
-(799, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":\"Company\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"WHOLESALER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":1,\"verified_at\":null,\"created_at\":\"2021-11-27 09:24:49\",\"updated_at\":\"2021-11-30 07:00:02\",\"deleted_at\":null}', '127.0.0.1', '2021-11-30 01:30:02', '2021-11-30 01:30:02'),
-(800, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":\"Company\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"WHOLESALER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":1,\"verified_at\":null,\"created_at\":\"2021-11-27 09:24:49\",\"updated_at\":\"2021-11-30 07:01:12\",\"deleted_at\":null,\"profile\":{\"id\":1,\"vendor_id\":1,\"company_name\":\"Company\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"homver30@gmail.com\",\"pan_number\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":2,\"billing_district_id\":7,\"billing_pincode\":\"25554\",\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":1,\"pickup_district_id\":7,\"pickup_pincode\":\"25554\",\"bank_name\":\"homver30@gmail.com\",\"account_number\":\"9109844778\",\"account_holder_name\":\"9109844778\",\"ifsc_code\":\"homver30@gmail.com\",\"created_at\":\"2021-11-27 09:26:06\",\"updated_at\":\"2021-11-30 06:54:57\",\"deleted_at\":null,\"pan_card\":{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},\"gst\":{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},\"media\":[{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"}]}}', '127.0.0.1', '2021-11-30 01:31:12', '2021-11-30 01:31:12'),
-(801, 'updated', 1, 'App\\Models\\VendorProfile', NULL, '{\"id\":1,\"vendor_id\":1,\"company_name\":\"Company\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"homver30@gmail.com\",\"pan_number\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":2,\"billing_district_id\":7,\"billing_pincode\":\"25554\",\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":1,\"pickup_district_id\":7,\"pickup_pincode\":\"25554\",\"bank_name\":\"State Bank of India\",\"account_number\":\"9109844778\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSCCODE\",\"created_at\":\"2021-11-27 09:26:06\",\"updated_at\":\"2021-11-30 07:59:46\",\"deleted_at\":null,\"pan_card\":{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},\"gst\":{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},\"media\":[{\"id\":3,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"8fbdb0c5-4447-479e-b9d5-5b5211795e4e\",\"collection_name\":\"gst\",\"name\":\"61a4ca20a2703_250px-Irrigat\",\"file_name\":\"61a4ca20a2703_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:06.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a4ca20a2703_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a4ca20a2703_250px-Irrigat-preview.jpg\"},{\"id\":4,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"607ecf85-e821-49fa-acb6-b31eaed10faf\",\"collection_name\":\"pan_card\",\"name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"created_at\":\"2021-11-29T12:40:06.000000Z\",\"updated_at\":\"2021-11-29T12:40:07.000000Z\",\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"}]}', '127.0.0.1', '2021-11-30 02:29:46', '2021-11-30 02:29:46'),
-(802, 'created', 3, 'App\\Models\\Vendor', 1, '{\"name\":\"Company\",\"email\":\"test@test.com\",\"mobile\":\"1234567890\",\"approved\":true,\"verified\":true,\"verified_at\":\"2021-11-30T12:45:50.923630Z\",\"updated_at\":\"2021-11-30 12:45:50\",\"created_at\":\"2021-11-30 12:45:50\",\"id\":3}', '127.0.0.1', '2021-11-30 07:15:50', '2021-11-30 07:15:50'),
-(803, 'created', 3, 'App\\Models\\VendorProfile', 1, '{\"mobile\":\"1234567890\",\"email\":\"test@test.com\",\"company_name\":\"Company\",\"representative_name\":\"Representative\",\"billing_address\":\"Address\",\"billing_state_id\":\"4\",\"billing_district_id\":\"41\",\"billing_pincode\":\"455555\",\"pickup_address\":\"Address\",\"pickup_state_id\":\"2\",\"pickup_district_id\":\"7\",\"pickup_pincode\":\"78944\",\"pan_number\":\"PAN\",\"gst_number\":\"GSTIN\",\"bank_name\":\"Bank\",\"account_number\":\"123456\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSCCODE\",\"vendor_id\":3,\"updated_at\":\"2021-11-30 12:45:50\",\"created_at\":\"2021-11-30 12:45:50\",\"id\":3,\"pan_card\":null,\"gst\":null,\"media\":[]}', '127.0.0.1', '2021-11-30 07:15:50', '2021-11-30 07:15:50'),
-(804, 'updated', 3, 'App\\Models\\Vendor', 1, '{\"id\":3,\"name\":\"Company\",\"email\":\"test@test.com\",\"mobile\":\"1234567890\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":true,\"verified\":true,\"verified_at\":\"2021-11-30T13:41:51.307753Z\",\"created_at\":\"2021-11-30 12:45:50\",\"updated_at\":\"2021-11-30 13:41:51\",\"deleted_at\":null}', '127.0.0.1', '2021-11-30 08:11:51', '2021-11-30 08:11:51'),
-(805, 'updated', 3, 'App\\Models\\VendorProfile', 1, '{\"id\":3,\"vendor_id\":3,\"company_name\":\"Company\",\"representative_name\":\"Representative\",\"email\":\"test@test.com\",\"mobile\":\"1234567890\",\"gst_number\":\"GSTIN\",\"pan_number\":\"PAN\",\"billing_address\":\"Address\",\"billing_address_two\":null,\"billing_state_id\":\"4\",\"billing_district_id\":\"41\",\"billing_pincode\":\"455555\",\"pickup_address\":\"Address\",\"pickup_address_two\":null,\"pickup_state_id\":\"2\",\"pickup_district_id\":\"41\",\"pickup_pincode\":\"78944\",\"bank_name\":\"Bank\",\"account_number\":\"123456\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSCCODE\",\"created_at\":\"2021-11-30 12:45:50\",\"updated_at\":\"2021-11-30 13:41:51\",\"deleted_at\":null,\"pan_card\":null,\"gst\":null,\"media\":[]}', '127.0.0.1', '2021-11-30 08:11:51', '2021-11-30 08:11:51'),
-(806, 'updated', 2, 'App\\Models\\Vendor', 1, '{\"id\":2,\"name\":null,\"email\":\"homver30@gmail1.com\",\"mobile\":\"9109844777\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":1,\"verified\":0,\"verified_at\":null,\"created_at\":\"2021-11-29 11:53:39\",\"updated_at\":\"2021-11-30 16:42:56\",\"deleted_at\":null}', '127.0.0.1', '2021-11-30 11:12:56', '2021-11-30 11:12:56');
+(1, 'created', 1, 'App\\Models\\Vendor', NULL, '{\"mobile\":\"9109844778\",\"email\":\"homver30@gmail.com\",\"user_type\":\"MANUFACTURER\",\"name\":\"Company\",\"verified\":1,\"updated_at\":\"2021-12-03 09:16:38\",\"created_at\":\"2021-12-03 09:16:38\",\"id\":1}', '127.0.0.1', '2021-12-03 03:46:38', '2021-12-03 03:46:38'),
+(2, 'created', 1, 'App\\Models\\VendorProfile', NULL, '{\"mobile\":\"9109844778\",\"email\":\"homver30@gmail.com\",\"company_name\":\"Company\",\"representative_name\":\"Representative\",\"billing_address\":\"Billing Address\",\"billing_address_two\":null,\"billing_state_id\":\"7\",\"billing_district_id\":\"111\",\"billing_pincode\":\"492001\",\"pickup_address_two\":null,\"pan_number\":\"PAN\",\"gst_number\":\"GSIN\",\"bank_name\":\"Bank\",\"account_number\":\"123456\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSC\",\"vendor_id\":1,\"updated_at\":\"2021-12-03 09:16:38\",\"created_at\":\"2021-12-03 09:16:38\",\"id\":1,\"pan_card\":null,\"gst\":null,\"media\":[]}', '127.0.0.1', '2021-12-03 03:46:38', '2021-12-03 03:46:38'),
+(3, 'created', 1, 'App\\Models\\Product', NULL, '{\"name\":\"Product One\",\"price\":\"5000\",\"moq\":\"5\",\"discount\":\"1\",\"dispatch_time\":\"2 days\",\"rrp\":null,\"product_category_id\":\"1\",\"product_sub_category_id\":\"1\",\"description\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"product-one\",\"updated_at\":\"2021-12-03 09:21:35\",\"created_at\":\"2021-12-03 09:21:35\",\"id\":1,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 03:51:35', '2021-12-03 03:51:35'),
+(4, 'created', 2, 'App\\Models\\Product', NULL, '{\"name\":\"Product Two\",\"price\":\"200\",\"moq\":\"12\",\"discount\":null,\"dispatch_time\":\"2 days\",\"rrp\":null,\"product_category_id\":\"2\",\"product_sub_category_id\":\"30\",\"description\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"product-two\",\"updated_at\":\"2021-12-03 09:24:09\",\"created_at\":\"2021-12-03 09:24:09\",\"id\":2,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 03:54:09', '2021-12-03 03:54:09'),
+(5, 'created', 3, 'App\\Models\\Product', NULL, '{\"discount\":null,\"name\":\"Product Three\",\"price\":\"500\",\"moq\":\"5\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"description\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"product-three\",\"updated_at\":\"2021-12-03 09:25:56\",\"created_at\":\"2021-12-03 09:25:56\",\"id\":3,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 03:55:56', '2021-12-03 03:55:56'),
+(6, 'created', 4, 'App\\Models\\Product', NULL, '{\"discount\":\"0\",\"name\":\"Product Four\",\"price\":\"1400\",\"moq\":\"14\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"description\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"product-four\",\"updated_at\":\"2021-12-03 09:30:00\",\"created_at\":\"2021-12-03 09:30:00\",\"id\":4,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 04:00:00', '2021-12-03 04:00:00'),
+(7, 'created', 1, 'App\\Models\\User', NULL, '{\"name\":\"Company\",\"email\":\"homver301@gmail.com\",\"mobile\":\"9109844771\",\"device_token\":\"ehf7jciXSDSiEyulFGKe1h:APA91bFht6Q6hep_PGtxB9Khk4wVAv93zGjLpq530XO8sXxdNL3uLiubLdefu4tFZJlBvECc7cL4CBZpKVZ0LWkcLvnbewl-D_RaakjWeGdYFIEsDyXqZWjcUTwvJ92Sonf4y0VeLP3Q\",\"updated_at\":\"2021-12-03 09:30:54\",\"created_at\":\"2021-12-03 09:30:54\",\"id\":1}', '127.0.0.1', '2021-12-03 04:00:54', '2021-12-03 04:00:54'),
+(8, 'created', 1, 'App\\Models\\Cart', NULL, '{\"user_id\":1,\"product_id\":1,\"product_option_id\":1,\"quantity\":5,\"updated_at\":\"2021-12-03 09:34:54\",\"created_at\":\"2021-12-03 09:34:54\",\"id\":1}', '127.0.0.1', '2021-12-03 04:04:54', '2021-12-03 04:04:54'),
+(9, 'created', 2, 'App\\Models\\Cart', NULL, '{\"user_id\":1,\"product_id\":2,\"product_option_id\":null,\"quantity\":12,\"updated_at\":\"2021-12-03 09:35:23\",\"created_at\":\"2021-12-03 09:35:23\",\"id\":2}', '127.0.0.1', '2021-12-03 04:05:23', '2021-12-03 04:05:23'),
+(10, 'updated', 1, 'App\\Models\\Cart', NULL, '{\"id\":1,\"user_id\":1,\"product_id\":1,\"product_option_id\":1,\"quantity\":6,\"created_at\":\"2021-12-03 09:34:54\",\"updated_at\":\"2021-12-03 09:35:58\",\"deleted_at\":null,\"order_id\":null,\"product\":{\"id\":1,\"vendor_id\":1,\"name\":\"Product One\",\"slug\":\"product-one\",\"description\":null,\"price\":\"5000.00\",\"mop\":\"0.00\",\"moq\":5,\"discount\":\"1.00\",\"product_category_id\":1,\"product_sub_category_id\":1,\"dispatch_time\":\"2 days\",\"rrp\":null,\"approval_status\":\"PENDING\",\"quantity\":null,\"created_at\":\"2021-12-03 09:21:35\",\"updated_at\":\"2021-12-03 09:21:35\",\"deleted_at\":null,\"brand_id\":null,\"images\":[{\"id\":3,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"29ab9b4d-b3db-4aa7-b715-e016a98d54dd\",\"collection_name\":\"images\",\"name\":\"61a9e0c25a907_250px-Irrigat\",\"file_name\":\"61a9e0c25a907_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:35.000000Z\",\"updated_at\":\"2021-12-03T09:21:36.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a9e0c25a907_250px-Irrigat.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a9e0c25a907_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-preview.jpg\"},{\"id\":4,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"af9516c5-d5fa-4a76-8519-f550804d6c9c\",\"collection_name\":\"images\",\"name\":\"61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:36.000000Z\",\"updated_at\":\"2021-12-03T09:21:36.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},{\"id\":5,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"3beea4b4-1853-4cae-ad68-56d4bb0d9b1f\",\"collection_name\":\"images\",\"name\":\"61a9e0c34eb0f_515DsF20K1L._SL1080_\",\"file_name\":\"61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":5,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:37.000000Z\",\"updated_at\":\"2021-12-03T09:21:37.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-preview.jpg\"}],\"media\":[{\"id\":3,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"29ab9b4d-b3db-4aa7-b715-e016a98d54dd\",\"collection_name\":\"images\",\"name\":\"61a9e0c25a907_250px-Irrigat\",\"file_name\":\"61a9e0c25a907_250px-Irrigat.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":15187,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":3,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:35.000000Z\",\"updated_at\":\"2021-12-03T09:21:36.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a9e0c25a907_250px-Irrigat.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/61a9e0c25a907_250px-Irrigat.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/3\\/conversions\\/61a9e0c25a907_250px-Irrigat-preview.jpg\"},{\"id\":4,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"af9516c5-d5fa-4a76-8519-f550804d6c9c\",\"collection_name\":\"images\",\"name\":\"61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":4,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:36.000000Z\",\"updated_at\":\"2021-12-03T09:21:36.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/4\\/conversions\\/61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},{\"id\":5,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":1,\"uuid\":\"3beea4b4-1853-4cae-ad68-56d4bb0d9b1f\",\"collection_name\":\"images\",\"name\":\"61a9e0c34eb0f_515DsF20K1L._SL1080_\",\"file_name\":\"61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":5,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:21:37.000000Z\",\"updated_at\":\"2021-12-03T09:21:37.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/5\\/conversions\\/61a9e0c34eb0f_515DsF20K1L._SL1080_-preview.jpg\"}]}}', '127.0.0.1', '2021-12-03 04:05:58', '2021-12-03 04:05:58'),
+(11, 'created', 3, 'App\\Models\\Cart', NULL, '{\"user_id\":1,\"product_id\":3,\"product_option_id\":null,\"quantity\":5,\"updated_at\":\"2021-12-03 09:36:28\",\"created_at\":\"2021-12-03 09:36:28\",\"id\":3}', '127.0.0.1', '2021-12-03 04:06:28', '2021-12-03 04:06:28'),
+(12, 'deleted', 3, 'App\\Models\\Cart', NULL, '{\"id\":3,\"user_id\":1,\"product_id\":3,\"product_option_id\":null,\"quantity\":5,\"created_at\":\"2021-12-03 09:36:28\",\"updated_at\":\"2021-12-03 09:36:28\",\"deleted_at\":null,\"order_id\":null}', '127.0.0.1', '2021-12-03 04:06:39', '2021-12-03 04:06:39'),
+(14, 'updated', 3, 'App\\Models\\Product', NULL, '{\"id\":3,\"vendor_id\":1,\"name\":\"Product Three\",\"slug\":\"product-three\",\"description\":null,\"price\":\"500.00\",\"mop\":\"0.00\",\"moq\":\"5\",\"discount\":\"1\",\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"PENDING\",\"quantity\":null,\"created_at\":\"2021-12-03 09:25:56\",\"updated_at\":\"2021-12-03 09:40:24\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 04:10:24', '2021-12-03 04:10:24'),
+(15, 'updated', 4, 'App\\Models\\Product', NULL, '{\"id\":4,\"vendor_id\":1,\"name\":\"Product Four\",\"slug\":\"product-four\",\"description\":null,\"price\":\"1400.00\",\"mop\":\"0.00\",\"moq\":\"14\",\"discount\":\"5.00\",\"product_category_id\":null,\"product_sub_category_id\":null,\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"PENDING\",\"quantity\":null,\"created_at\":\"2021-12-03 09:30:00\",\"updated_at\":\"2021-12-03 09:41:21\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-03 04:11:21', '2021-12-03 04:11:21'),
+(16, 'created', 2, 'App\\Models\\Vendor', NULL, '{\"mobile\":\"9109844774\",\"email\":\"homver10@gmail.com\",\"updated_at\":\"2021-12-03 17:27:24\",\"created_at\":\"2021-12-03 17:27:24\",\"id\":2}', '127.0.0.1', '2021-12-03 11:57:24', '2021-12-03 11:57:24'),
+(17, 'updated', 2, 'App\\Models\\Vendor', NULL, '{\"id\":2,\"name\":null,\"email\":\"homver10@gmail.com\",\"mobile\":\"9109844774\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":0,\"verified_at\":null,\"created_at\":\"2021-12-03 17:27:24\",\"updated_at\":\"2021-12-03 17:29:26\",\"deleted_at\":null}', '127.0.0.1', '2021-12-03 11:59:26', '2021-12-03 11:59:26'),
+(18, 'created', 2, 'App\\Models\\VendorProfile', NULL, '{\"vendor_id\":2,\"company_name\":\"9109844778\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":\"1\",\"billing_district_id\":\"1\",\"billing_pincode\":25554,\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":\"1\",\"pickup_district_id\":\"1\",\"pickup_pincode\":25554,\"updated_at\":\"2021-12-03 17:29:27\",\"created_at\":\"2021-12-03 17:29:27\",\"id\":2,\"pan_card\":null,\"gst\":null,\"media\":[]}', '127.0.0.1', '2021-12-03 11:59:27', '2021-12-03 11:59:27'),
+(19, 'updated', 2, 'App\\Models\\VendorProfile', NULL, '{\"id\":2,\"vendor_id\":2,\"company_name\":\"9109844778\",\"representative_name\":\"homver30@gmail.com\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"homver30@gmail.com\",\"pan_number\":\"9109844778\",\"billing_address\":\"9109844778\",\"billing_address_two\":\"homver30@gmail.com\",\"billing_state_id\":1,\"billing_district_id\":1,\"billing_pincode\":\"25554\",\"pickup_address\":\"9109844778\",\"pickup_address_two\":\"homver30@gmail.com\",\"pickup_state_id\":1,\"pickup_district_id\":1,\"pickup_pincode\":\"25554\",\"bank_name\":\"homver30@gmail.com\",\"account_number\":\"9109844778\",\"account_holder_name\":\"9109844778\",\"ifsc_code\":\"homver30@gmail.com\",\"created_at\":\"2021-12-03 17:29:27\",\"updated_at\":\"2021-12-03 17:29:31\",\"deleted_at\":null,\"pan_card\":null,\"gst\":null,\"media\":[]}', '127.0.0.1', '2021-12-03 11:59:31', '2021-12-03 11:59:31'),
+(27, 'created', 8, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7765515296809260\",\"order_group_number\":2167141910572865,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":30000,\"discount_amount\":315,\"charge_percent\":5,\"charge_amount\":1500,\"grand_total\":31185,\"updated_at\":\"2021-12-03 18:29:58\",\"created_at\":\"2021-12-03 18:29:58\",\"id\":8}', '127.0.0.1', '2021-12-03 12:59:58', '2021-12-03 12:59:58'),
+(28, 'created', 9, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-6711807791308935\",\"order_group_number\":2167141910572865,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-03 18:29:58\",\"created_at\":\"2021-12-03 18:29:58\",\"id\":9}', '127.0.0.1', '2021-12-03 12:59:58', '2021-12-03 12:59:58'),
+(29, 'created', 4, 'App\\Models\\Cart', NULL, '{\"user_id\":1,\"product_id\":3,\"product_option_id\":null,\"quantity\":5,\"updated_at\":\"2021-12-03 18:33:40\",\"created_at\":\"2021-12-03 18:33:40\",\"id\":4}', '127.0.0.1', '2021-12-03 13:03:40', '2021-12-03 13:03:40'),
+(30, 'created', 10, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7789167459064520\",\"order_group_number\":3069781574261446,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":55,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":34070,\"updated_at\":\"2021-12-03 18:35:15\",\"created_at\":\"2021-12-03 18:35:15\",\"id\":10}', '127.0.0.1', '2021-12-03 13:05:15', '2021-12-03 13:05:15'),
+(31, 'created', 11, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-695737670561842\",\"order_group_number\":3069781574261446,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-03 18:35:15\",\"created_at\":\"2021-12-03 18:35:15\",\"id\":11}', '127.0.0.1', '2021-12-03 13:05:15', '2021-12-03 13:05:15'),
+(32, 'created', 12, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7708139231304402\",\"order_group_number\":2857219999897869,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":33800,\"updated_at\":\"2021-12-03 18:36:04\",\"created_at\":\"2021-12-03 18:36:04\",\"id\":12}', '127.0.0.1', '2021-12-03 13:06:04', '2021-12-03 13:06:04'),
+(33, 'created', 13, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-6261513207041661\",\"order_group_number\":2857219999897869,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-03 18:36:04\",\"created_at\":\"2021-12-03 18:36:04\",\"id\":13}', '127.0.0.1', '2021-12-03 13:06:04', '2021-12-03 13:06:04'),
+(34, 'created', 14, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-4836623859737852\",\"order_group_number\":3548366800215624,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":35425,\"updated_at\":\"2021-12-03 18:40:28\",\"created_at\":\"2021-12-03 18:40:28\",\"id\":14}', '127.0.0.1', '2021-12-03 13:10:28', '2021-12-03 13:10:28'),
+(35, 'created', 15, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-2754983751137762\",\"order_group_number\":3548366800215624,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2640,\"updated_at\":\"2021-12-03 18:40:28\",\"created_at\":\"2021-12-03 18:40:28\",\"id\":15}', '127.0.0.1', '2021-12-03 13:10:28', '2021-12-03 13:10:28'),
+(36, 'created', 16, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7722395847636128\",\"order_group_number\":4451976084978711,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":341.25,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":33783.75,\"updated_at\":\"2021-12-03 18:41:54\",\"created_at\":\"2021-12-03 18:41:54\",\"id\":16}', '127.0.0.1', '2021-12-03 13:11:54', '2021-12-03 13:11:54'),
+(37, 'created', 17, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-5401978653479030\",\"order_group_number\":4451976084978711,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-03 18:41:54\",\"created_at\":\"2021-12-03 18:41:54\",\"id\":17}', '127.0.0.1', '2021-12-03 13:11:54', '2021-12-03 13:11:54'),
+(38, 'created', 18, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-5423917385909360\",\"order_group_number\":4218641325609162,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":341.25,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":33783.75,\"updated_at\":\"2021-12-03 18:56:07\",\"created_at\":\"2021-12-03 18:56:07\",\"id\":18}', '127.0.0.1', '2021-12-03 13:26:07', '2021-12-03 13:26:07'),
+(39, 'created', 19, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7432351977212695\",\"order_group_number\":4218641325609162,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-03 18:56:07\",\"created_at\":\"2021-12-03 18:56:07\",\"id\":19}', '127.0.0.1', '2021-12-03 13:26:07', '2021-12-03 13:26:07'),
+(40, 'created', 20, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-3338445126735428\",\"order_group_number\":9519374935204832,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":341.25,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 08:28:15\",\"created_at\":\"2021-12-04 08:28:15\",\"id\":20}', '127.0.0.1', '2021-12-04 02:58:15', '2021-12-04 02:58:15'),
+(41, 'created', 21, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1992307998263394\",\"order_group_number\":9519374935204832,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 08:28:15\",\"created_at\":\"2021-12-04 08:28:15\",\"id\":21}', '127.0.0.1', '2021-12-04 02:58:15', '2021-12-04 02:58:15'),
+(42, 'created', 22, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-6012125464254574\",\"order_group_number\":4686504131305911,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1625,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 08:37:06\",\"created_at\":\"2021-12-04 08:37:06\",\"id\":22}', '127.0.0.1', '2021-12-04 03:07:06', '2021-12-04 03:07:06'),
+(43, 'created', 23, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-4825529496731993\",\"order_group_number\":4686504131305911,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 08:37:06\",\"created_at\":\"2021-12-04 08:37:06\",\"id\":23}', '127.0.0.1', '2021-12-04 03:07:06', '2021-12-04 03:07:06'),
+(44, 'created', 24, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-3750114973479878\",\"order_group_number\":6155858042262585,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1689.1875,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 08:39:42\",\"created_at\":\"2021-12-04 08:39:42\",\"id\":24}', '127.0.0.1', '2021-12-04 03:09:42', '2021-12-04 03:09:42'),
+(45, 'created', 25, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-4829529596940859\",\"order_group_number\":6155858042262585,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":126,\"grand_total\":2520,\"updated_at\":\"2021-12-04 08:39:42\",\"created_at\":\"2021-12-04 08:39:42\",\"id\":25}', '127.0.0.1', '2021-12-04 03:09:42', '2021-12-04 03:09:42'),
+(46, 'created', 26, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-8056203749787165\",\"order_group_number\":272476833759884,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 08:47:44\",\"created_at\":\"2021-12-04 08:47:44\",\"id\":26}', '127.0.0.1', '2021-12-04 03:17:44', '2021-12-04 03:17:44'),
+(47, 'created', 27, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-2399343030096663\",\"order_group_number\":272476833759884,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 08:47:44\",\"created_at\":\"2021-12-04 08:47:44\",\"id\":27}', '127.0.0.1', '2021-12-04 03:17:44', '2021-12-04 03:17:44'),
+(48, 'created', 28, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9158607488421383\",\"order_group_number\":692869393061991,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:09:19\",\"created_at\":\"2021-12-04 09:09:19\",\"id\":28}', '127.0.0.1', '2021-12-04 03:39:19', '2021-12-04 03:39:19'),
+(49, 'created', 29, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-7245525560049674\",\"order_group_number\":692869393061991,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:09:19\",\"created_at\":\"2021-12-04 09:09:19\",\"id\":29}', '127.0.0.1', '2021-12-04 03:39:19', '2021-12-04 03:39:19'),
+(50, 'created', 30, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-4400240771660847\",\"order_group_number\":1945955497533715,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:10:48\",\"created_at\":\"2021-12-04 09:10:48\",\"id\":30}', '127.0.0.1', '2021-12-04 03:40:48', '2021-12-04 03:40:48'),
+(51, 'created', 31, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-3289057823648718\",\"order_group_number\":1945955497533715,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:10:48\",\"created_at\":\"2021-12-04 09:10:48\",\"id\":31}', '127.0.0.1', '2021-12-04 03:40:48', '2021-12-04 03:40:48'),
+(52, 'created', 32, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9257593798472135\",\"order_group_number\":4566010513130747,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:11:08\",\"created_at\":\"2021-12-04 09:11:08\",\"id\":32}', '127.0.0.1', '2021-12-04 03:41:08', '2021-12-04 03:41:08'),
+(53, 'created', 33, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-6615082323258955\",\"order_group_number\":4566010513130747,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:11:08\",\"created_at\":\"2021-12-04 09:11:08\",\"id\":33}', '127.0.0.1', '2021-12-04 03:41:08', '2021-12-04 03:41:08'),
+(54, 'created', 34, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-8295003435385035\",\"order_group_number\":1109501312987155,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:41:04\",\"created_at\":\"2021-12-04 09:41:04\",\"id\":34}', '127.0.0.1', '2021-12-04 04:11:04', '2021-12-04 04:11:04'),
+(55, 'created', 35, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9977721774006869\",\"order_group_number\":1109501312987155,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:41:04\",\"created_at\":\"2021-12-04 09:41:04\",\"id\":35}', '127.0.0.1', '2021-12-04 04:11:04', '2021-12-04 04:11:04'),
+(56, 'created', 36, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1505971194675460\",\"order_group_number\":4286845059661474,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:47:45\",\"created_at\":\"2021-12-04 09:47:45\",\"id\":36}', '127.0.0.1', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
+(57, 'created', 37, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1648034493656266\",\"order_group_number\":4286845059661474,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:47:45\",\"created_at\":\"2021-12-04 09:47:45\",\"id\":37}', '127.0.0.1', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
+(58, 'updated', 32, 'App\\Models\\Order', NULL, '{\"id\":32,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9257593798472135\",\"order_group_number\":\"4566010513130747\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CONFIRMED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:11:08\",\"updated_at\":\"2021-12-04 16:36:38\",\"deleted_at\":null}', '127.0.0.1', '2021-12-04 11:06:38', '2021-12-04 11:06:38'),
+(59, 'updated', 28, 'App\\Models\\Order', NULL, '{\"id\":28,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9158607488421383\",\"order_group_number\":\"692869393061991\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CANCELLED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:09:19\",\"updated_at\":\"2021-12-04 16:40:31\",\"deleted_at\":null}', '127.0.0.1', '2021-12-04 11:10:31', '2021-12-04 11:10:31');
 
 -- --------------------------------------------------------
 
@@ -1014,7 +271,7 @@ CREATE TABLE `bill_items` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `bill_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `product_price_id` bigint(20) UNSIGNED NOT NULL,
+  `product_option_id` bigint(20) UNSIGNED NOT NULL,
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quantity` decimal(8,2) DEFAULT NULL,
@@ -1054,6 +311,25 @@ CREATE TABLE `brands` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `title`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Coromandel International Limited', 1, '2021-04-06 22:15:33', '2021-04-06 22:15:33', NULL),
+(2, 'Deepak Fertilisers and Petrochemicals Corporation Limited', 1, '2021-04-06 22:15:51', '2021-04-06 22:15:51', NULL),
+(3, 'Fertilisers And Chemicals Travancore Limited (FACT)', 1, '2021-04-06 22:16:11', '2021-04-06 22:16:11', NULL),
+(4, 'Gujarat Narmada Valley Fertilizers & Chemicals Limited (GNFC)', 1, '2021-04-06 22:16:23', '2021-04-06 22:16:23', NULL),
+(5, 'Taparia', 1, '2021-04-10 12:38:58', '2021-04-10 12:38:58', NULL),
+(6, 'Falcon', 1, '2021-04-10 12:48:13', '2021-04-10 12:48:13', NULL),
+(7, 'Kohinoor', 1, '2021-04-10 12:52:08', '2021-04-10 12:52:08', NULL),
+(8, 'Crompton Greaves limited', 1, '2021-04-10 12:55:39', '2021-04-10 12:55:39', NULL),
+(9, 'Test Brand', 0, '2021-06-02 08:29:10', '2021-06-02 08:29:10', NULL),
+(10, 'test', 0, '2021-06-02 10:59:48', '2021-06-02 10:59:48', NULL),
+(11, 'new', 0, '2021-06-02 11:00:06', '2021-06-02 11:00:06', NULL),
+(12, 'tests', 1, '2021-06-02 11:01:23', '2021-06-02 11:01:23', NULL),
+(13, 'test', 1, '2021-06-02 11:03:09', '2021-06-02 11:06:51', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1062,21 +338,22 @@ CREATE TABLE `brands` (
 
 CREATE TABLE `carts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` double(15,2) NOT NULL,
-  `amount` double(15,2) DEFAULT NULL,
-  `cart_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `order_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `product_price_id` bigint(20) UNSIGNED NOT NULL,
-  `gst` double NOT NULL DEFAULT 0,
-  `discount` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `product_option_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `quantity` smallint(6) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_option_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 6, '2021-12-03 04:04:54', '2021-12-03 04:05:58'),
+(2, 1, 2, NULL, 12, '2021-12-03 04:05:23', '2021-12-03 04:05:23'),
+(4, 1, 3, NULL, 5, '2021-12-03 13:03:40', '2021-12-03 13:03:40');
 
 -- --------------------------------------------------------
 
@@ -1167,725 +444,728 @@ CREATE TABLE `districts` (
 --
 
 INSERT INTO `districts` (`id`, `name`, `state_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Nicobar', 1, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(2, 'North and Middle Andaman', 1, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(3, 'South Andaman', 1, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(4, 'Anantapur', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(5, 'Chittoor', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(6, 'East Godavari', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(7, 'Guntur', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(8, 'Krishna', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(9, 'Kurnool', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(10, 'Prakasam', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(11, 'Srikakulam', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(12, 'Sri Potti Sriramulu Nellore', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(13, 'Visakhapatnam', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(14, 'Vizianagaram', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(15, 'West Godavari', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(16, 'YSR District, Kadapa (Cuddapah)', 2, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(17, 'Anjaw', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(18, 'Changlang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(19, 'Dibang Valley', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(20, 'East Kameng', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(21, 'East Siang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(22, 'Kra Daadi', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(23, 'Kurung Kumey', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(24, 'Lohit', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(25, 'Longding', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(26, 'Lower Dibang Valley', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(27, 'Lower Siang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(28, 'Lower Subansiri', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(29, 'Namsai', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(30, 'Papum Pare', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(31, 'Siang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(32, 'Tawang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(33, 'Tirap', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(34, 'Upper Siang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(35, 'Upper Subansiri', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(36, 'West Kameng', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(37, 'West Siang', 3, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(38, 'Baksa', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(39, 'Barpeta', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(40, 'Biswanath', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(41, 'Bongaigaon', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(42, 'Cachar', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(43, 'Charaideo', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(44, 'Chirang', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(45, 'Darrang', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(46, 'Dhemaji', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(47, 'Dhubri', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(48, 'Dibrugarh', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(49, 'Dima Hasao (North Cachar Hills)', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(50, 'Goalpara', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(51, 'Golaghat', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(52, 'Hailakandi', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(53, 'Hojai', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(54, 'Jorhat', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(55, 'Kamrup', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(56, 'Kamrup Metropolitan', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(57, 'Karbi Anglong', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(58, 'Karimganj', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(59, 'Kokrajhar', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(60, 'Lakhimpur', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(61, 'Majuli', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(62, 'Morigaon', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(63, 'Nagaon', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(64, 'Nalbari', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(65, 'Sivasagar', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(66, 'Sonitpur', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(67, 'South Salamara-Mankachar', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(68, 'Tinsukia', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(69, 'Udalguri', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(70, 'West Karbi Anglong', 4, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(71, 'Araria', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(72, 'Arwal', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(73, 'Aurangabad', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(74, 'Banka', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(75, 'Begusarai', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(76, 'Bhagalpur', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(77, 'Bhojpur', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(78, 'Buxar', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(79, 'Darbhanga', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(80, 'East Champaran (Motihari)', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(81, 'Gaya', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(82, 'Gopalganj', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(83, 'Jamui', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(84, 'Jehanabad', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(85, 'Kaimur (Bhabua)', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(86, 'Katihar', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(87, 'Khagaria', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(88, 'Kishanganj', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(89, 'Lakhisarai', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(90, 'Madhepura', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(91, 'Madhubani', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(92, 'Munger (Monghyr)', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(93, 'Muzaffarpur', 5, 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(94, 'Nalanda', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(95, 'Nawada', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(96, 'Patna', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(97, 'Purnia (Purnea)', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(98, 'Rohtas', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(99, 'Saharsa', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(100, 'Samastipur', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(101, 'Saran', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(102, 'Sheikhpura', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(103, 'Sheohar', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(104, 'Sitamarhi', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(105, 'Siwan', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(106, 'Supaul', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(107, 'Vaishali', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(108, 'West Champaran', 5, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(109, 'Chandigarh', 6, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(110, 'Balod', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(111, 'Baloda Bazar', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(112, 'Balrampur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(113, 'Bastar', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(114, 'Bemetara', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(115, 'Bijapur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(116, 'Bilaspur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(117, 'Dantewada (South Bastar)', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(118, 'Dhamtari', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(119, 'Durg', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(120, 'Gariyaband', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(121, 'Janjgir-Champa', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(122, 'Jashpur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(123, 'Kabirdham (Kawardha)', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(124, 'Kanker (North Bastar)', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(125, 'Kondagaon', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(126, 'Korba', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(127, 'Korea (Koriya)', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(128, 'Mahasamund', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(129, 'Mungeli', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(130, 'Narayanpur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(131, 'Raigarh', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(132, 'Raipur', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(133, 'Rajnandgaon', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(134, 'Sukma', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(135, 'Surajpur  ', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(136, 'Surguja', 7, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(137, 'Dadra & Nagar Haveli', 8, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(138, 'Daman', 9, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(139, 'Diu', 9, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(140, 'Central Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(141, 'East Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(142, 'New Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(143, 'North Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(144, 'North East  Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(145, 'North West  Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(146, 'Shahdara', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(147, 'South Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(148, 'South East Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(149, 'South West  Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(150, 'West Delhi', 10, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(151, 'North Goa', 11, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(152, 'South Goa', 11, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(153, 'Ahmedabad', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(154, 'Amreli', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(155, 'Anand', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(156, 'Aravalli', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(157, 'Banaskantha (Palanpur)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(158, 'Bharuch', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(159, 'Bhavnagar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(160, 'Botad', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(161, 'Chhota Udepur', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(162, 'Dahod', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(163, 'Dangs (Ahwa)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(164, 'Devbhoomi Dwarka', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(165, 'Gandhinagar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(166, 'Gir Somnath', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(167, 'Jamnagar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(168, 'Junagadh', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(169, 'Kachchh', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(170, 'Kheda (Nadiad)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(171, 'Mahisagar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(172, 'Mehsana', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(173, 'Morbi', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(174, 'Narmada (Rajpipla)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(175, 'Navsari', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(176, 'Panchmahal (Godhra)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(177, 'Patan', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(178, 'Porbandar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(179, 'Rajkot', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(180, 'Sabarkantha (Himmatnagar)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(181, 'Surat', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(182, 'Surendranagar', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(183, 'Tapi (Vyara)', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(184, 'Vadodara', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(185, 'Valsad', 12, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(186, 'Ambala', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(187, 'Bhiwani', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(188, 'Charkhi Dadri', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(189, 'Faridabad', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(190, 'Fatehabad', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(191, 'Gurgaon', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(192, 'Hisar', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(193, 'Jhajjar', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(194, 'Jind', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(195, 'Kaithal', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(196, 'Karnal', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(197, 'Kurukshetra', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(198, 'Mahendragarh', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(199, 'Mewat', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(200, 'Palwal', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(201, 'Panchkula', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(202, 'Panipat', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(203, 'Rewari', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(204, 'Rohtak', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(205, 'Sirsa', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(206, 'Sonipat', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(207, 'Yamunanagar', 13, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(208, 'Bilaspur', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(209, 'Chamba', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(210, 'Hamirpur', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(211, 'Kangra', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(212, 'Kinnaur', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(213, 'Kullu', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(214, 'Lahaul & Spiti', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(215, 'Mandi', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(216, 'Shimla', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(217, 'Sirmaur (Sirmour)', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(218, 'Solan', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(219, 'Una', 14, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(220, 'Anantnag', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(221, 'Bandipore', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(222, 'Baramulla', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(223, 'Budgam', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(224, 'Doda', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(225, 'Ganderbal', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(226, 'Jammu', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(227, 'Kargil', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(228, 'Kathua', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(229, 'Kishtwar', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(230, 'Kulgam', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(231, 'Kupwara', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(232, 'Leh', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(233, 'Poonch', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(234, 'Pulwama', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(235, 'Rajouri', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(236, 'Ramban', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(237, 'Reasi', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(238, 'Samba', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(239, 'Shopian', 15, 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(240, 'Srinagar', 15, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(241, 'Udhampur', 15, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(242, 'Bokaro', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(243, 'Chatra', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(244, 'Deoghar', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(245, 'Dhanbad', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(246, 'Dumka', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(247, 'East Singhbhum', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(248, 'Garhwa', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(249, 'Giridih', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(250, 'Godda', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(251, 'Gumla', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(252, 'Hazaribag', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(253, 'Jamtara', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(254, 'Khunti', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(255, 'Koderma', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(256, 'Latehar', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(257, 'Lohardaga', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(258, 'Pakur', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(259, 'Palamu', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(260, 'Ramgarh', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(261, 'Ranchi', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(262, 'Sahibganj', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(263, 'Seraikela-Kharsawan', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(264, 'Simdega', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(265, 'West Singhbhum', 16, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(266, 'Bagalkot', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(267, 'Ballari (Bellary)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(268, 'Belagavi (Belgaum)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(269, 'Bengaluru (Bangalore) Rural', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(270, 'Bengaluru (Bangalore) Urban', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(271, 'Bidar', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(272, 'Chamarajanagar', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(273, 'Chikballapur', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(274, 'Chikkamagaluru (Chikmagalur)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(275, 'Chitradurga', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(276, 'Dakshina Kannada', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(277, 'Davangere', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(278, 'Dharwad', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(279, 'Gadag', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(280, 'Hassan', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(281, 'Haveri', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(282, 'Kalaburagi (Gulbarga)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(283, 'Kodagu', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(284, 'Kolar', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(285, 'Koppal', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(286, 'Mandya', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(287, 'Mysuru (Mysore)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(288, 'Raichur', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(289, 'Ramanagara', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(290, 'Shivamogga (Shimoga)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(291, 'Tumakuru (Tumkur)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(292, 'Udupi', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(293, 'Uttara Kannada (Karwar)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(294, 'Vijayapura (Bijapur)', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(295, 'Yadgir', 17, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(296, 'Alappuzha', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(297, 'Ernakulam', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(298, 'Idukki', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(299, 'Kannur', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(300, 'Kasaragod', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(301, 'Kollam', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(302, 'Kottayam', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(303, 'Kozhikode', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(304, 'Malappuram', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(305, 'Palakkad', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(306, 'Pathanamthitta', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(307, 'Thiruvananthapuram', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(308, 'Thrissur', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(309, 'Wayanad', 18, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(310, 'Lakshadweep', 19, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(311, 'Agar Malwa', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(312, 'Alirajpur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(313, 'Anuppur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(314, 'Ashoknagar', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(315, 'Balaghat', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(316, 'Barwani', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(317, 'Betul', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(318, 'Bhind', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(319, 'Bhopal', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(320, 'Burhanpur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(321, 'Chhatarpur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(322, 'Chhindwara', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(323, 'Damoh', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(324, 'Datia', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(325, 'Dewas', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(326, 'Dhar', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(327, 'Dindori', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(328, 'Guna', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(329, 'Gwalior', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(330, 'Harda', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(331, 'Hoshangabad', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(332, 'Indore', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(333, 'Jabalpur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(334, 'Jhabua', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(335, 'Katni', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(336, 'Khandwa', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(337, 'Khargone', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(338, 'Mandla', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(339, 'Mandsaur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(340, 'Morena', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(341, 'Narsinghpur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(342, 'Neemuch', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(343, 'Panna', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(344, 'Raisen', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(345, 'Rajgarh', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(346, 'Ratlam', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(347, 'Rewa', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(348, 'Sagar', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(349, 'Satna', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(350, 'Sehore', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(351, 'Seoni', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(352, 'Shahdol', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(353, 'Shajapur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(354, 'Sheopur', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(355, 'Shivpuri', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(356, 'Sidhi', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(357, 'Singrauli', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(358, 'Tikamgarh', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(359, 'Ujjain', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(360, 'Umaria', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(361, 'Vidisha', 20, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(362, 'Ahmednagar', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(363, 'Akola', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(364, 'Amravati', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(365, 'Aurangabad', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(366, 'Beed', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(367, 'Bhandara', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(368, 'Buldhana', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(369, 'Chandrapur', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(370, 'Dhule', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(371, 'Gadchiroli', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(372, 'Gondia', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(373, 'Hingoli', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(374, 'Jalgaon', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(375, 'Jalna', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(376, 'Kolhapur', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(377, 'Latur', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(378, 'Mumbai City', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(379, 'Mumbai Suburban', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(380, 'Nagpur', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(381, 'Nanded', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(382, 'Nandurbar', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(383, 'Nashik', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(384, 'Osmanabad', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(385, 'Palghar', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(386, 'Parbhani', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(387, 'Pune', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(388, 'Raigad', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(389, 'Ratnagiri', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(390, 'Sangli', 21, 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(391, 'Satara', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(392, 'Sindhudurg', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(393, 'Solapur', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(394, 'Thane', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(395, 'Wardha', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(396, 'Washim', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(397, 'Yavatmal', 21, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(398, 'Bishnupur', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(399, 'Chandel', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(400, 'Churachandpur', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(401, 'Imphal East', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(402, 'Imphal West', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(403, 'Jiribam', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(404, 'Kakching', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(405, 'Kamjong', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(406, 'Kangpokpi', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(407, 'Noney', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(408, 'Pherzawl', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(409, 'Senapati', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(410, 'Tamenglong', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(411, 'Tengnoupal', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(412, 'Thoubal', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(413, 'Ukhrul', 22, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(414, 'East Garo Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(415, 'East Jaintia Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(416, 'East Khasi Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(417, 'North Garo Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(418, 'Ri Bhoi', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(419, 'South Garo Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(420, 'South West Garo Hills ', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(421, 'South West Khasi Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(422, 'West Garo Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(423, 'West Jaintia Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(424, 'West Khasi Hills', 23, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(425, 'Aizawl', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(426, 'Champhai', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(427, 'Kolasib', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(428, 'Lawngtlai', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(429, 'Lunglei', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(430, 'Mamit', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(431, 'Saiha', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(432, 'Serchhip', 24, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(433, 'Dimapur', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(434, 'Kiphire', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(435, 'Kohima', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(436, 'Longleng', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(437, 'Mokokchung', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(438, 'Mon', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(439, 'Peren', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(440, 'Phek', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(441, 'Tuensang', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(442, 'Wokha', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(443, 'Zunheboto', 25, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(444, 'Angul', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(445, 'Balangir', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(446, 'Balasore', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(447, 'Bargarh', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(448, 'Bhadrak', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(449, 'Boudh', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(450, 'Cuttack', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(451, 'Deogarh', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(452, 'Dhenkanal', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(453, 'Gajapati', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(454, 'Ganjam', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(455, 'Jagatsinghapur', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(456, 'Jajpur', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(457, 'Jharsuguda', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(458, 'Kalahandi', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(459, 'Kandhamal', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(460, 'Kendrapara', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(461, 'Kendujhar (Keonjhar)', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(462, 'Khordha', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(463, 'Koraput', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(464, 'Malkangiri', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(465, 'Mayurbhanj', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(466, 'Nabarangpur', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(467, 'Nayagarh', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(468, 'Nuapada', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(469, 'Puri', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(470, 'Rayagada', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(471, 'Sambalpur', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(472, 'Sonepur', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(473, 'Sundargarh', 26, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(474, 'Karaikal', 27, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(475, 'Mahe', 27, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(476, 'Pondicherry', 27, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(477, 'Yanam', 27, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(478, 'Amritsar', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(479, 'Barnala', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(480, 'Bathinda', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(481, 'Faridkot', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(482, 'Fatehgarh Sahib', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(483, 'Fazilka', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(484, 'Ferozepur', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(485, 'Gurdaspur', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(486, 'Hoshiarpur', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(487, 'Jalandhar', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(488, 'Kapurthala', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(489, 'Ludhiana', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(490, 'Mansa', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(491, 'Moga', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(492, 'Muktsar', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(493, 'Nawanshahr (Shahid Bhagat Singh Nagar)', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(494, 'Pathankot', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(495, 'Patiala', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(496, 'Rupnagar', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(497, 'Sahibzada Ajit Singh Nagar (Mohali)', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(498, 'Sangrur', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(499, 'Tarn Taran', 28, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(500, 'Ajmer', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(501, 'Alwar', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(502, 'Banswara', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(503, 'Baran', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(504, 'Barmer', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(505, 'Bharatpur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(506, 'Bhilwara', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(507, 'Bikaner', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(508, 'Bundi', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(509, 'Chittorgarh', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(510, 'Churu', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(511, 'Dausa', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(512, 'Dholpur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(513, 'Dungarpur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(514, 'Hanumangarh', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(515, 'Jaipur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(516, 'Jaisalmer', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(517, 'Jalore', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(518, 'Jhalawar', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(519, 'Jhunjhunu', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(520, 'Jodhpur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(521, 'Karauli', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(522, 'Kota', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(523, 'Nagaur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(524, 'Pali', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(525, 'Pratapgarh', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(526, 'Rajsamand', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(527, 'Sawai Madhopur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(528, 'Sikar', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(529, 'Sirohi', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(530, 'Sri Ganganagar', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(531, 'Tonk', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(532, 'Udaipur', 29, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(533, 'East Sikkim', 30, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(534, 'North Sikkim', 30, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(535, 'South Sikkim', 30, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(536, 'West Sikkim', 30, 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(537, 'Ariyalur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(538, 'Chennai', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(539, 'Coimbatore', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(540, 'Cuddalore', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(541, 'Dharmapuri', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(542, 'Dindigul', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(543, 'Erode', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(544, 'Kanchipuram', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(545, 'Kanyakumari', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(546, 'Karur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(547, 'Krishnagiri', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(548, 'Madurai', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(549, 'Nagapattinam', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(550, 'Namakkal', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(551, 'Nilgiris', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(552, 'Perambalur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(553, 'Pudukkottai', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(554, 'Ramanathapuram', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(555, 'Salem', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(556, 'Sivaganga', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(557, 'Thanjavur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(558, 'Theni', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(559, 'Thoothukudi (Tuticorin)', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(560, 'Tiruchirappalli', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(561, 'Tirunelveli', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(562, 'Tiruppur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(563, 'Tiruvallur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(564, 'Tiruvannamalai', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(565, 'Tiruvarur', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(566, 'Vellore', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(567, 'Viluppuram', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(568, 'Virudhunagar', 31, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(569, 'Adilabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(570, 'Bhadradri Kothagudem', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(571, 'Hyderabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(572, 'Jagtial', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(573, 'Jangaon', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(574, 'Jayashankar Bhoopalpally', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(575, 'Jogulamba Gadwal', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(576, 'Kamareddy', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(577, 'Karimnagar', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(578, 'Khammam', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(579, 'Komaram Bheem Asifabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(580, 'Mahabubabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(581, 'Mahabubnagar', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(582, 'Mancherial', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(583, 'Medak', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(584, 'Medchal', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(585, 'Nagarkurnool', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(586, 'Nalgonda', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(587, 'Nirmal', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(588, 'Nizamabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(589, 'Peddapalli', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(590, 'Rajanna Sircilla', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(591, 'Rangareddy', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(592, 'Sangareddy', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(593, 'Siddipet', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(594, 'Suryapet', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(595, 'Vikarabad', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(596, 'Wanaparthy', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(597, 'Warangal (Rural)', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(598, 'Warangal (Urban)', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(599, 'Yadadri Bhuvanagiri', 32, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(600, 'Dhalai', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(601, 'Gomati', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(602, 'Khowai', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(603, 'North Tripura', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(604, 'Sepahijala', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(605, 'South Tripura', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(606, 'Unakoti', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(607, 'West Tripura', 33, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(608, 'Almora', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(609, 'Bageshwar', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(610, 'Chamoli', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(611, 'Champawat', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(612, 'Dehradun', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(613, 'Haridwar', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(614, 'Nainital', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(615, 'Pauri Garhwal', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(616, 'Pithoragarh', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(617, 'Rudraprayag', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(618, 'Tehri Garhwal', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(619, 'Udham Singh Nagar', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(620, 'Uttarkashi', 34, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(621, 'Agra', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(622, 'Aligarh', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(623, 'Allahabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(624, 'Ambedkar Nagar', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(625, 'Amethi (Chatrapati Sahuji Mahraj Nagar)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(626, 'Amroha (J.P. Nagar)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(627, 'Auraiya', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(628, 'Azamgarh', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(629, 'Baghpat', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(630, 'Bahraich', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(631, 'Ballia', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(632, 'Balrampur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(633, 'Banda', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(634, 'Barabanki', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(635, 'Bareilly', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(636, 'Basti', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(637, 'Bhadohi', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(638, 'Bijnor', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(639, 'Budaun', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(640, 'Bulandshahr', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(641, 'Chandauli', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(642, 'Chitrakoot', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(643, 'Deoria', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(644, 'Etah', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(645, 'Etawah', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(646, 'Faizabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(647, 'Farrukhabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(648, 'Fatehpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(649, 'Firozabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL);
+(1, 'Nicobar', 1, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(2, 'North and Middle Andaman', 1, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(3, 'South Andaman', 1, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(4, 'Anantapur', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(5, 'Chittoor', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(6, 'East Godavari', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(7, 'Guntur', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(8, 'Krishna', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(9, 'Kurnool', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(10, 'Prakasam', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(11, 'Srikakulam', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(12, 'Sri Potti Sriramulu Nellore', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(13, 'Visakhapatnam', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(14, 'Vizianagaram', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(15, 'West Godavari', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(16, 'YSR District, Kadapa (Cuddapah)', 2, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(17, 'Anjaw', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(18, 'Changlang', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(19, 'Dibang Valley', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(20, 'East Kameng', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(21, 'East Siang', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(22, 'Kra Daadi', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(23, 'Kurung Kumey', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(24, 'Lohit', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(25, 'Longding', 3, 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(26, 'Lower Dibang Valley', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(27, 'Lower Siang', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(28, 'Lower Subansiri', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(29, 'Namsai', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(30, 'Papum Pare', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(31, 'Siang', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(32, 'Tawang', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(33, 'Tirap', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(34, 'Upper Siang', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(35, 'Upper Subansiri', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(36, 'West Kameng', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(37, 'West Siang', 3, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(38, 'Baksa', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(39, 'Barpeta', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(40, 'Biswanath', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(41, 'Bongaigaon', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(42, 'Cachar', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(43, 'Charaideo', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(44, 'Chirang', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(45, 'Darrang', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(46, 'Dhemaji', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(47, 'Dhubri', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(48, 'Dibrugarh', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(49, 'Dima Hasao (North Cachar Hills)', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(50, 'Goalpara', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(51, 'Golaghat', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(52, 'Hailakandi', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(53, 'Hojai', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(54, 'Jorhat', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(55, 'Kamrup', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(56, 'Kamrup Metropolitan', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(57, 'Karbi Anglong', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(58, 'Karimganj', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(59, 'Kokrajhar', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(60, 'Lakhimpur', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(61, 'Majuli', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(62, 'Morigaon', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(63, 'Nagaon', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(64, 'Nalbari', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(65, 'Sivasagar', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(66, 'Sonitpur', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(67, 'South Salamara-Mankachar', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(68, 'Tinsukia', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(69, 'Udalguri', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(70, 'West Karbi Anglong', 4, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(71, 'Araria', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(72, 'Arwal', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(73, 'Aurangabad', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(74, 'Banka', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(75, 'Begusarai', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(76, 'Bhagalpur', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(77, 'Bhojpur', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(78, 'Buxar', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(79, 'Darbhanga', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(80, 'East Champaran (Motihari)', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(81, 'Gaya', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(82, 'Gopalganj', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(83, 'Jamui', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(84, 'Jehanabad', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(85, 'Kaimur (Bhabua)', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(86, 'Katihar', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(87, 'Khagaria', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(88, 'Kishanganj', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(89, 'Lakhisarai', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(90, 'Madhepura', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(91, 'Madhubani', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(92, 'Munger (Monghyr)', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(93, 'Muzaffarpur', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(94, 'Nalanda', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(95, 'Nawada', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(96, 'Patna', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(97, 'Purnia (Purnea)', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(98, 'Rohtas', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(99, 'Saharsa', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(100, 'Samastipur', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(101, 'Saran', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(102, 'Sheikhpura', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(103, 'Sheohar', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(104, 'Sitamarhi', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(105, 'Siwan', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(106, 'Supaul', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(107, 'Vaishali', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(108, 'West Champaran', 5, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(109, 'Chandigarh', 6, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(110, 'Balod', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(111, 'Baloda Bazar', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(112, 'Balrampur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(113, 'Bastar', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(114, 'Bemetara', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(115, 'Bijapur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(116, 'Bilaspur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(117, 'Dantewada (South Bastar)', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(118, 'Dhamtari', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(119, 'Durg', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(120, 'Gariyaband', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(121, 'Janjgir-Champa', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(122, 'Jashpur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(123, 'Kabirdham (Kawardha)', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(124, 'Kanker (North Bastar)', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(125, 'Kondagaon', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(126, 'Korba', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(127, 'Korea (Koriya)', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(128, 'Mahasamund', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(129, 'Mungeli', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(130, 'Narayanpur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(131, 'Raigarh', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(132, 'Raipur', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(133, 'Rajnandgaon', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(134, 'Sukma', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(135, 'Surajpur  ', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(136, 'Surguja', 7, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(137, 'Dadra & Nagar Haveli', 8, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(138, 'Daman', 9, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(139, 'Diu', 9, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(140, 'Central Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(141, 'East Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(142, 'New Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(143, 'North Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(144, 'North East  Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(145, 'North West  Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(146, 'Shahdara', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(147, 'South Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(148, 'South East Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(149, 'South West  Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(150, 'West Delhi', 10, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(151, 'North Goa', 11, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(152, 'South Goa', 11, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(153, 'Ahmedabad', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(154, 'Amreli', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(155, 'Anand', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(156, 'Aravalli', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(157, 'Banaskantha (Palanpur)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(158, 'Bharuch', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(159, 'Bhavnagar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(160, 'Botad', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(161, 'Chhota Udepur', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(162, 'Dahod', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(163, 'Dangs (Ahwa)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(164, 'Devbhoomi Dwarka', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(165, 'Gandhinagar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(166, 'Gir Somnath', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(167, 'Jamnagar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(168, 'Junagadh', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(169, 'Kachchh', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(170, 'Kheda (Nadiad)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(171, 'Mahisagar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(172, 'Mehsana', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(173, 'Morbi', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(174, 'Narmada (Rajpipla)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(175, 'Navsari', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(176, 'Panchmahal (Godhra)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(177, 'Patan', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(178, 'Porbandar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(179, 'Rajkot', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(180, 'Sabarkantha (Himmatnagar)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(181, 'Surat', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(182, 'Surendranagar', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(183, 'Tapi (Vyara)', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(184, 'Vadodara', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(185, 'Valsad', 12, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(186, 'Ambala', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(187, 'Bhiwani', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(188, 'Charkhi Dadri', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(189, 'Faridabad', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(190, 'Fatehabad', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(191, 'Gurgaon', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(192, 'Hisar', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(193, 'Jhajjar', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(194, 'Jind', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(195, 'Kaithal', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(196, 'Karnal', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(197, 'Kurukshetra', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(198, 'Mahendragarh', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(199, 'Mewat', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(200, 'Palwal', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(201, 'Panchkula', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(202, 'Panipat', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(203, 'Rewari', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(204, 'Rohtak', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(205, 'Sirsa', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(206, 'Sonipat', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(207, 'Yamunanagar', 13, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(208, 'Bilaspur', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(209, 'Chamba', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(210, 'Hamirpur', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(211, 'Kangra', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(212, 'Kinnaur', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(213, 'Kullu', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(214, 'Lahaul & Spiti', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(215, 'Mandi', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(216, 'Shimla', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(217, 'Sirmaur (Sirmour)', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(218, 'Solan', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(219, 'Una', 14, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(220, 'Anantnag', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(221, 'Bandipore', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(222, 'Baramulla', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(223, 'Budgam', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(224, 'Doda', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(225, 'Ganderbal', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(226, 'Jammu', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(227, 'Kargil', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(228, 'Kathua', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(229, 'Kishtwar', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(230, 'Kulgam', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(231, 'Kupwara', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(232, 'Leh', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(233, 'Poonch', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(234, 'Pulwama', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(235, 'Rajouri', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(236, 'Ramban', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(237, 'Reasi', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(238, 'Samba', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(239, 'Shopian', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(240, 'Srinagar', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(241, 'Udhampur', 15, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(242, 'Bokaro', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(243, 'Chatra', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(244, 'Deoghar', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(245, 'Dhanbad', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(246, 'Dumka', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(247, 'East Singhbhum', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(248, 'Garhwa', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(249, 'Giridih', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(250, 'Godda', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(251, 'Gumla', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(252, 'Hazaribag', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(253, 'Jamtara', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(254, 'Khunti', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(255, 'Koderma', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(256, 'Latehar', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(257, 'Lohardaga', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(258, 'Pakur', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(259, 'Palamu', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(260, 'Ramgarh', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(261, 'Ranchi', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(262, 'Sahibganj', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(263, 'Seraikela-Kharsawan', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(264, 'Simdega', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(265, 'West Singhbhum', 16, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(266, 'Bagalkot', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(267, 'Ballari (Bellary)', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(268, 'Belagavi (Belgaum)', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(269, 'Bengaluru (Bangalore) Rural', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(270, 'Bengaluru (Bangalore) Urban', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(271, 'Bidar', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(272, 'Chamarajanagar', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(273, 'Chikballapur', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(274, 'Chikkamagaluru (Chikmagalur)', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(275, 'Chitradurga', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(276, 'Dakshina Kannada', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(277, 'Davangere', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(278, 'Dharwad', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(279, 'Gadag', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(280, 'Hassan', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(281, 'Haveri', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(282, 'Kalaburagi (Gulbarga)', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(283, 'Kodagu', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(284, 'Kolar', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(285, 'Koppal', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(286, 'Mandya', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(287, 'Mysuru (Mysore)', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(288, 'Raichur', 17, 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(289, 'Ramanagara', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(290, 'Shivamogga (Shimoga)', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(291, 'Tumakuru (Tumkur)', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(292, 'Udupi', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(293, 'Uttara Kannada (Karwar)', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(294, 'Vijayapura (Bijapur)', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(295, 'Yadgir', 17, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(296, 'Alappuzha', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(297, 'Ernakulam', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(298, 'Idukki', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(299, 'Kannur', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(300, 'Kasaragod', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(301, 'Kollam', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(302, 'Kottayam', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(303, 'Kozhikode', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(304, 'Malappuram', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(305, 'Palakkad', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(306, 'Pathanamthitta', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(307, 'Thiruvananthapuram', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(308, 'Thrissur', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(309, 'Wayanad', 18, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(310, 'Lakshadweep', 19, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(311, 'Agar Malwa', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(312, 'Alirajpur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(313, 'Anuppur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(314, 'Ashoknagar', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(315, 'Balaghat', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(316, 'Barwani', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(317, 'Betul', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(318, 'Bhind', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(319, 'Bhopal', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(320, 'Burhanpur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(321, 'Chhatarpur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(322, 'Chhindwara', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(323, 'Damoh', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(324, 'Datia', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(325, 'Dewas', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(326, 'Dhar', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(327, 'Dindori', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(328, 'Guna', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(329, 'Gwalior', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(330, 'Harda', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(331, 'Hoshangabad', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(332, 'Indore', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(333, 'Jabalpur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(334, 'Jhabua', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(335, 'Katni', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(336, 'Khandwa', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(337, 'Khargone', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(338, 'Mandla', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(339, 'Mandsaur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(340, 'Morena', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(341, 'Narsinghpur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(342, 'Neemuch', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(343, 'Panna', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(344, 'Raisen', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(345, 'Rajgarh', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(346, 'Ratlam', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(347, 'Rewa', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(348, 'Sagar', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(349, 'Satna', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(350, 'Sehore', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(351, 'Seoni', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(352, 'Shahdol', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(353, 'Shajapur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(354, 'Sheopur', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(355, 'Shivpuri', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(356, 'Sidhi', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(357, 'Singrauli', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(358, 'Tikamgarh', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(359, 'Ujjain', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(360, 'Umaria', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(361, 'Vidisha', 20, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(362, 'Ahmednagar', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(363, 'Akola', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(364, 'Amravati', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(365, 'Aurangabad', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(366, 'Beed', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(367, 'Bhandara', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(368, 'Buldhana', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(369, 'Chandrapur', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(370, 'Dhule', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(371, 'Gadchiroli', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(372, 'Gondia', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(373, 'Hingoli', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(374, 'Jalgaon', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(375, 'Jalna', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(376, 'Kolhapur', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(377, 'Latur', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(378, 'Mumbai City', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(379, 'Mumbai Suburban', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(380, 'Nagpur', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(381, 'Nanded', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(382, 'Nandurbar', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(383, 'Nashik', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(384, 'Osmanabad', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(385, 'Palghar', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(386, 'Parbhani', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(387, 'Pune', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(388, 'Raigad', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(389, 'Ratnagiri', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(390, 'Sangli', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(391, 'Satara', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(392, 'Sindhudurg', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(393, 'Solapur', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(394, 'Thane', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(395, 'Wardha', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(396, 'Washim', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(397, 'Yavatmal', 21, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(398, 'Bishnupur', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(399, 'Chandel', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(400, 'Churachandpur', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(401, 'Imphal East', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(402, 'Imphal West', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(403, 'Jiribam', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(404, 'Kakching', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(405, 'Kamjong', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(406, 'Kangpokpi', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(407, 'Noney', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(408, 'Pherzawl', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(409, 'Senapati', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(410, 'Tamenglong', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(411, 'Tengnoupal', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(412, 'Thoubal', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(413, 'Ukhrul', 22, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(414, 'East Garo Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(415, 'East Jaintia Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(416, 'East Khasi Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(417, 'North Garo Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(418, 'Ri Bhoi', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(419, 'South Garo Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(420, 'South West Garo Hills ', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(421, 'South West Khasi Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(422, 'West Garo Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(423, 'West Jaintia Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(424, 'West Khasi Hills', 23, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(425, 'Aizawl', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(426, 'Champhai', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(427, 'Kolasib', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(428, 'Lawngtlai', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(429, 'Lunglei', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(430, 'Mamit', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(431, 'Saiha', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(432, 'Serchhip', 24, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(433, 'Dimapur', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(434, 'Kiphire', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(435, 'Kohima', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(436, 'Longleng', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(437, 'Mokokchung', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(438, 'Mon', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(439, 'Peren', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(440, 'Phek', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(441, 'Tuensang', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(442, 'Wokha', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(443, 'Zunheboto', 25, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(444, 'Angul', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(445, 'Balangir', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(446, 'Balasore', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(447, 'Bargarh', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(448, 'Bhadrak', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(449, 'Boudh', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(450, 'Cuttack', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(451, 'Deogarh', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(452, 'Dhenkanal', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(453, 'Gajapati', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(454, 'Ganjam', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(455, 'Jagatsinghapur', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(456, 'Jajpur', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(457, 'Jharsuguda', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(458, 'Kalahandi', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(459, 'Kandhamal', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(460, 'Kendrapara', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(461, 'Kendujhar (Keonjhar)', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(462, 'Khordha', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(463, 'Koraput', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(464, 'Malkangiri', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(465, 'Mayurbhanj', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(466, 'Nabarangpur', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(467, 'Nayagarh', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(468, 'Nuapada', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(469, 'Puri', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(470, 'Rayagada', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(471, 'Sambalpur', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(472, 'Sonepur', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(473, 'Sundargarh', 26, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(474, 'Karaikal', 27, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(475, 'Mahe', 27, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(476, 'Pondicherry', 27, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(477, 'Yanam', 27, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(478, 'Amritsar', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(479, 'Barnala', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(480, 'Bathinda', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(481, 'Faridkot', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(482, 'Fatehgarh Sahib', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(483, 'Fazilka', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(484, 'Ferozepur', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(485, 'Gurdaspur', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(486, 'Hoshiarpur', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(487, 'Jalandhar', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(488, 'Kapurthala', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(489, 'Ludhiana', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(490, 'Mansa', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(491, 'Moga', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(492, 'Muktsar', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(493, 'Nawanshahr (Shahid Bhagat Singh Nagar)', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(494, 'Pathankot', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(495, 'Patiala', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(496, 'Rupnagar', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(497, 'Sahibzada Ajit Singh Nagar (Mohali)', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(498, 'Sangrur', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(499, 'Tarn Taran', 28, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(500, 'Ajmer', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(501, 'Alwar', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(502, 'Banswara', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(503, 'Baran', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(504, 'Barmer', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(505, 'Bharatpur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(506, 'Bhilwara', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(507, 'Bikaner', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(508, 'Bundi', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(509, 'Chittorgarh', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(510, 'Churu', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(511, 'Dausa', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(512, 'Dholpur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(513, 'Dungarpur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(514, 'Hanumangarh', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(515, 'Jaipur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(516, 'Jaisalmer', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(517, 'Jalore', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(518, 'Jhalawar', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(519, 'Jhunjhunu', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(520, 'Jodhpur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(521, 'Karauli', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(522, 'Kota', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(523, 'Nagaur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(524, 'Pali', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(525, 'Pratapgarh', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(526, 'Rajsamand', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(527, 'Sawai Madhopur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(528, 'Sikar', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(529, 'Sirohi', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(530, 'Sri Ganganagar', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(531, 'Tonk', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(532, 'Udaipur', 29, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(533, 'East Sikkim', 30, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(534, 'North Sikkim', 30, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(535, 'South Sikkim', 30, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(536, 'West Sikkim', 30, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(537, 'Ariyalur', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(538, 'Chennai', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(539, 'Coimbatore', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(540, 'Cuddalore', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(541, 'Dharmapuri', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(542, 'Dindigul', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(543, 'Erode', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(544, 'Kanchipuram', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(545, 'Kanyakumari', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(546, 'Karur', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(547, 'Krishnagiri', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(548, 'Madurai', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(549, 'Nagapattinam', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(550, 'Namakkal', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(551, 'Nilgiris', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(552, 'Perambalur', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(553, 'Pudukkottai', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(554, 'Ramanathapuram', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(555, 'Salem', 31, 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(556, 'Sivaganga', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(557, 'Thanjavur', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(558, 'Theni', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(559, 'Thoothukudi (Tuticorin)', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(560, 'Tiruchirappalli', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(561, 'Tirunelveli', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(562, 'Tiruppur', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(563, 'Tiruvallur', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(564, 'Tiruvannamalai', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(565, 'Tiruvarur', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(566, 'Vellore', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(567, 'Viluppuram', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(568, 'Virudhunagar', 31, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(569, 'Adilabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(570, 'Bhadradri Kothagudem', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(571, 'Hyderabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(572, 'Jagtial', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(573, 'Jangaon', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(574, 'Jayashankar Bhoopalpally', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(575, 'Jogulamba Gadwal', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(576, 'Kamareddy', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(577, 'Karimnagar', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(578, 'Khammam', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(579, 'Komaram Bheem Asifabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(580, 'Mahabubabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(581, 'Mahabubnagar', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(582, 'Mancherial', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(583, 'Medak', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(584, 'Medchal', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(585, 'Nagarkurnool', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(586, 'Nalgonda', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(587, 'Nirmal', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(588, 'Nizamabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(589, 'Peddapalli', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(590, 'Rajanna Sircilla', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(591, 'Rangareddy', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(592, 'Sangareddy', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(593, 'Siddipet', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(594, 'Suryapet', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(595, 'Vikarabad', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(596, 'Wanaparthy', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(597, 'Warangal (Rural)', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(598, 'Warangal (Urban)', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(599, 'Yadadri Bhuvanagiri', 32, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(600, 'Dhalai', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(601, 'Gomati', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(602, 'Khowai', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(603, 'North Tripura', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(604, 'Sepahijala', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(605, 'South Tripura', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(606, 'Unakoti', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(607, 'West Tripura', 33, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(608, 'Almora', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(609, 'Bageshwar', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(610, 'Chamoli', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(611, 'Champawat', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(612, 'Dehradun', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(613, 'Haridwar', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(614, 'Nainital', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(615, 'Pauri Garhwal', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(616, 'Pithoragarh', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(617, 'Rudraprayag', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(618, 'Tehri Garhwal', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(619, 'Udham Singh Nagar', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(620, 'Uttarkashi', 34, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(621, 'Agra', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(622, 'Aligarh', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(623, 'Allahabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(624, 'Ambedkar Nagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(625, 'Amethi (Chatrapati Sahuji Mahraj Nagar)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(626, 'Amroha (J.P. Nagar)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(627, 'Auraiya', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(628, 'Azamgarh', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(629, 'Baghpat', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(630, 'Bahraich', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(631, 'Ballia', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(632, 'Balrampur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(633, 'Banda', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(634, 'Barabanki', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(635, 'Bareilly', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(636, 'Basti', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(637, 'Bhadohi', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(638, 'Bijnor', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(639, 'Budaun', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(640, 'Bulandshahr', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(641, 'Chandauli', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(642, 'Chitrakoot', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(643, 'Deoria', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(644, 'Etah', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(645, 'Etawah', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(646, 'Faizabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(647, 'Farrukhabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(648, 'Fatehpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(649, 'Firozabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL);
 INSERT INTO `districts` (`id`, `name`, `state_id`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(650, 'Gautam Buddha Nagar', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(651, 'Ghaziabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(652, 'Ghazipur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(653, 'Gonda', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(654, 'Gorakhpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(655, 'Hamirpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(656, 'Hapur (Panchsheel Nagar)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(657, 'Hardoi', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(658, 'Hathras', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(659, 'Jalaun', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(660, 'Jaunpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(661, 'Jhansi', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(662, 'Kannauj', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(663, 'Kanpur Dehat', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(664, 'Kanpur Nagar', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(665, 'Kanshiram Nagar (Kasganj)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(666, 'Kaushambi', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(667, 'Kushinagar (Padrauna)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(668, 'Lakhimpur - Kheri', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(669, 'Lalitpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(670, 'Lucknow', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(671, 'Maharajganj', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(672, 'Mahoba', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(673, 'Mainpuri', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(674, 'Mathura', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(675, 'Mau', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(676, 'Meerut', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(677, 'Mirzapur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(678, 'Moradabad', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(679, 'Muzaffarnagar', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(680, 'Pilibhit', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(681, 'Pratapgarh', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(682, 'RaeBareli', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(683, 'Rampur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(684, 'Saharanpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(685, 'Sambhal (Bhim Nagar)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(686, 'Sant Kabir Nagar', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(687, 'Shahjahanpur', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(688, 'Shamali (Prabuddh Nagar)', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(689, 'Shravasti', 35, 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(690, 'Siddharth Nagar', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(691, 'Sitapur', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(692, 'Sonbhadra', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(693, 'Sultanpur', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(694, 'Unnao', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(695, 'Varanasi', 35, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(696, 'Alipurduar', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(697, 'Bankura', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(698, 'Birbhum', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(699, 'Cooch Behar', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(700, 'Dakshin Dinajpur (South Dinajpur)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(701, 'Darjeeling', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(702, 'Hooghly', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(703, 'Howrah', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(704, 'Jalpaiguri', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(705, 'Jhargram', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(706, 'Kalimpong', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(707, 'Kolkata', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(708, 'Malda', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(709, 'Murshidabad', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(710, 'Nadia', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(711, 'North 24 Parganas', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(712, 'Paschim Medinipur (West Medinipur)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(713, 'Paschim (West) Burdwan (Bardhaman)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(714, 'Purba Burdwan (Bardhaman)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(715, 'Purba Medinipur (East Medinipur)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(716, 'Purulia', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(717, 'South 24 Parganas', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL),
-(718, 'Uttar Dinajpur (North Dinajpur)', 36, 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL);
+(650, 'Gautam Buddha Nagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(651, 'Ghaziabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(652, 'Ghazipur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(653, 'Gonda', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(654, 'Gorakhpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(655, 'Hamirpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(656, 'Hapur (Panchsheel Nagar)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(657, 'Hardoi', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(658, 'Hathras', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(659, 'Jalaun', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(660, 'Jaunpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(661, 'Jhansi', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(662, 'Kannauj', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(663, 'Kanpur Dehat', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(664, 'Kanpur Nagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(665, 'Kanshiram Nagar (Kasganj)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(666, 'Kaushambi', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(667, 'Kushinagar (Padrauna)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(668, 'Lakhimpur - Kheri', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(669, 'Lalitpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(670, 'Lucknow', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(671, 'Maharajganj', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(672, 'Mahoba', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(673, 'Mainpuri', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(674, 'Mathura', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(675, 'Mau', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(676, 'Meerut', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(677, 'Mirzapur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(678, 'Moradabad', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(679, 'Muzaffarnagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(680, 'Pilibhit', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(681, 'Pratapgarh', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(682, 'RaeBareli', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(683, 'Rampur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(684, 'Saharanpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(685, 'Sambhal (Bhim Nagar)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(686, 'Sant Kabir Nagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(687, 'Shahjahanpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(688, 'Shamali (Prabuddh Nagar)', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(689, 'Shravasti', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(690, 'Siddharth Nagar', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(691, 'Sitapur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(692, 'Sonbhadra', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(693, 'Sultanpur', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(694, 'Unnao', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(695, 'Varanasi', 35, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(696, 'Alipurduar', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(697, 'Bankura', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(698, 'Birbhum', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(699, 'Cooch Behar', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(700, 'Dakshin Dinajpur (South Dinajpur)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(701, 'Darjeeling', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(702, 'Hooghly', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(703, 'Howrah', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(704, 'Jalpaiguri', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(705, 'Jhargram', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(706, 'Kalimpong', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(707, 'Kolkata', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(708, 'Malda', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(709, 'Murshidabad', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(710, 'Nadia', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(711, 'North 24 Parganas', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(712, 'Paschim Medinipur (West Medinipur)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(713, 'Paschim (West) Burdwan (Bardhaman)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(714, 'Purba Burdwan (Bardhaman)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(715, 'Purba Medinipur (East Medinipur)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(716, 'Purulia', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(717, 'South 24 Parganas', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(718, 'Uttar Dinajpur (North Dinajpur)', 36, 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(719, 'Gariaband', 7, 1, '2021-04-05 08:47:35', '2021-04-05 08:52:15', '2021-04-05 08:52:15'),
+(720, 'New District', 37, 1, '2021-05-27 04:28:44', '2021-05-27 04:31:51', '2021-05-27 04:31:51'),
+(721, 'New District', 2, 1, '2021-06-02 11:49:50', '2021-06-02 11:51:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -2024,7 +1304,7 @@ CREATE TABLE `logistics` (
 CREATE TABLE `master_stocks` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `product_price_id` bigint(20) UNSIGNED NOT NULL,
+  `product_option_id` bigint(20) UNSIGNED NOT NULL,
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stock` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -2050,30 +1330,29 @@ CREATE TABLE `media` (
   `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `conversions_disk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `size` bigint(20) UNSIGNED NOT NULL,
-  `manipulations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`manipulations`)),
-  `custom_properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`custom_properties`)),
-  `responsive_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`responsive_images`)),
+  `manipulations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `custom_properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `responsive_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `order_column` int(10) UNSIGNED DEFAULT NULL,
+  `generated_conversions` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `generated_conversions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`generated_conversions`))
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `media`
 --
 
-INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `responsive_images`, `order_column`, `created_at`, `updated_at`, `generated_conversions`) VALUES
-(1, 'App\\Models\\VendorProfile', 2, 'f9285134-8d84-47fb-959a-2f630c0a9eb2', 'gst', '250px-Irrigat', '250px-Irrigat.jpg', 'image/jpeg', 'public', 'public', 15187, '[]', '[]', '[]', 1, '2021-11-29 06:23:41', '2021-11-29 06:23:45', '{\"thumb\":true,\"preview\":true}'),
-(2, 'App\\Models\\VendorProfile', 2, 'dc687e6e-54c4-487f-b64b-efaebcbc0f96', 'pan_card', '80-512', '80-512.png', 'image/png', 'public', 'public', 30162, '[]', '[]', '[]', 2, '2021-11-29 06:23:45', '2021-11-29 06:23:46', '{\"thumb\":true,\"preview\":true}'),
-(3, 'App\\Models\\VendorProfile', 1, '8fbdb0c5-4447-479e-b9d5-5b5211795e4e', 'gst', '61a4ca20a2703_250px-Irrigat', '61a4ca20a2703_250px-Irrigat.jpg', 'image/jpeg', 'public', 'public', 15187, '[]', '[]', '[]', 3, '2021-11-29 07:10:06', '2021-11-29 07:10:06', '{\"thumb\":true,\"preview\":true}'),
-(4, 'App\\Models\\VendorProfile', 1, '607ecf85-e821-49fa-acb6-b31eaed10faf', 'pan_card', '61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC', '61a4ca246f4f7_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg', 'image/jpeg', 'public', 'public', 48510, '[]', '[]', '[]', 4, '2021-11-29 07:10:06', '2021-11-29 07:10:07', '{\"thumb\":true,\"preview\":true}'),
-(5, 'App\\Models\\Product', 32, 'a83cce61-cae0-4c21-a688-f980b71cae7f', 'images', '61a4dfeb06934_250px-Irrigat', '61a4dfeb06934_250px-Irrigat.jpg', 'image/jpeg', 'public', 'public', 15187, '[]', '[]', '[]', 5, '2021-11-29 08:43:17', '2021-11-29 08:43:18', '{\"thumb\":true,\"preview\":true}'),
-(6, 'App\\Models\\Product', 32, '730d1b5d-1880-4b19-99ea-e6b1a36617be', 'images', '61a4dfeb7d6d2_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC', '61a4dfeb7d6d2_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg', 'image/jpeg', 'public', 'public', 48510, '[]', '[]', '[]', 6, '2021-11-29 08:43:18', '2021-11-29 08:43:19', '{\"thumb\":true,\"preview\":true}'),
-(7, 'App\\Models\\Product', 32, 'a1b0fbf5-79fe-42b4-a237-f531d32b7315', 'images', '61a4dfebe6261_515DsF20K1L._SL1080_', '61a4dfebe6261_515DsF20K1L._SL1080_.jpg', 'image/jpeg', 'public', 'public', 61899, '[]', '[]', '[]', 7, '2021-11-29 08:43:19', '2021-11-29 08:43:20', '{\"thumb\":true,\"preview\":true}'),
-(8, 'App\\Models\\Product', 15, '66b0ae88-4635-40da-9561-06ff87c7586d', 'images', '61a501ecc6c73_1-500x500', '61a501ecc6c73_1-500x500.jpg', 'image/jpeg', 'public', 'public', 61857, '[]', '[]', '[]', 8, '2021-11-29 11:08:07', '2021-11-29 11:08:08', '{\"thumb\":true,\"preview\":true}'),
-(9, 'App\\Models\\Product', 15, '890e9f9d-ff6a-4965-bf54-6302ae28703f', 'images', '61a501ed3c303_31g08PW3dtL._SX466_', '61a501ed3c303_31g08PW3dtL._SX466_.jpg', 'image/jpeg', 'public', 'public', 12500, '[]', '[]', '[]', 9, '2021-11-29 11:08:08', '2021-11-29 11:08:08', '{\"thumb\":true,\"preview\":true}'),
-(10, 'App\\Models\\Product', 15, 'cbd46a4d-55bb-48ba-953f-4dd6c14c7e3a', 'images', '61a501edb332b_80-512', '61a501edb332b_80-512.png', 'image/png', 'public', 'public', 30162, '[]', '[]', '[]', 10, '2021-11-29 11:08:08', '2021-11-29 11:08:09', '{\"thumb\":true,\"preview\":true}');
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `responsive_images`, `order_column`, `generated_conversions`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\VendorProfile', 1, '21365fc1-5794-4fdb-82d5-a5243d86207c', 'gst', '515DsF20K1L._SL1080_', '515DsF20K1L._SL1080_.jpg', 'image/jpeg', 'public', 'public', 61899, '[]', '[]', '[]', 1, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:46:38', '2021-12-03 03:46:39'),
+(2, 'App\\Models\\VendorProfile', 1, 'b2908050-0271-41e2-ab9a-665af17ea831', 'pan_card', '500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC', '500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg', 'image/jpeg', 'public', 'public', 48510, '[]', '[]', '[]', 2, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:46:39', '2021-12-03 03:46:39'),
+(3, 'App\\Models\\Product', 1, '29ab9b4d-b3db-4aa7-b715-e016a98d54dd', 'images', '61a9e0c25a907_250px-Irrigat', '61a9e0c25a907_250px-Irrigat.jpg', 'image/jpeg', 'public', 'public', 15187, '[]', '[]', '[]', 3, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:51:35', '2021-12-03 03:51:36'),
+(4, 'App\\Models\\Product', 1, 'af9516c5-d5fa-4a76-8519-f550804d6c9c', 'images', '61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC', '61a9e0c2d797a_500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg', 'image/jpeg', 'public', 'public', 48510, '[]', '[]', '[]', 4, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:51:36', '2021-12-03 03:51:36'),
+(5, 'App\\Models\\Product', 1, '3beea4b4-1853-4cae-ad68-56d4bb0d9b1f', 'images', '61a9e0c34eb0f_515DsF20K1L._SL1080_', '61a9e0c34eb0f_515DsF20K1L._SL1080_.jpg', 'image/jpeg', 'public', 'public', 61899, '[]', '[]', '[]', 5, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:51:37', '2021-12-03 03:51:37'),
+(6, 'App\\Models\\Product', 2, '59d4a7ef-89d1-4249-b097-4f578c646f70', 'images', '61a9e1d3add75_2-stroke-brush-cutter-500x500', '61a9e1d3add75_2-stroke-brush-cutter-500x500.jpg', 'image/jpeg', 'public', 'public', 18040, '[]', '[]', '[]', 6, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:09', '2021-12-03 03:54:10'),
+(7, 'App\\Models\\Product', 2, '6d2bbd7b-0391-496c-8dc0-e71780ccdd95', 'images', '61a9e1d429f80_1-500x500', '61a9e1d429f80_1-500x500.jpg', 'image/jpeg', 'public', 'public', 61857, '[]', '[]', '[]', 7, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:10', '2021-12-03 03:54:11'),
+(8, 'App\\Models\\Product', 2, 'c41e7d27-e610-475d-84a8-000593ed6599', 'images', '61a9e1d4ab01c_31g08PW3dtL._SX466_', '61a9e1d4ab01c_31g08PW3dtL._SX466_.jpg', 'image/jpeg', 'public', 'public', 12500, '[]', '[]', '[]', 8, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:11', '2021-12-03 03:54:12'),
+(9, 'App\\Models\\Product', 2, 'fcf14910-0272-4aae-9444-a32c254cfd29', 'images', '61a9e1d532bc8_80-512', '61a9e1d532bc8_80-512.png', 'image/png', 'public', 'public', 30162, '[]', '[]', '[]', 9, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:12', '2021-12-03 03:54:12');
 
 -- --------------------------------------------------------
 
@@ -2095,7 +1374,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_100000_create_password_resets_table', 1),
 (2, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (3, '2021_01_27_000001_create_audit_logs_table', 1),
-(4, '2021_01_27_000002_create_media_table', 1),
 (5, '2021_01_27_000003_create_article_likes_table', 1),
 (6, '2021_01_27_000005_create_states_table', 1),
 (7, '2021_01_27_000006_create_districts_table', 1),
@@ -2109,84 +1387,56 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2021_01_27_000012_create_followers_table', 1),
 (16, '2021_01_27_000013_create_logistics_table', 1),
 (17, '2021_01_27_000015_create_transactions_table', 1),
-(18, '2021_01_27_000016_create_user_addresses_table', 1),
-(19, '2021_01_27_000017_create_settings_table', 1),
-(20, '2021_01_27_000018_create_admins_table', 1),
-(21, '2021_01_27_000022_create_user_profiles_table', 1),
-(22, '2021_01_27_000025_create_vendors_table', 1),
-(23, '2021_01_27_000026_create_vendor_profiles_table', 1),
-(24, '2021_01_27_000027_create_product_categories_table', 1),
-(25, '2021_01_27_000027_create_product_sub_categories_table', 1),
-(26, '2021_01_27_000027_create_user_alerts_table', 1),
-(27, '2021_01_27_000028_create_products_table', 1),
-(28, '2021_01_27_000029_create_product_tags_table', 1),
-(29, '2021_01_27_000031_create_carts_table', 1),
-(30, '2021_01_27_000032_create_content_categories_table', 1),
-(31, '2021_01_27_000033_create_content_tags_table', 1),
-(32, '2021_01_27_000034_create_users_table', 1),
-(33, '2021_01_27_000035_create_content_pages_table', 1),
-(34, '2021_01_27_000036_create_roles_table', 1),
-(35, '2021_01_27_000037_create_orders_table', 1),
-(36, '2021_01_27_000038_create_faq_categories_table', 1),
-(37, '2021_01_27_000039_create_permissions_table', 1),
-(38, '2021_01_27_000040_create_faq_questions_table', 1),
-(39, '2021_01_27_000041_create_permission_role_pivot_table', 1),
-(40, '2021_01_27_000042_create_product_product_tag_pivot_table', 1),
-(41, '2021_01_27_000043_create_user_user_alert_pivot_table', 1),
-(42, '2021_01_27_000044_create_role_user_pivot_table', 1),
-(43, '2021_01_27_000045_create_content_page_content_tag_pivot_table', 1),
-(44, '2021_01_27_000046_create_article_article_tag_pivot_table', 1),
-(45, '2021_01_27_000047_create_content_category_content_page_pivot_table', 1),
-(46, '2021_01_27_000049_add_relationship_fields_to_user_profiles_table', 1),
+(18, '2021_01_27_000015_create_users_table', 1),
+(19, '2021_01_27_000016_create_user_addresses_table', 1),
+(20, '2021_01_27_000017_create_settings_table', 1),
+(21, '2021_01_27_000018_create_admins_table', 1),
+(22, '2021_01_27_000022_create_user_profiles_table', 1),
+(23, '2021_01_27_000025_create_vendors_table', 1),
+(24, '2021_01_27_000026_create_vendor_profiles_table', 1),
+(25, '2021_01_27_000027_create_product_categories_table', 1),
+(26, '2021_01_27_000027_create_product_sub_categories_table', 1),
+(27, '2021_01_27_000027_create_user_alerts_table', 1),
+(28, '2021_01_27_000028_create_products_table', 1),
+(29, '2021_01_27_000029_create_product_tags_table', 1),
+(30, '2021_01_27_000030_create_product_options_table', 1),
+(31, '2021_01_27_000031_create_carts_table', 1),
+(32, '2021_01_27_000032_create_content_categories_table', 1),
+(33, '2021_01_27_000033_create_content_tags_table', 1),
+(34, '2021_01_27_000035_create_content_pages_table', 1),
+(35, '2021_01_27_000036_create_roles_table', 1),
+(36, '2021_01_27_000037_create_orders_table', 1),
+(37, '2021_01_27_000038_create_faq_categories_table', 1),
+(38, '2021_01_27_000039_create_permissions_table', 1),
+(39, '2021_01_27_000040_create_faq_questions_table', 1),
+(40, '2021_01_27_000041_create_permission_role_pivot_table', 1),
+(41, '2021_01_27_000042_create_product_product_tag_pivot_table', 1),
+(42, '2021_01_27_000043_create_user_user_alert_pivot_table', 1),
+(43, '2021_01_27_000044_create_role_user_pivot_table', 1),
+(44, '2021_01_27_000045_create_content_page_content_tag_pivot_table', 1),
+(45, '2021_01_27_000046_create_article_article_tag_pivot_table', 1),
+(46, '2021_01_27_000047_create_content_category_content_page_pivot_table', 1),
 (47, '2021_01_27_000054_add_relationship_fields_to_carts_table', 1),
-(48, '2021_01_27_000055_add_relationship_fields_to_user_addresses_table', 1),
-(49, '2021_01_27_000056_add_relationship_fields_to_transactions_table', 1),
-(50, '2021_01_27_000057_add_relationship_fields_to_products_table', 1),
-(51, '2021_01_27_000058_add_relationship_fields_to_article_likes_table', 1),
-(52, '2021_01_27_000059_add_relationship_fields_to_followers_table', 1),
-(53, '2021_01_27_000060_add_relationship_fields_to_article_comments_table', 1),
-(54, '2021_01_27_000061_add_relationship_fields_to_articles_table', 1),
-(55, '2021_01_27_000065_add_relationship_fields_to_faq_questions_table', 1),
-(56, '2021_01_27_000067_add_relationship_fields_to_orders_table', 1),
-(57, '2021_02_04_091149_create_role_admins_table', 1),
-(58, '2021_02_04_121103_create_admin_alerts_table', 1),
-(59, '2021_02_04_122046_create_admin_admin_alert_pivot_table', 1),
-(60, '2021_02_09_183539_create_role_logistics_table', 1),
-(61, '2021_02_09_183608_create_role_vendor_table', 1),
-(62, '2021_02_11_000025_create_enquiries_table', 1),
-(63, '2021_02_11_000055_add_relationship_fields_to_enquiries_table', 1),
-(64, '2021_03_03_065222_create_unit_types_table', 1),
-(65, '2021_03_09_074229_create_product_prices_table', 1),
-(66, '2021_03_09_075532_add_columns_to_orders_table', 1),
-(67, '2021_03_09_075619_create_order_items_table', 1),
-(68, '2021_03_09_091846_create_otps_table', 1),
-(69, '2021_03_09_170012_add_columns_to_carts_table', 1),
-(70, '2021_03_10_062703_create_product_stocks_table', 1),
-(71, '2021_03_10_133403_create_sliders_table', 1),
-(72, '2021_03_10_133713_create_slider_items_table', 1),
-(73, '2021_03_14_152023_add_columns_to_transactions_table', 1),
-(74, '2021_03_15_161336_add_transaction_id_column_to_orders_table', 1),
-(75, '2021_05_11_100736_create_reviews_table', 1),
-(76, '2021_05_15_074441_create_wishlists_table', 1),
-(77, '2021_05_15_082604_add_generated_conversions_column_to_media_table', 1),
-(78, '2021_05_16_064229_create_site_settings_table', 1),
-(79, '2021_05_16_071733_add_name_column_to_user_addresses_table', 1),
-(80, '2021_05_16_105347_add_unit_qty_column_to_carts_table', 1),
-(81, '2021_05_16_105457_add_more_columns_to_order_items_table', 1),
-(82, '2021_05_16_123821_add_is_default_column_to_user_addresses_table', 1),
-(83, '2021_05_17_090636_create_push_notifications_table', 1),
-(84, '2021_05_17_091145_add_device_token_column_to_users_table', 1),
-(85, '2021_05_26_082650_create_jobs_table', 1),
-(86, '2021_05_29_120747_add_unit_quantity_column_to_product_stocks_table', 1),
-(87, '2021_06_02_083341_create_push_notification_user_table', 1),
-(88, '2021_06_08_064846_create_invoices_table', 1),
-(89, '2021_06_08_082020_add_is_invoice_generated_coloumn_to_orders_table', 1),
-(90, '2021_06_08_083550_add_payment_related_columns_to_orders_table', 1),
-(91, '2021_06_09_075952_create_master_stocks_table', 1),
-(92, '2021_06_09_080513_create_bills_table', 1),
-(93, '2021_06_09_081642_create_bill_items_table', 1),
-(94, '2021_06_10_134151_add_is_stock_updated_column_to_orders_table', 1),
-(95, '2021_11_27_085521_create_product_options_table', 1);
+(48, '2021_01_27_000056_add_relationship_fields_to_transactions_table', 1),
+(49, '2021_01_27_000057_add_relationship_fields_to_products_table', 1),
+(50, '2021_01_27_000058_add_relationship_fields_to_article_likes_table', 1),
+(51, '2021_01_27_000059_add_relationship_fields_to_followers_table', 1),
+(52, '2021_01_27_000060_add_relationship_fields_to_article_comments_table', 1),
+(53, '2021_01_27_000061_add_relationship_fields_to_articles_table', 1),
+(54, '2021_01_27_000065_add_relationship_fields_to_faq_questions_table', 1),
+(55, '2021_01_27_000067_add_relationship_fields_to_orders_table', 1),
+(56, '2021_02_04_091149_create_role_admins_table', 1),
+(57, '2021_02_04_121103_create_admin_alerts_table', 1),
+(58, '2021_02_04_122046_create_admin_admin_alert_pivot_table', 1),
+(59, '2021_02_09_183539_create_role_logistics_table', 1),
+(60, '2021_02_09_183608_create_role_vendor_table', 1),
+(61, '2021_02_11_000025_create_enquiries_table', 1),
+(62, '2021_02_11_000055_add_relationship_fields_to_enquiries_table', 1),
+(63, '2021_03_03_065222_create_unit_types_table', 1),
+(64, '2021_03_09_075532_add_columns_to_orders_table', 1),
+(65, '2021_03_09_075619_create_order_items_table', 1),
+(66, '2021_03_09_091846_create_otps_table', 1),
+(67, '2021_01_27_000002_create_media_table', 2);
 
 -- --------------------------------------------------------
 
@@ -2196,26 +1446,44 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `billing_address_id` bigint(20) UNSIGNED NOT NULL,
+  `shipping_address_id` bigint(20) UNSIGNED NOT NULL,
   `order_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_group_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vendor_id` bigint(20) UNSIGNED DEFAULT NULL,
   `payment_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sub_total` decimal(8,2) NOT NULL,
+  `discount_amount` decimal(8,2) DEFAULT NULL,
+  `charge_percent` decimal(5,2) NOT NULL DEFAULT 0.00 COMMENT 'platform chargecharge',
+  `charge_amount` decimal(8,2) NOT NULL DEFAULT 0.00 COMMENT 'platform charge',
+  `grand_total` decimal(8,2) NOT NULL,
+  `amount_paid` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
+  `is_invoice_generated` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `address_id` bigint(20) UNSIGNED NOT NULL,
-  `sub_total` double NOT NULL DEFAULT 0,
-  `gst` double NOT NULL DEFAULT 0,
-  `discount` double NOT NULL DEFAULT 0,
-  `grand_total` double NOT NULL DEFAULT 0,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
-  `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transaction_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `is_invoice_generated` tinyint(1) NOT NULL DEFAULT 0,
-  `paymentable_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paymentable_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `is_payment_verified` tinyint(1) NOT NULL DEFAULT 0,
-  `is_stock_updated` tinyint(1) NOT NULL DEFAULT 0
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `billing_address_id`, `shipping_address_id`, `order_number`, `order_group_number`, `vendor_id`, `payment_type`, `sub_total`, `discount_amount`, `charge_percent`, `charge_amount`, `grand_total`, `amount_paid`, `payment_status`, `status`, `is_invoice_generated`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(26, 1, 1, 1, 'BB-ORD-8056203749787165', '272476833759884', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
+(27, 1, 1, 1, 'BB-ORD-2399343030096663', '272476833759884', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
+(28, 1, 1, 1, 'BB-ORD-9158607488421383', '692869393061991', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CANCELLED', 0, '2021-12-04 03:39:19', '2021-12-04 11:10:31', NULL),
+(29, 1, 1, 1, 'BB-ORD-7245525560049674', '692869393061991', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:39:19', '2021-12-04 03:39:19', NULL),
+(30, 1, 1, 1, 'BB-ORD-4400240771660847', '1945955497533715', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
+(31, 1, 1, 1, 'BB-ORD-3289057823648718', '1945955497533715', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
+(32, 1, 1, 1, 'BB-ORD-9257593798472135', '4566010513130747', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CONFIRMED', 0, '2021-12-04 03:41:08', '2021-12-04 11:06:38', NULL),
+(33, 1, 1, 1, 'BB-ORD-6615082323258955', '4566010513130747', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:41:08', '2021-12-04 03:41:08', NULL),
+(34, 1, 1, 1, 'BB-ORD-8295003435385035', '1109501312987155', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
+(35, 1, 1, 1, 'BB-ORD-9977721774006869', '1109501312987155', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
+(36, 1, 1, 1, 'BB-ORD-1505971194675460', '4286845059661474', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:17:45', '2021-12-04 04:17:45', NULL),
+(37, 1, 1, 1, 'BB-ORD-1648034493656266', '4286845059661474', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:17:45', '2021-12-04 04:17:45', NULL);
 
 -- --------------------------------------------------------
 
@@ -2228,21 +1496,42 @@ CREATE TABLE `order_items` (
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `order_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
-  `product_price_id` bigint(20) UNSIGNED NOT NULL,
-  `quantity` smallint(5) UNSIGNED NOT NULL,
+  `product_option_id` bigint(20) UNSIGNED DEFAULT NULL,
   `amount` double NOT NULL,
-  `gst` double NOT NULL,
-  `discount` double NOT NULL,
+  `quantity` smallint(5) UNSIGNED NOT NULL,
+  `discount` double(5,2) NOT NULL,
+  `discount_amount` double NOT NULL,
+  `charge_percent` decimal(5,2) NOT NULL DEFAULT 0.00 COMMENT 'platform chargecharge',
+  `charge_amount` decimal(8,2) NOT NULL DEFAULT 0.00 COMMENT 'platform charge',
   `total_amount` double NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `cart_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `discount_amount` decimal(8,2) NOT NULL DEFAULT 0.00
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `order_number`, `product_id`, `product_option_id`, `amount`, `quantity`, `discount`, `discount_amount`, `charge_percent`, `charge_amount`, `total_amount`, `status`, `created_at`, `updated_at`) VALUES
+(30, 26, 'BB-ORD-8056203749787165-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 03:17:44', '2021-12-04 03:17:44'),
+(31, 26, 'BB-ORD-8056203749787165-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 03:17:44', '2021-12-04 03:17:44'),
+(32, 27, 'BB-ORD-2399343030096663-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 03:17:44', '2021-12-04 03:17:44'),
+(33, 28, 'BB-ORD-9158607488421383-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 03:39:19', '2021-12-04 03:39:19'),
+(34, 28, 'BB-ORD-9158607488421383-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 03:39:19', '2021-12-04 03:39:19'),
+(35, 29, 'BB-ORD-7245525560049674-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 03:39:19', '2021-12-04 03:39:19'),
+(36, 30, 'BB-ORD-4400240771660847-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 03:40:48', '2021-12-04 03:40:48'),
+(37, 30, 'BB-ORD-4400240771660847-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 03:40:48', '2021-12-04 03:40:48'),
+(38, 31, 'BB-ORD-3289057823648718-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 03:40:48', '2021-12-04 03:40:48'),
+(39, 32, 'BB-ORD-9257593798472135-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 03:41:08', '2021-12-04 03:41:08'),
+(40, 32, 'BB-ORD-9257593798472135-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 03:41:08', '2021-12-04 03:41:08'),
+(41, 33, 'BB-ORD-6615082323258955-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 03:41:08', '2021-12-04 03:41:08'),
+(42, 34, 'BB-ORD-8295003435385035-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 04:11:04', '2021-12-04 04:11:04'),
+(43, 34, 'BB-ORD-8295003435385035-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 04:11:04', '2021-12-04 04:11:04'),
+(44, 35, 'BB-ORD-9977721774006869-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 04:11:04', '2021-12-04 04:11:04'),
+(45, 36, 'BB-ORD-1505971194675460-1', 1, 1, 5000, 6, 1.00, 300, '5.00', '1485.00', 31185, 'PENDING', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
+(46, 36, 'BB-ORD-1505971194675460-2', 3, NULL, 500, 5, 1.00, 25, '5.00', '123.75', 2598.75, 'PENDING', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
+(47, 37, 'BB-ORD-1648034493656266-1', 2, NULL, 200, 12, 0.00, 0, '5.00', '120.00', 2520, 'PENDING', '2021-12-04 04:17:45', '2021-12-04 04:17:45');
 
 -- --------------------------------------------------------
 
@@ -2269,8 +1558,8 @@ CREATE TABLE `otps` (
 --
 
 INSERT INTO `otps` (`id`, `user_id`, `vendor_id`, `otp`, `mobile`, `sms_status`, `v_token`, `gateway_response`, `is_expired`, `created_at`, `updated_at`) VALUES
-(1, NULL, 1, '8713', '9109844778', NULL, '662581', NULL, 1, '2021-11-27 03:54:49', '2021-11-27 12:23:20'),
-(2, NULL, 1, '1448', '9109844778', NULL, NULL, NULL, 1, '2021-11-27 12:22:28', '2021-11-27 12:23:20');
+(1, NULL, NULL, '7569', '9109844778', NULL, '798763', NULL, 1, '2021-12-03 04:00:33', '2021-12-03 04:00:44'),
+(2, NULL, 2, '4680', '9109844774', NULL, '710869', NULL, 1, '2021-12-03 11:57:24', '2021-12-03 11:59:21');
 
 -- --------------------------------------------------------
 
@@ -2926,8 +2215,8 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\Models\\Vendor', 1, 'user_token', '530d6e01ca84da85500ecf6440a887b9edbfbe1ffa3e406adbbcc200c818dfe1', '[\"*\"]', '2021-11-27 12:23:32', '2021-11-27 03:54:49', '2021-11-27 12:23:32'),
-(2, 'App\\Models\\Vendor', 1, 'user_token', '7aa335b276de05a153f99bdae043b4f87bdae6955093316245ac6d4c64540ff7', '[\"*\"]', '2021-11-29 08:45:15', '2021-11-27 12:23:20', '2021-11-29 08:45:15');
+(1, 'App\\Models\\User', 1, 'user_token', '26c1a5d54c58c2c4578f8cabfe62ab036310b008dddbc58f3befc7f7788fdde0', '[\"*\"]', '2021-12-04 05:39:59', '2021-12-03 04:00:54', '2021-12-04 05:39:59'),
+(2, 'App\\Models\\Vendor', 2, 'user_token', '5104e087fddc1d25e4f9a6baca5daed09dbe8402d28294a6117d488500b1865a', '[\"*\"]', '2021-12-03 11:59:31', '2021-12-03 11:57:24', '2021-12-03 11:59:31');
 
 -- --------------------------------------------------------
 
@@ -2958,9 +2247,8 @@ CREATE TABLE `products` (
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
-  `mop` decimal(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Minimum order price',
   `moq` smallint(5) UNSIGNED NOT NULL DEFAULT 4 COMMENT 'Minimum order quantity',
-  `discount` decimal(5,2) DEFAULT 0.00,
+  `discount` decimal(5,2) NOT NULL DEFAULT 0.00,
   `product_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `product_sub_category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `dispatch_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Expected Dispatch Time',
@@ -2977,22 +2265,11 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `vendor_id`, `name`, `slug`, `description`, `price`, `mop`, `moq`, `discount`, `product_category_id`, `product_sub_category_id`, `dispatch_time`, `rrp`, `approval_status`, `quantity`, `created_at`, `updated_at`, `deleted_at`, `brand_id`) VALUES
-(1, 1, 'Name', '9109844778', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-11-27 04:44:05', '2021-11-27 04:57:43', NULL, NULL),
-(3, 1, '9109844778', '91098447781', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, 'ACCEPTED', NULL, '2021-11-27 04:46:30', '2021-11-27 04:46:30', NULL, NULL),
-(4, 1, '9109844778', '91098447782', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:51:14', '2021-11-27 04:51:14', NULL, NULL),
-(5, 1, '9109844778', '91098447783', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:51:28', '2021-11-27 04:51:28', NULL, NULL),
-(6, 1, '9109844778', '91098447784', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:52:46', '2021-11-27 04:52:46', NULL, NULL),
-(7, 1, '9109844778', '91098447785', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:52:56', '2021-11-27 04:52:56', NULL, NULL),
-(8, 1, '9109844778', '91098447786', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:53:08', '2021-11-27 04:53:08', NULL, NULL),
-(9, 1, '9109844778', '91098447787', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:53:21', '2021-11-27 04:53:21', NULL, NULL),
-(10, 1, '9109844778', '91098447788', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:53:45', '2021-11-27 04:53:45', NULL, NULL),
-(11, 1, '9109844778', '91098447789', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:54:42', '2021-11-27 04:54:42', NULL, NULL),
-(12, 1, '9109844778', '910984477810', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:55:03', '2021-11-27 04:55:03', NULL, NULL),
-(13, 1, '9109844778', '910984477811', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, '0', NULL, '2021-11-27 04:55:27', '2021-11-27 04:55:27', NULL, NULL),
-(14, 1, '9109844778', '910984477812', NULL, '500.00', '5000.00', 5, NULL, 1, NULL, NULL, NULL, '0', NULL, '2021-11-27 11:40:10', '2021-11-27 11:40:10', NULL, NULL),
-(15, 1, 'Name Test', '910984477813', NULL, '500.00', '5000.00', 5, NULL, NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-11-27 12:04:19', '2021-11-29 11:07:37', NULL, NULL),
-(32, 1, 'Test Product', 'test-product', NULL, '5000.00', '0.00', 5, '41.00', NULL, NULL, '2 days', NULL, 'PENDING', NULL, '2021-11-29 08:43:17', '2021-11-29 08:43:17', NULL, NULL);
+INSERT INTO `products` (`id`, `vendor_id`, `name`, `slug`, `description`, `price`, `moq`, `discount`, `product_category_id`, `product_sub_category_id`, `dispatch_time`, `rrp`, `approval_status`, `quantity`, `created_at`, `updated_at`, `deleted_at`, `brand_id`) VALUES
+(1, 1, 'Product One', 'product-one', NULL, '5000.00', 5, '1.00', 1, 1, '2 days', NULL, 'PENDING', NULL, '2021-12-03 03:51:35', '2021-12-03 03:51:35', NULL, NULL),
+(2, 2, 'Product Two', 'product-two', NULL, '200.00', 12, '0.00', 2, 30, '2 days', NULL, 'PENDING', NULL, '2021-12-03 03:54:09', '2021-12-03 03:54:09', NULL, NULL),
+(3, 1, 'Product Three', 'product-three', NULL, '500.00', 5, '1.00', NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-12-03 03:55:56', '2021-12-03 04:10:24', NULL, NULL),
+(4, 1, 'Product Four', 'product-four', NULL, '1400.00', 14, '5.00', NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-12-03 04:00:00', '2021-12-03 04:11:21', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3039,41 +2316,16 @@ CREATE TABLE `product_options` (
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `quantity` smallint(5) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `product_options`
 --
 
-INSERT INTO `product_options` (`id`, `product_id`, `option`, `unit`, `quantity`, `created_at`, `updated_at`) VALUES
-(2, 11, NULL, NULL, NULL, '2021-11-27 04:54:42', '2021-11-27 04:54:42'),
-(3, 12, NULL, NULL, NULL, '2021-11-27 04:55:03', '2021-11-27 04:55:03'),
-(4, 13, 'Blue', NULL, NULL, '2021-11-27 04:55:27', '2021-11-27 04:55:27'),
-(5, 13, 'Red', NULL, NULL, '2021-11-27 04:55:27', '2021-11-27 04:55:27'),
-(8, 1, 'Blue', NULL, NULL, '2021-11-27 04:57:43', '2021-11-27 04:57:43'),
-(9, 1, 'Red', NULL, NULL, '2021-11-27 04:57:43', '2021-11-27 04:57:43'),
-(10, 14, 'Blue', NULL, NULL, '2021-11-27 11:40:11', '2021-11-27 11:40:11'),
-(11, 14, 'Red', NULL, NULL, '2021-11-27 11:40:11', '2021-11-27 11:40:11'),
-(14, 15, 'Blue', NULL, NULL, '2021-11-27 12:05:06', '2021-11-27 12:05:06'),
-(15, 15, 'Red1', NULL, NULL, '2021-11-27 12:05:06', '2021-11-29 11:07:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_prices`
---
-
-CREATE TABLE `product_prices` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `product_id` bigint(20) UNSIGNED NOT NULL,
-  `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `quantity` smallint(5) UNSIGNED NOT NULL,
-  `price` double NOT NULL,
-  `discount` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `product_options` (`id`, `product_id`, `option`, `unit`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, '25 KG', 'KG', NULL, '2021-12-03 03:51:37', '2021-12-03 03:51:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -3100,8 +2352,7 @@ CREATE TABLE `product_stocks` (
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3198,6 +2449,23 @@ CREATE TABLE `product_tags` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_tags`
+--
+
+INSERT INTO `product_tags` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Bio Fertilizers', '2021-04-06 22:13:52', '2021-04-06 22:13:52', NULL),
+(2, 'Fertilizers', '2021-04-06 22:14:04', '2021-04-06 22:14:04', NULL),
+(3, 'Organic Products', '2021-04-06 22:14:13', '2021-04-06 22:14:13', NULL),
+(4, 'Seeds', '2021-04-10 12:34:49', '2021-04-10 12:34:49', NULL),
+(5, 'Secondary Fertilisers', '2021-04-10 12:35:05', '2021-04-10 12:35:05', NULL),
+(6, 'Sprayers', '2021-04-10 12:35:16', '2021-04-10 12:35:16', NULL),
+(7, 'Vegetable Seeds', '2021-04-10 12:35:24', '2021-04-10 12:35:24', NULL),
+(8, 'Flower Seeds', '2021-04-10 12:35:34', '2021-04-10 12:35:34', NULL),
+(9, 'Fruit Seeds', '2021-04-10 12:35:45', '2021-04-10 12:35:45', NULL),
+(10, 'Tools', '2021-04-10 12:36:05', '2021-04-10 12:36:05', NULL),
+(11, 'Hand Garden Sprayers', '2021-04-10 12:36:19', '2021-04-10 12:36:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -3398,42 +2666,45 @@ CREATE TABLE `states` (
 --
 
 INSERT INTO `states` (`id`, `name`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Andaman and Nicobar Island (UT)', 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(2, 'Andhra Pradesh', 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(3, 'Arunachal Pradesh', 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(4, 'Assam', 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(5, 'Bihar', 1, '2021-11-27 03:37:53', '2021-11-27 03:37:53', NULL),
-(6, 'Chandigarh (UT)', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(7, 'Chhattisgarh', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(8, 'Dadra and Nagar Haveli (UT)', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(9, 'Daman and Diu (UT)', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(10, 'Delhi (NCT)', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(11, 'Goa', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(12, 'Gujarat', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(13, 'Haryana', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(14, 'Himachal Pradesh', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(15, 'Jammu and Kashmir', 1, '2021-11-27 03:37:54', '2021-11-27 03:37:54', NULL),
-(16, 'Jharkhand', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(17, 'Karnataka', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(18, 'Kerala', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(19, 'Lakshadweep (UT)', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(20, 'Madhya Pradesh', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(21, 'Maharashtra', 1, '2021-11-27 03:37:55', '2021-11-27 03:37:55', NULL),
-(22, 'Manipur', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(23, 'Meghalaya', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(24, 'Mizoram', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(25, 'Nagaland', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(26, 'Odisha', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(27, 'Puducherry (UT)', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(28, 'Punjab', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(29, 'Rajasthan', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(30, 'Sikkim', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(31, 'Tamil Nadu', 1, '2021-11-27 03:37:56', '2021-11-27 03:37:56', NULL),
-(32, 'Telangana', 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(33, 'Tripura', 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(34, 'Uttarakhand', 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(35, 'Uttar Pradesh', 1, '2021-11-27 03:37:57', '2021-11-27 03:37:57', NULL),
-(36, 'West Bengal', 1, '2021-11-27 03:37:58', '2021-11-27 03:37:58', NULL);
+(1, 'Andaman and Nicobar Island (UT)', 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(2, 'Andhra Pradesh', 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(3, 'Arunachal Pradesh', 1, '2021-02-22 09:44:04', '2021-02-22 09:44:04', NULL),
+(4, 'Assam', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(5, 'Bihar', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(6, 'Chandigarh (UT)', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(7, 'Chhattisgarh', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(8, 'Dadra and Nagar Haveli (UT)', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(9, 'Daman and Diu (UT)', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(10, 'Delhi (NCT)', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(11, 'Goa', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(12, 'Gujarat', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(13, 'Haryana', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(14, 'Himachal Pradesh', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(15, 'Jammu and Kashmir', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(16, 'Jharkhand', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(17, 'Karnataka', 1, '2021-02-22 09:44:05', '2021-02-22 09:44:05', NULL),
+(18, 'Kerala', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(19, 'Lakshadweep (UT)', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(20, 'Madhya Pradesh', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(21, 'Maharashtra', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(22, 'Manipur', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(23, 'Meghalaya', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(24, 'Mizoram', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(25, 'Nagaland', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(26, 'Odisha', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(27, 'Puducherry (UT)', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(28, 'Punjab', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(29, 'Rajasthan', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(30, 'Sikkim', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(31, 'Tamil Nadu', 1, '2021-02-22 09:44:06', '2021-02-22 09:44:06', NULL),
+(32, 'Telangana', 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(33, 'Tripura', 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(34, 'Uttarakhand', 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(35, 'Uttar Pradesh', 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(36, 'West Bengal', 1, '2021-02-22 09:44:07', '2021-02-22 09:44:07', NULL),
+(37, 'New State', 1, '2021-05-27 04:28:24', '2021-05-27 04:31:41', '2021-05-27 04:31:41'),
+(38, 'New State', 1, '2021-06-02 11:32:42', '2021-06-02 11:34:36', '2021-06-02 11:34:36'),
+(39, 'New State', 0, '2021-06-02 11:34:45', '2021-06-02 11:35:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -3443,15 +2714,18 @@ INSERT INTO `states` (`id`, `name`, `status`, `created_at`, `updated_at`, `delet
 
 CREATE TABLE `transactions` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `payment_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gateway` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` double NOT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `amount` decimal(15,2) DEFAULT NULL,
-  `transaction_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `order_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `transaction_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -3468,6 +2742,17 @@ CREATE TABLE `unit_types` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `unit_types`
+--
+
+INSERT INTO `unit_types` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'KG', 1, '2021-04-06 22:19:23', '2021-04-06 22:19:23'),
+(2, 'GM', 1, '2021-04-06 22:19:32', '2021-04-06 22:19:32'),
+(3, 'LTR', 1, '2021-04-06 22:19:40', '2021-04-06 22:19:40'),
+(4, 'PKG', 1, '2021-04-06 22:19:56', '2021-04-06 22:19:56'),
+(5, 'PCS', 1, '2021-04-06 22:20:07', '2021-04-06 22:20:07');
+
 -- --------------------------------------------------------
 
 --
@@ -3478,6 +2763,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` datetime DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3485,14 +2771,20 @@ CREATE TABLE `users` (
   `verified` tinyint(1) DEFAULT 0,
   `verified_at` datetime DEFAULT NULL,
   `verification_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile_verified_at` datetime DEFAULT NULL,
   `referral_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `device_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `device_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `email_verified_at`, `password`, `remember_token`, `approved`, `verified`, `verified_at`, `verification_token`, `mobile_verified_at`, `referral_code`, `device_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Company', 'homver301@gmail.com', '9109844771', NULL, '$2y$10$11LjdDcvpkJi8hpzpILpUO5uL.nGh6C.47XrUUUGqYbj.lGYaf8yG', NULL, 0, 0, NULL, NULL, NULL, NULL, 'ehf7jciXSDSiEyulFGKe1h:APA91bFht6Q6hep_PGtxB9Khk4wVAv93zGjLpq530XO8sXxdNL3uLiubLdefu4tFZJlBvECc7cL4CBZpKVZ0LWkcLvnbewl-D_RaakjWeGdYFIEsDyXqZWjcUTwvJ92Sonf4y0VeLP3Q', '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -3502,22 +2794,27 @@ CREATE TABLE `users` (
 
 CREATE TABLE `user_addresses` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `address` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `street` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address_line_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `district_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `pincode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `pincode_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `district_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `block_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `state_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `area_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT 0
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_addresses`
+--
+
+INSERT INTO `user_addresses` (`id`, `user_id`, `name`, `address`, `address_line_two`, `state_id`, `district_id`, `pincode`, `address_type`, `is_default`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, NULL, '9109844778', NULL, 1, 1, '25554', 'BILLING', 0, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL),
+(2, 1, NULL, '9109844778', NULL, 1, 1, '25554', 'BILLING', 0, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -3541,17 +2838,24 @@ CREATE TABLE `user_alerts` (
 
 CREATE TABLE `user_profiles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `shop_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `company_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `representative_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `owner_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pan_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gst_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gst_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pan_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_profiles`
+--
+
+INSERT INTO `user_profiles` (`id`, `user_id`, `company_name`, `representative_name`, `email`, `mobile`, `gst_number`, `pan_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'Company', 'homver30@gmail.com', 'homver301@gmail.com', '9109844771', NULL, NULL, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -3596,9 +2900,8 @@ CREATE TABLE `vendors` (
 --
 
 INSERT INTO `vendors` (`id`, `name`, `email`, `mobile`, `password`, `user_type`, `email_verified_at`, `mobile_verified_at`, `verification_token`, `mobile_verification_token`, `remember_token`, `approved`, `verified`, `verified_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Company', 'homver30@gmail.com', '9109844778', '$2y$10$ip0a06qc.510F5TPkU9Fu.Ex2sawWTaiCx.so/5cdfvd43wlh6yU.', 'WHOLESALER', NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, '2021-11-27 03:54:49', '2021-11-30 01:31:12', NULL),
-(2, NULL, 'homver30@gmail1.com', '9109844777', '$2y$10$xdPuaVJbSUSXcP6.BLMJ2OhXcX6GvXYVwLf0JY9mbH7PejvPCCR.S', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, '2021-11-29 06:23:39', '2021-11-30 11:12:56', NULL),
-(3, 'Company', 'test@test.com', '1234567890', '$2y$10$EDxUqqgzdNajSzzo5Jt3Ou26yMtcimYsS7DM.b0ZMvqra46XFUpcu', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 1, 1, '2021-11-30 08:11:51', '2021-11-30 07:15:50', '2021-11-30 08:11:51', NULL);
+(1, 'Company', 'homver30@gmail.com', '9109844778', '$2y$10$O5R4jFIgvw4oNYUh/A1vJOcPECAnJ73Dw9ktTgyfOKqojl2.hPk.S', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, '2021-12-03 03:46:38', '2021-12-03 03:46:38', NULL),
+(2, 'New Vendor', 'homver10@gmail.com', '9109844774', '$2y$10$tZL3gydnQNGVkK5w/qPvCuoZWy6AcLTQNEXieKc7R5346kz17xNMu', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2021-12-03 11:57:24', '2021-12-03 11:59:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -3639,9 +2942,8 @@ CREATE TABLE `vendor_profiles` (
 --
 
 INSERT INTO `vendor_profiles` (`id`, `vendor_id`, `company_name`, `representative_name`, `email`, `mobile`, `gst_number`, `pan_number`, `billing_address`, `billing_address_two`, `billing_state_id`, `billing_district_id`, `billing_pincode`, `pickup_address`, `pickup_address_two`, `pickup_state_id`, `pickup_district_id`, `pickup_pincode`, `bank_name`, `account_number`, `account_holder_name`, `ifsc_code`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Company', 'homver30@gmail.com', 'homver30@gmail.com', '9109844778', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', 2, 7, '25554', '9109844778', 'homver30@gmail.com', 1, 7, '25554', 'State Bank of India', '9109844778', 'Homesh', 'IFSCCODE', '2021-11-27 03:56:06', '2021-11-30 02:29:46', NULL),
-(2, 2, 'company', 'representative', 'homver30@gmail1.com', '9109844777', 'gstin', 'pnnnnn', 'address', NULL, 1, 1, '495555', 'address', NULL, 1, 2, '455555', 'bank', '12345678', 'acoun', 'ifsc', '2021-11-29 06:23:39', '2021-11-29 06:23:39', NULL),
-(3, 3, 'Company', 'Representative', 'test@test.com', '1234567890', 'GSTIN', 'PAN', 'Address', NULL, 4, 41, '455555', 'Address', NULL, 2, 41, '78944', 'Bank', '123456', 'Homesh', 'IFSCCODE', '2021-11-30 07:15:50', '2021-11-30 08:11:51', NULL);
+(1, 1, 'Company', 'Representative', 'homver30@gmail.com', '9109844778', 'GSIN', 'PAN', 'Billing Address', NULL, 7, 111, '492001', NULL, NULL, NULL, NULL, NULL, 'Bank', '123456', 'Homesh', 'IFSC', '2021-12-03 03:46:38', '2021-12-03 03:46:38', NULL),
+(2, 2, '9109844778', 'homver30@gmail.com', 'homver30@gmail.com', '9109844778', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', 1, 1, '25554', '9109844778', 'homver30@gmail.com', 1, 1, '25554', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', '2021-12-03 11:59:27', '2021-12-03 11:59:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -3651,12 +2953,20 @@ INSERT INTO `vendor_profiles` (`id`, `vendor_id`, `company_name`, `representativ
 
 CREATE TABLE `wishlists` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `product_price_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `product_option_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlists`
+--
+
+INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `product_option_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, '2021-12-03 08:23:21', '2021-12-03 08:23:21'),
+(3, 1, 1, 1, '2021-12-03 08:29:06', '2021-12-03 08:29:06');
 
 --
 -- Indexes for dumped tables
@@ -3666,230 +2976,230 @@ CREATE TABLE `wishlists` (
 -- Indexes for table `admins`
 --
 ALTER TABLE `admins`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `admins_email_unique` (`email`),
-  ADD UNIQUE KEY `admins_mobile_unique` (`mobile`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `admins_email_unique` (`email`) USING BTREE,
+  ADD UNIQUE KEY `admins_mobile_unique` (`mobile`) USING BTREE;
 
 --
 -- Indexes for table `admin_admin_alert`
 --
 ALTER TABLE `admin_admin_alert`
-  ADD KEY `admin_alert_id_fk_2924387` (`admin_alert_id`),
-  ADD KEY `admin_id_fk_2924387` (`admin_id`);
+  ADD KEY `admin_alert_id_fk_2924387` (`admin_alert_id`) USING BTREE,
+  ADD KEY `admin_id_fk_2924387` (`admin_id`) USING BTREE;
 
 --
 -- Indexes for table `admin_alerts`
 --
 ALTER TABLE `admin_alerts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `areas`
 --
 ALTER TABLE `areas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `areas_pincode_id_foreign` (`pincode_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `areas_pincode_id_foreign` (`pincode_id`) USING BTREE;
 
 --
 -- Indexes for table `articles`
 --
 ALTER TABLE `articles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2993335` (`user_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_fk_2993335` (`user_id`) USING BTREE;
 
 --
 -- Indexes for table `article_article_tag`
 --
 ALTER TABLE `article_article_tag`
-  ADD KEY `article_id_fk_2995560` (`article_id`),
-  ADD KEY `article_tag_id_fk_2995560` (`article_tag_id`);
+  ADD KEY `article_id_fk_2995560` (`article_id`) USING BTREE,
+  ADD KEY `article_tag_id_fk_2995560` (`article_tag_id`) USING BTREE;
 
 --
 -- Indexes for table `article_comments`
 --
 ALTER TABLE `article_comments`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2995574` (`user_id`),
-  ADD KEY `article_fk_2995580` (`article_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_fk_2995574` (`user_id`) USING BTREE,
+  ADD KEY `article_fk_2995580` (`article_id`) USING BTREE;
 
 --
 -- Indexes for table `article_likes`
 --
 ALTER TABLE `article_likes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2995642` (`user_id`),
-  ADD KEY `article_fk_2995643` (`article_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_fk_2995642` (`user_id`) USING BTREE,
+  ADD KEY `article_fk_2995643` (`article_id`) USING BTREE;
 
 --
 -- Indexes for table `article_tags`
 --
 ALTER TABLE `article_tags`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `bills`
 --
 ALTER TABLE `bills`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bills_vendor_id_foreign` (`vendor_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `bills_vendor_id_foreign` (`vendor_id`) USING BTREE;
 
 --
 -- Indexes for table `bill_items`
 --
 ALTER TABLE `bill_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bill_items_bill_id_foreign` (`bill_id`),
-  ADD KEY `bill_items_product_id_foreign` (`product_id`),
-  ADD KEY `bill_items_product_price_id_foreign` (`product_price_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `bill_items_bill_id_foreign` (`bill_id`) USING BTREE,
+  ADD KEY `bill_items_product_id_foreign` (`product_id`) USING BTREE,
+  ADD KEY `bill_items_product_option_id_foreign` (`product_option_id`) USING BTREE;
 
 --
 -- Indexes for table `blocks`
 --
 ALTER TABLE `blocks`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `blocks_district_id_foreign` (`district_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `blocks_district_id_foreign` (`district_id`) USING BTREE;
 
 --
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `carts`
 --
 ALTER TABLE `carts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_fk_2939007` (`order_id`),
-  ADD KEY `carts_product_id_foreign` (`product_id`),
-  ADD KEY `carts_product_price_id_foreign` (`product_price_id`),
-  ADD KEY `carts_user_id_foreign` (`user_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `carts_user_id_foreign` (`user_id`) USING BTREE,
+  ADD KEY `carts_product_id_foreign` (`product_id`) USING BTREE,
+  ADD KEY `carts_product_option_id_foreign` (`product_option_id`) USING BTREE;
 
 --
 -- Indexes for table `content_categories`
 --
 ALTER TABLE `content_categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `content_category_content_page`
 --
 ALTER TABLE `content_category_content_page`
-  ADD KEY `content_page_id_fk_2924404` (`content_page_id`),
-  ADD KEY `content_category_id_fk_2924404` (`content_category_id`);
+  ADD KEY `content_page_id_fk_2924404` (`content_page_id`) USING BTREE,
+  ADD KEY `content_category_id_fk_2924404` (`content_category_id`) USING BTREE;
 
 --
 -- Indexes for table `content_pages`
 --
 ALTER TABLE `content_pages`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `content_page_content_tag`
 --
 ALTER TABLE `content_page_content_tag`
-  ADD KEY `content_page_id_fk_2924405` (`content_page_id`),
-  ADD KEY `content_tag_id_fk_2924405` (`content_tag_id`);
+  ADD KEY `content_page_id_fk_2924405` (`content_page_id`) USING BTREE,
+  ADD KEY `content_tag_id_fk_2924405` (`content_tag_id`) USING BTREE;
 
 --
 -- Indexes for table `content_tags`
 --
 ALTER TABLE `content_tags`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `districts`
 --
 ALTER TABLE `districts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `districts_state_id_foreign` (`state_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `districts_state_id_foreign` (`state_id`) USING BTREE;
 
 --
 -- Indexes for table `enquiries`
 --
 ALTER TABLE `enquiries`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `attendant_fk_3167399` (`attendant_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `attendant_fk_3167399` (`attendant_id`) USING BTREE;
 
 --
 -- Indexes for table `faq_categories`
 --
 ALTER TABLE `faq_categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `faq_questions`
 --
 ALTER TABLE `faq_questions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `category_fk_2924418` (`category_id`),
-  ADD KEY `created_by_fk_2927060` (`created_by_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `category_fk_2924418` (`category_id`) USING BTREE,
+  ADD KEY `created_by_fk_2927060` (`created_by_id`) USING BTREE;
 
 --
 -- Indexes for table `followers`
 --
 ALTER TABLE `followers`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2995632` (`user_id`),
-  ADD KEY `follow_fk_2995633` (`follow_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_fk_2995632` (`user_id`) USING BTREE,
+  ADD KEY `follow_fk_2995633` (`follow_id`) USING BTREE;
 
 --
 -- Indexes for table `invoices`
 --
 ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `invoices_invoice_number_unique` (`invoice_number`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `invoices_invoice_number_unique` (`invoice_number`) USING BTREE;
 
 --
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `jobs_queue_index` (`queue`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `jobs_queue_index` (`queue`) USING BTREE;
 
 --
 -- Indexes for table `logistics`
 --
 ALTER TABLE `logistics`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `logistics_email_unique` (`email`),
-  ADD UNIQUE KEY `logistics_mobile_unique` (`mobile`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `logistics_email_unique` (`email`) USING BTREE,
+  ADD UNIQUE KEY `logistics_mobile_unique` (`mobile`) USING BTREE;
 
 --
 -- Indexes for table `master_stocks`
 --
 ALTER TABLE `master_stocks`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `master_stocks_product_id_foreign` (`product_id`),
-  ADD KEY `master_stocks_product_price_id_foreign` (`product_price_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `master_stocks_product_id_foreign` (`product_id`) USING BTREE,
+  ADD KEY `master_stocks_product_option_id_foreign` (`product_option_id`) USING BTREE;
 
 --
 -- Indexes for table `media`
 --
 ALTER TABLE `media`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `media_model_type_model_id_index` (`model_type`,`model_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `media_model_type_model_id_index` (`model_type`,`model_id`) USING BTREE;
 
 --
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2927119` (`user_id`),
-  ADD KEY `address_fk_2998788` (`address_id`),
-  ADD KEY `orders_transaction_id_foreign` (`transaction_id`);
+  ADD KEY `orders_user_id_foreign` (`user_id`),
+  ADD KEY `orders_billing_address_id_foreign` (`billing_address_id`),
+  ADD KEY `orders_shipping_address_id_foreign` (`shipping_address_id`),
+  ADD KEY `orders_vendor_id_foreign` (`vendor_id`);
 
 --
 -- Indexes for table `order_items`
@@ -3898,275 +3208,265 @@ ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_items_order_id_foreign` (`order_id`),
   ADD KEY `order_items_product_id_foreign` (`product_id`),
-  ADD KEY `order_items_product_price_id_foreign` (`product_price_id`),
-  ADD KEY `order_items_user_id_foreign` (`user_id`);
+  ADD KEY `order_items_product_option_id_foreign` (`product_option_id`);
 
 --
 -- Indexes for table `otps`
 --
 ALTER TABLE `otps`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
+  ADD KEY `password_resets_email_index` (`email`) USING BTREE;
 
 --
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `permission_role`
 --
 ALTER TABLE `permission_role`
-  ADD KEY `role_id_fk_2902509` (`role_id`),
-  ADD KEY `permission_id_fk_2902509` (`permission_id`);
+  ADD KEY `role_id_fk_2902509` (`role_id`) USING BTREE,
+  ADD KEY `permission_id_fk_2902509` (`permission_id`) USING BTREE;
 
 --
 -- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`) USING BTREE,
+  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`) USING BTREE;
 
 --
 -- Indexes for table `pincodes`
 --
 ALTER TABLE `pincodes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pincodes_block_id_foreign` (`block_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `pincodes_block_id_foreign` (`block_id`) USING BTREE;
 
 --
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `products_slug_unique` (`slug`),
-  ADD KEY `products_vendor_id_foreign` (`vendor_id`),
-  ADD KEY `products_product_category_id_foreign` (`product_category_id`),
-  ADD KEY `products_product_sub_category_id_foreign` (`product_sub_category_id`),
-  ADD KEY `brand_fk_2974094` (`brand_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `products_slug_unique` (`slug`) USING BTREE,
+  ADD KEY `products_vendor_id_foreign` (`vendor_id`) USING BTREE,
+  ADD KEY `products_product_category_id_foreign` (`product_category_id`) USING BTREE,
+  ADD KEY `products_product_sub_category_id_foreign` (`product_sub_category_id`) USING BTREE,
+  ADD KEY `brand_fk_2974094` (`brand_id`) USING BTREE;
 
 --
 -- Indexes for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `product_options`
 --
 ALTER TABLE `product_options`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_options_product_id_foreign` (`product_id`);
-
---
--- Indexes for table `product_prices`
---
-ALTER TABLE `product_prices`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_prices_product_id_foreign` (`product_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `product_options_product_id_foreign` (`product_id`) USING BTREE;
 
 --
 -- Indexes for table `product_product_tag`
 --
 ALTER TABLE `product_product_tag`
-  ADD KEY `product_id_fk_2902540` (`product_id`),
-  ADD KEY `product_tag_id_fk_2902540` (`product_tag_id`);
+  ADD KEY `product_id_fk_2902540` (`product_id`) USING BTREE,
+  ADD KEY `product_tag_id_fk_2902540` (`product_tag_id`) USING BTREE;
 
 --
 -- Indexes for table `product_stocks`
 --
 ALTER TABLE `product_stocks`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_stocks_vendor_id_foreign` (`vendor_id`),
-  ADD KEY `product_stocks_product_id_foreign` (`product_id`),
-  ADD KEY `product_stocks_product_price_id_foreign` (`product_price_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `product_stocks_vendor_id_foreign` (`vendor_id`) USING BTREE,
+  ADD KEY `product_stocks_product_id_foreign` (`product_id`) USING BTREE;
 
 --
 -- Indexes for table `product_sub_categories`
 --
 ALTER TABLE `product_sub_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_sub_categories_product_category_id_foreign` (`product_category_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `product_sub_categories_product_category_id_foreign` (`product_category_id`) USING BTREE;
 
 --
 -- Indexes for table `product_tags`
 --
 ALTER TABLE `product_tags`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `push_notifications`
 --
 ALTER TABLE `push_notifications`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `push_notification_user`
 --
 ALTER TABLE `push_notification_user`
-  ADD KEY `push_notification_user_push_notification_id_foreign` (`push_notification_id`),
-  ADD KEY `push_notification_user_user_id_foreign` (`user_id`);
+  ADD KEY `push_notification_user_push_notification_id_foreign` (`push_notification_id`) USING BTREE,
+  ADD KEY `push_notification_user_user_id_foreign` (`user_id`) USING BTREE;
 
 --
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `reviews_product_id_foreign` (`product_id`),
-  ADD KEY `reviews_user_id_foreign` (`user_id`),
-  ADD KEY `reviews_vendor_id_foreign` (`vendor_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `reviews_product_id_foreign` (`product_id`) USING BTREE,
+  ADD KEY `reviews_user_id_foreign` (`user_id`) USING BTREE,
+  ADD KEY `reviews_vendor_id_foreign` (`vendor_id`) USING BTREE;
 
 --
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `role_admin`
 --
 ALTER TABLE `role_admin`
-  ADD KEY `admin_id_fk_custom_01` (`admin_id`),
-  ADD KEY `role_id_fk_custom_02` (`role_id`);
+  ADD KEY `admin_id_fk_custom_01` (`admin_id`) USING BTREE,
+  ADD KEY `role_id_fk_custom_02` (`role_id`) USING BTREE;
 
 --
 -- Indexes for table `role_logistics`
 --
 ALTER TABLE `role_logistics`
-  ADD KEY `logistics_id_fk_001` (`logistics_id`),
-  ADD KEY `role_id_fk_0092` (`role_id`);
+  ADD KEY `logistics_id_fk_001` (`logistics_id`) USING BTREE,
+  ADD KEY `role_id_fk_0092` (`role_id`) USING BTREE;
 
 --
 -- Indexes for table `role_user`
 --
 ALTER TABLE `role_user`
-  ADD KEY `user_id_fk_2902518` (`user_id`),
-  ADD KEY `role_id_fk_2902518` (`role_id`);
+  ADD KEY `user_id_fk_2902518` (`user_id`) USING BTREE,
+  ADD KEY `role_id_fk_2902518` (`role_id`) USING BTREE;
 
 --
 -- Indexes for table `role_vendor`
 --
 ALTER TABLE `role_vendor`
-  ADD KEY `vendor_id_fk_001` (`vendor_id`),
-  ADD KEY `role_id_fk_0095` (`role_id`);
+  ADD KEY `vendor_id_fk_001` (`vendor_id`) USING BTREE,
+  ADD KEY `role_id_fk_0095` (`role_id`) USING BTREE;
 
 --
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `site_settings`
 --
 ALTER TABLE `site_settings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `slider_items`
 --
 ALTER TABLE `slider_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `slider_items_slider_id_foreign` (`slider_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `slider_items_slider_id_foreign` (`slider_id`) USING BTREE;
 
 --
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transactions_user_id_foreign` (`user_id`),
+  ADD KEY `transactions_order_group_index` (`order_group`);
 
 --
 -- Indexes for table `unit_types`
 --
 ALTER TABLE `unit_types`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD UNIQUE KEY `users_mobile_unique` (`mobile`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `users_email_unique` (`email`) USING BTREE,
+  ADD UNIQUE KEY `users_mobile_unique` (`mobile`) USING BTREE;
 
 --
 -- Indexes for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_2998741` (`user_id`),
-  ADD KEY `pincode_fk_2998742` (`pincode_id`),
-  ADD KEY `district_fk_2998743` (`district_id`),
-  ADD KEY `block_fk_2998744` (`block_id`),
-  ADD KEY `state_fk_2998745` (`state_id`),
-  ADD KEY `area_fk_2998746` (`area_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_addresses_user_id_foreign` (`user_id`) USING BTREE,
+  ADD KEY `user_addresses_state_id_foreign` (`state_id`) USING BTREE,
+  ADD KEY `user_addresses_district_id_foreign` (`district_id`) USING BTREE;
 
 --
 -- Indexes for table `user_alerts`
 --
 ALTER TABLE `user_alerts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_fk_3068042` (`user_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `user_profiles_user_id_foreign` (`user_id`) USING BTREE;
 
 --
 -- Indexes for table `user_user_alert`
 --
 ALTER TABLE `user_user_alert`
-  ADD KEY `user_alert_id_fk_2924387` (`user_alert_id`),
-  ADD KEY `user_id_fk_2924387` (`user_id`);
+  ADD KEY `user_alert_id_fk_2924387` (`user_alert_id`) USING BTREE,
+  ADD KEY `user_id_fk_2924387` (`user_id`) USING BTREE;
 
 --
 -- Indexes for table `vendors`
 --
 ALTER TABLE `vendors`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `vendors_email_unique` (`email`),
-  ADD UNIQUE KEY `vendors_mobile_unique` (`mobile`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `vendors_email_unique` (`email`) USING BTREE,
+  ADD UNIQUE KEY `vendors_mobile_unique` (`mobile`) USING BTREE;
 
 --
 -- Indexes for table `vendor_profiles`
 --
 ALTER TABLE `vendor_profiles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `vendor_profiles_vendor_id_foreign` (`vendor_id`),
-  ADD KEY `vendor_profiles_billing_state_id_foreign` (`billing_state_id`),
-  ADD KEY `vendor_profiles_billing_district_id_foreign` (`billing_district_id`),
-  ADD KEY `vendor_profiles_pickup_state_id_foreign` (`pickup_state_id`),
-  ADD KEY `vendor_profiles_pickup_district_id_foreign` (`pickup_district_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `vendor_profiles_vendor_id_foreign` (`vendor_id`) USING BTREE,
+  ADD KEY `vendor_profiles_billing_state_id_foreign` (`billing_state_id`) USING BTREE,
+  ADD KEY `vendor_profiles_billing_district_id_foreign` (`billing_district_id`) USING BTREE,
+  ADD KEY `vendor_profiles_pickup_state_id_foreign` (`pickup_state_id`) USING BTREE,
+  ADD KEY `vendor_profiles_pickup_district_id_foreign` (`pickup_district_id`) USING BTREE;
 
 --
 -- Indexes for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `wishlists_product_id_foreign` (`product_id`),
-  ADD KEY `wishlists_product_price_id_foreign` (`product_price_id`),
-  ADD KEY `wishlists_user_id_foreign` (`user_id`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `wishlists_user_id_foreign` (`user_id`) USING BTREE,
+  ADD KEY `wishlists_product_id_foreign` (`product_id`) USING BTREE,
+  ADD KEY `wishlists_product_option_id_foreign` (`product_option_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -4218,7 +3518,7 @@ ALTER TABLE `article_tags`
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=807;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `bills`
@@ -4242,13 +3542,13 @@ ALTER TABLE `blocks`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `content_categories`
@@ -4272,7 +3572,7 @@ ALTER TABLE `content_tags`
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=719;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=722;
 
 --
 -- AUTO_INCREMENT for table `enquiries`
@@ -4326,25 +3626,25 @@ ALTER TABLE `master_stocks`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `otps`
@@ -4374,7 +3674,7 @@ ALTER TABLE `pincodes`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
@@ -4386,13 +3686,7 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `product_options`
 --
 ALTER TABLE `product_options`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `product_prices`
---
-ALTER TABLE `product_prices`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_stocks`
@@ -4410,7 +3704,7 @@ ALTER TABLE `product_sub_categories`
 -- AUTO_INCREMENT for table `product_tags`
 --
 ALTER TABLE `product_tags`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `push_notifications`
@@ -4458,7 +3752,7 @@ ALTER TABLE `slider_items`
 -- AUTO_INCREMENT for table `states`
 --
 ALTER TABLE `states`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -4470,19 +3764,19 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `unit_types`
 --
 ALTER TABLE `unit_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_alerts`
@@ -4494,25 +3788,25 @@ ALTER TABLE `user_alerts`
 -- AUTO_INCREMENT for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vendor_profiles`
 --
 ALTER TABLE `vendor_profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -4559,20 +3853,6 @@ ALTER TABLE `article_likes`
   ADD CONSTRAINT `user_fk_2995642` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `bills`
---
-ALTER TABLE `bills`
-  ADD CONSTRAINT `bills_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
-
---
--- Constraints for table `bill_items`
---
-ALTER TABLE `bill_items`
-  ADD CONSTRAINT `bill_items_bill_id_foreign` FOREIGN KEY (`bill_id`) REFERENCES `bills` (`id`),
-  ADD CONSTRAINT `bill_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `bill_items_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`);
-
---
 -- Constraints for table `blocks`
 --
 ALTER TABLE `blocks`
@@ -4583,9 +3863,8 @@ ALTER TABLE `blocks`
 --
 ALTER TABLE `carts`
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `carts_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`),
-  ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `order_fk_2939007` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+  ADD CONSTRAINT `carts_product_option_id_foreign` FOREIGN KEY (`product_option_id`) REFERENCES `product_options` (`id`),
+  ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `content_category_content_page`
@@ -4628,19 +3907,13 @@ ALTER TABLE `followers`
   ADD CONSTRAINT `user_fk_2995632` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `master_stocks`
---
-ALTER TABLE `master_stocks`
-  ADD CONSTRAINT `master_stocks_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `master_stocks_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`);
-
---
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `address_fk_2998788` FOREIGN KEY (`address_id`) REFERENCES `user_addresses` (`id`),
-  ADD CONSTRAINT `orders_transaction_id_foreign` FOREIGN KEY (`transaction_id`) REFERENCES `transactions` (`id`),
-  ADD CONSTRAINT `user_fk_2927119` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_billing_address_id_foreign` FOREIGN KEY (`billing_address_id`) REFERENCES `user_addresses` (`id`),
+  ADD CONSTRAINT `orders_shipping_address_id_foreign` FOREIGN KEY (`shipping_address_id`) REFERENCES `user_addresses` (`id`),
+  ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `orders_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
 
 --
 -- Constraints for table `order_items`
@@ -4648,8 +3921,7 @@ ALTER TABLE `orders`
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
   ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `order_items_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`),
-  ADD CONSTRAINT `order_items_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `order_items_product_option_id_foreign` FOREIGN KEY (`product_option_id`) REFERENCES `product_options` (`id`);
 
 --
 -- Constraints for table `permission_role`
@@ -4680,12 +3952,6 @@ ALTER TABLE `product_options`
   ADD CONSTRAINT `product_options_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
--- Constraints for table `product_prices`
---
-ALTER TABLE `product_prices`
-  ADD CONSTRAINT `product_prices_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
-
---
 -- Constraints for table `product_product_tag`
 --
 ALTER TABLE `product_product_tag`
@@ -4697,7 +3963,6 @@ ALTER TABLE `product_product_tag`
 --
 ALTER TABLE `product_stocks`
   ADD CONSTRAINT `product_stocks_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `product_stocks_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`),
   ADD CONSTRAINT `product_stocks_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
 
 --
@@ -4705,21 +3970,6 @@ ALTER TABLE `product_stocks`
 --
 ALTER TABLE `product_sub_categories`
   ADD CONSTRAINT `product_sub_categories_product_category_id_foreign` FOREIGN KEY (`product_category_id`) REFERENCES `product_categories` (`id`);
-
---
--- Constraints for table `push_notification_user`
---
-ALTER TABLE `push_notification_user`
-  ADD CONSTRAINT `push_notification_user_push_notification_id_foreign` FOREIGN KEY (`push_notification_id`) REFERENCES `push_notifications` (`id`),
-  ADD CONSTRAINT `push_notification_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `reviews`
---
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `reviews_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `reviews_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
 
 --
 -- Constraints for table `role_admin`
@@ -4750,27 +4000,24 @@ ALTER TABLE `role_vendor`
   ADD CONSTRAINT `vendor_id_fk_001` FOREIGN KEY (`vendor_id`) REFERENCES `logistics` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `slider_items`
+-- Constraints for table `transactions`
 --
-ALTER TABLE `slider_items`
-  ADD CONSTRAINT `slider_items_slider_id_foreign` FOREIGN KEY (`slider_id`) REFERENCES `sliders` (`id`);
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  ADD CONSTRAINT `area_fk_2998746` FOREIGN KEY (`area_id`) REFERENCES `areas` (`id`),
-  ADD CONSTRAINT `block_fk_2998744` FOREIGN KEY (`block_id`) REFERENCES `blocks` (`id`),
-  ADD CONSTRAINT `district_fk_2998743` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`),
-  ADD CONSTRAINT `pincode_fk_2998742` FOREIGN KEY (`pincode_id`) REFERENCES `pincodes` (`id`),
-  ADD CONSTRAINT `state_fk_2998745` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`),
-  ADD CONSTRAINT `user_fk_2998741` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `user_addresses_district_id_foreign` FOREIGN KEY (`district_id`) REFERENCES `districts` (`id`),
+  ADD CONSTRAINT `user_addresses_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`),
+  ADD CONSTRAINT `user_addresses_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
-  ADD CONSTRAINT `user_fk_3068042` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `user_profiles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `user_user_alert`
@@ -4788,14 +4035,6 @@ ALTER TABLE `vendor_profiles`
   ADD CONSTRAINT `vendor_profiles_pickup_district_id_foreign` FOREIGN KEY (`pickup_district_id`) REFERENCES `districts` (`id`),
   ADD CONSTRAINT `vendor_profiles_pickup_state_id_foreign` FOREIGN KEY (`pickup_state_id`) REFERENCES `states` (`id`),
   ADD CONSTRAINT `vendor_profiles_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
-
---
--- Constraints for table `wishlists`
---
-ALTER TABLE `wishlists`
-  ADD CONSTRAINT `wishlists_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `wishlists_product_price_id_foreign` FOREIGN KEY (`product_price_id`) REFERENCES `product_prices` (`id`),
-  ADD CONSTRAINT `wishlists_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
