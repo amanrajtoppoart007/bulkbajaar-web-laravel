@@ -3,23 +3,17 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Events\OrderAssigned;
 use App\Events\OrderCreated;
-use App\Events\OrderNotAssigned;
 use App\Models\Cart;
-use App\Models\FranchiseeArea;
-use App\Models\HelpCenter;
-use App\Models\HelpCenterProfile;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Transaction;
-use App\Models\UserAddress;
-use App\Models\Vendor;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Razorpay\Api\Api;
 use Validator;
 
 class OrderController extends \App\Http\Controllers\Api\BaseController
@@ -61,6 +55,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             $orderGroupNo = $this->generateOrderGroupNumber(Order::class);
             $orders = [];
             $orderItems = [];
+            $ordersTotal = 0;
             foreach ($groupedCarts as $vendorId => $cartGroup) {
                 $orderNo = $this->generateOrderNumber(Order::class);
                 $orderSubTotal = 0;
@@ -71,10 +66,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 foreach ($cartGroup as $cart) {
                     $product = $cart->product;
                     $price = $product->price;
-                    $appliedPrice = applyPrice($price * $cart->quantity);
-                    $discountAmount = getPercentAmount($appliedPrice, $product->discount);
-                    $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
-                    $totalAmount = $appliedPrice - $discountAmount;
+                    $discountAmount = getPercentAmount($price * $cart->quantity, $product->discount);
+                    $chargeAmount = getPercentAmount(($price * $cart->quantity) - $discountAmount, $portalChargePercent);
+                    $totalAmount = applyPrice($price * $cart->quantity, $portalChargePercent, $product->discount);
                     $orderItems[$vendorId][] = [
                         'order_number' => $orderNo.'-'.($index++),
                         'product_id' => $product->id,
@@ -106,6 +100,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'charge_amount' => $orderChargeAmount,
                     'grand_total' => $orderGrandTotal,
                 ];
+                $ordersTotal += $orderGrandTotal;
 
 //                $minimumOrderAmount = getMinimumOrderAmount($vendorId);
 //                if ($orderGrandTotal < $minimumOrderAmount) {
@@ -130,29 +125,55 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             DB::commit();
 //            die;
 
+
+
+            $razorOrder = null;
+            if ($request->payment_method != 'COD'){
+                if ($request->payment_method == 'ONLINE'){
+                    $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+                    $razorOrder = $razorPayApi->order->create(
+                        [
+                            'receipt' => $orderGroupNo,
+                            'amount' => $ordersTotal * 100,
+                            'currency' => 'INR'
+                        ]
+                    );
+                }elseif ($request->payment_method == 'HALF'){
+                    $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+                    $razorOrder = $razorPayApi->order->create(
+                        [
+                            'receipt' => $orderGroupNo,
+                            'amount' => ($ordersTotal / 2) * 100,
+                            'currency' => 'INR'
+                        ]
+                    );
+                }
+            }
             $result = [
                 'status' => 1,
                 'response' => 'success',
-                'action' => 'placed',
-                'data' => ['order_number' => $orderGroupNo],
+                'action' => $request->payment_method == 'COD' ? 'placed' : 'pay',
+                'data' => [
+                    'order_number' => $orderGroupNo,
+                    'razor_order_id' => $razorOrder['id'] ?? null,
+                    'amount' => $razorOrder['amount'] ?? null,
+                ],
                 'message' => 'Order placed successfully'
             ];
-
 
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
-
-
     }
 
-    public function placeOrder_bkp(Request $request)
+    public function makePayment(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'address_id' => 'required|exists:user_addresses,id,deleted_at,NULL',
-            'payment_method' => 'required',
-            'razorpay_payment_id' => 'nullable',
+            'order_number' => 'required|exists:orders,order_group_number',
+            'razorpay_order_id' => 'required',
+            'razorpay_payment_id' => 'required',
+            'razorpay_signature' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -160,130 +181,63 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if (!UserAddress::whereId($request->input('address_id'))->whereUserId(auth()->user()->id)->exists()) {
-            $result = [
-                'status' => 0,
-                'response' => 'error',
-                'action' => 'rejected',
-                'message' => "This address does not belong to you."
-            ];
+        $orderGroupNo = $request->order_number;
+        $razorpayOrderId = $request->razorpay_order_id;
+        $razorpayId = $request->razorpay_payment_id;
+
+        $generatedSignature = hash_hmac('SHA256', $razorpayOrderId . "|" . $razorpayId, env('RAZOR_SECRET'));
+
+        if ($generatedSignature != $request->razorpay_signature) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Payment Verification failed.'];
             return response()->json($result, 200);
         }
 
-        $carts = Cart::where('user_id', auth()->user()->id)->get();
-        if (!count($carts)) {
-            $result = [
-                'status' => 0,
-                'response' => 'error',
-                'action' => 'add',
-                'message' => 'Sorry your cart is empty'
-            ];
-            return response()->json($result, 200);
-        }
-
-        DB::beginTransaction();
         try {
-            $order = new Order();
-            $order->order_number = $this->generateOrderNumber(Order::class);
-            $order->user_id = auth()->user()->id;
-            $order->status = 'PENDING';
-            $order->payment_type = strtoupper($request->input('payment_method'));
+            $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+            $razorPayment = $razorPayApi->payment->fetch($request->razorpay_payment_id);
 
-            $order->payment_status = $request->input('razorpay_payment_id') ? 'SUCCESS' : 'PENDING';
-            $order->address_id = $request->input('address_id');
-            $subTotal = 0;
-            $totalDiscount = 0;
-            $grandTotal = 0;
+            Transaction::create([
+                'payment_id' => $razorPayment->id,
+                'gateway' => 'razorpay',
+                'amount' => $razorPayment->amount,
+                'status' => $razorPayment->status,
+                'currency' => $razorPayment->currency,
+                'method' => $razorPayment->method,
+                'meta_data' => serialize($razorPayment),
+                'order_group' => $orderGroupNo,
+                'user_id' => auth()->id(),
+            ]);
 
-            foreach ($carts as $cart) {
-                $total = $cart->amount * $cart->quantity;
-                $discountAmount = $total * $cart->discount / 100;
-                $subTotal += $total;
-                $totalDiscount += $discountAmount;
-                $grandTotal += $total - $discountAmount;
-            }
-            $order->sub_total = $subTotal;
-            $order->gst = 0;
-            $order->discount = $totalDiscount;
-            $order->grand_total = $grandTotal;
+            if ($razorPayment->status != 'failed') {
+                DB::transaction(function () use ($orderGroupNo, $razorPayment){
+                    $orders = Order::where($orderGroupNo)->with('orderItems')->get();
+                    foreach ($orders as $order){
+                        $type = $order->payment_type;
+                        if($type == 'HALF'){
+                            $order->amount_paid += ($order->grand_total / 2);
+                        }else{
+                            $order->amount_paid += $order->grand_total;
+                        }
+                        $order->payment_status = $order->grand_total > $order->amount_paid ? 'PARTLY_PAID' : 'PAID';
+                        $order->save();
+                    }
+                });
 
-            $userAddress = UserAddress::find($request->input('address_id'));
-
-            $helpCenterIds = HelpCenterProfile::where('representative_pincode_id',
-                $userAddress->pincode_id)->orWhere('organization_pincode_id',
-                $userAddress->pincode_id)->pluck('help_center_id')->toArray();
-            if (!empty($helpCenterIds)) {
-                $order->help_center_id = $helpCenterIds[array_rand($helpCenterIds)];
-            }
-
-            $franchiseeIds = FranchiseeArea::where('area_id',
-                $userAddress->area_id)->distinct('franchisee_id')->pluck('franchisee_id')->toArray();
-            if (empty($franchiseeIds)) {
-                $franchiseeIds = FranchiseeArea::where('pincode_id',
-                    $userAddress->pincode_id)->distinct('franchisee_id')->pluck('franchisee_id')->toArray();
-            }
-            $counts = [];
-            foreach ($franchiseeIds as $franchiseeId) {
-                $counts[$franchiseeId] = Order::whereFranchiseeId($franchiseeId)->count();
-            }
-            $order->franchisee_id = empty($counts) ? null : array_search(min($counts), $counts);
-
-
-            $order->save();
-            foreach ($carts as $cart) {
-                $itemDiscountAmount = ($cart->amount * $cart->quantity) * $cart->discount / 100;
-                $itemTotalAmount = ($cart->amount * $cart->quantity) - $itemDiscountAmount;
-
-                $data = [
-                    'order_id' => $order->id,
-                    'product_id' => $cart->product_id,
-                    'product_price_id' => $cart->product_price_id,
-                    'amount' => $cart->amount,
-                    'unit' => $cart->unit,
-                    'unit_quantity' => $cart->unit_quantity,
-                    'quantity' => $cart->quantity,
-                    'discount' => $cart->discount,
-                    'discount_amount' => $itemDiscountAmount,
-                    'gst' => 0,
-                    'total_amount' => $itemTotalAmount,
-                    'user_id' => $cart->user_id,
-                    'cart_number' => $cart->cart_number,
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'paid',
+                    'message' => 'Your payment was successful..'
                 ];
-                OrderItem::create($data);
-            }
+            }else
+                $result = [
+                    'status' => 1,
+                    'response' => 'error',
+                    'action' => 'retry',
+                    'message' => 'Your payment was failed, please try again.'
+                ];
 
-            if ($request->input('razorpay_payment_id')) {
-                $transaction = new Transaction();
-                $transaction->status = "Success";
-                $transaction->amount = $itemTotalAmount;
-                $transaction->transaction_number = $request->input('razorpay_payment_id');
-                $transaction->transaction_type = "App\Models\Order";
-                $transaction->user_id = auth()->user()->id;
-                $transaction->order_id = $order->id;
-                $transaction->save();
-                $order->transaction_id = $transaction->id;
-                $order->payment_status = 'SUCCESS';
-                $order->save();
-            }
-
-            Cart::where('user_id', auth()->user()->id)->delete();
-            DB::commit();
-            $order->refresh();
-            $result = [
-                'status' => 1,
-                'response' => 'success',
-                'action' => 'placed',
-                'data' => ['order_number' => $order->order_number],
-                'message' => 'Order placed successfully'
-            ];
-            event(new OrderCreated($order));
-            if (!isset($order->franchisee_id)) {
-                event(new OrderNotAssigned($order));
-            } else {
-                event(new OrderAssigned($order));
-            }
-        } catch (\Exception $exception) {
-            DB::rollBack();
+        }catch (\Exception $exception){
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -342,28 +296,43 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
 
             $orderItems = OrderItem::where('order_id', $order->id)->with('product')->get();
 
-            $addressObj = $order->address()->withTrashed()->first();
+            $order->load(['vendor','orderItems.product','orderItems.productOption', 'billingAddress.state:id,name', 'billingAddress.district:id,name', 'shippingAddress.state:id,name', 'shippingAddress.district:id,name']);
 
-            $address = $addressObj->address;
-            $address .= $addressObj->landmark ? ", ".$addressObj->landmark : "";
-            $address .= $addressObj->landmark ? ", ".$addressObj->landmark : "";
-            $address .= $addressObj->city ? ", ".$addressObj->city->name : "";
-            $address .= $addressObj->state ? ", ".$addressObj->state->name : "";
-            $address .= $addressObj->pincode ? " - ".$addressObj->pincode->pincode : "";
+            $billingAddressObj = $order->billingAddress;
+            $shippingAddressObj = $order->shippingAddress;
+
+            $billingAddress = '';
+            if (!is_null($billingAddressObj)){
+                $billingAddress = $billingAddressObj->address;
+                $billingAddress .= $billingAddressObj->address_line_two ? ", ".$billingAddressObj->address_line_two : "";
+                $billingAddress .= $billingAddressObj->district ? ", ".$billingAddressObj->district->name : "";
+                $billingAddress .= $billingAddressObj->state ? ", ".$billingAddressObj->state->name : "";
+                $billingAddress .= $billingAddressObj->pincode ? " - ".$billingAddressObj->pincode : "";
+            }
+
+            $shippingAddress = "";
+            if (!is_null($shippingAddressObj)){
+                $shippingAddress = $shippingAddressObj->address ?? '';
+                $shippingAddress .= $shippingAddressObj->address_line_two ? ", ".$shippingAddressObj->address_line_two : "";
+                $shippingAddress .= $shippingAddressObj->district ? ", ".$shippingAddressObj->district->name : "";
+                $shippingAddress .= $shippingAddressObj->state ? ", ".$shippingAddressObj->state->name : "";
+                $shippingAddress .= $shippingAddressObj->pincode ? " - ".$shippingAddressObj->pincode : "";
+            }
 
             $data = [
                 'id' => $order->id,
                 'order_number' => $order->order_number,
+                'order_group_number' => $order->order_group_number,
                 'payment_type' => $order->payment_type,
-                'sub_total' => $order->sub_total,
-                'gst' => $order->gst,
-                'discount' => $order->discount,
+                'sub_total' => $order->sub_total + $order->charge_amount,
+                'discount_amount' => $order->discount_amount,
                 'grand_total' => $order->grand_total,
                 'status' => $order->status,
                 'payment_status' => $order->payment_status,
                 'order_date' => Carbon::parse($order->created_at)->format('d-m-Y'),
-                'name' => $addressObj->name,
-                'address' => $address,
+                'shipping_address' => $shippingAddress,
+                'billing_address' => $billingAddress,
+                'vendor' => $order->vendor->name ?? '',
             ];
 
             foreach ($orderItems as $orderItem) {
@@ -377,17 +346,17 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 }
                 $data['list'][] = [
                     'id' => $orderItem->id,
-                    'cart_number' => $orderItem->cart_number,
                     'product_id' => $orderItem->product_id,
                     'product' => $orderItem->product->name,
-                    'product_price_id' => $orderItem->product_price_id,
-                    'unit' => $orderItem->unit,
-                    'unit_quantity' => $orderItem->unit_quantity,
+                    'product_option_id' => $orderItem->product_option_id,
+                    'option' => $orderItem->productOption->option ?? null,
+                    'unit' => $orderItem->productOption->unit ?? null,
                     'quantity' => $orderItem->quantity,
-                    'amount' => $orderItem->amount,
-                    'gst' => $orderItem->gst,
+                    'amount' => $orderItem->amount, $orderItem->charge_percent,
                     'discount' => $orderItem->discount,
                     'discount_amount' => $orderItem->discount_amount,
+                    'charge_percent' => $orderItem->charge_percent,
+                    'charge_amount' => $orderItem->charge_amount,
                     'total_amount' => $orderItem->total_amount,
                     'thumb_link' => $thumbLink
                 ];

@@ -33,6 +33,7 @@ Route::prefix('v1/user')->group(function (){
         Route::post('update-cart-quantity', [\App\Http\Controllers\Api\V1\User\CartController::class, 'updateCartQuantity']);
         Route::post('remove-from-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'removeFromCart']);
         Route::post('place-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'placeOrder']);
+        Route::post('make-payment', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'makePayment']);
         Route::get('get-orders', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrders']);
         Route::get('get-order-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderDetails']);
         Route::post('cancel-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'cancelOrder']);

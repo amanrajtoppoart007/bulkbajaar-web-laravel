@@ -62,7 +62,13 @@ class Order extends Model
     const PAYMENT_TYPE_SELECT = [
         'ONLINE' => 'Online',
         'COD'    => 'COD',
-        'HALF'    => 'HALF',
+        'HALF'    => 'Up front 50 %',
+    ];
+
+    const PAYMENT_STATUS_SElECT = [
+        'PENDING' => 'Pending',
+        'PARTLY_PAID'    => 'Partly Paid',
+        'PAID'    => 'Paid',
     ];
 
     protected $fillable = [

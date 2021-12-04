@@ -28,7 +28,7 @@ class ProductList
                 $data[$i]['id'] = $product['id'];
                 $data[$i]['name'] = $product['name'];
                 $data[$i]['price'] = applyPrice($product['price']);
-                $data[$i]['mop'] = $product['mop'];
+                $data[$i]['mop'] = getMinimumOrderAmount($product['vendor_id']);
                 $data[$i]['moq'] = $product['moq'];
                 $data[$i]['discount'] = $product['discount'];
                 $data[$i]['discounted_price'] = applyPrice($product['price'], null, $product['discount']);

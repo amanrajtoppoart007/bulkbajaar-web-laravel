@@ -19,9 +19,9 @@ class Product extends Model implements HasMedia
 
     public $table = 'products';
 
-//    protected $appends = [
-//        'images',
-//    ];
+    protected $appends = [
+        'images',
+    ];
 
     protected $attributes = [
         'discount' => 0
@@ -39,7 +39,6 @@ class Product extends Model implements HasMedia
         'slug',
         'description',
         'price',
-        'mop',
         'moq',
         'discount',
         'product_category_id',

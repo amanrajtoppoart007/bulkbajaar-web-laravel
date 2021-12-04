@@ -2,11 +2,9 @@
 
 function applyPrice($amount, $percentage = null, $discount = 0){
     if (is_null($percentage)) $percentage = getPortalChargePercentage();
-    $total = ($amount + ($amount * $percentage / 100));
-    if ($discount > 0){
-        $total -= $total * $discount / 100;
-    }
-    return ceil($total);
+    $discountedPrice = $amount - (($amount * $discount) / 100);
+    $total = $discountedPrice + getPercentAmount($discountedPrice, $percentage);
+    return round($total, 2);
 }
 
 //To get portal charge applied to each product

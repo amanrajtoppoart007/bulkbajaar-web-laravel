@@ -15,7 +15,6 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
             $table->decimal('price', 15, 2)->nullable();
-            $table->decimal('mop', 15, 2)->default(0)->comment('Minimum order price');
             $table->unsignedSmallInteger('moq')->default(4)->comment('Minimum order quantity');
             $table->decimal('discount', 5, 2)->default(0);
             $table->foreignId('product_category_id')->nullable()->constrained();

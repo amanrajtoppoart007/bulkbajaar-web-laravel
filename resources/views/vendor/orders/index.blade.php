@@ -14,19 +14,19 @@
                         {{ trans('cruds.franchiseeOrder.fields.order_number') }}
                     </th>
                     <th>
-                        {{ trans('cruds.franchiseeOrder.fields.payment_type') }}
+                        Buyer
                     </th>
                     <th>
-                        {{ trans('cruds.franchiseeOrder.fields.amount') }}
+                        Payment Status
                     </th>
                     <th>
-                        {{ trans('cruds.franchiseeOrder.fields.gst') }}
+                        Sub Total
                     </th>
                     <th>
                         {{ trans('cruds.franchiseeOrder.fields.discount') }}
                     </th>
                     <th>
-                        {{ trans('cruds.franchiseeOrder.fields.total_amount') }}
+                        Grand Total
                     </th>
                     <th>
                         {{ trans('cruds.franchiseeOrder.fields.status') }}
@@ -39,14 +39,16 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                         <select class="search" strict="true">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Order::PAYMENT_TYPE_SELECT as $key => $item)
+                            @foreach(App\Models\Order::PAYMENT_STATUS_SElECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </td>
-                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -80,10 +82,10 @@
                 columns: [
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'order_number', name: 'order_number'},
-                    {data: 'payment_type', name: 'payment_type'},
-                    {data: 'amount', name: 'amount'},
-                    {data: 'gst', name: 'gst'},
-                    {data: 'discount', name: 'discount'},
+                    {data: 'user', name: 'user.name'},
+                    {data: 'payment_status', name: 'payment_status'},
+                    {data: 'sub_total', name: 'sub_total'},
+                    {data: 'discount_amount', name: 'discount_amount'},
                     {data: 'total_amount', name: 'total_amount'},
                     {data: 'status', name: 'status'},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
