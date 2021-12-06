@@ -25,25 +25,17 @@
                             {{ trans('cruds.userAddress.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.userAddress.fields.user') }}
+                            {{ trans('cruds.userAddress.fields.address') }}
                         </th>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.pincode') }}
-                        </th>
+
                         <th>
                             {{ trans('cruds.userAddress.fields.district') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.block') }}
                         </th>
                         <th>
                             {{ trans('cruds.userAddress.fields.state') }}
                         </th>
                         <th>
-                            {{ trans('cruds.userAddress.fields.area') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.address') }}
+                            {{ trans('cruds.userAddress.fields.pincode') }}
                         </th>
                         <th>
                             {{ trans('cruds.userAddress.fields.address_type') }}
@@ -63,25 +55,16 @@
                                 {{ $userAddress->id ?? '' }}
                             </td>
                             <td>
-                                {{ $userAddress->user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $userAddress->pincode->pincode ?? '' }}
+                                {{ $userAddress->address ?? '' }}
                             </td>
                             <td>
                                 {{ $userAddress->district->name ?? '' }}
                             </td>
                             <td>
-                                {{ $userAddress->block->name ?? '' }}
-                            </td>
-                            <td>
                                 {{ $userAddress->state->name ?? '' }}
                             </td>
                             <td>
-                                {{ $userAddress->area->area ?? '' }}
-                            </td>
-                            <td>
-                                {{ $userAddress->address ?? '' }}
+                                {{ $userAddress->pincode ?? '' }}
                             </td>
                             <td>
                                 {{ App\Models\UserAddress::ADDRESS_TYPE_RADIO[$userAddress->address_type] ?? '' }}

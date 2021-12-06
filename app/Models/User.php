@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'deleted_at',
         'device_token',
         'registration_number',
+    ];
+
+    const APPROVAL_STATUS_SELECT = [
+        '1' => 'Approved',
+        '0' => 'Un Approved',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -148,11 +154,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserAddress::class, 'user_id', 'id');
     }
 
-    public function userUserProfile()
-    {
-        return $this->hasOne(UserProfile::class, 'user_id', 'id');
-    }
-
     public function userUserAlerts()
     {
         return $this->belongsToMany(UserAlert::class);
@@ -210,8 +211,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Wishlist::class);
     }
 
-    public function kisanCards()
+    public function userProfile(): HasOne
     {
-        return $this->hasMany(KishanCard::class);
+        return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 }

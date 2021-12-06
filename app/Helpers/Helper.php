@@ -32,3 +32,7 @@ function checkIfUserCanPlaceOrderWithCod($userId): bool
 {
     return true;
 }
+
+function getOrderNumbersByOrderGroup($orderGroup){
+    return \App\Models\Order::where('order_group_number', $orderGroup)->pluck('order_number');
+}

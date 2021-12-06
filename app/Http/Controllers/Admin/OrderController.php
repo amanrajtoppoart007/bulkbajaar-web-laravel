@@ -33,7 +33,7 @@ class OrderController extends Controller
         abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Order::with(['user', 'address', 'helpCenter'])->select(sprintf('%s.*', (new Order)->table));
+            $query = Order::with(['user'])->select(sprintf('%s.*', (new Order)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -62,6 +62,22 @@ class OrderController extends Controller
             });
             $table->addColumn('user_name', function ($row) {
                 return $row->user ? $row->user->name : '';
+            });
+
+            $table->addColumn('grand_total', function ($row) {
+                return $row->grand_total ?? '';
+            });
+
+            $table->addColumn('amount_paid', function ($row) {
+                return $row->amount_paid ?? '';
+            });
+
+            $table->editColumn('payment_status', function ($row) {
+                return Order::PAYMENT_STATUS_SElECT[$row->payment_status] ?? '';
+            });
+
+            $table->editColumn('status', function ($row) {
+                return Order::STATUS_SELECT[$row->status] ?? '';
             });
 
             $table->addColumn('help_center_name', function ($row) {
@@ -130,10 +146,8 @@ class OrderController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('user', 'address', 'orderCarts', 'orderTransactions');
-        $franchisees = Vendor::whereApproved(true)->whereVerified(true)->get();
-
-        return view('admin.orders.show', compact('order', 'franchisees'));
+        $order->load('user', 'billingAddress', 'shippingAddress', 'transactions', 'orderItems', 'vendor');
+        return view('admin.orders.show', compact('order'));
     }
 
     public function destroy(Order $order)

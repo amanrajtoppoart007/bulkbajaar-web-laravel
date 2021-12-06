@@ -39,7 +39,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles', 'help_center'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,34 +66,21 @@ class UsersController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('contact', function ($row) {
-                return $row->mobile ."/\n". $row->email;
+            $table->editColumn('mobile', function ($row) {
+                return $row->mobile ?? '';
             });
-            $table->editColumn('help_center_name', function ($row) {
-                return $row->help_center ? $row->help_center->name : "";
+            $table->editColumn('email', function ($row) {
+                return $row->email ?? '';
             });
 
-            $table->editColumn('approved', function ($row) {
-                return '<input type="checkbox" class="user-approval-status" data-status="' . $row->approved . '" data-id="' . $row->id . '"  ' . ($row->approved ? 'checked' : null) . '>';
+            $table->editColumn('approval_status', function ($row) {
+                return $row->approved ? 'Approved' : 'Un Approved';
             });
             $table->editColumn('verified', function ($row) {
                 return '<input  type="checkbox" class="user-verification-status" data-status="' . $row->verified . '" data-id="' . $row->id . '"   ' . ($row->verified ? 'checked' : null) . '>';
             });
-            $table->editColumn('roles', function ($row) {
-                $labels = [];
 
-                foreach ($row->roles as $role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->editColumn('referral_code', function ($row) {
-                return $row->referral_code ? $row->referral_code : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'approved', 'verified', 'roles', 'help_center_name']);
+            $table->rawColumns(['actions', 'placeholder', 'approval_status']);
 
             return $table->make(true);
         }
@@ -201,9 +188,11 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'userOrders', 'userArticles', 'userArticleComments', 'userFollowers', 'followFollowers', 'userArticleLikes', 'userTransactions', 'userUserAddresses', 'userUserProfile', 'userUserAlerts');
+        $user->load('userProfile', 'userOrders', 'userArticles', 'userArticleComments', 'userFollowers', 'followFollowers', 'userArticleLikes', 'userTransactions', 'userUserAddresses', 'userUserAlerts');
 
-        return view('admin.users.show', compact('user'));
+        $userProfile = $user->userProfile ?? null;
+
+        return view('admin.users.show', compact('user', 'userProfile'));
     }
 
     public function destroy(User $user)
@@ -258,20 +247,17 @@ class UsersController extends Controller
         return response()->json($result, 200);
     }
 
-    public function printKisanCard(User $user)
+    public function massApprove(MassDestroyUserRequest $request)
     {
-        $address = $user->userUserAddresses->first();
-        $addressString = "";
-        if($address){
-            $addressString = $address->address ? $address->address . ', ' : '';
-            $addressString .= $address->street ? $address->street . ', ' : '';
-            $addressString .= $address->village ? $address->village . ', ' : '';
-            $addressString .= $address->district ? $address->district->name . ', ' : '';
-            $addressString .= $address->block ? $address->block->name . ', ' : '';
-            $addressString .= $address->state ? $address->state->name . '' : '';
-            $addressString .= $address->pincode ? ' - ' . $address->pincode->pincode : '';
-        }
-        $kisanCard = $user->kisanCards()->latest()->first();
-        return view('admin.users.kisanCard', compact('user', 'address', 'kisanCard', 'addressString'));
+        User::whereIn('id', request('ids'))->update(['approved' => 1]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function approve(User $user)
+    {
+        $user->approved = 1;
+        $user->save();
+        return back()->with('message' ,'Approved successfully!');
     }
 }

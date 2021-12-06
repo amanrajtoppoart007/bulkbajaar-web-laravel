@@ -28,13 +28,13 @@
                             {{ trans('cruds.order.fields.order_number') }}
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.user') }}
+                            Amount
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.payment_type') }}
+                            {{ trans('cruds.order.fields.payment_status') }}
                         </th>
                         <th>
-                            {{ trans('cruds.order.fields.address') }}
+                            {{ trans('cruds.order.fields.status') }}
                         </th>
                         <th>
                             &nbsp;
@@ -54,13 +54,13 @@
                                 {{ $order->order_number ?? '' }}
                             </td>
                             <td>
-                                {{ $order->user->name ?? '' }}
+                                {{ $order->grand_total ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Order::PAYMENT_TYPE_SELECT[$order->payment_type] ?? '' }}
+                                {{ App\Models\Order::PAYMENT_STATUS_SElECT[$order->payment_status] ?? '' }}
                             </td>
                             <td>
-                                {{ $order->address->address ?? '' }}
+                                {{ \App\Models\Order::STATUS_SELECT[$order->status] ?? '' }}
                             </td>
                             <td>
                                 @can('order_show')
