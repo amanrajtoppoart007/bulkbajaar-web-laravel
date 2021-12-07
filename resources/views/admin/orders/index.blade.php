@@ -58,7 +58,7 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -141,7 +141,7 @@
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
                     {data: 'order_number', name: 'order_number'},
-                    {data: 'user_name', name: 'user.name'},
+                    {data: 'user_name', name: 'user_id'},
                     {data: 'grand_total', name: 'grand_total'},
                     {data: 'payment_status', name: 'payment_status'},
                     {data: 'status', name: 'status'},

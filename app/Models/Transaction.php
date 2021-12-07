@@ -27,6 +27,14 @@ class Transaction extends Model
         'Success' => 'Success',
     ];
 
+    public const RAZORPAY_PAYMENT_STATUSES = [
+        'created',
+        'authorized',
+        'captured',
+        'refunded',
+        'failed',
+    ];
+
     protected $fillable = [
         'order_id',
         'user_id',

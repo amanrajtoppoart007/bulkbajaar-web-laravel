@@ -100,8 +100,6 @@
     Route::post('orders/parse-csv-import', 'Admin\OrderController@parseCsvImport')->name('orders.parseCsvImport');
     Route::post('orders/process-csv-import', 'Admin\OrderController@processCsvImport')->name('orders.processCsvImport');
     Route::resource('orders', 'Admin\OrderController');
-    Route::post('orders/assign', 'Admin\OrderController@assignOrder')->name('orders.assign');
-    Route::post('orders/assign-manually', 'Admin\OrderController@assignOrderManually')->name('orders.assign.manually');
     Route::post('orders/cancel', 'Admin\OrderController@cancelOrder')->name('orders.cancel');
     Route::post('orders/verify-payment', 'Admin\OrderController@verifyPayment')->name('orders.verify.payment');
     Route::post('orders/generate-invoice', 'HelpCenter\OrderController@generateInvoice')->name('orders.generate.invoice');

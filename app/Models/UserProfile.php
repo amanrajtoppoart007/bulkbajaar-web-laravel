@@ -57,10 +57,7 @@ class UserProfile extends Model implements HasMedia
 
     public static function createProfile($array)
     {
-        $without = Arr::except($array, ['crops']);
-        $crops = ['crops'=>$array['crops']];
-        $store = array_merge($without,$crops);
-        return UserProfile::create($store);
+        return UserProfile::create($array);
     }
 
     public  function updateProfile($array)

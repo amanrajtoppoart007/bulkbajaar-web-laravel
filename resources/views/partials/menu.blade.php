@@ -224,6 +224,25 @@
                 </ul>
             </li>
         @endcan
+        @can('transaction_management_access')
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/transactions*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <i class="fas fa-credit-card c-sidebar-nav-icon"></i>
+                    {{ trans('cruds.transactionManagement.title') }}
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    @can('transaction_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.transactions.index") }}"
+                               class="c-sidebar-nav-link {{ request()->is("admin/transactions") || request()->is("admin/transactions/*") ? "c-active" : "" }}">
+                                <i class="fas fa-credit-card c-sidebar-nav-icon"></i>
+                                {{ trans('cruds.transaction.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
 {{--        @can('user_alert_access')--}}
 {{--            <li class="c-sidebar-nav-item">--}}
 {{--                <a href="{{ route("admin.user-alerts.index") }}"--}}
@@ -311,7 +330,7 @@
         @can('area_management_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/pincodes*") ? "c-show" : "" }} {{ request()->is("admin/states*") ? "c-show" : "" }} {{ request()->is("admin/districts*") ? "c-show" : "" }} {{ request()->is("admin/blocks*") ? "c-show" : "" }} {{ request()->is("admin/areas*") ? "c-show" : "" }} {{ request()->is("admin/cities*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                    <i class="fas fa-map-marked c-sidebar-nav-icon"></i>
                     {{ trans('cruds.areaManagement.title') }}
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
@@ -320,7 +339,7 @@
                             <a href="{{ route("admin.states.index") }}"
                                class="c-sidebar-nav-link {{ request()->is("admin/states") || request()->is("admin/states/*") ? "c-active" : "" }}">
 
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                                <i class="fas fa-map-marker c-sidebar-nav-icon"></i>
                                 {{ trans('cruds.state.title') }}
                             </a>
                         </li>
@@ -330,7 +349,7 @@
                             <a href="{{ route("admin.districts.index") }}"
                                class="c-sidebar-nav-link {{ request()->is("admin/districts") || request()->is("admin/districts/*") ? "c-active" : "" }}">
 
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                                <i class="fas fa-map-pin c-sidebar-nav-icon"></i>
                                 {{ trans('cruds.district.title') }}
                             </a>
                         </li>
@@ -464,30 +483,11 @@
 {{--                </ul>--}}
 {{--            </li>--}}
 {{--        @endcan--}}
-        @can('transaction_management_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/transactions*") ? "c-show" : "" }}">
-                <a class="c-sidebar-nav-dropdown-toggle" href="#">
-                    <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
-                    {{ trans('cruds.transactionManagement.title') }}
-                </a>
-                <ul class="c-sidebar-nav-dropdown-items">
-                    @can('transaction_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.transactions.index") }}"
-                               class="c-sidebar-nav-link {{ request()->is("admin/transactions") || request()->is("admin/transactions/*") ? "c-active" : "" }}">
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
-                                {{ trans('cruds.transaction.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                </ul>
-            </li>
-        @endcan
         @can('setting_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.settings.index") }}"
                    class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
-                    <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                    <i class="fas fa-cogs c-sidebar-nav-icon"></i>
 
                     {{ trans('cruds.setting.title') }}
                 </a>
@@ -497,7 +497,7 @@
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/audit-logs*") ? "c-show" : "" }} {{ request()->is("admin/admins*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
 
-                    <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                    <i class="fas fa-users-cog c-sidebar-nav-icon"></i>
 
                     {{ trans('cruds.adminManagement.title') }}
                 </a>
@@ -507,7 +507,7 @@
                             <a href="{{ route("admin.permissions.index") }}"
                                class="c-sidebar-nav-link {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "c-active" : "" }}">
 
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                                <i class="fas fa-user-check c-sidebar-nav-icon"></i>
                                 {{ trans('cruds.permission.title') }}
                             </a>
                         </li>
@@ -517,7 +517,7 @@
                             <a href="{{ route("admin.roles.index") }}"
                                class="c-sidebar-nav-link {{ request()->is("admin/roles") || request()->is("admin/roles/*") ? "c-active" : "" }}">
 
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                                <i class="fas fa-user-tie c-sidebar-nav-icon"></i>
                                 {{ trans('cruds.role.title') }}
                             </a>
                         </li>
@@ -537,7 +537,7 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.admins.index") }}"
                                class="c-sidebar-nav-link {{ request()->is("admin/admins") || request()->is("admin/admins/*") ? "c-active" : "" }}">
-                                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                                <i class="fas fa-users c-sidebar-nav-icon"></i>
                                 {{ trans('cruds.admin.title') }}
                             </a>
                         </li>
@@ -572,7 +572,7 @@
                     <a class="c-sidebar-nav-link {{ request()->is('admin/change-password') ? 'c-active' : '' }}"
                        href="{{ route('admin.show.change.password.form') }}">
 
-                        <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                        <i class="fas fa-lock c-sidebar-nav-icon"></i>
 
                         {{ trans('global.change_password') }}
                     </a>
@@ -582,7 +582,7 @@
         <li class="c-sidebar-nav-item">
             <a href="#" class="c-sidebar-nav-link"
                onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                <i class="fas fa-sign-out-alt c-sidebar-nav-icon"></i>
                 {{ trans('global.logout') }}
             </a>
         </li>

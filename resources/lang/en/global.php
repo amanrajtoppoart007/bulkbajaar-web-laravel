@@ -364,7 +364,7 @@ return [
     'credit_limit' => 'Credit Limit',
     'credit_left' => 'Credit Left',
     'credit_used' => 'Credit Used',
-    'generate' => 'Generated',
+    'generate' => 'Generate',
     'print' => 'Print',
     'invoice' => 'Invoice',
     'apply' => 'Apply',

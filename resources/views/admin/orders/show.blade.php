@@ -48,7 +48,7 @@
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>
-                <span>{{ date('d-m-Y', strtotime($order->created_at)) }}</span>
+                <span>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</span>
             </div>
             <div class="col-4">
                 <div class="form-group">
@@ -60,20 +60,20 @@
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.payment_status') }}: </label>
                 <span>{{ $order->payment_status }}</span>
-                @if(!$order->is_payment_verified)
+                @if(!$order->payment_verified_by_id)
                     <button class="btn btn-xs btn-danger" id="verify-payment-button">Verify</button>
                 @endif
             </div>
             <div class="col-4">
-                <label for="" class="font-weight-bolder">Status: </label>
-                <span>{{ $order->status ?? '' }}</span>
+                <label for="" class="font-weight-bolder">Buyer: </label>
+                <span><a href="{{ route('admin.users.show', $order->user_id) }}" target="_blank">{{ $order->user->name ?? '' }}</a></span>
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">Seller: </label>
-                <span>{{ $order->vendor->name ?? '' }}</span>
+                <span><a href="{{ route('admin.vendors.show', $order->vendor_id) }}" target="_blank">{{ $order->vendor->name ?? '' }}</a></span>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-6">
                 <label for="" class="font-weight-bolder">Billing Address: </label>
                 <br>

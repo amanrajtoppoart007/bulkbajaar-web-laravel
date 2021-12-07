@@ -195,7 +195,7 @@ class AuthController extends BaseController
                             'address_type' => 'SHIPPING',
                         ]);
                     }else{
-                        UserAddress::create(array_merge($billingAddressData, ['is_default' => 1]));
+                        UserAddress::create(array_merge($billingAddressData, ['is_default' => 1, 'address_type' => 'SHIPPING']));
                     }
 
                     $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();

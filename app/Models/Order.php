@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
@@ -88,6 +89,7 @@ class Order extends Model
         'payment_status',
         'status',
         'is_invoice_generated',
+        'payment_verified_by_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -135,5 +137,10 @@ class Order extends Model
     public function vendor()
     {
         return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
+
+    public function paymentVerifiedBy(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'payment_verified_by_id');
     }
 }
