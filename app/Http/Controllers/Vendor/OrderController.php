@@ -62,6 +62,7 @@ class OrderController extends Controller
     public function show($orderNumber)
     {
         $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
+        abort_if($order->vendor_id != auth()->id(), 401);
         return view('vendor.orders.show', compact('order'));
     }
 

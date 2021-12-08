@@ -46,9 +46,7 @@
                     <div class="form-group">
                         <label class="required" for="district_id">{{ trans('cruds.userAddress.fields.district') }}</label>
                         <select class="form-control select2 {{ $errors->has('district_id') ? 'is-invalid' : '' }}" name="district_id" id="district_id" required>
-                            @foreach($districts as $id => $district)
-                                <option value="{{ $id }}" {{ old('district_id') == $id ? 'selected' : '' }}>{{ $district }}</option>
-                            @endforeach
+
                         </select>
                         @if($errors->has('district_id'))
                             <div class="invalid-feedback">
@@ -116,7 +114,6 @@
                             <span class="help-block">{{ trans('cruds.userAddress.fields.address_type_helper') }}</span>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="form-group">
@@ -138,6 +135,13 @@
 
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}});
 
+            let state = "{{ old('state_id') }}";
+            let district = "{{ old('district_id') }}";
+
+            setTimeout(() => {
+                $('#state_id').val(state).trigger('change');
+            }, 100)
+
             $("#state_id").on("change", function () {
 
                 $("#district_id").empty();
@@ -154,86 +158,8 @@
                                 let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
                                 $("#district_id").append($option);
                             });
+                            $('#district_id').val(district).trigger('change');
                         }
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus);
-                    }
-                });
-            });
-
-            $("#district_id").on("change", function () {
-
-                $("#block_id").empty();
-                $.ajax({
-                    url: "{{route('ajax.block.list')}}",
-                    type: 'POST',
-                    data: {'district_id': $(this).val()},
-                    dataType: 'json',
-                    success: function (res) {
-                        if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Block</option>`));
-                            $("#block_id").append(option);
-                            $.each(res.data, function (key, item) {
-                                let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
-                                $("#block_id").append($option);
-                            });
-                        }
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus);
-                    }
-                });
-            });
-
-            $("#block_id").on("change", function () {
-
-                $("#pincode_id").empty();
-                $.ajax({
-                    url: "{{route('ajax.pincode.list')}}",
-                    type: 'POST',
-                    data: {'block_id': $(this).val()},
-                    dataType: 'json',
-                    success: function (res) {
-                        if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Pincode</option>`));
-                            $("#pincode_id").append(option);
-                            $.each(res.data, function (key, item) {
-                                let $option = $($.parseHTML(`<option value="${item.id}">${item.pincode}</option>`));
-                                $("#pincode_id").append($option);
-                            });
-                        }
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus);
-                    }
-                });
-            });
-            $("#pincode_id").on("change", function () {
-
-                $("#area_id").empty();
-                $.ajax({
-                    url: "{{route('ajax.area.list')}}",
-                    type: 'POST',
-                    data: {'pincode_id': $(this).val()},
-                    dataType: 'json',
-                    success: function (res) {
-                        if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Area</option>`));
-                            $("#area_id").append(option);
-                            $.each(res.data, function (key, item) {
-                                let $option = $($.parseHTML(`<option value="${item.id}">${item.area}</option>`));
-                                $("#area_id").append($option);
-                            });
-                        }
-
-
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);

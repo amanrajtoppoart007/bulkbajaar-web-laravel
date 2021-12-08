@@ -66,7 +66,7 @@
                             GST Number
                         </th>
                         <td>
-                            {{ $profile->gst_number ?? '' }}
+                            {{ $userProfile->gst_number ?? '' }}
                         </td>
                     </tr>
                     <tr>

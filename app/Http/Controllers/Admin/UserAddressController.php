@@ -93,17 +93,9 @@ class UserAddressController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.userAddresses.create', compact('users', 'pincodes', 'districts', 'blocks', 'states', 'areas'));
+        return view('admin.userAddresses.create', compact('users','states'));
     }
 
     public function store(StoreUserAddressRequest $request)
@@ -119,19 +111,9 @@ class UserAddressController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $userAddress->load('user', 'pincode', 'district', 'block', 'state', 'area');
-
-        return view('admin.userAddresses.edit', compact('users', 'pincodes', 'districts', 'blocks', 'states', 'areas', 'userAddress'));
+        return view('admin.userAddresses.edit', compact('users',  'states', 'userAddress'));
     }
 
     public function update(UpdateUserAddressRequest $request, UserAddress $userAddress)

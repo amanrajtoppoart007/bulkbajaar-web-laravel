@@ -47,6 +47,8 @@ class Product extends Model implements HasMedia
         'rrp',
         'approval_status',
         'quantity',
+        'sku',
+        'hsn',
         'brand_id',
         'created_at',
         'updated_at',

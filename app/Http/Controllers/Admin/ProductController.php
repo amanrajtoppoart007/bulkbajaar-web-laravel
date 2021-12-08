@@ -106,50 +106,45 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vendors = Vendor::all()->pluck('name', 'id');
         $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $subCategories = ProductSubCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
-        return view('admin.products.create', compact('categories', 'unitTypes', 'subCategories', 'vendors'));
+        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors'));
     }
 
     public function store(StoreProductRequest $request)
     {
         DB::beginTransaction();
         try {
-            foreach ($request->vendors as $vendor){
-                $validated = $request->validated();
-                $validated['vendor_id'] = $vendor;
-                $validated['slug'] = $this->generateSlug(Product::class, $request->name);
-                $validated['quantity'] = null;
-                $validated['approved'] = 1;
-                $product = Product::create($validated);
+            $validated = $request->validated();
+            $validated['slug'] = $this->generateSlug(Product::class, $request->name);
+            $validated['quantity'] = null;
+            $validated['approval_status'] = 'APPROVED';
+            $product = Product::create($validated);
 
-                foreach ($request->input('images', []) as $file) {
-                    $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
-                }
-                if ($media = $request->input('ck-media', false)) {
-                    Media::whereIn('id', $media)->update(['model_id' => $product->id]);
-                }
+            foreach ($request->input('images', []) as $file) {
+                $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
+            }
+            if ($media = $request->input('ck-media', false)) {
+                Media::whereIn('id', $media)->update(['model_id' => $product->id]);
+            }
 
-                $productOptions = $request->only('unit', 'quantity', 'option');
-                $size = sizeof($productOptions['option']);
-                $productOptionsArr = [];
-                foreach ($productOptions as $key => $value) {
-                    for ($i = 0; $i < $size; $i++) {
-                        $productOptionsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
-                    }
+            $productOptions = $request->only('unit', 'quantity', 'option');
+            $size = sizeof($productOptions['option']);
+            $productOptionsArr = [];
+            foreach ($productOptions as $key => $value) {
+                for ($i = 0; $i < $size; $i++) {
+                    $productOptionsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
                 }
-                foreach ($productOptionsArr as $value) {
-                    if (!empty($value['option'])) {
-                        $data = [
-                            'product_id' => $product->id,
-                            'unit' => !empty($value['unit']) ? $value['unit'] : null,
-                            'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
-                            'option' => $value['option'],
-                        ];
-                        ProductOption::create($data);
-                    }
+            }
+            foreach ($productOptionsArr as $value) {
+                if (!empty($value['option'])) {
+                    $data = [
+                        'product_id' => $product->id,
+                        'unit' => !empty($value['unit']) ? $value['unit'] : null,
+                        'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
+                        'option' => $value['option'],
+                    ];
+                    ProductOption::create($data);
                 }
-
             }
 
             DB::commit();
@@ -173,11 +168,10 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $subCategories = ProductSubCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $productOptions = ProductOption::where('product_id', $product->id)->get();
         return view('admin.products.edit',
-            compact('categories', 'product', 'unitTypes', 'subCategories', 'productOptions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions'));
     }
 
     public function update(UpdateProductRequest $request)

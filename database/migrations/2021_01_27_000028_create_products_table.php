@@ -23,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->text('rrp')->nullable()->comment('Refund & Return Policy');
             $table->string('approval_status')->default('PENDING');
             $table->unsignedInteger('quantity')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('hsn')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

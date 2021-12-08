@@ -47,18 +47,26 @@
                 </tr>
                 <tr>
                     <th>
-                        {{ trans('cruds.product.fields.description') }}
-                    </th>
-                    <td>
-                        {{ $product->description }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
                         {{ trans('cruds.product.fields.price') }}
                     </th>
                     <td>
                         {{ $product->price }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        SKU
+                    </th>
+                    <td>
+                        {{ $product->sku ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        HSN
+                    </th>
+                    <td>
+                        {{ $product->hsn ?? '' }}
                     </td>
                 </tr>
                 <tr>
@@ -117,6 +125,14 @@
                 </tr>
                 <tr>
                     <th>
+                        {{ trans('cruds.product.fields.description') }}
+                    </th>
+                    <td>
+                        {{ $product->description }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         Refund & Return Policy
                     </th>
                     <td>
@@ -139,14 +155,14 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#product_prices" role="tab" data-toggle="tab">
+            <a class="nav-link active" href="#product_prices" role="tab" data-toggle="tab">
                 {{ trans('cruds.productPrice.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="product_prices">
-            @includeIf('admin.products.relationships.productPrices', ['productPrices' => $product->productPrices])
+        <div class="tab-pane active show" role="tabpanel" id="product_prices">
+            @includeIf('admin.products.relationships.productPrices', ['productOptions' => $product->productOptions])
         </div>
     </div>
 </div>

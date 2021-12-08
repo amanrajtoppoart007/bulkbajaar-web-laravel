@@ -28,6 +28,8 @@ class UpdateProductRequest extends FormRequest
             'product_category_id' => 'nullable|exists:product_categories,id',
             'product_sub_category_id' => 'nullable|exists:product_sub_categories,id',
             'description' => 'nullable',
+            'sku' => 'required|string',
+            'hsn' => 'nullable|string',
             'option' => 'nullable|array',
             'option.*' => 'nullable|string',
             'unit' => 'nullable|array',

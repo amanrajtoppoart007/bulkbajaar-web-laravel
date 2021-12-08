@@ -14,25 +14,19 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="vendors">Vendors</label>
-                                    <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                        <span class="btn btn-info btn-xs deselect-all"
-                                              style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                    </div>
+                                    <label for="vendor_id">Seller</label>
                                     <select
-                                        class="form-control select2 {{ $errors->has('vendors') ? 'is-invalid' : '' }}"
-                                        name="vendors[]" id="vendors" multiple required>
-                                        <option value="" disabled>Select Vendors</option>
+                                        class="form-control select2 {{ $errors->has('vendor_id') ? 'is-invalid' : '' }}"
+                                        name="vendor_id" id="vendor_id" required>
+                                        <option value="">Select Seller</option>
                                         @foreach($vendors as $id => $vendor)
                                             <option
-                                                value="{{ $id }}" {{ in_array($id, old('vendors', [])) ? 'selected' : '' }}>{{ $vendor }}</option>
+                                                value="{{ $id }}" {{ old('vendor_id') == $id ? 'selected' : '' }}>{{ $vendor }}</option>
                                         @endforeach
                                     </select>
-                                    @if($errors->has('vendors'))
+                                    @if($errors->has('vendor_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('vendors') }}
+                                            {{ $errors->first('vendor_id') }}
                                         </div>
                                     @endif
                                 </div>
@@ -49,6 +43,32 @@
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="sku">SKU</label>
+                                    <input class="form-control {{ $errors->has('sku') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="sku" id="sku" value="{{ old('sku', '') }}" required>
+                                    @if($errors->has('sku'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('sku') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="hsn">HSN</label>
+                                    <input class="form-control {{ $errors->has('hsn') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="hsn" id="hsn" value="{{ old('hsn', '') }}">
+                                    @if($errors->has('hsn'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('hsn') }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-12">
@@ -132,10 +152,6 @@
                                     <select
                                         class="form-control select2 {{ $errors->has('product_sub_category_id') ? 'is-invalid' : '' }}"
                                         name="product_sub_category_id" id="product_sub_category_id">
-                                        @foreach($subCategories as $id => $subCategory)
-                                            <option
-                                                value="{{ $id }}" {{ $id == old('product_sub_category_id') ? 'selected' : '' }}>{{ $subCategory }}</option>
-                                        @endforeach
                                     </select>
                                     @if($errors->has('product_sub_category_id'))
                                         <div class="invalid-feedback">
@@ -332,7 +348,7 @@
             let tr = $(this).closest('tr');
 
             let isNotEmpty = $($(tr).find('.option')).filter(function () {
-                return $.trim($(this).val()).length == 0
+                return $.trim($(this).val()).length == 0;
             }).length == 0;
 
             if(isNotEmpty){
@@ -376,6 +392,39 @@
             });
 
             e.preventDefault();
+        });
+
+        let category = "{{ old('product_category_id') }}";
+        let subCategory = "{{ old('product_sub_category_id') }}";
+
+        setTimeout(() => {
+            $('#product_category_id').val(category).trigger('change');
+        }, 100)
+
+        $("#product_category_id").on("change", function () {
+
+            $("#product_sub_category_id").empty();
+            $.ajax({
+                url: "{{route('ajax.products.sub-category.list')}}",
+                type: 'POST',
+                data: {'product_category_id': $(this).val()},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.response === "success") {
+                        let option = $($.parseHTML(`<option value="">Select Sub Category</option>`));
+                        $("#product_sub_category_id").append(option);
+                        $.each(res.data, function (key, item) {
+                            let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
+                            $("#product_sub_category_id").append($option);
+                        });
+                    }
+                    $('#product_sub_category_id').val(subCategory).trigger('change');
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         });
     </script>
 @endsection

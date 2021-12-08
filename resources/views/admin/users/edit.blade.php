@@ -70,7 +70,7 @@
                                 for="gst_number">{{ trans('cruds.helpCenterProfile.fields.gst_number') }}</label>
                             <input class="form-control {{ $errors->has('gst_number') ? 'is-invalid' : '' }}"
                                    type="text"
-                                   name="gst_number" id="gst_number" value="{{ old('gst_number', $userProfile->gst_number) }}">
+                                   name="gst_number" id="gst_number" value="{{ old('gst_number', $userProfile->gst_number ?? '') }}">
                             @if($errors->has('gst_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('gst_number') }}
@@ -83,7 +83,7 @@
                             <label class="required" for="pan_number">PAN Number</label>
                             <input class="form-control {{ $errors->has('gst_number') ? 'is-invalid' : '' }}"
                                    type="text"
-                                   name="pan_number" id="pan_number" value="{{ old('pan_number', $userProfile->pan_number) }}" required>
+                                   name="pan_number" id="pan_number" value="{{ old('pan_number', $userProfile->pan_number ?? '') }}" required>
                             @if($errors->has('pan_number'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('pan_number') }}
