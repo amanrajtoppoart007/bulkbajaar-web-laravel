@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Api\BaseController;
+use App\Models\UserAddress;
 use App\Models\UserProfile;
 use App\Traits\SmsSenderTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
@@ -35,28 +36,26 @@ class AuthController extends BaseController
                     $data['otp'] = $otp;
                     $data['service_type'] = "registration";
                     $data['mobile'] = $request->input('mobile');
-                    $gatewayResponse = $this->sendOtpSms($data);
+//                    $gatewayResponse = $this->sendOtpSms($data);
                     $otpObj = new Otp();
                     $otpObj->mobile = $request->input('mobile');
                     $otpObj->otp = $otp;
-                    $otpObj->sms_status = $gatewayResponse->status;
-                    $otpObj->gateway_response = json_encode($gatewayResponse);
+//                    $otpObj->sms_status = $gatewayResponse->status;
+//                    $otpObj->gateway_response = json_encode($gatewayResponse);
                     $otpObj->save();
-
-                    $result = ['response' => 'success', 'action' => 'login', 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
-
+                    $result = ['response' => 'success', 'action' => 'register', 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
                 } else {
                     Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
                     $otp = rand(1000, 9999);
                     $data['otp'] = $otp;
                     $data['service_type'] = "login";
                     $data['mobile'] = $request->input('mobile');
-                    $gatewayResponse = $this->sendOtpSms($data);
+//                    $gatewayResponse = $this->sendOtpSms($data);
                     $otpObj = new Otp();
                     $otpObj->mobile = $request->input('mobile');
                     $otpObj->otp = $otp;
-                    $otpObj->sms_status = $gatewayResponse->status;
-                    $otpObj->gateway_response = json_encode($gatewayResponse);
+//                    $otpObj->sms_status = $gatewayResponse->status;
+//                    $otpObj->gateway_response = json_encode($gatewayResponse);
                     $otpObj->save();
 
                     $result = ['response' => 'success', 'action' => 'login', 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
@@ -97,9 +96,7 @@ class AuthController extends BaseController
                         $obj->save();
 
                         if (User::where('mobile', $request->input('mobile'))->exists()) {
-                            $password = Hash::make($request->input('otp'));
                             $userData = [
-                                'password' => $password,
                                 'device_token' => $request->input('device_token')
                             ];
                             User::where('mobile', $request->input('mobile'))->update($userData);
@@ -134,11 +131,23 @@ class AuthController extends BaseController
     public function access_step_third(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
-            'mobile' => 'required|numeric|digits:10|unique:users,mobile',
-            'email' => 'required|email|unique:users,email',
-            'name' => 'required',
-            'verification_token' => 'required',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
+            'email' => 'required|email|unique:users,email|unique:vendors,email',
+            'password' => ['required', 'string', 'confirmed'],
             'device_token' => 'nullable',
+            'company_name' => 'required|string',
+            'representative_name' => 'required|string',
+            'billing_address' => 'required|string',
+            'billing_address_two' => 'nullable|string',
+            'billing_state_id' => 'required|exists:states,id',
+            'billing_district_id' => 'required|exists:districts,id',
+            'billing_pincode' => 'required',
+            'shipping_address_same' => 'required|in:0,1',
+            'shipping_address' => 'required_if:shipping_address_same,0|string',
+            'shipping_address_two' => 'nullable|string',
+            'shipping_state_id' => 'required_if:shipping_address_same,0|exists:states,id',
+            'shipping_district_id' => 'required_if:shipping_address_same,0|exists:districts,id',
+            'shipping_pincode' => 'required_if:shipping_address_same,0',
         ]);
 
         if ($validator->fails()) {
@@ -147,45 +156,115 @@ class AuthController extends BaseController
             DB::beginTransaction();
             try {
                 $input = $request->json()->all();
-                $otp = Otp::where('mobile', $input['mobile'])->where('v_token', $input['verification_token'])->first();
+                $user = new User();
+                $user->name = $input['company_name'];
+                $user->email = $input['email'];
+                $user->mobile = $input['mobile'];
+                $user->password = Hash::make($input['password']);
+                $user->device_token = $input['device_token'];
+                if ($user->save()) {
+                    $userProfile = new UserProfile();
+                    $userProfile->company_name = $input['company_name'];
+                    $userProfile->representative_name = $input['representative_name'];
+                    $userProfile->email = $input['email'];
+                    $userProfile->mobile = $input['mobile'];
+                    $userProfile->user_id = $user->id;
+                    $userProfile->save();
 
-                if ($input['verification_token'] == $otp->v_token) {
+                    $billingAddressData = [
+                        'user_id' => $user->id,
+                        'address' => $request->billing_address,
+                        'address_two' => $request->billing_address_two,
+                        'state_id' => $request->billing_state_id,
+                        'district_id' => $request->billing_district_id,
+                        'pincode' => $request->billing_pincode,
+                        'address_type' => 'BILLING',
+                    ];
 
-                    $input['password'] = Hash::make($otp->otp);
-                    $user = new User();
-                    $user->name = $input['name'];
-                    $user->email = $input['email'];
-                    $user->mobile = $input['mobile'];
-                    $user->password = $input['password'];
-                    $user->device_token = $input['device_token'];
-                    $user->registration_number = $this->generateRegistrationNumber();
-                    if ($user->save()) {
-                        $userProfile = new UserProfile();
-                        $userProfile->name = $input['name'];
-                        $userProfile->email = $input['email'];
-                        $userProfile->mobile = $input['mobile'];
-                        $userProfile->user_id = $user->id;
-                        $userProfile->save();
-                        $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
-                        $data['access_token'] = $user->createToken('user_token')->plainTextToken;
-                        $result = ['status' => 1, 'response' => 'success', 'action' => 'verified', 'data' => $data, 'message' => 'User register successfully'];
-                        $userData['name'] = $input['name'];
-                        $userData['username'] = $input['email'];
-                        $userData['email'] = $input['email'];
-                        $userData['mobile'] = $input['mobile'];
-                        event(new FarmerRegistered($userData));
-                        DB::commit();
-                    } else {
-                        DB::rollBack();
-                        $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'User register failed'];
+                    UserAddress::create($billingAddressData);
+
+                    if ($request->shipping_address_same == 0){
+                        UserAddress::create([
+                            'user_id' => $user->id,
+                            'address' => $request->shipping_address,
+                            'address_two' => $request->shipping_address_two,
+                            'state_id' => $request->shipping_state_id,
+                            'district_id' => $request->shipping_district_id,
+                            'pincode' => $request->shipping_pincode,
+                            'is_default' => 1,
+                            'address_type' => 'SHIPPING',
+                        ]);
+                    }else{
+                        UserAddress::create(array_merge($billingAddressData, ['is_default' => 1, 'address_type' => 'SHIPPING']));
                     }
+
+                    $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
+                    $data['access_token'] = $user->createToken('user_token')->plainTextToken;
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'verified', 'data' => $data, 'message' => 'User register successfully'];
+                    DB::commit();
                 } else {
                     DB::rollBack();
-                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'OPT verification failed'];
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'User register failed'];
                 }
+
             } catch (\Exception $exception) {
                 DB::rollBack();
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+            }
+        }
+
+        return response()->json($result, 200);
+    }
+
+    public function accessStepFour(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'pan_number' => 'required|string',
+            'gst_number' => 'nullable|string',
+            'pan' => 'required|mimes:jpeg,png',
+            'gst' => 'required|mimes:jpeg,png',
+        ]);
+
+        if ($validator->fails()) {
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
+        } else {
+            try {
+
+                $profile = UserProfile::updateOrCreate([
+                    'user_id' => auth()->id()
+                ],
+                    $request->all()
+                );
+
+                if ($request->hasFile('gst')) {
+                    $profile->addMedia($request->file('gst'))->toMediaCollection('gst');
+                }
+                if ($request->hasFile('pan')) {
+                    $profile->addMedia($request->file('pan'))->toMediaCollection('pan_card');
+                }
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'registered',
+                    'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
+                ];
+                //Send notification to admin for approval
+//                $userData['name'] = $input['name'];
+//                $userData['username'] = $input['email'];
+//                $userData['email'] = $input['email'];
+//                $userData['mobile'] = $input['mobile'];
+//                        event(new UserRegistered($userData));
+            } catch (\Exception $exception) {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'message' => $exception->getMessage()
+                ];
             }
         }
 

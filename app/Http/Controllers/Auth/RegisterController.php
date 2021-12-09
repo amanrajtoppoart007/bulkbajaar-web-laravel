@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Events\VendorRegistered;
 use App\Events\HelpCenterRegistered;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -56,7 +56,7 @@ class RegisterController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware(['guest', 'guest:vendor']);
     }
 
     public function showRegistrationForm()
@@ -92,7 +92,7 @@ class RegisterController extends Controller
 
 //            $this->sendRegisteredUserSms($data);
 
-            event(new FarmerRegistered($data));
+            event(new UserRegistered($data));
 
             $url = route("registration.message",
                 [

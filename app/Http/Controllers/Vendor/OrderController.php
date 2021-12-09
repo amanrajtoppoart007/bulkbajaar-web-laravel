@@ -4,13 +4,7 @@ namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\Product;
-use App\Models\ProductPrice;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\DB;
-use Razorpay\Api\Api;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,13 +14,15 @@ class OrderController extends Controller
     {
         if ($request->ajax()) {
             $query = Order::query();
+            $query->where('vendor_id', auth()->id());
+            $query->with('user');
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                $showURL = route('franchisee.orders.show', $row->order_number);
+                $showURL = route('vendor.orders.show', $row->order_number);
                 $viewText = trans('global.view');
                 return "<a class='btn btn-xs btn-primary' href='{$showURL}'>$viewText</a>";
             });
@@ -37,23 +33,21 @@ class OrderController extends Controller
             $table->editColumn('order_number', function ($row) {
                 return $row->order_number ? $row->order_number : "";
             });
-            $table->editColumn('payment_type', function ($row) {
-                return $row->payment_type ? Order::PAYMENT_TYPE_SELECT[$row->payment_type] : '';
+            $table->addColumn('user', function ($row) {
+                return $row->user->name ?? '';
             });
-            $table->addColumn('amount', function ($row) {
-                return $row->amount ?? '';
+            $table->editColumn('payment_status', function ($row) {
+                return Order::PAYMENT_STATUS_SElECT[$row->payment_status] ?? '';
             });
-            $table->addColumn('gst', function ($row) {
-                return $row->gst ?? '';
+            $table->addColumn('sub_total', function ($row) {
+                return $row->sub_total ?? '';
             });
-            $table->addColumn('discount', function ($row) {
-                return $row->discount ?? '';
-            });
+
             $table->addColumn('total_amount', function ($row) {
-                return $row->total_amount ?? '';
+                return $row->sub_total - $row->discount_amount ;
             });
             $table->addColumn('status', function ($row) {
-                return $row->status ?? '';
+                return Order::STATUS_SELECT[$row->status] ?? '';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
@@ -67,9 +61,9 @@ class OrderController extends Controller
 
     public function show($orderNumber)
     {
-        $franchiseeOrder = FranchiseeOrder::whereOrderNumber($orderNumber)->first();
-        if (!$franchiseeOrder) abort(404);
-        return view('franchisee.orders.show', compact('franchiseeOrder'));
+        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
+        abort_if($order->vendor_id != auth()->id(), 401);
+        return view('vendor.orders.show', compact('order'));
     }
 
     public function cancelOrder(Request $request)
@@ -86,10 +80,34 @@ class OrderController extends Controller
         }
 
         try {
-            $order = FranchiseeOrder::find($request->orderId);
+            $order = Order::find($request->orderId);
             $order->status = 'CANCELLED';
             $order->save();
             $result = ["status" => 1, "response" => "success", "message" => "Order cancelled successful."];
+        } catch (Exception $e) {
+            $result = ["status" => 0, "response" => "error", "message" => $e->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function confirmOrder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'orderId' => 'required'
+        ]);
+        if ($validator->fails()) {
+            $result = array(
+                'status' => false,
+                'msg' => $validator->errors()->all()
+            );
+            return response($result);
+        }
+
+        try {
+            $order = Order::find($request->orderId);
+            $order->status = 'CONFIRMED';
+            $order->save();
+            $result = ["status" => 1, "response" => "success", "message" => "Order confirmed successful."];
         } catch (Exception $e) {
             $result = ["status" => 0, "response" => "error", "message" => $e->getMessage()];
         }

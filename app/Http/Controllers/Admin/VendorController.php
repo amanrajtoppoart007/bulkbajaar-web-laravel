@@ -164,6 +164,8 @@ class VendorController extends Controller
 //        abort_if(Gate::denies('franchisee_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vendor->load(['profile', 'profile.billingState', 'profile.billingDistrict', 'profile.pickupState', 'profile.pickupState']);
+//        echo "<pre>";
+//        print_r($vendor->toArray());die;
         $profile = $vendor->profile ?? null;
         return view('admin.vendors.show', compact('vendor', 'profile'));
     }
@@ -189,5 +191,12 @@ class VendorController extends Controller
         $vendor->approved = 1;
         $vendor->save();
         return back()->with('message' ,'Approved successfully!');
+    }
+
+    public function massApprove(MassDestroyVendorRequest $request)
+    {
+        Vendor::whereIn('id', request('ids'))->update(['approved' => 1]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

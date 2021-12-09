@@ -10,12 +10,21 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unit');
-            $table->float('quantity', 15, 2);
-            $table->float('amount', 15, 2)->nullable();
-            $table->string('cart_number');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_option_id')->nullable()->constrained();
+            $table->smallInteger('quantity');
             $table->timestamps();
-            $table->softDeletes();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('carts');
     }
 }

@@ -14,6 +14,25 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label for="vendor_id">Seller</label>
+                                    <select
+                                        class="form-control select2 {{ $errors->has('vendor_id') ? 'is-invalid' : '' }}"
+                                        name="vendor_id" id="vendor_id" required>
+                                        <option value="">Select Seller</option>
+                                        @foreach($vendors as $id => $vendor)
+                                            <option
+                                                value="{{ $id }}" {{ old('vendor_id') == $id ? 'selected' : '' }}>{{ $vendor }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('vendor_id'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('vendor_id') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label class="required" for="name">{{ trans('cruds.product.fields.name') }}</label>
                                     <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                            type="text"
@@ -28,24 +47,100 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
-                                    <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                        <span class="btn btn-info btn-xs deselect-all"
-                                              style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                    </div>
+                                    <label class="required" for="sku">SKU</label>
+                                    <input class="form-control {{ $errors->has('sku') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="sku" id="sku" value="{{ old('sku', '') }}" required>
+                                    @if($errors->has('sku'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('sku') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="hsn">HSN</label>
+                                    <input class="form-control {{ $errors->has('hsn') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="hsn" id="hsn" value="{{ old('hsn', '') }}">
+                                    @if($errors->has('hsn'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('hsn') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="price">Price</label>
+                                    <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="price" id="price" value="{{ old('price', '') }}" required>
+                                    @if($errors->has('price'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('price') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="price">Minimum Order Quantity</label>
+                                    <input class="form-control {{ $errors->has('moq') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="moq" id="moq" value="{{ old('moq', '') }}" required>
+                                    @if($errors->has('moq'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('moq') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="discount">Discount</label>
+                                    <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="discount" id="discount" value="{{ old('discount', 0) }}" required>
+                                    @if($errors->has('discount'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('discount') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="dispatch_time">Expected Dispatch Time</label>
+                                    <input class="form-control {{ $errors->has('dispatch_time') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="dispatch_time" id="dispatch_time" value="{{ old('dispatch_time', '') }}">
+                                    @if($errors->has('dispatch_time'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('dispatch_time') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="product_category_id">Category</label>
                                     <select
-                                        class="form-control select2 {{ $errors->has('categories') ? 'is-invalid' : '' }}"
-                                        name="categories[]" id="categories" multiple>
+                                        class="form-control select2 {{ $errors->has('product_category_id') ? 'is-invalid' : '' }}"
+                                        name="product_category_id" id="product_category_id">
                                         @foreach($categories as $id => $category)
                                             <option
-                                                value="{{ $id }}" {{ in_array($id, old('categories', [])) ? 'selected' : '' }}>{{ $category }}</option>
+                                                value="{{ $id }}" {{ $id == old('product_category_id') ? 'selected' : '' }}>{{ $category }}</option>
                                         @endforeach
                                     </select>
-                                    @if($errors->has('categories'))
+                                    @if($errors->has('product_category_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('categories') }}
+                                            {{ $errors->first('product_category_id') }}
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.category_helper') }}</span>
@@ -53,71 +148,20 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="sub_categories">{{ trans('cruds.product.fields.sub_category') }}</label>
-                                    <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                        <span class="btn btn-info btn-xs deselect-all"
-                                              style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                    </div>
+                                    <label for="product_sub_category_id">Sub Category</label>
                                     <select
-                                        class="form-control select2 {{ $errors->has('sub_categories') ? 'is-invalid' : '' }}"
-                                        name="sub_categories[]" id="sub_categories" multiple>
-                                        @foreach($subCategories as $id => $subCategory)
-                                            <option
-                                                value="{{ $id }}" {{ in_array($id, old('sub_categories', [])) ? 'selected' : '' }}>{{ $subCategory }}</option>
-                                        @endforeach
+                                        class="form-control select2 {{ $errors->has('product_sub_category_id') ? 'is-invalid' : '' }}"
+                                        name="product_sub_category_id" id="product_sub_category_id">
                                     </select>
-                                    @if($errors->has('sub_categories'))
+                                    @if($errors->has('product_sub_category_id'))
                                         <div class="invalid-feedback">
-                                            {{ $errors->first('sub_categories') }}
+                                            {{ $errors->first('product_sub_category_id') }}
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="tags">{{ trans('cruds.product.fields.tag') }}</label>
-                                    <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                        <span class="btn btn-info btn-xs deselect-all"
-                                              style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                                    </div>
-                                    <select class="form-control select2 {{ $errors->has('tags') ? 'is-invalid' : '' }}"
-                                            name="tags[]" id="tags" multiple>
-                                        @foreach($tags as $id => $tag)
-                                            <option
-                                                value="{{ $id }}" {{ in_array($id, old('tags', [])) ? 'selected' : '' }}>{{ $tag }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if($errors->has('tags'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('tags') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.tag_helper') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="brand_id">{{ trans('cruds.product.fields.brand') }}</label>
-                                    <select class="form-control select2 {{ $errors->has('brand') ? 'is-invalid' : '' }}"
-                                            name="brand_id" id="brand_id">
-                                        @foreach($brands as $id => $brand)
-                                            <option
-                                                value="{{ $id }}" {{ old('brand_id') == $id ? 'selected' : '' }}>{{ $brand }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if($errors->has('brand'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('brand') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.brand_helper') }}</span>
-                                </div>
-                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="images">{{ trans('cruds.product.fields.images') }}</label>
@@ -150,24 +194,38 @@
                                         class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="rrp">Refund & Return Policy</label>
+                                    <textarea class="form-control {{ $errors->has('rrp') ? 'is-invalid' : '' }}"
+                                              name="rrp" id="rrp">{{ old('rrp') }}</textarea>
+                                    @if($errors->has('rrp'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('rrp') }}
+                                        </div>
+                                    @endif
+                                    <span
+                                        class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
+                                </div>
+                            </div>
                             <div class="col-12 table-responsive">
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th>Option</th>
                                         <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                                         <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.purchase_price') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.price') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.bulk_price') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.discount') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.bulk_discount') }}</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <select class="form-control" name="unit[]" style="min-width: 100px;" required>
+                                            <input class="form-control option" type="text"
+                                                   name="option[]" style="min-width: 100px">
+                                        </td>
+                                        <td>
+                                            <select class="form-control" name="unit[]" style="min-width: 100px;">
                                                 @foreach($unitTypes as $unitType)
                                                     <option
                                                         value="{{ $unitType->name }}" {{ old('unit') == $unitType->name ? 'selected' : '' }}>{{ $unitType->name }}</option>
@@ -175,27 +233,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input class="form-control" style="min-width: 100px" type="number" step="1" name="quantity[]" required>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" step="0.01"
-                                                   name="purchase_price[]" style="min-width: 100px" required>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" step="0.01"
-                                                   name="price[]" style="min-width: 100px" required>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" step="0.01"
-                                                   name="bulk_price[]" style="min-width: 100px" required>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" min="0" max="100" step="1"
-                                                   name="discount[]" style="min-width: 100px" required>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" type="number" min="0" max="100" step="1"
-                                                   name="bulk_discount[]" style="min-width: 100px" required>
+                                            <input class="form-control" style="min-width: 100px" type="number" step="1" name="quantity[]">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button>
@@ -260,7 +298,7 @@
             init: function () {
                 @if(isset($product) && $product->images)
                 var files =
-                {!! json_encode($product->images) !!}
+                    {!! json_encode($product->images) !!}
                     for (var i in files) {
                     var file = files[i]
                     this.options.addedfile.call(this, file)
@@ -290,20 +328,16 @@
 
         const addProductUnitTemplate = () => {
             let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px" required>`;
+            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px">`;
             $.each(unitTypes, (i, e) => {
                 unitSelect += `<option value="${e.name}">${e.name}</option>`;
             })
             unitSelect += "</select>";
 
             let template = `<tr>`+
+                `<td><input class="form-control option" type="text" name="option[]" style="min-width: 100px"></td>`+
                 `<td>${unitSelect}</td>`+
-                `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="number" step="0.01" name="purchase_price[]" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="number" step="0.01" name="price[]" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="number" step="0.01" name="bulk_price[]" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="number" step="1" name="discount[]" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="number" step="1" name="bulk_discount[]" style="min-width: 100px" required></td>`+
+                `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px"></td>`+
                 `<td><button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button></td>`+
                 `</tr>`;
 
@@ -313,8 +347,8 @@
         $(document).on('click', '.add-button', function (){
             let tr = $(this).closest('tr');
 
-            let isNotEmpty = $($(tr).find('input')).filter(function () {
-                return $.trim($(this).val()).length == 0
+            let isNotEmpty = $($(tr).find('.option')).filter(function () {
+                return $.trim($(this).val()).length == 0;
             }).length == 0;
 
             if(isNotEmpty){
@@ -335,7 +369,7 @@
         $(document).on('submit', '#productForm', function(e) {
             var formData = new FormData($(this)[0]);
             $.ajax({
-                url: "{{route('admin.products.add')}}",
+                url: "{{route('admin.products.store')}}",
                 type: 'POST',
                 dataType: 'json',
                 data: formData,
@@ -358,6 +392,39 @@
             });
 
             e.preventDefault();
+        });
+
+        let category = "{{ old('product_category_id') }}";
+        let subCategory = "{{ old('product_sub_category_id') }}";
+
+        setTimeout(() => {
+            $('#product_category_id').val(category).trigger('change');
+        }, 100)
+
+        $("#product_category_id").on("change", function () {
+
+            $("#product_sub_category_id").empty();
+            $.ajax({
+                url: "{{route('ajax.products.sub-category.list')}}",
+                type: 'POST',
+                data: {'product_category_id': $(this).val()},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.response === "success") {
+                        let option = $($.parseHTML(`<option value="">Select Sub Category</option>`));
+                        $("#product_sub_category_id").append(option);
+                        $.each(res.data, function (key, item) {
+                            let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
+                            $("#product_sub_category_id").append($option);
+                        });
+                    }
+                    $('#product_sub_category_id').val(subCategory).trigger('change');
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         });
     </script>
 @endsection

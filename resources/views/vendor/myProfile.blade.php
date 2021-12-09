@@ -151,9 +151,7 @@
                         <div class="form-group">
                             <label class="required" for="billing_district_id">District</label>
                             <select class="form-control select2 {{ $errors->has('billing_district_id') ? 'is-invalid' : '' }}" name="billing_district_id" id="billing_district_id" required>
-                                @foreach($districts as $id => $district)
-                                    <option value="{{ $id }}" {{ (old('billing_district_id') ? old('billing_district_id') : $profile->billing_district_id ?? '') == $id ? 'selected' : '' }}>{{ $district }}</option>
-                                @endforeach
+
                             </select>
                             @if($errors->has('billing_district_id'))
                                 <div class="invalid-feedback">
@@ -215,9 +213,7 @@
                         <div class="form-group">
                             <label class="required" for="pickup_district_id">District</label>
                             <select class="form-control select2 {{ $errors->has('pickup_district_id') ? 'is-invalid' : '' }}" name="pickup_district_id" id="pickup_district_id" required>
-                                @foreach($districts as $id => $district)
-                                    <option value="{{ $id }}" {{ (old('billing_district_id') ? old('billing_district_id') : $profile->billing_district_id ?? '') == $id ? 'selected' : '' }}>{{ $district }}</option>
-                                @endforeach
+
                             </select>
                             @if($errors->has('pickup_district_id'))
                                 <div class="invalid-feedback">
@@ -257,6 +253,18 @@
         $(document).ready(function () {
 
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}});
+
+            let billingState = "{{ old('billing_state_id', $profile->billing_state_id ?? '') }}";
+            let billingDistrict = "{{ old('billing_district_id', $profile->billing_district_id ?? '') }}";
+
+            let pickupState = "{{ old('pickup_state_id', $profile->pickup_state_id ?? '') }}";
+            let pickupDistrict = "{{ old('pickup_district_id', $profile->pickup_district_id ?? '') }}";
+
+            setTimeout(() => {
+                $('#billing_state_id').val(billingState).trigger('change');
+                $('#pickup_state_id').val(pickupState).trigger('change');
+            }, 100)
+
             $("#billing_state_id").on("change", function () {
 
                 $("#billing_district_id").empty();
@@ -275,8 +283,7 @@
                             });
                             $("#billing_district_id").select2();
                         }
-
-
+                        $('#billing_district_id').val(billingDistrict).trigger('change');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);
@@ -303,7 +310,7 @@
                             });
                             $("#pickup_district_id").select2();
                         }
-
+                        $('#pickup_district_id').val(pickupDistrict).trigger('change');
 
                     },
                     error: function (jqXHR, textStatus, errorThrown) {

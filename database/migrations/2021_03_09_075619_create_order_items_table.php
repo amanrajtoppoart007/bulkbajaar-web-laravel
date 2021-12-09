@@ -18,11 +18,13 @@ class CreateOrderItemsTable extends Migration
             $table->foreignId('order_id')->constrained();
             $table->string('order_number')->nullable();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('product_price_id')->constrained();
-            $table->unsignedSmallInteger('quantity');
+            $table->foreignId('product_option_id')->nullable()->constrained();
             $table->double('amount');
-            $table->double('gst');
-            $table->double('discount');
+            $table->unsignedSmallInteger('quantity');
+            $table->double('discount', 5, 2);
+            $table->double('discount_amount');
+            $table->decimal('charge_percent', 5,2)->default(0)->comment('platform chargecharge');
+            $table->decimal('charge_amount')->default(0)->comment('platform charge');
             $table->double('total_amount');
             $table->string('status')->default('PENDING');
             $table->timestamps();

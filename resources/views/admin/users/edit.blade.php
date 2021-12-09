@@ -7,25 +7,38 @@
         </div>
 
         <div class="card-body">
+            <h6 class="text-danger">{{ trans('global.required_header') }}</h6>
             <form method="POST" action="{{ route("admin.users.update", [$user->id]) }}" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
+                    <div class="col-6">
                         <div class="form-group">
-                            <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                            <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text"
-                                   name="name" id="name" value="{{ old('name', $user->name ?? '') }}" required>
-                            @if($errors->has('name'))
+                            <label class="required" for="company_name">Company Name</label>
+                            <input class="form-control {{ $errors->has('company_name') ? 'is-invalid' : '' }}" type="text"
+                                   name="company_name" id="company_name" value="{{ old('company_name', $user->name ?? '') }}" required>
+                            @if($errors->has('company_name'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('name') }}
+                                    {{ $errors->first('company_name') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                         </div>
-
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="required" for="representative_name">Representative/Owner Name</label>
+                            <input class="form-control {{ $errors->has('representative_name') ? 'is-invalid' : '' }}"
+                                   type="text"
+                                   name="representative_name" id="representative_name"
+                                   value="{{ old('representative_name', $userProfile->representative_name ?? '') }}" required>
+                            @if($errors->has('representative_name'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('representative_name') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="mobile">{{ trans('cruds.user.fields.mobile') }}</label>
                             <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="text"
@@ -37,23 +50,8 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.mobile_helper') }}</span>
                         </div>
-
-                        <div class="form-group">
-                            <label class="required"
-                                   for="secondary_mobile">{{ trans('cruds.user.fields.secondary_mobile') }}</label>
-                            <input class="form-control {{ $errors->has('secondary_mobile') ? 'is-invalid' : '' }}"
-                                   type="text"
-                                   name="secondary_mobile" id="secondary_mobile"
-                                   value="{{ old('mobile', $userProfile->secondary_mobile ?? '') }}" required>
-                            @if($errors->has('secondary_mobile'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('secondary_mobile') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.secondary_mobile_helper') }}</span>
-                        </div>
-
-
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
                             <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
@@ -65,219 +63,175 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
                         </div>
-
-                        <div class="form-group">
-                            <label for="password">{{ trans('cruds.user.fields.password') }}</label>
-                            <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                                   type="password"
-                                   name="password" id="password">
-                            @if($errors->has('password'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('password') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="required"
-                                for="agricultural_land">{{ trans('cruds.userProfile.fields.agricultural_land') }}</label>
-                            <input class="form-control {{ $errors->has('agricultural_land') ? 'is-invalid' : '' }}"
-                                   type="number" name="agricultural_land" id="agricultural_land"
-                                   value="{{ old('farming_land_area', $userProfile->agricultural_land ?? '') }}" step="0.01" required>
-                            @if($errors->has('agricultural_land'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('agricultural_land') }}
-                                </div>
-                            @endif
-                            <span class="help-block"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="required" for="crops">{{ trans('cruds.userProfile.fields.crops') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all"
-                                      style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all"
-                                      style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control {{ $errors->has('crops') ? 'is-invalid' : '' }} select2"
-                                    name="crops[]" id="crops" multiple="multiple" required>
-                                @foreach($crops as $crop_id=>$crop_name)
-                                    @php
-                                        if((!empty($userProfile->crops))&& is_array($userProfile->crops) && $crop_id)
-                                        {
-                                            if(in_array($crop_id,$userProfile->crops))
-                                            {
-                                                $selected = "selected";
-                                            }
-                                            else
-                                            {
-                                                 $selected = "";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            $selected = "";
-                                        }
-
-                                    @endphp
-                                    <option value="{{$crop_id}}" {{$selected}}>{{$crop_name}}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('crops'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('crops') }}
-                                </div>
-                            @endif
-                            <span class="help-block"></span>
-                        </div>
-
                     </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
-
+                    <div class="col-6">
                         <div class="form-group">
-                            <label class="required" for="address">{{ trans('cruds.userAddress.fields.address') }}</label>
-                            <textarea class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}"
-                                      name="address"
-                                      id="address" required>{{ old('address', $userAddress->address) }}</textarea>
-                            @if($errors->has('address'))
+                            <label
+                                for="gst_number">{{ trans('cruds.helpCenterProfile.fields.gst_number') }}</label>
+                            <input class="form-control {{ $errors->has('gst_number') ? 'is-invalid' : '' }}"
+                                   type="text"
+                                   name="gst_number" id="gst_number" value="{{ old('gst_number', $userProfile->gst_number ?? '') }}">
+                            @if($errors->has('gst_number'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('address') }}
+                                    {{ $errors->first('gst_number') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.address_helper') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="required" for="pan_number">PAN Number</label>
+                            <input class="form-control {{ $errors->has('gst_number') ? 'is-invalid' : '' }}"
+                                   type="text"
+                                   name="pan_number" id="pan_number" value="{{ old('pan_number', $userProfile->pan_number ?? '') }}" required>
+                            @if($errors->has('pan_number'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('pan_number') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <input type="hidden" name="billing_address_id" value="{{ $billingAddress->id ?? '' }}">
+                            <label class="required" for="billing_address">Billing Address</label>
+                            <textarea class="form-control {{ $errors->has('billing_address') ? 'is-invalid' : '' }}"
+                                      name="billing_address" id="billing_address"
+                                      required>{{ old('billing_address', $billingAddress->address ?? '') }}</textarea>
+                            @if($errors->has('billing_address'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('billing_address') }}
+                                </div>
+                            @endif
+                            <span
+                                class="help-block">{{ trans('cruds.franchiseeProfile.fields.organization_address_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing_address_line_two">Billing Address Line 2</label>
+                            <input
+                                class="form-control {{ $errors->has('billing_address_line_two') ? 'is-invalid' : '' }}"
+                                type="text" name="billing_address_line_two" id="billing_address_line_two"
+                                value="{{ old('billing_address_line_two', $billingAddress->address_line_two ?? '') }}">
+                            @if($errors->has('billing_address_line_two'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('billing_address_line_two') }}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="form-group">
-                            <label for="street">{{ trans('cruds.userAddress.fields.street') }}</label>
-                            <input class="form-control {{ $errors->has('street') ? 'is-invalid' : '' }}" type="text"
-                                   name="street" id="street" value="{{ old('street', $userAddress->street) }}">
-                            @if($errors->has('street'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('street') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.street_helper') }}</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="required" for="state_id">{{ trans('cruds.userAddress.fields.state') }}</label>
-                            <select class="form-control select2 {{ $errors->has('state') ? 'is-invalid' : '' }}"
-                                    name="state_id" id="state_id" required>
+                            <label class="required" for="billing_state_id">State</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('billing_state_id') ? 'is-invalid' : '' }}"
+                                name="billing_state_id" id="billing_state_id" required>
                                 @foreach($states as $id => $state)
                                     <option
-                                        value="{{ $id }}" {{ (old('state_id') ? old('state_id') : $userAddress->state->id ?? '') == $id ? 'selected' : '' }}>{{ $state }}</option>
+                                        value="{{ $id }}" {{ old('billing_state_id', $billingAddress->state_id ?? '') == $id ? 'selected' : '' }}>{{ $state }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('state'))
+                            @if($errors->has('billing_state_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('state') }}
+                                    {{ $errors->first('billing_state_id') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.state_helper') }}</span>
+                            <span
+                                class="help-block">{{ trans('cruds.franchiseeProfile.fields.organization_state_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="required" for="billing_district_id">District</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('billing_district_id') ? 'is-invalid' : '' }}"
+                                name="billing_district_id" id="billing_district_id" required>
+
+                            </select>
+                            @if($errors->has('billing_district_id'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('billing_district_id') }}
+                                </div>
+                            @endif
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label class="required"
+                                   for="billing_pincode">Pincode</label>
+                            <input class="form-control {{ $errors->has('billing_pincode') ? 'is-invalid' : '' }}"
+                                   type="text"
+                                   name="billing_pincode" id="billing_pincode"
+                                   value="{{ old('billing_pincode', $billingAddress->pincode ?? '') }}" required>
+                            @if($errors->has('billing_pincode'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('billing_pincode') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <input type="hidden" name="shipping_address_id" value="{{ $shippingAddress->id ?? '' }}">
+                            <label class="required" for="shipping_address">Shipping Address</label>
+                            <textarea class="form-control {{ $errors->has('shipping_address') ? 'is-invalid' : '' }}"
+                                      name="shipping_address" id="shipping_address"
+                                      required>{{ old('shipping_address', $shippingAddress->address ?? '') }}</textarea>
+                            @if($errors->has('shipping_address'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('shipping_address') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="shipping_address_line_two">Shipping Address Line 2</label>
+                            <input
+                                class="form-control {{ $errors->has('shipping_address_line_two') ? 'is-invalid' : '' }}"
+                                type="text" name="shipping_address_line_two" id="shipping_address_line_two"
+                                value="{{ old('shipping_address_line_two', $shippingAddress->address_line_two ?? '') }}">
+                            @if($errors->has('shipping_address_line_two'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('shipping_address_line_two') }}
+                                </div>
+                            @endif
+                        </div>
 
                         <div class="form-group">
-                            <label class="required"
-                                   for="district_id">{{ trans('cruds.userAddress.fields.district') }}</label>
-                            <select class="form-control select2 {{ $errors->has('district') ? 'is-invalid' : '' }}"
-                                    name="district_id" id="district_id" required>
-                                @foreach($districts as $id => $district)
+                            <label class="required" for="shipping_state_id">State</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('shipping_state_id') ? 'is-invalid' : '' }}"
+                                name="shipping_state_id" id="shipping_state_id" required>
+                                @foreach($states as $id => $state)
                                     <option
-                                        value="{{ $id }}" {{ (old('district_id') ? old('district_id') : $userAddress->district->id ?? '') == $id ? 'selected' : '' }}>{{ $district }}</option>
+                                        value="{{ $id }}" {{ old('shipping_state_id', $shippingAddress->state_id ?? '') == $id ? 'selected' : '' }}>{{ $state }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('district'))
+                            @if($errors->has('shipping_state_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('district') }}
+                                    {{ $errors->first('shipping_state_id') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.district_helper') }}</span>
                         </div>
-
-
                         <div class="form-group">
-                            <label class="required" for="block_id">{{ trans('cruds.userAddress.fields.block') }}</label>
-                            <select class="form-control select2 {{ $errors->has('block') ? 'is-invalid' : '' }}"
-                                    name="block_id" id="block_id" required>
-                                @foreach($blocks as $id => $block)
-                                    <option
-                                        value="{{ $id }}" {{ (old('block_id') ? old('block_id') : $userAddress->block->id ?? '') == $id ? 'selected' : '' }}>{{ $block }}</option>
-                                @endforeach
+                            <label class="required" for="shipping_district_id">District</label>
+                            <select
+                                class="form-control select2 {{ $errors->has('shipping_district_id') ? 'is-invalid' : '' }}"
+                                name="shipping_district_id" id="shipping_district_id" required>
                             </select>
-                            @if($errors->has('block'))
+                            @if($errors->has('shipping_district_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('block') }}
+                                    {{ $errors->first('shipping_district_id') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.block_helper') }}</span>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label class="required"
-                                   for="pincode_id">{{ trans('cruds.userAddress.fields.pincode') }}</label>
-                            <select class="form-control select2 {{ $errors->has('pincode_id') ? 'is-invalid' : '' }}"
-                                    name="pincode_id" id="pincode_id" required>
-                                <option
-                                    value="" disabled selected>{{ trans('global.pleaseSelect') }}
-                                </option>
-
-                            </select>
-                            @if($errors->has('pincode_id'))
+                                   for="shipping_pincode">Pincode</label>
+                            <input class="form-control {{ $errors->has('shipping_pincode') ? 'is-invalid' : '' }}"
+                                   type="text"
+                                   name="shipping_pincode" id="shipping_pincode"
+                                   value="{{ old('shipping_pincode', $shippingAddress->pincode ?? '') }}" required>
+                            @if($errors->has('shipping_pincode'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('pincode_id') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.pincode_helper') }}</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="required"
-                                for="area_id">{{ trans('cruds.userAddress.fields.area') }}</label>
-                            <select class="form-control select2 {{ $errors->has('area_id') ? 'is-invalid' : '' }}"
-                                    name="area_id" id="area_id" required>
-                                <option
-                                    value="" disabled selected>{{ trans('global.pleaseSelect') }}
-                                </option>
-
-                            </select>
-                            @if($errors->has('area_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('area_id') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.area_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="required" for="village">
-                                {{ trans('cruds.userAddress.fields.village') }}
-                            </label>
-                            <input type="text" class="form-control  {{ $errors->has('village') ? 'is-invalid' : '' }}"
-                                   value="{{ old('village', $userAddress->village ?? '') }}" name="village" id="village" required>
-                            @if($errors->has('village'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('village') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.userAddress.fields.village_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="required" for="help_center_id">{{ trans('cruds.user.fields.help_center') }}</label>
-                            <select class="form-control select2 {{ $errors->has('help_center_id') ? 'is-invalid' : '' }}"
-                                    name="help_center_id" id="help_center_id" required>
-                                @foreach($helpCenters as $id=> $helpCenter)
-                                    <option value="{{ $id }}" {{ old('help_center_id', $user->help_center_id ?? '') == $id ? 'selected' : '' }}>{{ $helpCenter }}</option>
-                                @endforeach
-
-                            </select>
-                            @if($errors->has('help_center_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('help_center_id') }}
+                                    {{ $errors->first('shipping_pincode') }}
                                 </div>
                             @endif
                         </div>
@@ -302,22 +256,23 @@
 
         $(document).ready(function () {
 
-            let state = "{{ $userAddress->state_id ?? '' }}";
-            let district = "{{ $userAddress->district_id ?? '' }}";
-            let block = "{{ $userAddress->block_id ?? '' }}";
-            let pincode = "{{ $userAddress->pincode_id ?? '' }}";
-            let area = "{{ $userAddress->area_id ?? '' }}";
+            let billingState = "{{ old('billing_state_id', $billingAddress->state_id ?? '') }}";
+            let billingDistrict = "{{ old('billing_district_id', $billingAddress->district_id ?? '') }}";
+
+            let shippingState = "{{ old('shipping_state_id', $shippingAddress->state_id ?? '') }}";
+            let shippingDistrict = "{{ old('shipping_district_id', $shippingAddress->district_id ?? '') }}";
 
             setTimeout(() => {
-                $('#state_id').val(state).trigger('change');
+                $('#billing_state_id').val(billingState).trigger('change');
+                $('#shipping_state_id').val(shippingState).trigger('change');
             }, 100)
 
 
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}});
 
-            $("#state_id").on("change", function () {
+            $("#billing_state_id").on("change", function () {
 
-                $("#district_id").empty();
+                $("#billing_district_id").empty();
                 $.ajax({
                     url: "{{route('ajax.district.list')}}",
                     type: 'POST',
@@ -326,13 +281,13 @@
                     success: function (res) {
                         if (res.response === "success") {
                             let option = $($.parseHTML(`<option value="">Select District</option>`));
-                            $("#district_id").append(option);
+                            $("#billing_district_id").append(option);
                             $.each(res.data, function (key, item) {
                                 let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
-                                $("#district_id").append($option);
+                                $("#billing_district_id").append($option);
                             });
                         }
-                        $('#district_id').val(district).trigger('change');
+                        $('#billing_district_id').val(billingDistrict).trigger('change');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);
@@ -340,78 +295,24 @@
                 });
             });
 
-            $("#district_id").on("change", function () {
+            $("#shipping_state_id").on("change", function () {
 
-                $("#block_id").empty();
+                $("#shipping_district_id").empty();
                 $.ajax({
-                    url: "{{route('ajax.block.list')}}",
+                    url: "{{route('ajax.district.list')}}",
                     type: 'POST',
-                    data: {'district_id': $(this).val()},
+                    data: {'state_id': $(this).val()},
                     dataType: 'json',
                     success: function (res) {
                         if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Block</option>`));
-                            $("#block_id").append(option);
+                            let option = $($.parseHTML(`<option value="">Select District</option>`));
+                            $("#shipping_district_id").append(option);
                             $.each(res.data, function (key, item) {
                                 let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
-                                $("#block_id").append($option);
+                                $("#shipping_district_id").append($option);
                             });
                         }
-                        $('#block_id').val(block).trigger('change');
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus);
-                    }
-                });
-            });
-
-            $("#block_id").on("change", function () {
-
-                $("#pincode_id").empty();
-                $.ajax({
-                    url: "{{route('ajax.pincode.list')}}",
-                    type: 'POST',
-                    data: {'block_id': $(this).val()},
-                    dataType: 'json',
-                    success: function (res) {
-                        if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Pincode</option>`));
-                            $("#pincode_id").append(option);
-                            $.each(res.data, function (key, item) {
-                                let $option = $($.parseHTML(`<option value="${item.id}">${item.pincode}</option>`));
-                                $("#pincode_id").append($option);
-                            });
-                        }
-                        $('#pincode_id').val(pincode).trigger('change');
-
-
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus);
-                    }
-                });
-            });
-
-            $("#pincode_id").on("change", function () {
-
-                $("#area_id").empty();
-                $.ajax({
-                    url: "{{route('ajax.area.list')}}",
-                    type: 'POST',
-                    data: {'pincode_id': $(this).val()},
-                    dataType: 'json',
-                    success: function (res) {
-                        if (res.response === "success") {
-                            let option = $($.parseHTML(`<option value="">Select Area</option>`));
-                            $("#area_id").append(option);
-                            $.each(res.data, function (key, item) {
-                                let $option = $($.parseHTML(`<option value="${item.id}">${item.area}</option>`));
-                                $("#area_id").append($option);
-                            });
-                        }
-                        $('#area_id').val(area).trigger('change');
+                        $('#shipping_district_id').val(shippingDistrict).trigger('change');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(textStatus);

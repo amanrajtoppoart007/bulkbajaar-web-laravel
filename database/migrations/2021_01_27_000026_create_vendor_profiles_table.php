@@ -31,6 +31,7 @@ class CreateVendorProfilesTable extends Migration
             $table->string('account_number')->nullable();
             $table->string('account_holder_name')->nullable();
             $table->string('ifsc_code')->nullable();
+            $table->decimal('mop', 15, 0)->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

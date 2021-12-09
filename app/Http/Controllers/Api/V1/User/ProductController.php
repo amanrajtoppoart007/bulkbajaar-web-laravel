@@ -3,11 +3,13 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-
+use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
+use App\Library\Api\V1\User\SubCategoryList;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use App\Models\Review;
-use App\Models\UserAddress;
 use App\Traits\ProductTrait;
 use App\Traits\ReviewTrait;
 use Illuminate\Http\Request;
@@ -16,44 +18,15 @@ use Validator;
 class ProductController extends \App\Http\Controllers\Api\BaseController
 {
     use ProductTrait, ReviewTrait;
+
     public function getLatestProducts(Request $request)
     {
-        $validatable = [];
-
-        $pincode = null;
-        $area = null;
-
-        if(!auth('sanctum')->check()){
-            $validatable['pincode_id'] = 'required';
-            $validatable['area_id'] = 'required';
-            $pincode = $request->input('pincode_id');
-            $area = $request->input('area_id');
-        }else{
-            $address = auth('sanctum')->user()->userUserAddresses->first();
-            if(!$address){
-                $validatable['pincode_id'] = 'required';
-                $validatable['area_id'] = 'required';
-                $pincode = $request->input('pincode_id');
-                $area = $request->input('area_id');
-            }else{
-                $pincode = $address->pincode_id;
-                $area = $request->area_id;
-            }
-        }
-        $validator = Validator::make($request->all(), $validatable);
-
-        if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
-        }
-
         try {
-
             $products = Product::latest()
-                ->with('productPrices', 'categories', 'reviews')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
-                $class = new ProductList($products, $pincode, $area);
+                $class = new ProductList($products);
                 $data['list'] = $class->execute();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
             } else {
@@ -67,42 +40,13 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
     public function getTopRatedProducts(Request $request)
     {
-        $validatable = [];
-
-        $pincode = null;
-        $area = null;
-
-        if(!auth('sanctum')->check()){
-            $validatable['pincode_id'] = 'required';
-            $validatable['area_id'] = 'required';
-            $pincode = $request->input('pincode_id');
-            $area = $request->input('area_id');
-        }else{
-            $address = auth('sanctum')->user()->userUserAddresses->first();
-            if(!$address){
-                $validatable['pincode_id'] = 'required';
-                $validatable['area_id'] = 'required';
-                $pincode = $request->input('pincode_id');
-                $area = $request->input('area_id');
-            }else{
-                $pincode = $address->pincode_id;
-                $area = $request->area_id;
-            }
-        }
-        $validator = Validator::make($request->all(), $validatable);
-
-        if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
-        }
         try {
-
             $products = Product::limit(10)
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
-                ->with('productPrices', 'categories', 'reviews')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->get()->toArray();
             if (count($products)) {
-                $class = new ProductList($products, $pincode, $area);
+                $class = new ProductList($products);
                 $data['list'] = $class->execute();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
             } else {
@@ -146,110 +90,169 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
     public function getProductDetails(Request $request)
     {
-        $validatable = [
+        $validator = \Illuminate\Support\Facades\Validator::make($request->json()->all(), [
             'product_id' => 'required|exists:products,id',
-        ];
-
-        $pincode = null;
-        $area = null;
-
-        if(!auth('sanctum')->check()){
-            $validatable['pincode_id'] = 'required';
-            $validatable['area_id'] = 'required';
-            $pincode = $request->input('pincode_id');
-            $area = $request->input('area_id');
-        }else{
-            $address = auth('sanctum')->user()->userUserAddresses->first();
-            if(!$address){
-                $validatable['pincode_id'] = 'required';
-                $validatable['area_id'] = 'required';
-                $pincode = $request->input('pincode_id');
-                $area = $request->input('area_id');
-            }else{
-                $pincode = $address->pincode_id;
-                $area = $request->area_id;
-            }
-        }
-        $validator = Validator::make($request->all(), $validatable);
-
+        ]);
 
         if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
+        } else {
+            $product = Product::find($request->product_id);
+            try {
+
+                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor']);
+
+                $data = [
+                    'id' => $product->id,
+                    'vendor_id' => $product->vendor_id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => applyPrice($product->price, null, $product->discount),
+                    'moq' => $product->moq,
+                    'discount' => $product->discount,
+                    'category' => $product->productCategory->name ?? '',
+                    'sub_category' => $product->productSubCategory->name ?? '',
+                    'dispatch_time' => $product->dispatch_time,
+                    'rrp' => $product->rrp,
+                    'product_options' => $product->productOptions,
+                    'vendor' => $product->vendor->name ?? '',
+                ];
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Product fetched successfully.'
+                ];
+            } catch (\Exception $exception) {
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+            }
         }
+
+        return response()->json($result, 200);
+
+    }
+
+    public function getCategories(Request $request)
+    {
         try {
-            $product = Product::find($request->input('product_id'));
-            if ($product) {
+            $query = ProductCategory::query();
 
-                $data = [];
-                $data['id'] = $product->id;
-                $data['name'] = $product->name;
-                $data['description'] = $product->description;
-                $data['stock'] = $this->checkProductStock($product->id, $pincode, $area);
-                $data['stock'] = $this->checkProductStock($product->id, $pincode, $area);
-                $data['liked'] = $this->checkIfProductLiked($product->id);
-                $data['prices'] = [];
-                $data['categories'] = [];
-                $data['sub_categories'] = [];
-                $data['rating'] = $this->calculateRatingAverage($product->id);
-                $data['reviews'] = [];
-                $data['tags'] = [];
-                $images = [];
+            if (!empty($request->input('keyword'))) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('name', 'LIKE', "%" . $request->input('keyword') . "%");
+                });
+            }
 
-                foreach ($product->images as $key => $media){
-                        $images[] = [
-                            'thumbnail' => $media->getUrl('thumb'),
-                            'preview' => $media->getUrl('preview'),
-                            'original' => $media->getUrl(),
-                        ];
-
-                }
-                $data['images'] = $images;
-
-                foreach ($product->productPrices as $productPrice) {
-                    $data['prices'][] = [
-                        'id' => $productPrice->id,
-                        'price' => $productPrice->price,
-                        'discount' => $productPrice->discount,
-                        'unit' => $productPrice->unit,
-                        'quantity' => $productPrice->quantity,
-                        'stock' => $this->checkProductPriceStock($productPrice->id, $pincode, false, $area),
-                        'liked' => $this->checkIfProductProductLiked($productPrice->id),
-                    ];
-                }
-
-                foreach ($product->categories as $category) {
-                    $data['categories'][] = [
-                        'name' => $category->name,
-                    ];
-                }
-                foreach ($product->reviews as $review) {
-                    $data['reviews'][] = [
-                        'review' => $review->review,
-                        'rating' => $review->star,
-                    ];
-                }
-                foreach ($product->tags as $tag) {
-                    $data['tags'][] = [
-                        'name' => $tag->name,
-                    ];
-                }
-                foreach ($product->subCategories as $subCategory) {
-                    $data['sub_categories'][] = [
-                        'name' => $subCategory->name,
-                    ];
-                }
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully successfully'];
-
+            $categories = $query->paginate(10);
+            if (count($categories)) {
+                $categoryList = $categories->toArray();
+                $data['current_page'] = $categoryList['current_page'];
+                $data['next_page_url'] = $categoryList['next_page_url'];
+                $data['last_page_url'] = $categoryList['last_page_url'];
+                $data['per_page'] = $categoryList['per_page'];
+                $data['total'] = $categoryList['total'];
+                $data['list'] = $categoryList['data'];
+                $class = new CategoryList($categoryList['data']);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Category data fetched successfully'];
             } else {
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product not found'];
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No category found'];
+            }
+
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function getSubCategories(Request $request)
+    {
+        try {
+            $query = ProductSubCategory::query();
+            if ($request->input('keyword')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('name', 'LIKE', "%" . $request->input('keyword') . "%");
+                });
+            }
+
+            if ($request->input('category_id')) {
+                $query->where('product_category_id', $request->input('category_id'));
+            }
+
+            $subCategories = $query->with('category')->paginate(10);
+            if (count($subCategories)) {
+                $subCategoryList = $subCategories->toArray();
+                $data['current_page'] = $subCategoryList['current_page'];
+                $data['next_page_url'] = $subCategoryList['next_page_url'];
+                $data['last_page_url'] = $subCategoryList['last_page_url'];
+                $data['per_page'] = $subCategoryList['per_page'];
+                $data['total'] = $subCategoryList['total'];
+                $data['list'] = $subCategoryList['data'];
+                $class = new SubCategoryList($subCategoryList['data']);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'SubCategory data fetched successfully'];
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No sub category found'];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
+    }
 
+    public function getProducts(Request $request)
+    {
+        try {
+            $query = Product::query();
+            if ($request->input('keyword')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('name', 'LIKE', "%".$request->input('keyword')."%");
+                });
+            }
 
+            if ($request->input('category_id')) {
+                $query->where('product_category_id', $request->input('category_id'));
+            }
+            if ($request->input('sub_category_id')) {
+                $query->where('product_category_id', $request->input('sub_category_id'));
+            }
+
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);
+            if (count($products)) {
+                $productList = $products->toArray();
+                $data['current_page'] = $productList['current_page'];
+                $data['next_page_url'] = $productList['next_page_url'];
+                $data['last_page_url'] = $productList['last_page_url'];
+                $data['per_page'] = $productList['per_page'];
+                $data['total'] = $productList['total'];
+                $data['list'] = $productList['data'];
+                $class = new ProductList($productList['data']);
+                $data['list'] = $class->execute();
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Products data fetched successfully'
+                ];
+            } else {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'retry',
+                    'message' => 'No product found'
+                ];
+            }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
     }
 
 }

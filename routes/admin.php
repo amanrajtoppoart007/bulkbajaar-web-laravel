@@ -14,12 +14,13 @@
 
     // Users
     Route::delete('users/destroy', 'Admin\UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/mass-approve', 'Admin\UsersController@massApprove')->name('users.massApprove');
     Route::post('users/parse-csv-import', 'Admin\UsersController@parseCsvImport')->name('users.parseCsvImport');
     Route::post('users/process-csv-import', 'Admin\UsersController@processCsvImport')->name('users.processCsvImport');
+    Route::post('users/approve/{vendor}', 'Admin\UsersController@approve')->name('users.approve');
     Route::resource('users', 'Admin\UsersController');
     Route::post('users/change/approval/status', 'Admin\UsersController@changeApprovalStatus')->name('users.changeApprovalStatus');
     Route::post('users/change/verification/status', 'Admin\UsersController@changeVerificationStatus')->name('users.changeVerificationStatus');
-    Route::get('users/print-kisan-card/{user}', 'Admin\UsersController@printKisanCard')->name('users.print.kisan-card');
 
     // Product Categories
     Route::delete('product-categories/destroy', 'Admin\ProductCategoryController@massDestroy')->name('product-categories.massDestroy');
@@ -40,9 +41,12 @@
     Route::post('products/ckmedia', 'Admin\ProductController@storeCKEditorImages')->name('products.storeCKEditorImages');
     Route::post('products/parse-csv-import', 'Admin\ProductController@parseCsvImport')->name('products.parseCsvImport');
     Route::post('products/process-csv-import', 'Admin\ProductController@processCsvImport')->name('products.processCsvImport');
+    Route::post('products/mass-approve', 'Admin\ProductController@massApprove')->name('products.massApprove');
+    Route::post('products/approve/{product}', 'Admin\ProductController@approve')->name('products.approve');
     Route::resource('products', 'Admin\ProductController');
-    Route::post('products/add', 'Admin\ProductController@addProduct')->name('products.add');
-    Route::post('products/update', 'Admin\ProductController@updateProduct')->name('products.update');
+    Route::post('products/update', 'Admin\ProductController@update')->name('products.update');
+    Route::post('products/update-portal-charge', 'Admin\ProductController@updatePortalCharge')->name('products.update-portal-charge');
+
 
 
 // User Alerts
@@ -97,8 +101,6 @@
     Route::post('orders/parse-csv-import', 'Admin\OrderController@parseCsvImport')->name('orders.parseCsvImport');
     Route::post('orders/process-csv-import', 'Admin\OrderController@processCsvImport')->name('orders.processCsvImport');
     Route::resource('orders', 'Admin\OrderController');
-    Route::post('orders/assign', 'Admin\OrderController@assignOrder')->name('orders.assign');
-    Route::post('orders/assign-manually', 'Admin\OrderController@assignOrderManually')->name('orders.assign.manually');
     Route::post('orders/cancel', 'Admin\OrderController@cancelOrder')->name('orders.cancel');
     Route::post('orders/verify-payment', 'Admin\OrderController@verifyPayment')->name('orders.verify.payment');
     Route::post('orders/generate-invoice', 'HelpCenter\OrderController@generateInvoice')->name('orders.generate.invoice');
@@ -113,6 +115,7 @@
 
     // Vendors
     Route::delete('vendors/destroy', 'Admin\VendorController@massDestroy')->name('vendors.massDestroy');
+    Route::post('vendors/mass-approve', 'Admin\VendorController@massApprove')->name('vendors.massApprove');
     Route::post('vendors/parse-csv-import', 'Admin\VendorController@parseCsvImport')->name('vendors.parseCsvImport');
     Route::post('vendors/process-csv-import', 'Admin\VendorController@processCsvImport')->name('vendors.processCsvImport');
     Route::post('vendors/approve/{vendor}', 'Admin\VendorController@approve')->name('vendors.approve');
@@ -323,7 +326,6 @@
     Route::post('site-setting/ckmedia', 'Admin\SiteSettingController@storeCKEditorImages')->name('site-setting.storeCKEditorImages');
 
     //Push Notification
-
     Route::get('push-notifications', [\App\Http\Controllers\Admin\PushNotificationController::class, 'index'])->name('push-notifications.index');
     Route::post('push-notifications/store', [\App\Http\Controllers\Admin\PushNotificationController::class, 'store'])->name('push-notifications.store');
     Route::post('push-notifications/delete', [\App\Http\Controllers\Admin\PushNotificationController::class, 'destroy'])->name('push-notifications.destroy');
@@ -331,16 +333,13 @@
     Route::post('push-notifications/media', 'Admin\PushNotificationController@storeMedia')->name('push-notifications.storeMedia');
     Route::post('push-notifications/send', [\App\Http\Controllers\Admin\PushNotificationController::class, 'send'])->name('push-notifications.send');
 
-    //MEMBERSHIP PLANS
-    Route::resource('membership-plans', 'Admin\MembershipPlanController');
 
-    //Help Center Memberships
-    Route::resource('help-center-memberships', 'Admin\HelpCenterMembershipController');
 
-    //Franchisee Memberships
-    Route::resource('franchisee-memberships', 'Admin\FranchiseeMembershipController');
 
     //BILLS AND STOCK
     Route::resource('bills', 'Admin\BillController');
     Route::resource('master-stocks', 'Admin\MasterStockController');
     Route::post('master-stocks/update-stock', 'Admin\MasterStockController@updateStock')->name('master-stocks.update.stock');
+
+    Route::get('shiprocket-settings', [\App\Http\Controllers\Admin\ShiprocketController::class, 'index'])->name('shiprocket.settings.index');
+    Route::post('shiprocket-settings/save', [\App\Http\Controllers\Admin\ShiprocketController::class, 'save'])->name('shiprocket.settings.save');

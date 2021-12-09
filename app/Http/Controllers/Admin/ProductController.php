@@ -12,10 +12,14 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductOption;
+use App\Models\ProductPortalCharge;
 use App\Models\ProductPrice;
 use App\Models\ProductSubCategory;
 use App\Models\ProductTag;
 use App\Models\UnitType;
+use App\Models\Vendor;
+use App\Traits\SlugGeneratorTrait;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,14 +30,14 @@ use Validator;
 
 class ProductController extends Controller
 {
-    use MediaUploadingTrait, CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait, SlugGeneratorTrait;
 
     public function index(Request $request)
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['categories', 'tags', 'brand'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['vendor', 'productCategory', 'productSubCategory'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -60,46 +64,26 @@ class ProductController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
+
             $table->editColumn('image', function ($row) {
-                if($row->images){
-                    $imageUrl = $row->images[0]->getUrl();
+                if (!empty($row->images[0])) {
                     $imageThumbUrl = $row->images[0]->getUrl('thumb');
-                    return '<a href="'. $imageUrl .'" target="_blank" style="display: inline-block"><img src="'.$imageThumbUrl .'"></a>';
+                    return '<a href="'.$imageThumbUrl.'" target="_blank" style="display: inline-block"><img src="'.$imageThumbUrl.'"></a>';
                 }
                 return "";
-            });
-            $table->editColumn('mrp', function ($row) {
-                return $row->mrp ? $row->mrp : "";
             });
             $table->editColumn('price', function ($row) {
                 return $row->price ? $row->price : "";
             });
+            $table->editColumn('vendor', function ($row) {
+                return $row->vendor->name ?? '';
+            });
+
             $table->editColumn('category', function ($row) {
-                $labels = [];
-
-                foreach ($row->categories as $category) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $category->name);
-                }
-
-                return implode(' ', $labels);
+                return $row->productCategory->name ?? '';
             });
             $table->editColumn('sub_category', function ($row) {
-                $labels = [];
-
-                foreach ($row->subCategories as $subCcategory) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $subCcategory->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('tag', function ($row) {
-                $labels = [];
-
-                foreach ($row->tags as $tag) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
-                }
-
-                return implode(' ', $labels);
+                return $row->productSubCategory->name ?? '';
             });
             $table->editColumn('discount', function ($row) {
                 return $row->discount ? $row->discount : "";
@@ -108,100 +92,160 @@ class ProductController extends Controller
                 return $row->brand ? $row->brand->title : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category','sub_category', 'tag', 'brand', 'image']);
+            $table->rawColumns(['actions', 'placeholder', 'category','sub_category', 'image']);
 
             return $table->make(true);
         }
 
         $product_categories = ProductCategory::get();
-        $product_tags       = ProductTag::get();
-        $brands             = Brand::get();
-        $subCategories      = ProductSubCategory::all();
 
-        return view('admin.products.index', compact('product_categories', 'product_tags', 'brands', 'subCategories'));
+        return view('admin.products.index', compact('product_categories'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $categories = ProductCategory::all()->pluck('name', 'id');
-
-        $tags = ProductTag::all()->pluck('name', 'id');
-        $subCategories = ProductSubCategory::all()->pluck('name', 'id');
-
-        $brands = Brand::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $vendors = Vendor::all()->pluck('name', 'id');
+        $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
-        return view('admin.products.create', compact('categories', 'tags', 'brands', 'unitTypes', 'subCategories'));
+        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors'));
     }
 
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->all());
-        $product->categories()->sync($request->input('categories', []));
-        $product->tags()->sync($request->input('tags', []));
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
+            $validated['slug'] = $this->generateSlug(Product::class, $request->name);
+            $validated['quantity'] = null;
+            $validated['approval_status'] = 'APPROVED';
+            $product = Product::create($validated);
 
-        foreach ($request->input('images', []) as $file) {
-            $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
-        }
+            foreach ($request->input('images', []) as $file) {
+                $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
+            }
+            if ($media = $request->input('ck-media', false)) {
+                Media::whereIn('id', $media)->update(['model_id' => $product->id]);
+            }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $product->id]);
+            $productOptions = $request->only('unit', 'quantity', 'option');
+            $size = sizeof($productOptions['option']);
+            $productOptionsArr = [];
+            foreach ($productOptions as $key => $value) {
+                for ($i = 0; $i < $size; $i++) {
+                    $productOptionsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
+                }
+            }
+            foreach ($productOptionsArr as $value) {
+                if (!empty($value['option'])) {
+                    $data = [
+                        'product_id' => $product->id,
+                        'unit' => !empty($value['unit']) ? $value['unit'] : null,
+                        'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
+                        'option' => $value['option'],
+                    ];
+                    ProductOption::create($data);
+                }
+            }
+
+            DB::commit();
+            $data = array(
+                "status" => true,
+                "msg" => 'Product added successfully'
+            );
+            return json_encode($data);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $data = array(
+                "status" => false,
+                "msg" => 'Something went wrong!!'
+            );
+            return json_encode($data);
         }
-        event(new ProductCreated($product));
-        return redirect()->route('admin.products.index');
     }
 
     public function edit(Product $product)
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $categories = ProductCategory::all()->pluck('name', 'id');
-
-        $tags = ProductTag::all()->pluck('name', 'id');
-
-        $subCategories = ProductSubCategory::all()->pluck('name', 'id');
-
-        $brands = Brand::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $product->load('categories', 'tags', 'brand', 'subCategories');
-
-        $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
-        $productPrices = ProductPrice::where('product_id', $product->id)->get();
-
-        return view('admin.products.edit', compact('categories', 'tags', 'brands', 'product', 'unitTypes', 'subCategories', 'productPrices'));
+        $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $unitTypes = UnitType::select('name')->whereStatus(true)->get();
+        $productOptions = ProductOption::where('product_id', $product->id)->get();
+        return view('admin.products.edit',
+            compact('categories', 'product', 'unitTypes', 'productOptions'));
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request)
     {
-        $product->update($request->all());
-        $product->categories()->sync($request->input('categories', []));
-        $product->tags()->sync($request->input('tags', []));
+        DB::beginTransaction();
+        try {
+            $validated = $request->validated();
+            $product = Product::findOrFail($request->id);
+            $validated['quantity'] = null;
+            $product->update($validated);
 
-        if (count($product->images) > 0) {
-            foreach ($product->images as $media) {
-                if (!in_array($media->file_name, $request->input('images', []))) {
-                    $media->delete();
+            if (count($product->images) > 0) {
+                foreach ($product->images as $media) {
+                    if (!in_array($media->file_name, $request->input('images', []))) {
+                        $media->delete();
+                    }
                 }
             }
-        }
 
-        $media = $product->images->pluck('file_name')->toArray();
+            $media = $product->images->pluck('file_name')->toArray();
 
-        foreach ($request->input('images', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
+            foreach ($request->input('images', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
+                }
             }
-        }
 
-        return redirect()->route('admin.products.index');
+            if ($media = $request->input('ck-media', false)) {
+                Media::whereIn('id', $media)->update(['model_id' => $product->id]);
+            }
+            $productUnits = $request->only('pu_id', 'unit', 'quantity', 'option');
+            $size = sizeof($productUnits['option']);
+            $productUnitsArr = [];
+            foreach ($productUnits as $key => $value) {
+                for ($i = 0; $i < $size; $i++) {
+                    $productUnitsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
+                }
+            }
+            ProductOption::where('product_id', $request->id)->whereNotIn('id', $request->pu_id)->delete();
+            foreach ($productUnitsArr as $value) {
+                if (!empty($value['option'])) {
+                    $productUnit = [
+                        'product_id' => $product->id,
+                        'unit' => !empty($value['unit']) ? $value['unit'] : null,
+                        'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
+                        'option' => $value['option'],
+                    ];
+                    ProductOption::updateOrCreate([
+                        'id' => $value['pu_id']
+                    ], $productUnit);
+                }
+            }
+            DB::commit();
+            $data = array(
+                "status" => true,
+                "msg" => 'Product updated successfully'
+            );
+            return json_encode($data);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $data = array(
+                "status" => false,
+                "msg" => 'Something went wrong!!'
+            );
+            return json_encode($data);
+        }
     }
 
     public function show(Product $product)
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'tags', 'brand', 'subCategories');
+        $product->load('productCategory', 'productSubCategory', 'vendor');
 
         return view('admin.products.show', compact('product'));
     }
@@ -234,192 +278,46 @@ class ProductController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function addProduct(Request $request)
+    public function massApprove(MassDestroyProductRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'categories.*' => 'integer',
-            'categories' => 'array',
-            'sub_categories.*' => 'integer',
-            'sub_categories' => 'array',
-            'tags.*'       => 'integer',
-            'tags'         => 'array',
-            'unit.*' => 'required',
-            'quantity.*' => 'required',
-            'purchase_price.*' => 'required',
-            'price.*' => 'required',
-            'bulk_price.*' => 'required',
-            'discount.*' => 'required',
-            'bulk_discount.*' => 'required',
-        ]);
+        Product::whereIn('id', request('ids'))->update(['approval_status' => 'APPROVED']);
 
-        if ($validator->fails()) {
-            $result = array(
-                'status' => false,
-                'msg' => $validator->errors()->all()
-            );
-            return json_encode($result);
-
-        } else {
-            DB::beginTransaction();
-            try {
-                $product = new Product();
-                $product->name = $request->name;
-                $product->description = $request->description;
-                $product->brand_id = $request->brand_id;
-                $product->save();
-
-                $product->categories()->sync($request->input('categories', []));
-                $product->subCategories()->sync($request->input('sub_categories', []));
-
-                $product->tags()->sync($request->input('tags', []));
-
-                foreach ($request->input('images', []) as $file) {
-                    $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
-                }
-                if ($media = $request->input('ck-media', false)) {
-                    Media::whereIn('id', $media)->update(['model_id' => $product->id]);
-                }
-                $productUnits = $request->only('unit', 'quantity', 'purchase_price', 'price', 'bulk_price', 'discount', 'bulk_discount');
-                $size = sizeof($productUnits['unit']);
-                $productUnitsArr = [];
-                foreach ($productUnits as $key => $value) {
-                    for ($i = 0; $i < $size; $i++) {
-                        $productUnitsArr[$i][$key] = $value[$i];
-                    }
-                }
-                $units = [];
-                foreach ($productUnitsArr as $value) {
-                    $units[] = [
-                        'product_id' => $product->id,
-                        'unit' => $value['unit'],
-                        'quantity' => $value['quantity'],
-                        'purchase_price' => $value['purchase_price'],
-                        'price' => $value['price'],
-                        'bulk_price' => $value['bulk_price'],
-                        'discount' => $value['discount'],
-                        'bulk_discount' => $value['bulk_discount']
-                    ];
-                }
-
-                ProductPrice::insert($units);
-                DB::commit();
-                $data = array(
-                    "status" => true,
-                    "msg" => 'Product added successfully'
-                );
-                event(new ProductCreated($product));
-                return json_encode($data);
-            }catch (Exception $e){
-                DB::rollBack();
-                $data = array(
-                    "status" => false,
-                    "msg" => 'Something went wrong!!'
-                );
-                return json_encode($data);
-            }
-        }
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function updateProduct(Request $request)
+    public function approve(Product $product)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'categories.*' => 'integer',
-            'categories' => 'array',
-            'sub_categories.*' => 'integer',
-            'sub_categories' => 'array',
-            'tags.*'       => 'integer',
-            'tags'         => 'array',
-            'unit.*' => 'required',
-            'quantity.*' => 'required',
-            'purchase_price.*' => 'required',
-            'price.*' => 'required',
-            'bulk_price.*' => 'required',
-            'discount.*' => 'required',
-            'bulk_discount.*' => 'required',
+        $product->approval_status = 'APPROVED';
+        $product->save();
+        return back()->with('message' ,'Approved successfully!');
+    }
+
+    public function updatePortalCharge(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'charge' => 'required|numeric|min:0|max:100'
         ]);
 
-        if ($validator->fails()) {
-            $result = array(
-                'status' => false,
-                'msg' => $validator->errors()->all()
+        try {
+            ProductPortalCharge::updateOrCreate([
+                'product_id' => $request->product_id,
+            ], [
+                'charge' => $request->charge,
+            ]);
+            $data = array(
+                "status" => true,
+                "msg" => 'Product charge updated successfully'
             );
-            return json_encode($result);
-
-        } else {
-            DB::beginTransaction();
-            try {
-                $product = Product::findOrFail($request->id);
-                $product->name = $request->name;
-                $product->description = $request->description;
-                $product->brand_id = $request->brand_id;
-                $product->save();
-
-                $product->categories()->sync($request->input('categories', []));
-                $product->subCategories()->sync($request->input('sub_categories', []));
-
-                $product->tags()->sync($request->input('tags', []));
-
-                if (count($product->images) > 0) {
-                    foreach ($product->images as $media) {
-                        if (!in_array($media->file_name, $request->input('images', []))) {
-                            $media->delete();
-                        }
-                    }
-                }
-
-                $media = $product->images->pluck('file_name')->toArray();
-
-                foreach ($request->input('images', []) as $file) {
-                    if (count($media) === 0 || !in_array($file, $media)) {
-                        $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
-                    }
-                }
-
-                if ($media = $request->input('ck-media', false)) {
-                    Media::whereIn('id', $media)->update(['model_id' => $product->id]);
-                }
-                $productUnits = $request->only('pu_id', 'unit', 'quantity', 'purchase_price', 'price', 'bulk_price', 'discount', 'bulk_discount');
-                $size = sizeof($productUnits['unit']);
-                $productUnitsArr = [];
-                foreach ($productUnits as $key => $value) {
-                    for ($i = 0; $i < $size; $i++) {
-                        $productUnitsArr[$i][$key] = $value[$i];
-                    }
-                }
-                $units = [];
-                foreach ($productUnitsArr as $value) {
-                    $productUnit = [
-                        'product_id' => $product->id,
-                        'unit' => $value['unit'],
-                        'quantity' => $value['quantity'],
-                        'purchase_price' => $value['purchase_price'],
-                        'price' => $value['price'],
-                        'bulk_price' => $value['bulk_price'],
-                        'discount' => $value['discount'],
-                        'bulk_discount' => $value['bulk_discount']
-                    ];
-
-                    $units[] = $productUnit;
-                    ProductPrice::updateOrCreate([
-                        'id' => $value['pu_id']
-                    ], $productUnit);
-                }
-                DB::commit();
-                $data = array(
-                    "status" => true,
-                    "msg" => 'Product updated successfully'
-                );
-                return json_encode($data);
-            }catch (Exception $e){
-                DB::rollBack();
-                $data = array(
-                    "status" => false,
-                    "msg" => 'Something went wrong!!'
-                );
-                return json_encode($data);
-            }
+            return json_encode($data);
+        }catch (Exception $e) {
+            $data = array(
+                "status" => false,
+                "msg" => 'Something went wrong!!'
+            );
+            return json_encode($data);
         }
+
+
     }
 }

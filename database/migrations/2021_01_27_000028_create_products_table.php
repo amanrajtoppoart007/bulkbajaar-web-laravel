@@ -15,7 +15,6 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
             $table->decimal('price', 15, 2)->nullable();
-            $table->decimal('mop', 15, 2)->default(0)->comment('Minimum order price');
             $table->unsignedSmallInteger('moq')->default(4)->comment('Minimum order quantity');
             $table->decimal('discount', 5, 2)->default(0);
             $table->foreignId('product_category_id')->nullable()->constrained();
@@ -24,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->text('rrp')->nullable()->comment('Refund & Return Policy');
             $table->string('approval_status')->default('PENDING');
             $table->unsignedInteger('quantity')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('hsn')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

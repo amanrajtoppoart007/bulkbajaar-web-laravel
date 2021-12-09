@@ -18,56 +18,23 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'               => [
-                'string',
-                'required',
-            ],
-            'mobile'             => [
-                'required',
-                'unique:users',
-                'numeric',
-                'digits:10',
-//                'regex:/^([6-9]{1}[0-9]{9})$/'
-            ],
-            'secondary_mobile'             => [
-                'required',
-                'numeric',
-                'digits:10',
-//                'regex:/^([6-9]{1}[0-9]{9})$/'
-            ],
-            'email'              => [
-                'required',
-                'unique:users',
-            ],
-            'password'           => [
-                'required',
-            ],
-
-            'mobile_verified_at' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-                'nullable',
-            ],
-            'referral_code'      => [
-                'string',
-                'nullable',
-            ],
-            'crops.*'            => [
-                'integer',
-            ],
-            'crops'              => [
-                'required',
-                'array',
-            ],
-            'address'              => [
-                'required',
-                'string',
-            ],
-            'area_id' => [
-                'required'
-            ],
-            'help_center_id' => [
-                'required'
-            ]
+            'mobile' => 'required|numeric|digits:10|unique:users|unique:vendors',
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique:vendors'],
+            'company_name' => 'required|string',
+            'representative_name' => 'required|string',
+            'billing_address' => 'required|string',
+            'billing_address_two' => 'nullable|string',
+            'billing_state_id' => 'required|exists:states,id',
+            'billing_district_id' => 'required|exists:districts,id',
+            'billing_pincode' => 'required',
+            'shipping_address_same' => 'required|in:0,1',
+            'shipping_address' => 'required_if:shipping_address_same,0|string',
+            'shipping_address_two' => 'nullable|string',
+            'shipping_state_id' => 'required_if:shipping_address_same,0|exists:states,id',
+            'shipping_district_id' => 'required_if:shipping_address_same,0|exists:districts,id',
+            'shipping_pincode' => 'required_if:shipping_address_same,0',
+            'pan_number' => 'required|string',
+            'gst_number' => 'nullable|string',
         ];
     }
 }

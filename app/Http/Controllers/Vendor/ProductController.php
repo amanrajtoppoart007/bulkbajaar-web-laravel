@@ -93,15 +93,13 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $subCategories = ProductSubCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
-        return view('vendor.products.create', compact('categories', 'unitTypes', 'subCategories'));
+        return view('vendor.products.create', compact('categories', 'unitTypes'));
     }
 
     public function show(Product $product)
     {
-        //abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        abort_if($product->vendor_id != auth()->id(), 401);
         $product->load('productCategory', 'productSubCategory', 'productOptions');
 
         return view('vendor.products.show', compact('product'));
@@ -109,6 +107,13 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+        if (!auth()->user()->approved){
+            $result = [
+                'status' => false,
+                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
+            ];
+            return response()->json($result, 200);
+        }
         DB::beginTransaction();
         try {
             $validated = $request->validated();
@@ -164,16 +169,23 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        abort_if($product->vendor_id != auth()->id(), 401);
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $subCategories = ProductSubCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $productOptions = ProductOption::where('product_id', $product->id)->get();
         return view('vendor.products.edit',
-            compact('categories', 'product', 'unitTypes', 'subCategories', 'productOptions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions'));
     }
 
     public function update(UpdateProductRequest $request)
     {
+        if (!auth()->user()->approved){
+            $result = [
+                'status' => false,
+                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
+            ];
+            return response()->json($result, 200);
+        }
         DB::beginTransaction();
         try {
             $validated = $request->validated();
@@ -209,6 +221,7 @@ class ProductController extends Controller
                     $productUnitsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
                 }
             }
+            ProductOption::where('product_id', $request->id)->whereNotIn('id', $request->pu_id)->delete();
             foreach ($productUnitsArr as $value) {
                 if (!empty($value['option'])) {
                     $productUnit = [

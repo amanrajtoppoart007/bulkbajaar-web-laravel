@@ -12,6 +12,7 @@ use App\Models\State;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class ProfileController extends \App\Http\Controllers\Api\BaseController
@@ -213,17 +214,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     public function addAddress(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'address' => 'nullable',
-            'address_type' => 'nullable',
-            'landmark' => 'required',
+            'name' => 'nullable|string',
+            'address' => 'required',
+            'address_type' => ['required', Rule::in(['SHIPPING', 'BILLING'])],
             'address_line_two' => 'nullable',
-            'state_id' => 'required',
-            'district_id' => 'required',
-            'city_id' => 'nullable',
-            'block_id' => 'required',
+            'state_id' => 'required|exists:states,id',
+            'district_id' => 'required|exists:districts,id',
             'pincode' => 'required',
-            'area_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -234,16 +231,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         try {
             $address = new UserAddress();
             $address->user_id = auth()->user()->id;
-            $address->name = $request->input('name');
+            $address->name = $request->name ?? auth()->user()->name;
             $address->address = $request->input('address');
-            $address->address_type = $request->input('address_type') ?? 'billing';
-            $address->street = $request->input('landmark');
             $address->address_line_two = $request->input('address_line_two');
+            $address->address_type = $request->input('address_type') ?? 'BILLING';
             $address->state_id = $request->input('state_id');
             $address->district_id = $request->input('district_id');
-            $address->block_id = $request->input('block_id');
-            $address->pincode_id = $request->input('pincode');
-            $address->area_id = $request->input('area_id');
+            $address->pincode = $request->input('pincode');
 
             if ($address->save()) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'added', 'message' => 'Address added successfully'];
@@ -260,17 +254,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:user_addresses',
-            'name' => 'required',
-            'address' => 'nullable',
-            'address_type' => 'nullable',
-            'landmark' => 'required',
+            'name' => 'nullable|string',
+            'address' => 'required',
+            'address_type' => ['required', Rule::in(['SHIPPING', 'BILLING'])],
             'address_line_two' => 'nullable',
-            'state_id' => 'required',
-            'district_id' => 'required',
-            'city_id' => 'nullable',
-            'block_id' => 'required',
+            'state_id' => 'required|exists:states,id',
+            'district_id' => 'required|exists:districts,id',
             'pincode' => 'required',
-            'area_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -286,16 +276,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         try {
             $address = UserAddress::find($request->input('id'));
             if ($address) {
-                $address->name = $request->input('name');
+                $address->name = $request->input('name') ?? auth()->user()->name;
                 $address->address = $request->input('address');
                 $address->address_type = $request->input('address_type');
-                $address->street = $request->input('landmark');
                 $address->address_line_two = $request->input('address_line_two');
                 $address->state_id = $request->input('state_id');
                 $address->district_id = $request->input('district_id');
-                $address->block_id = $request->input('block_id');
-                $address->pincode_id = $request->input('pincode');
-                $address->area_id = $request->input('area_id');
+                $address->pincode = $request->input('pincode');
 
                 if ($address->save()) {
                     $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Address updated successfully'];
@@ -320,17 +307,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     'id' => $address->id,
                     'name' => $address->name,
                     'address' => $address->address,
-                    'landmark' => $address->street,
+                    'address_line_two' => $address->address_line_two,
                     'state_id' => $address->state_id,
                     'state' => $address->state->name ?? null,
                     'district_id' => $address->district_id,
                     'district' => $address->district->name ?? null,
-                    'block_id' => $address->block_id,
-                    'block' => $address->block->name ?? null,
-                    'pincode_id' => $address->pincode_id,
-                    'pincode' => $address->pincode->pincode ?? null,
-                    'area_id' => $address->area_id,
-                    'area' => $address->area->area ?? null,
+                    'pincode' => $address->pincode ?? null,
+                    'address_type' => UserAddress::ADDRESS_TYPE_RADIO[$address->address_type] ?? null,
                     'is_default' => (bool)$address->is_default,
                     'checked' => false,
                 ];
@@ -364,22 +347,18 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         }
 
         $result = [];
-        DB::beginTransaction();
         try {
             $address = UserAddress::find($request->input('id'));
             if ($address) {
                 UserAddress::whereUserId(auth()->user()->id)->update(['is_default' => false]);
                 $address->is_default = true;
                 if ($address->save()) {
-                    DB::commit();
                     $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Address marked as default successfully'];
                 } else {
-                    DB::rollBack();
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
                 }
             }
         } catch (\Exception $exception) {
-            DB::rollBack();
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);

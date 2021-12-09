@@ -25,10 +25,13 @@
                         {{ trans('cruds.transaction.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.transaction.fields.order') }}
+                        Order(s)
                     </th>
                     <th>
                         {{ trans('cruds.transaction.fields.user') }}
+                    </th>
+                    <th>
+                        Payment ID
                     </th>
                     <th>
                         {{ trans('cruds.transaction.fields.status') }}
@@ -41,14 +44,13 @@
                     </th>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
+                    <td></td>
                     <td></td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($orders as $key => $item)
-                                <option value="{{ $item->order_number }}">{{ $item->order_number }}</option>
+                                <option value="{{ $item->order_group_number }}">{{ $item->order_number }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -56,14 +58,17 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                         <select class="search" strict="true">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Transaction::STATUS_SELECT as $key => $item)
+                            @foreach(App\Models\Transaction::RAZORPAY_PAYMENT_STATUSES as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
@@ -127,8 +132,9 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'order_order_number', name: 'order.order_number' },
-{ data: 'user_name', name: 'user.name' },
+{ data: 'order_order_number', name: 'order_group' },
+{ data: 'user_name', name: 'user_id' },
+{ data: 'payment_id', name: 'payment_id' },
 { data: 'status', name: 'status' },
 { data: 'amount', name: 'amount' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

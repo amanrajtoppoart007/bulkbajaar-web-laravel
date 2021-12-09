@@ -28,7 +28,7 @@ class UserAddressController extends Controller
         abort_if(Gate::denies('user_address_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = UserAddress::with(['user', 'pincode', 'district', 'block', 'state', 'area'])->select(sprintf('%s.*', (new UserAddress)->table));
+            $query = UserAddress::with(['user', 'district', 'state'])->select(sprintf('%s.*', (new UserAddress)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -56,24 +56,16 @@ class UserAddressController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
-            $table->addColumn('pincode_pincode', function ($row) {
-                return $row->pincode ? $row->pincode->pincode : '';
+            $table->addColumn('pincode', function ($row) {
+                return $row->pincode ?? '';
             });
 
             $table->addColumn('district_name', function ($row) {
                 return $row->district ? $row->district->name : '';
             });
 
-            $table->addColumn('block_name', function ($row) {
-                return $row->block ? $row->block->name : '';
-            });
-
             $table->addColumn('state_name', function ($row) {
                 return $row->state ? $row->state->name : '';
-            });
-
-            $table->addColumn('area_area', function ($row) {
-                return $row->area ? $row->area->area : '';
             });
 
             $table->editColumn('address', function ($row) {
@@ -83,19 +75,16 @@ class UserAddressController extends Controller
                 return $row->address_type ? UserAddress::ADDRESS_TYPE_RADIO[$row->address_type] : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'pincode', 'district', 'block', 'state', 'area']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'district', 'block', 'state']);
 
             return $table->make(true);
         }
 
-        $users     = User::get();
-        $pincodes  = Pincode::get();
-        $districts = District::get();
-        $blocks    = Block::get();
-        $states    = State::get();
-        $areas     = Area::get();
+        $users     = User::get(['id', 'name']);
+        $districts = District::get(['id', 'name']);
+        $states    = State::get(['id', 'name']);
 
-        return view('admin.userAddresses.index', compact('users', 'pincodes', 'districts', 'blocks', 'states', 'areas'));
+        return view('admin.userAddresses.index', compact('users', 'districts', 'states'));
     }
 
     public function create()
@@ -104,17 +93,9 @@ class UserAddressController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.userAddresses.create', compact('users', 'pincodes', 'districts', 'blocks', 'states', 'areas'));
+        return view('admin.userAddresses.create', compact('users','states'));
     }
 
     public function store(StoreUserAddressRequest $request)
@@ -130,19 +111,9 @@ class UserAddressController extends Controller
 
         $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $userAddress->load('user', 'pincode', 'district', 'block', 'state', 'area');
-
-        return view('admin.userAddresses.edit', compact('users', 'pincodes', 'districts', 'blocks', 'states', 'areas', 'userAddress'));
+        return view('admin.userAddresses.edit', compact('users',  'states', 'userAddress'));
     }
 
     public function update(UpdateUserAddressRequest $request, UserAddress $userAddress)
@@ -156,7 +127,7 @@ class UserAddressController extends Controller
     {
         abort_if(Gate::denies('user_address_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $userAddress->load('user', 'pincode', 'district', 'block', 'state', 'area', 'addressOrders');
+        $userAddress->load('user', 'district', 'state');
 
         return view('admin.userAddresses.show', compact('userAddress'));
     }

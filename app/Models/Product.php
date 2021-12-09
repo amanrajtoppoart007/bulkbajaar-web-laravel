@@ -23,6 +23,10 @@ class Product extends Model implements HasMedia
         'images',
     ];
 
+    protected $attributes = [
+        'discount' => 0
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -35,7 +39,6 @@ class Product extends Model implements HasMedia
         'slug',
         'description',
         'price',
-        'mop',
         'moq',
         'discount',
         'product_category_id',
@@ -44,10 +47,18 @@ class Product extends Model implements HasMedia
         'rrp',
         'approval_status',
         'quantity',
+        'sku',
+        'hsn',
         'brand_id',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    public const APPROVAL_STATUS_SELECT = [
+        'PENDING' => 'Pending',
+        'APPROVED' => 'Approved',
+        'REJECTED' => 'Reject',
     ];
 
 
@@ -132,5 +143,10 @@ class Product extends Model implements HasMedia
     public function productOptions(): HasMany
     {
         return $this->hasMany(ProductOption::class);
+    }
+
+    public function orderItems() : HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

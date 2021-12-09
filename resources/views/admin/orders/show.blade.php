@@ -21,14 +21,6 @@
             @if($order->status != 'CANCELLED' || $order->status != 'RECEIVED')
                 <button type="button" class="btn btn-sm btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
             @endif
-            @if(!$order->franchisee_id)
-                <button class="btn btn-sm btn-default" id="assign-button">
-                    {{ trans('global.auto_assign') }}
-                </button>
-                <button class="btn btn-sm btn-default" id="manual-assign-button">
-                    {{ trans('global.manual_assign') }}
-                </button>
-            @endif
             @if($order->is_invoice_generated)
                 <a target="_blank" href="{{ route('orders.print.invoice', $order->invoice->invoice_number ?? '') }}" class="btn btn-sm btn-danger">
                     {{ trans('global.print') }} {{ trans('global.invoice') }}
@@ -36,11 +28,6 @@
             @else
                 <button class="btn btn-sm btn-danger" id="generate-invoice-button">
                     {{ trans('global.generate') }} {{ trans('global.invoice') }}
-                </button>
-            @endif
-            @if(!$order->is_stock_updated)
-                <button class="btn btn-sm btn-danger" id="update-stock-button">
-                    {{ trans('global.update_stock') }}
                 </button>
             @endif
         </div>
@@ -61,7 +48,7 @@
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>
-                <span>{{ date('d-m-Y', strtotime($order->created_at)) }}</span>
+                <span>{{ date('d-m-Y H:i:s', strtotime($order->created_at)) }}</span>
             </div>
             <div class="col-4">
                 <div class="form-group">
@@ -73,17 +60,39 @@
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.payment_status') }}: </label>
                 <span>{{ $order->payment_status }}</span>
-                @if(!$order->is_payment_verified)
+                @if(!$order->payment_verified_by_id)
                     <button class="btn btn-xs btn-danger" id="verify-payment-button">Verify</button>
                 @endif
             </div>
             <div class="col-4">
-                <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.help_center') }} ({{ trans('global.handling') }}): </label>
-                <span>{{ $order->helpCenter->name ?? '' }}</span>
+                <label for="" class="font-weight-bolder">Buyer: </label>
+                <span><a href="{{ route('admin.users.show', $order->user_id) }}" target="_blank">{{ $order->user->name ?? '' }}</a></span>
             </div>
             <div class="col-4">
-                <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.assignee') }} ({{ trans('global.assigned_to') }}): </label>
-                <span>{{ $order->assignee->name ?? 'Not Assigned' }}</span>
+                <label for="" class="font-weight-bolder">Seller: </label>
+                <span><a href="{{ route('admin.vendors.show', $order->vendor_id) }}" target="_blank">{{ $order->vendor->name ?? '' }}</a></span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-6">
+                <label for="" class="font-weight-bolder">Billing Address: </label>
+                <br>
+                <span>{{ $order->billingAddress->name ?? '' }}</span>,
+                <span>{{ $order->billingAddress->address ?? '' }}</span>,
+                <span>{{ $order->billingAddress->address_line_two ?? '' }}</span>,
+                <span>{{ $order->billingAddress->district->name ?? '' }}</span>,
+                <span>{{ $order->billingAddress->state->name ?? '' }}</span> -
+                <span>{{ $order->billingAddress->pincode ?? '' }}</span>
+            </div>
+            <div class="col-6">
+                <label for="" class="font-weight-bolder">Shipping Address: </label>
+                <br>
+                <span>{{ $order->shippingAddress->name ?? '' }}</span>,
+                <span>{{ $order->shippingAddress->address ?? '' }}</span>,
+                <span>{{ $order->shippingAddress->address_line_two ?? '' }}</span>,
+                <span>{{ $order->shippingAddress->district->name ?? '' }}</span>,
+                <span>{{ $order->shippingAddress->state->name ?? '' }}</span> -
+                <span>{{ $order->shippingAddress->pincode ?? '' }}</span>
             </div>
         </div>
         <hr>
@@ -93,36 +102,34 @@
                 <thead>
                 <tr>
                     <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.orderItem.fields.product') }}</th>
-                    <th>{{ trans('cruds.orderItem.fields.product_price') }}</th>
-                    <th>{{ trans('cruds.masterStock.fields.stock') }}</th>
-                    <th>{{ trans('cruds.orderItem.fields.quantity') }}</th>
+                    <th>Option</th>
                     <th>{{ trans('cruds.orderItem.fields.amount') }}</th>
-                    <th>{{ trans('cruds.orderItem.fields.gst') }}</th>
+                    <th>{{ trans('cruds.orderItem.fields.quantity') }}</th>
+                    <th colspan="2">Charge</th>
                     <th colspan="2">{{ trans('cruds.orderItem.fields.discount') }}</th>
                     <th>{{ trans('cruds.orderItem.fields.total_amount') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($order->orderItems  as $orderItem)
-                    @php $stock =  \App\Traits\ProductTrait::checkMasterStock($orderItem->product_price_id) @endphp
-                    <tr class="{{ $stock >= $orderItem->quantity ? '' : 'bg-danger' }}">
+                    <tr>
                         <td>
                             {{ $orderItem->product->name }}
                         </td>
                         <td>
-                            {{ $orderItem->unit_quantity . ' ' . $orderItem->unit }}
-                        </td>
-                        <td>
-                            {{ $stock }}
-                        </td>
-                        <td>
-                            {{ $orderItem->quantity }}
+                            {{ $orderItem->productOption->option ?? '' }}
                         </td>
                         <td>
                             &#8377;{{ $orderItem->amount }}
                         </td>
                         <td>
-                            {{ $orderItem->gst }}%
+                            {{ $orderItem->quantity }}
+                        </td>
+                        <td>
+                            {{ $orderItem->charge_percent }}%
+                        </td>
+                        <td>
+                            &#8377;{{ $orderItem->charge_amount }}
                         </td>
                         <td>
                             {{ $orderItem->discount }}%
@@ -143,15 +150,23 @@
                 </tr>
                 <tr>
                     <th colspan="4"></th>
-                    <th colspan="5">{{ trans('global.gst') }}: <span class="text-danger pull-right">+ &#8377;{{ $order->gst }}</span></th>
+                    <th colspan="5">Charge: <span class="text-danger pull-right">+ &#8377;{{ $order->charge_amount }}</span></th>
                 </tr>
                 <tr>
                     <th colspan="4"></th>
-                    <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $order->discount }}</span></th>
+                    <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
                 </tr>
                 <tr>
                     <th colspan="4"></th>
                     <th colspan="5">{{ trans('global.grand_total') }}: <span class="pull-right">&#8377;{{ $order->grand_total }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="4"></th>
+                    <th colspan="5">Paid: <span class="pull-right">&#8377;{{ $order->amount_paid }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="4"></th>
+                    <th colspan="5">Balance: <span class="pull-right">&#8377;{{ $order->grand_total - $order->amount_paid }}</span></th>
                 </tr>
                 </tfoot>
             </table>
@@ -165,63 +180,18 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#order_transactions" role="tab" data-toggle="tab">
+            <a class="nav-link active" href="#order_transactions" role="tab" data-toggle="tab">
                 {{ trans('cruds.transaction.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="order_transactions">
-            @includeIf('admin.orders.relationships.orderTransactions', ['transactions' => $order->orderTransactions])
+        <div class="tab-pane active show" role="tabpanel" id="order_transactions">
+            @includeIf('admin.orders.relationships.orderTransactions', ['transactions' => $order->transactions])
         </div>
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" id="assignModal" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{ trans('global.select_franchisee') }}</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
-            </div>
-
-            <div class="modal-body">
-                <table class="table table-bordered" id="franchisee-table">
-                    <thead>
-                    <tr>
-                        <th>{{ trans('cruds.franchisee.fields.name') }}</th>
-                        <th>{{ trans('cruds.franchisee.fields.mobile') }}</th>
-                        <th>{{ trans('cruds.franchiseeProfile.fields.representative_name') }}</th>
-                        <th>{{ trans('cruds.franchiseeProfile.fields.representative_address') }}</th>
-                        <th>{{ trans('global.representative') }} {{ trans('global.district') }} / {{ trans('global.block') }}</th>
-                        <th>{{ trans('global.representative') }} {{ trans('global.pincode') }} / {{ trans('global.area') }}</th>
-                        <th>{{ trans('global.select') }}}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($franchisees as $franchisee)
-                        <tr data-id="{{ $franchisee->id }}">
-                            <td>{{ $franchisee->name ?? '' }}</td>
-                            <td>{{ $franchisee->mobile ?? '' }}</td>
-                            <td>{{ $franchisee->profile->representative_name ?? '' }}</td>
-                            <td>{{ $franchisee->profile->representative_address ?? '' }}</td>
-                            <td>{{ $franchisee->profile->representative_district->name ?? '' }} / {{ $franchisee->profile->representative_block->name ?? '' }}</td>
-                            <td>{{ $franchisee->profile->representative_pincode->pincode ?? '' }} / {{ $franchisee->profile->representative_area->area ?? '' }}</td>
-                            <td><button class="btn btn-sm btn-success select-button">{{ trans('global.select') }}</button></td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ trans('global.close') }}</button>
-                <button class="btn btn-danger" id="select-assign-button">{{ trans('global.assign') }}</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" id="statusModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -265,47 +235,6 @@
             });
             let orderId = "{{ $order->id }}";
 
-            let selectedFranchisee = "";
-
-            $('#manual-assign-button').click(() => {
-                selectedFranchisee = "";
-                $('#franchisee-table tbody tr').removeClass('bg-success');
-                $('#assignModal').modal('show');
-            });
-
-            $('#select-assign-button').click(() => {
-                if(selectedFranchisee.length <= 0){
-                    alert('Please select franchisee')
-                }else{
-                    $.post("{{ route('admin.orders.assign.manually') }}", {orderId, franchiseeId: selectedFranchisee}, result => {
-                        alert(result.message)
-                        if(result.status){
-                            location.reload();
-                        }
-                    }, 'json')
-                }
-            });
-
-            $(document).on('click', '#franchisee-table tbody tr', function (){
-                let franchiseeId = $(this).data('id');
-                $('#franchisee-table tbody tr').removeClass('bg-success');
-                if(franchiseeId == selectedFranchisee){
-                    selectedFranchisee = "";
-                }else{
-                    $(this).addClass('bg-success');
-                    selectedFranchisee = franchiseeId;
-                }
-            });
-
-            $('#assign-button').click(() => {
-                $.post("{{ route('admin.orders.assign') }}", {orderId}, result => {
-                    alert(result.message)
-                    if(result.status){
-                        location.reload();
-                    }
-                }, 'json')
-            });
-
             $('#cancel-button').click(() => {
                 if(confirm('Are you sure want to cancel this order?')){
                     $.post("{{ route('admin.orders.cancel') }}", {orderId}, result => {
@@ -346,17 +275,6 @@
                         location.reload()
                     }
                 }, 'json')
-            });
-
-            $('#update-stock-button').click(() => {
-                if(confirm('Are you sure want to update stock?')){
-                    $.post("{{ route('admin.orders.update.stock') }}", {orderId}, result => {
-                        alert(result.message)
-                        if(result.status){
-                            location.reload();
-                        }
-                    }, 'json')
-                }
             });
         });
 

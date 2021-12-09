@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
@@ -24,6 +25,14 @@ class Transaction extends Model
         'pending'   => 'Pending',
         'cancelled' => 'Cancelled',
         'Success' => 'Success',
+    ];
+
+    public const RAZORPAY_PAYMENT_STATUSES = [
+        'created',
+        'authorized',
+        'captured',
+        'refunded',
+        'failed',
     ];
 
     protected $fillable = [

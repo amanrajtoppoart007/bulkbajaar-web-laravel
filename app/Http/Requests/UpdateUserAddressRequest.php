@@ -21,7 +21,7 @@ class UpdateUserAddressRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'pincode_id'       => [
+            'pincode'       => [
                 'required',
                 'integer',
             ],
@@ -29,25 +29,21 @@ class UpdateUserAddressRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'block_id'         => [
-                'required',
-                'integer',
-            ],
             'state_id'         => [
                 'required',
                 'integer',
             ],
-            'area_id'          => [
-                'required',
-                'integer',
-            ],
-            'street'           => [
+            'address'           => [
                 'string',
-                'nullable',
+                'required',
             ],
             'address_line_two' => [
                 'string',
                 'nullable',
+            ],
+            'address_type' => [
+                'string',
+                'required',
             ],
         ];
     }

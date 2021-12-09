@@ -4,6 +4,7 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
     Route::get('/', 'Vendor\HomeController@index')->name("dashboard");
     Route::resource('orders', 'Vendor\OrderController');
     Route::post('cancel-order', [\App\Http\Controllers\Vendor\OrderController::class, 'cancelOrder'])->name('orders.cancel');
+    Route::post('confirm-order', [\App\Http\Controllers\Vendor\OrderController::class, 'confirmOrder'])->name('orders.confirm');
     Route::get('profile', 'Vendor\HomeController@showProfileForm')->name('profile');
     Route::post('profile/update', 'Vendor\HomeController@updateProfile')->name('update.profile');
     Route::get('change-password', 'Vendor\HomeController@showChangePasswordForm')->name('show.change.password.form');
@@ -14,6 +15,8 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
 
     Route::get('bank-account', 'Vendor\HomeController@showBankAccountForm')->name('bank-account');
     Route::post('bank-account/update', 'Vendor\HomeController@updateBankAccount')->name('update.bank-account');
+    Route::get('mop', 'Vendor\HomeController@showMOPForm')->name('mop');
+    Route::post('mop/update', 'Vendor\HomeController@updateMOP')->name('update.mop');
 });
 
 Route::get('/upload-documents', 'Vendor\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");

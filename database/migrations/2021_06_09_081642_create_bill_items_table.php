@@ -17,7 +17,7 @@ class CreateBillItemsTable extends Migration
             $table->id();
             $table->foreignId('bill_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('product_price_id')->constrained();
+            $table->foreignId('product_option_id')->constrained();
             $table->string('unit')->nullable();
             $table->string('unit_quantity')->nullable();
             $table->decimal('quantity')->nullable();

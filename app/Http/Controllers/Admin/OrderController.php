@@ -33,7 +33,7 @@ class OrderController extends Controller
         abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Order::with(['user', 'address', 'helpCenter'])->select(sprintf('%s.*', (new Order)->table));
+            $query = Order::with(['user'])->select(sprintf('%s.*', (new Order)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -64,6 +64,22 @@ class OrderController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
+            $table->addColumn('grand_total', function ($row) {
+                return $row->grand_total ?? '';
+            });
+
+            $table->addColumn('amount_paid', function ($row) {
+                return $row->amount_paid ?? '';
+            });
+
+            $table->editColumn('payment_status', function ($row) {
+                return Order::PAYMENT_STATUS_SElECT[$row->payment_status] ?? '';
+            });
+
+            $table->editColumn('status', function ($row) {
+                return Order::STATUS_SELECT[$row->status] ?? '';
+            });
+
             $table->addColumn('help_center_name', function ($row) {
                 return $row->helpCenter ? $row->helpCenter->name : '';
             });
@@ -80,10 +96,9 @@ class OrderController extends Controller
             return $table->make(true);
         }
 
-        $users          = User::get();
-        $user_addresses = UserAddress::get();
+        $users          = User::get(['id', 'name']);
 
-        return view('admin.orders.index', compact('users', 'user_addresses'));
+        return view('admin.orders.index', compact('users'));
     }
 
     public function create()
@@ -130,10 +145,8 @@ class OrderController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('user', 'address', 'orderCarts', 'orderTransactions');
-        $franchisees = Vendor::whereApproved(true)->whereVerified(true)->get();
-
-        return view('admin.orders.show', compact('order', 'franchisees'));
+        $order->load('user', 'billingAddress', 'shippingAddress', 'transactions', 'orderItems', 'vendor');
+        return view('admin.orders.show', compact('order'));
     }
 
     public function destroy(Order $order)
@@ -152,39 +165,6 @@ class OrderController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function assignOrder(Request $request)
-    {
-        $order = Order::find($request->orderId);
-        $franchiseeIds = FranchiseeArea::where('area_id', $order->address->area_id)->distinct('franchisee_id')->pluck('franchisee_id')->toArray();
-        if (empty($franchiseeIds)) {
-            $franchiseeIds = FranchiseeArea::where('pincode_id',  $order->address->pincode_id)->distinct('franchisee_id')->pluck('franchisee_id')->toArray();
-        }
-        $counts = [];
-        foreach ($franchiseeIds as $franchiseeId) {
-            $counts[$franchiseeId] = Order::whereFranchiseeId($franchiseeId)->count();
-        }
-        $order->franchisee_id = empty($counts) ? null : array_search(min($counts), $counts);
-
-        if(empty($franchiseeIds)){
-            return response()->json([
-                'status' => false,
-                'message' => 'Franchisee not available in this area or pincode, assign manually.'
-            ]);
-        }
-
-        if ($order->save()) {
-            event(new OrderAssigned($order));
-            return response()->json([
-                'status' => true,
-                'message' => 'Order assigned successfully.'
-            ]);
-        }
-        return response()->json([
-            'status' => false,
-            'message' => 'Something went wrong.'
-        ]);
-    }
-
     public function cancelOrder(Request $request)
     {
         $order = Order::find($request->orderId);
@@ -201,31 +181,11 @@ class OrderController extends Controller
         ]);
     }
 
-    public function assignOrderManually(Request $request)
-    {
-        $order = Order::find($request->orderId);
-        $order->franchisee_id = $request->franchiseeId;
-
-        if ($order->save()) {
-            event(new OrderAssigned($order));
-            return response()->json([
-                'status' => true,
-                'message' => 'Order assigned successfully.'
-            ]);
-        }
-        return response()->json([
-            'status' => false,
-            'message' => 'Something went wrong.'
-        ]);
-    }
-
     public function verifyPayment(Request $request)
     {
         $order = Order::find($request->orderId);
-        $order->paymentable_type = "App\Models\Admin";
-        $order->paymentable_id = auth()->user()->id;
-        $order->is_payment_verified = true;
-        $order->payment_status = "SUCCESS";
+        $order->payment_verified_by_id = auth()->id();
+        $order->payment_status = "VERIFIED";
 
         if ($order->save()) {
             return response()->json([

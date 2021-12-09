@@ -10,12 +10,27 @@ class CreateUserAddressesTable extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('address')->nullable();
-            $table->string('address_type')->nullable();
-            $table->string('street')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
             $table->string('address_line_two')->nullable();
+            $table->foreignId('state_id')->nullable()->constrained();
+            $table->foreignId('district_id')->nullable()->constrained();
+            $table->string('pincode')->nullable();
+            $table->string('address_type')->nullable();
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('user_addresses');
     }
 }

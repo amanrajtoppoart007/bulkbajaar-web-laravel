@@ -4,14 +4,19 @@
     <div class="card">
         <div class="card-header">
 
-            {{ trans('global.show') }} {{ trans('cruds.franchiseeOrder.title_singular') }}
+            Order Details
             <div class="float-right">
-                <a class="btn btn-default" href="{{ route('franchisee.orders.index') }}">
+                <a class="btn btn-default" href="{{ route('vendor.orders.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
-                @if(strtoupper($franchiseeOrder->status) == "PENDING")
+                @if(strtoupper($order->status) == "PENDING")
                     <button class="btn btn-danger" id="cancel-button">
                         {{ trans('global.cancel') }}
+                    </button>
+                @endif
+                @if(strtoupper($order->status) == "PENDING")
+                    <button class="btn btn-success" id="confirm-button">
+                        Confirm
                     </button>
                 @endif
             </div>
@@ -22,61 +27,62 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.order_number') }}: </label>
-                        <span>{{ $franchiseeOrder->order_number }}</span>
+                        <span>{{ $order->order_number }}</span>
                     </div>
                 </div>
                 <div class="col-4">
                     <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.status') }}: </label>
-                    <span>{{ $franchiseeOrder->status }}</span>
+                    <span>{{ $order->status }}</span>
                 </div>
                 <div class="col-4">
                     <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>
-                    <span>{{ date('d-m-Y', strtotime($franchiseeOrder->created_at)) }}</span>
+                    <span>{{ date('d-m-Y', strtotime($order->created_at)) }}</span>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.payment_type') }}: </label>
-                        <span>{{ $franchiseeOrder->payment_type }}</span>
+                        <span>{{ \App\Models\Order::PAYMENT_TYPE_SELECT[$order->payment_type] ?? '' }}</span>
                     </div>
                 </div>
                 <div class="col-4">
                     <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.payment_status') }}: </label>
-                    <span>{{ $franchiseeOrder->payment_status }}</span>
+                    <span>{{ \App\Models\Order::PAYMENT_STATUS_SElECT[$order->payment_status] ?? '' }}</span>
+                </div>
+                <div class="col-4">
+                    <label for="" class="font-weight-bolder">Buyer: </label>
+                    <span>{{ $order->user->name ?? '' }}</span>
                 </div>
             </div>
             <hr>
-            <h6>{{ trans('cruds.franchiseeOrderItem.title_singular') }} {{ trans('global.list') }}</h6>
+            <h6>Order Item {{ trans('global.list') }}</h6>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.product_unit') }}</th>
+                        <th>Option</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.price') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.quantity') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.gst') }}</th>
                         <th colspan="2">{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.total_amount') }}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($franchiseeOrder->orderItems  as $orderItem)
+                    @foreach($order->orderItems  as $orderItem)
                         <tr>
                             <td>
                                 {{ $orderItem->product->name }}
                             </td>
                             <td>
-                                {{ $orderItem->unit_quantity . ' ' . $orderItem->unit }}
+                                {{ $orderItem->productOption->option ?? '' }}
                             </td>
                             <td>
-                                &#8377;{{ $orderItem->price }}
+                                &#8377;{{ $orderItem->amount }}
                             </td>
                             <td>
                                 {{ $orderItem->quantity }}
                             </td>
-                            <td>
-                                {{ $orderItem->gst }}%
-                            </td>
+
                             <td>
                                 {{ $orderItem->discount }}%
                             </td>
@@ -84,7 +90,7 @@
                                 &#8377;{{ $orderItem->discount_amount }}
                             </td>
                             <td>
-                                &#8377;{{ $orderItem->total_amount }}
+                                &#8377;{{ ($orderItem->amount * $orderItem->quantity) - $orderItem->discount_amount }}
                             </td>
                         </tr>
                     @endforeach
@@ -92,19 +98,15 @@
                     <tfoot>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $franchiseeOrder->amount }}</span></th>
+                        <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.gst') }}: <span class="text-danger pull-right">+ &#8377;{{ $franchiseeOrder->gst }}</span></th>
+                        <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $franchiseeOrder->discount }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.grand_total') }}: <span class="pull-right">&#8377;{{ $franchiseeOrder->total_amount }}</span></th>
+                        <th colspan="5">{{ trans('global.grand_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total - $order->discount_amount }}</span></th>
                     </tr>
                     </tfoot>
                 </table>
@@ -121,11 +123,22 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let orderId = "{{ $franchiseeOrder->id }}";
+            let orderId = "{{ $order->id }}";
 
             $('#cancel-button').click(() => {
                 if(confirm('Are you sure want to cancel the order?')){
-                    $.post("{{ route('franchisee.orders.cancel') }}", {orderId}, result => {
+                    $.post("{{ route('vendor.orders.cancel') }}", {orderId}, result => {
+                        alert(result.message)
+                        if(result.status){
+                            location.reload()
+                        }
+                    }, 'json');
+                }
+            })
+
+            $('#confirm-button').click(() => {
+                if(confirm('Are you sure want to confirm the order?')){
+                    $.post("{{ route('vendor.orders.confirm') }}", {orderId}, result => {
                         alert(result.message)
                         if(result.status){
                             location.reload()

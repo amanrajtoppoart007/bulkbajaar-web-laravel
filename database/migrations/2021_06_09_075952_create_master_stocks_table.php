@@ -16,7 +16,7 @@ class CreateMasterStocksTable extends Migration
         Schema::create('master_stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('product_price_id')->constrained();
+            $table->foreignId('product_option_id')->constrained();
             $table->string('unit')->nullable();
             $table->string('unit_quantity')->nullable();
             $table->unsignedBigInteger('stock')->default(0);

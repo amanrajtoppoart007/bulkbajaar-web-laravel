@@ -33,15 +33,14 @@ class UserProfile extends Model implements HasMedia
 
     protected $fillable = [
         'user_id',
-        'name',
+        'company_name',
+        'representative_name',
         'email',
         'mobile',
-        'secondary_mobile',
-        'agricultural_land',
-        'crops',
+        'pan_number',
+        'gst_number',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -58,10 +57,7 @@ class UserProfile extends Model implements HasMedia
 
     public static function createProfile($array)
     {
-        $without = Arr::except($array, ['crops']);
-        $crops = ['crops'=>$array['crops']];
-        $store = array_merge($without,$crops);
-        return UserProfile::create($store);
+        return UserProfile::create($array);
     }
 
     public  function updateProfile($array)

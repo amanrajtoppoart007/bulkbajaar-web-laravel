@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,9 +53,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'created_at',
         'updated_at',
         'deleted_at',
-        'help_center_id',
         'device_token',
         'registration_number',
+    ];
+
+    const APPROVAL_STATUS_SELECT = [
+        '1' => 'Approved',
+        '0' => 'Un Approved',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -66,39 +71,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->roles()->where('id', 1)->exists();
     }
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        /*self::created(function (User $user) {
-            if (auth()->check()) {
-                $user->verified    = 1;
-                $user->verified_at = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
-                $user->save();
-            } elseif (!$user->verification_token) {
-                $token     = Str::random(64);
-                $usedToken = User::where('verification_token', $token)->first();
-
-                while ($usedToken) {
-                    $token     = Str::random(64);
-                    $usedToken = User::where('verification_token', $token)->first();
-                }
-
-                $user->verification_token = $token;
-                $user->save();
-
-                $registrationRole = config('panel.registration_default_role');
-
-                if (!$user->roles()->get()->contains($registrationRole)) {
-                    $user->roles()->attach($registrationRole);
-                }
-
-                $user->notify(new VerifyUserNotification($user));
-            }
-        });*/
-    }
-
-
 
     public function routeNotificationForSms($notifiable) {
         return  $this->id;
@@ -147,11 +119,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userUserAddresses()
     {
         return $this->hasMany(UserAddress::class, 'user_id', 'id');
-    }
-
-    public function userUserProfile()
-    {
-        return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 
     public function userUserAlerts()
@@ -211,8 +178,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Wishlist::class);
     }
 
-    public function kisanCards()
+    public function userProfile(): HasOne
     {
-        return $this->hasMany(KishanCard::class);
+        return $this->hasOne(UserProfile::class, 'user_id', 'id');
     }
 }

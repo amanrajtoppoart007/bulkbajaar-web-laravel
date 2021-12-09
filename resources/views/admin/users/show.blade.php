@@ -8,12 +8,13 @@
             <a class="btn btn-default" href="{{ route('admin.users.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
-            @if($user->kisanCards->count())
-                <a class="btn btn-default" target="_blank" href="{{ route('admin.users.print.kisan-card', $user) }}">
-                    {{ trans('global.print_kisan_card') }}
-                </a>
-            @endif
         </div>
+        @if(!$user->approved)
+            <form action="{{ route('admin.users.approve', $user) }}" method="post" class="float-right">
+                @csrf
+                <button class="btn btn-success">Approve</button>
+            </form>
+        @endif
     </div>
 
     <div class="card-body">
@@ -30,7 +31,7 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.name') }}
+                            Company Name
                         </th>
                         <td>
                             {{ $user->name }}
@@ -54,44 +55,62 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.help_center') }}
+                            Representative Name
                         </th>
                         <td>
-                            {{ $user->help_center->name ?? '' }}
+                            {{ $userProfile->representative_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.approved') }}
+                            GST Number
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
+                            {{ $userProfile->gst_number ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.verified') }}
+                            GST
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $user->verified ? 'checked' : '' }}>
+                            @if($userProfile->gst)
+                                <a href="{{ $userProfile->gst->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $userProfile->gst->getUrl('thumb') }}">
+                                </a>
+                            @else
+                                Not uploaded
+                            @endif
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.roles') }}
+                            PAN Number
                         </th>
                         <td>
-                            @foreach($user->roles as $key => $roles)
-                                <span class="label label-info">{{ $roles->title }}</span>
-                            @endforeach
+                            {{ $userProfile->pan_number ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.referral_code') }}
+                            PAN Card
                         </th>
                         <td>
-                            {{ $user->referral_code }}
+                            @if($userProfile->pan_card)
+                                <a href="{{ $userProfile->pan_card->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $userProfile->pan_card->getUrl('thumb') }}">
+                                </a>
+                            @else
+                                Not uploaded
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Approval Status
+                        </th>
+                        <td>
+                            {{ \App\Models\User::APPROVAL_STATUS_SELECT[$user->approved] ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -106,7 +125,7 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#user_orders" role="tab" data-toggle="tab">
+            <a class="nav-link active" href="#user_orders" role="tab" data-toggle="tab">
                 {{ trans('cruds.order.title') }}
             </a>
         </li>
@@ -145,11 +164,6 @@
                 {{ trans('cruds.userAddress.title') }}
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#user_user_profiles" role="tab" data-toggle="tab">
-                {{ trans('cruds.userProfile.title') }}
-            </a>
-        </li>
         <li class="nav-item d-none">
             <a class="nav-link" href="#user_user_alerts" role="tab" data-toggle="tab">
                 {{ trans('cruds.userAlert.title') }}
@@ -157,7 +171,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="user_orders">
+        <div class="tab-pane active show" role="tabpanel" id="user_orders">
             @includeIf('admin.users.relationships.userOrders', ['orders' => $user->userOrders])
         </div>
         <div class="tab-pane d-none" role="tabpanel" id="user_articles">
@@ -180,9 +194,6 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="user_user_addresses">
             @includeIf('admin.users.relationships.userUserAddresses', ['userAddresses' => $user->userUserAddresses])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="user_user_profiles">
-            @includeIf('admin.users.relationships.userUserProfile', ['userProfile' => $user->userUserProfile])
         </div>
         <div class="tab-pane d-none" role="tabpanel" id="user_user_alerts">
             @includeIf('admin.users.relationships.userUserAlerts', ['userAlerts' => $user->userUserAlerts])

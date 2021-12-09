@@ -31,6 +31,32 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="required" for="sku">SKU</label>
+                                    <input class="form-control {{ $errors->has('sku') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="sku" id="sku" value="{{ old('sku', $product->sku ?? '') }}" required>
+                                    @if($errors->has('sku'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('sku') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="hsn">HSN</label>
+                                    <input class="form-control {{ $errors->has('hsn') ? 'is-invalid' : '' }}"
+                                           type="text"
+                                           name="hsn" id="hsn" value="{{ old('hsn', $product->hsn ?? '') }}">
+                                    @if($errors->has('hsn'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('hsn') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label class="required" for="price">Price</label>
                                     <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
                                            type="number"
@@ -59,10 +85,10 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="discount">Discount</label>
+                                    <label class="required" for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
                                            type="number"
-                                           name="discount" id="discount" value="{{ old('discount', $product->discount) }}">
+                                           name="discount" id="discount" value="{{ old('discount', $product->discount) }}" required>
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('discount') }}
@@ -112,10 +138,6 @@
                                     <select
                                         class="form-control select2 {{ $errors->has('product_sub_category_id') ? 'is-invalid' : '' }}"
                                         name="product_sub_category_id" id="product_sub_category_id">
-                                        @foreach($subCategories as $id => $subCategory)
-                                            <option
-                                                value="{{ $id }}" {{ $id == old('product_sub_category_id', $product->product_sub_category_id) ? 'selected' : '' }}>{{ $subCategory }}</option>
-                                        @endforeach
                                     </select>
                                     @if($errors->has('product_sub_category_id'))
                                         <div class="invalid-feedback">
@@ -190,7 +212,7 @@
                                             <td>
                                                 <input type="hidden" name="pu_id[]" value="{{$productOption->id}}">
 
-                                                <input class="form-control" style="min-width: 100px" type="text" value="{{ $productOption->option }}" name="option[]"
+                                                <input class="form-control option" style="min-width: 100px" type="text" value="{{ $productOption->option }}" name="option[]"
                                                        required>
                                             </td>
                                             <td>
@@ -218,7 +240,8 @@
                                     @empty
                                         <tr>
                                             <td>
-                                                <input class="form-control" type="text"
+                                                <input type="hidden" name="pu_id[]">
+                                                <input class="form-control option" type="text"
                                                        name="option[]" style="min-width: 100px">
                                             </td>
                                             <td>
@@ -320,14 +343,14 @@
 
         const addProductUnitTemplate = () => {
             let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px" required>`;
+            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px">`;
             $.each(unitTypes, (i, e) => {
                 unitSelect += `<option value="${e.name}">${e.name}</option>`;
             })
             unitSelect += "</select>";
 
             let template = `<tr>`+
-                `<td><input type="hidden" name="pu_id[]"><input class="form-control" type="text" step="1" name="option[]" style="min-width: 100px"></td>`+
+                `<td><input type="hidden" name="pu_id[]"><input class="form-control option" type="text" name="option[]" style="min-width: 100px"></td>`+
                 `<td>${unitSelect}</td>`+
                 `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px"></td>`+
                 `<td><button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button></td>`+
@@ -339,7 +362,7 @@
         $(document).on('click', '.add-button', function (){
             let tr = $(this).closest('tr');
 
-            let isNotEmpty = $($(tr).find('input')).filter(function () {
+            let isNotEmpty = $($(tr).find('.option')).filter(function () {
                 return $.trim($(this).val()).length == 0
             }).length == 0;
 
@@ -376,7 +399,7 @@
                             window.location = "{{ route('vendor.products.index') }}"
                         }, 100);
                     } else {
-                        alert(result);
+                        alert(result.msg);
                     }
                 },
                 error: function(result) {
@@ -385,6 +408,38 @@
             });
 
             e.preventDefault();
+        });
+        let category = "{{ old('product_category_id', $product->product_category_id ?? '') }}";
+        let subCategory = "{{ old('product_sub_category_id', $product->product_sub_category_id ?? '') }}";
+
+        setTimeout(() => {
+            $('#product_category_id').val(category).trigger('change');
+        }, 100)
+
+        $("#product_category_id").on("change", function () {
+
+            $("#product_sub_category_id").empty();
+            $.ajax({
+                url: "{{route('ajax.products.sub-category.list')}}",
+                type: 'POST',
+                data: {'product_category_id': $(this).val()},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.response === "success") {
+                        let option = $($.parseHTML(`<option value="">Select Sub Category</option>`));
+                        $("#product_sub_category_id").append(option);
+                        $.each(res.data, function (key, item) {
+                            let $option = $($.parseHTML(`<option value="${item.id}">${item.name}</option>`));
+                            $("#product_sub_category_id").append($option);
+                        });
+                    }
+                    $('#product_sub_category_id').val(subCategory).trigger('change');
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                }
+            });
         });
     </script>
 @endsection

@@ -25,10 +25,10 @@
                             {{ trans('cruds.transaction.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.transaction.fields.order') }}
+                            Order(s)
                         </th>
                         <th>
-                            {{ trans('cruds.transaction.fields.user') }}
+                            Payment ID
                         </th>
                         <th>
                             {{ trans('cruds.transaction.fields.status') }}
@@ -37,7 +37,7 @@
                             {{ trans('cruds.transaction.fields.amount') }}
                         </th>
                         <th>
-                            {{ trans('cruds.transaction.fields.transaction_number') }}
+                            Method
                         </th>
                         <th>
                             &nbsp;
@@ -54,19 +54,19 @@
                                 {{ $transaction->id ?? '' }}
                             </td>
                             <td>
-                                {{ $transaction->order->order_number ?? '' }}
+                                {{ collect(getOrderNumbersByOrderGroup($transaction->order_group))->implode(', ') }}
                             </td>
                             <td>
-                                {{ $transaction->user->name ?? '' }}
+                                {{ $transaction->payment_id ?? '' }}
                             </td>
                             <td>
-                                {{ App\Models\Transaction::STATUS_SELECT[$transaction->status] ?? '' }}
+                                {{ $transaction->status ?? '' }}
                             </td>
                             <td>
-                                {{ $transaction->amount ?? '' }}
+                                {{ ($transaction->amount ?? 0) / 100 }}
                             </td>
                             <td>
-                                {{ $transaction->transaction_number ?? '' }}
+                                {{ $transaction->method ?? '' }}
                             </td>
                             <td>
                                 @can('transaction_show')

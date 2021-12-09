@@ -11,16 +11,16 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-pincodes', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getPincodes']);
     Route::get('get-areas', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getAreas']);
     Route::get('get-address-types', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getAddressTypes']);
-    Route::get('get-categories', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getCategories']);
-    Route::get('get-sub-categories', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getSubCategories']);
-    Route::get('get-products', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getProducts']);
-    Route::get('get-product-prices', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getProductPrices']);
+    Route::get('get-categories', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getCategories']);
+    Route::get('get-sub-categories', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getSubCategories']);
+    Route::get('get-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProducts']);
     Route::get('get-sliders', [\App\Http\Controllers\Api\V1\User\SliderController::class, 'getSliders']);
     Route::get('get-latest-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getLatestProducts']);
     Route::get('get-top-rated-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopRatedProducts']);
     Route::get('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
 
     Route::middleware('auth:sanctum')->group(function (){
+        Route::post('access_step_four', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'accessStepFour']);
         Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
         Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
         Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
@@ -33,6 +33,7 @@ Route::prefix('v1/user')->group(function (){
         Route::post('update-cart-quantity', [\App\Http\Controllers\Api\V1\User\CartController::class, 'updateCartQuantity']);
         Route::post('remove-from-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'removeFromCart']);
         Route::post('place-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'placeOrder']);
+        Route::post('make-payment', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'makePayment']);
         Route::get('get-orders', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrders']);
         Route::get('get-order-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderDetails']);
         Route::post('cancel-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'cancelOrder']);

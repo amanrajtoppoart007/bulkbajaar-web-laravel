@@ -32,15 +32,16 @@
                         {{ trans('cruds.userAddress.fields.user') }}
                     </th>
                     <th>
+                        {{ trans('cruds.userAddress.fields.address') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.userAddress.fields.state') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.userAddress.fields.district') }}
                     </th>
                     <th>
                         {{ trans('cruds.userAddress.fields.pincode') }}
-                    </th>
-
-
-                    <th>
-                        {{ trans('cruds.userAddress.fields.area') }}
                     </th>
                     <th>
                         &nbsp;
@@ -56,7 +57,7 @@
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -64,20 +65,23 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <select class="search">
+                        <select class="search select2">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($pincodes as $key => $item)
-                                <option value="{{ $item->pincode }}">{{ $item->pincode }}</option>
+                            @foreach($states as $key => $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <select class="search">
+                        <select class="search select2">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($areas as $key => $item)
-                                <option value="{{ $item->area }}">{{ $item->area }}</option>
+                            @foreach($districts as $key => $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -135,10 +139,11 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'district_name', name: 'district.name' },
-{ data: 'pincode_pincode', name: 'pincode.pincode' },
-{ data: 'area_area', name: 'area.area' },
+{ data: 'user_name', name: 'user.id' },
+{ data: 'address', name: 'address' },
+{ data: 'state_name', name: 'state.id' },
+{ data: 'district_name', name: 'district.id' },
+{ data: 'pincode', name: 'pincode' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

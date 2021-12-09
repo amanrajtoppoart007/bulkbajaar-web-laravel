@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\FarmerRegistered;
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyUserRequest;
@@ -27,6 +27,7 @@ use Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -39,7 +40,7 @@ class UsersController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = User::with(['roles', 'help_center'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,34 +67,21 @@ class UsersController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('contact', function ($row) {
-                return $row->mobile ."/\n". $row->email;
+            $table->editColumn('mobile', function ($row) {
+                return $row->mobile ?? '';
             });
-            $table->editColumn('help_center_name', function ($row) {
-                return $row->help_center ? $row->help_center->name : "";
+            $table->editColumn('email', function ($row) {
+                return $row->email ?? '';
             });
 
-            $table->editColumn('approved', function ($row) {
-                return '<input type="checkbox" class="user-approval-status" data-status="' . $row->approved . '" data-id="' . $row->id . '"  ' . ($row->approved ? 'checked' : null) . '>';
+            $table->editColumn('approval_status', function ($row) {
+                return $row->approved ? 'Approved' : 'Un Approved';
             });
             $table->editColumn('verified', function ($row) {
                 return '<input  type="checkbox" class="user-verification-status" data-status="' . $row->verified . '" data-id="' . $row->id . '"   ' . ($row->verified ? 'checked' : null) . '>';
             });
-            $table->editColumn('roles', function ($row) {
-                $labels = [];
 
-                foreach ($row->roles as $role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->editColumn('referral_code', function ($row) {
-                return $row->referral_code ? $row->referral_code : "";
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'approved', 'verified', 'roles', 'help_center_name']);
+            $table->rawColumns(['actions', 'placeholder', 'approval_status']);
 
             return $table->make(true);
         }
@@ -107,48 +95,56 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $crops = Crop::all()->pluck('name', 'id');
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $helpCenters = HelpCenter::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        return view('admin.users.create', compact('crops', 'pincodes', 'states', 'districts', 'blocks', 'areas', 'helpCenters'));
+        return view('admin.users.create', compact('states'));
     }
 
     public function store(StoreUserRequest $request)
     {
-        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//        abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         DB::beginTransaction();
         try {
-            $registrationNo = $this->generateRegistrationNumber();
-            $request->request->add(['registration_number' => $registrationNo]);
+            $password = Str::random(10);
             $request->request->add(['approved' => 1]);
             $request->request->add(['verified' => 1]);
+            $request->request->add(['password' => $password]);
+            $request->request->add(['name' => $request->company_name]);
             $user = User::create($request->all());
             UserProfile::createProfile(array_merge($request->all(), ['user_id' => $user->id]));
-            UserAddress::create(array_merge($request->all(), ['user_id' => $user->id, 'address_type' => 'billing']));
+            $billingAddressData = [
+                'user_id' => $user->id,
+                'address' => $request->billing_address,
+                'address_two' => $request->billing_address_two,
+                'state_id' => $request->billing_state_id,
+                'district_id' => $request->billing_district_id,
+                'pincode' => $request->billing_pincode,
+                'address_type' => 'BILLING',
+            ];
+            UserAddress::create($billingAddressData);
+            if (!$request->boolean('shipping_address_same')){
+                UserAddress::create([
+                    'user_id' => $user->id,
+                    'address' => $request->shipping_address,
+                    'address_two' => $request->shipping_address_two,
+                    'state_id' => $request->shipping_state_id,
+                    'district_id' => $request->shipping_district_id,
+                    'pincode' => $request->shipping_pincode,
+                    'is_default' => 1,
+                    'address_type' => 'SHIPPING',
+                ]);
+            }else{
+                UserAddress::create(array_merge($billingAddressData, ['address_type' => 'SHIPPING', 'is_default' => 1]));
+            }
 //         $user->notify(new RegistrationSuccessSms());
-            $kisanCard = new KishanCard();
-            $kisanCard->name = $request->name;
-            $kisanCard->user_id = $user->id;
-            $kisanCard->registration_date = Carbon::now()->format('Y-m-d');
-            $kisanCard->expiry_date = Carbon::now()->addYear()->format('Y-m-d');
-            $kisanCard->card_number = $this->generateKisanCardNumber();
-            $kisanCard->save();
 
             $data['name'] = $user->name;
             $data['email'] = $user->email;
             $data['username'] = $user->email;
-            $data['password'] = request()->input('password');
+            $data['password'] = $password;
             $data['mobile'] = $user->mobile;
             DB::commit();
-            event(new FarmerRegistered($data));
+//            event(new UserRegistered($data));
             return redirect()->route('admin.users.show', $user->id);
         } catch (\Exception $exception) {
             DB::rollBack();
@@ -160,40 +156,50 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $pincodes = Pincode::all()->pluck('pincode', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $blocks = Block::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $areas = Area::all()->pluck('area', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $userAddress = UserAddress::where(['user_id' => $user->id])->first();
-
-        $userAddress->load('district', 'block', 'state', 'area');
+        $billingAddress = UserAddress::where('user_id', $user->id)->where('address_type', 'BILLING')->first();
+        $shippingAddress = UserAddress::where('user_id', $user->id)->where('address_type', 'SHIPPING')->first();
         $userProfile = UserProfile::where(['user_id' => $user->id])->first();
 
-        $crops = Crop::all()->pluck('name', 'id');
-
-        $helpCenters = HelpCenter::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.users.edit', compact('crops', 'user', 'userAddress', 'userProfile', 'pincodes', 'districts', 'blocks', 'states', 'areas', 'helpCenters'));
+        return view('admin.users.edit', compact('user','userProfile', 'states', 'billingAddress', 'shippingAddress'));
     }
 
-    public function update(UpdateUserRequest $request, User $user, UserProfile $userProfile, UserAddress $userAddress)
+    public function update(UpdateUserRequest $request, User $user)
     {
+        $request->request->add(['name' => $request->company_name]);
         $user->update($request->all());
-        $request->request->add(['crops' => json_encode($request->input('crops', []))]);
 
-        $userProfile = $userProfile->where(['user_id' => $user->id])->update($request->only(
-            ['name', 'mobile', 'secondary_mobile', 'agricultural_land', 'crops']
-        ));
+        UserProfile::updateOrCreate([
+            'user_id' => $user->id,
+        ], $request->all());
 
-        $userAddress->where(['user_id' => $user->id])->first()->update($request->only(
-            ['user_id', 'street', 'address', 'state_id', 'district_id', 'block_id', 'area_id', 'pincode', 'village']
-        ));
+        UserAddress::updateOrCreate([
+            'id' => $request->billing_address_id,
+            'user_id' => $user->id
+        ], [
+            'user_id' => $user->id,
+            'address' => $request->billing_address,
+            'address_two' => $request->billing_address_two,
+            'state_id' => $request->billing_state_id,
+            'district_id' => $request->billing_district_id,
+            'pincode' => $request->billing_pincode,
+            'address_type' => 'BILLING',
+        ]);
+
+        UserAddress::updateOrCreate([
+            'id' => $request->shipping_address_id,
+            'user_id' => $user->id
+        ], [
+            'user_id' => $user->id,
+            'address' => $request->shipping_address,
+            'address_two' => $request->shipping_address_two,
+            'state_id' => $request->shipping_state_id,
+            'district_id' => $request->shipping_district_id,
+            'pincode' => $request->shipping_pincode,
+            'is_default' => 1,
+            'address_type' => 'SHIPPING',
+        ]);
         return redirect()->route('admin.users.show', $user->id);
     }
 
@@ -201,9 +207,11 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'userOrders', 'userArticles', 'userArticleComments', 'userFollowers', 'followFollowers', 'userArticleLikes', 'userTransactions', 'userUserAddresses', 'userUserProfile', 'userUserAlerts');
+        $user->load('userProfile', 'userOrders', 'userArticles', 'userArticleComments', 'userFollowers', 'followFollowers', 'userArticleLikes', 'userTransactions', 'userUserAddresses', 'userUserAlerts');
 
-        return view('admin.users.show', compact('user'));
+        $userProfile = $user->userProfile ?? null;
+
+        return view('admin.users.show', compact('user', 'userProfile'));
     }
 
     public function destroy(User $user)
@@ -258,20 +266,17 @@ class UsersController extends Controller
         return response()->json($result, 200);
     }
 
-    public function printKisanCard(User $user)
+    public function massApprove(MassDestroyUserRequest $request)
     {
-        $address = $user->userUserAddresses->first();
-        $addressString = "";
-        if($address){
-            $addressString = $address->address ? $address->address . ', ' : '';
-            $addressString .= $address->street ? $address->street . ', ' : '';
-            $addressString .= $address->village ? $address->village . ', ' : '';
-            $addressString .= $address->district ? $address->district->name . ', ' : '';
-            $addressString .= $address->block ? $address->block->name . ', ' : '';
-            $addressString .= $address->state ? $address->state->name . '' : '';
-            $addressString .= $address->pincode ? ' - ' . $address->pincode->pincode : '';
-        }
-        $kisanCard = $user->kisanCards()->latest()->first();
-        return view('admin.users.kisanCard', compact('user', 'address', 'kisanCard', 'addressString'));
+        User::whereIn('id', request('ids'))->update(['approved' => 1]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function approve(User $user)
+    {
+        $user->approved = 1;
+        $user->save();
+        return back()->with('message' ,'Approved successfully!');
     }
 }

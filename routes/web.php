@@ -38,6 +38,7 @@ Route::prefix('ajax')->group(function(){
    Route::get('get-pincodes-and-areas-by-block', [\App\Http\Controllers\Ajax\RegionController::class, 'getPincodesAndAreasByBlock'])->name('ajax.pincodes.and.areas.list');
    Route::get('products-search-select2', [\App\Http\Controllers\Ajax\ProductController::class, 'productSearchSelect2'])->name('ajax.products.search.select2');
    Route::get('product-price-by-product', [\App\Http\Controllers\Ajax\ProductController::class, 'productPriceByProduct'])->name('ajax.products.price.by.product');
+   Route::match(['get', 'post'], 'get/sub-categories', [\App\Http\Controllers\Ajax\ProductController::class, 'getProductSubCategories'])->name('ajax.products.sub-category.list');
 });
 
 Route::get('/', 'Guest\HomeController@index')->name('guest.home');
@@ -78,3 +79,5 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 Route::middleware([\App\Http\Middleware\AuthCommonRouteMiddleware::class])->group(function (){
     Route::get('print-invoice/{invoiceNo}', 'InvoiceController@printInvoice')->name('orders.print.invoice');
 });
+
+Route::get('test',[\App\Http\Controllers\TestController::class,'test']);

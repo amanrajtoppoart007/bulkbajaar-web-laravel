@@ -33,26 +33,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.userAddress.fields.pincode') }}
+                            {{ trans('cruds.userAddress.fields.address') }}
                         </th>
                         <td>
-                            {{ $userAddress->pincode->pincode ?? '' }}
+                            {{ $userAddress->address }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.userAddress.fields.district') }}
+                            {{ trans('cruds.userAddress.fields.address_line_two') }}
                         </th>
                         <td>
-                            {{ $userAddress->district->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.block') }}
-                        </th>
-                        <td>
-                            {{ $userAddress->block->name ?? '' }}
+                            {{ $userAddress->address_line_two }}
                         </td>
                     </tr>
                     <tr>
@@ -65,18 +57,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.userAddress.fields.area') }}
+                            {{ trans('cruds.userAddress.fields.district') }}
                         </th>
                         <td>
-                            {{ $userAddress->area->area ?? '' }}
+                            {{ $userAddress->district->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.userAddress.fields.address') }}
+                            {{ trans('cruds.userAddress.fields.pincode') }}
                         </th>
                         <td>
-                            {{ $userAddress->address }}
+                            {{ $userAddress->pincode ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -85,22 +77,6 @@
                         </th>
                         <td>
                             {{ App\Models\UserAddress::ADDRESS_TYPE_RADIO[$userAddress->address_type] ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.street') }}
-                        </th>
-                        <td>
-                            {{ $userAddress->street }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.userAddress.fields.address_line_two') }}
-                        </th>
-                        <td>
-                            {{ $userAddress->address_line_two }}
                         </td>
                     </tr>
                 </tbody>
@@ -113,23 +89,4 @@
         </div>
     </div>
 </div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#address_orders" role="tab" data-toggle="tab">
-                {{ trans('cruds.order.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="address_orders">
-            @includeIf('admin.userAddresses.relationships.addressOrders', ['orders' => $userAddress->addressOrders])
-        </div>
-    </div>
-</div>
-
 @endsection
