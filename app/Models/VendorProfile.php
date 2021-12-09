@@ -59,6 +59,7 @@ class VendorProfile extends Model implements HasMedia
         'pickup_pincode',
         'account_holder_name',
         'ifsc_code',
+        'mop',
         'created_at',
         'updated_at',
         'deleted_at',

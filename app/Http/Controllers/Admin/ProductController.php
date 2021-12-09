@@ -13,6 +13,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
+use App\Models\ProductPortalCharge;
 use App\Models\ProductPrice;
 use App\Models\ProductSubCategory;
 use App\Models\ProductTag;
@@ -289,5 +290,34 @@ class ProductController extends Controller
         $product->approval_status = 'APPROVED';
         $product->save();
         return back()->with('message' ,'Approved successfully!');
+    }
+
+    public function updatePortalCharge(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'charge' => 'required|numeric|min:0|max:100'
+        ]);
+
+        try {
+            ProductPortalCharge::updateOrCreate([
+                'product_id' => $request->product_id,
+            ], [
+                'charge' => $request->charge,
+            ]);
+            $data = array(
+                "status" => true,
+                "msg" => 'Product charge updated successfully'
+            );
+            return json_encode($data);
+        }catch (Exception $e) {
+            $data = array(
+                "status" => false,
+                "msg" => 'Something went wrong!!'
+            );
+            return json_encode($data);
+        }
+
+
     }
 }

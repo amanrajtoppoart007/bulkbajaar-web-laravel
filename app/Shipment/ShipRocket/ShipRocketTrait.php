@@ -35,7 +35,7 @@ trait ShipRocketTrait {
 
     private function updateAuthToken($token): string
     {
-        ShipRocketSetting::find(1)->update(['token' => $token]);
+        ShipRocketSetting::first()->update(['token' => $token]);
         return $token;
     }
 

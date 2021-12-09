@@ -146,4 +146,26 @@ class HomeController extends Controller
             return back()->withInput()->withErrors($exception->getMessage());
         }
     }
+
+    public function showMOPForm()
+    {
+        $profile = VendorProfile::where('vendor_id', auth()->id())->select(['id', 'mop'])->first();
+        return view('vendor.minimumOrderPrice', compact('profile'));
+    }
+
+    public function updateMOP(Request $request)
+    {
+        $validatedData = $request->validate([
+            'mop' => 'required|numeric',
+        ]);
+        try {
+            $request->request->add(['vendor' => auth()->id()]);
+            VendorProfile::updateOrCreate([
+                'vendor_id' => auth()->id()
+            ], $request->all());
+            return back()->with('message' ,'Minimum order price updated successfully!');
+        }catch (\Exception $exception){
+            return back()->withInput()->withErrors($exception->getMessage());
+        }
+    }
 }

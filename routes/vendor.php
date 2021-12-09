@@ -15,6 +15,8 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
 
     Route::get('bank-account', 'Vendor\HomeController@showBankAccountForm')->name('bank-account');
     Route::post('bank-account/update', 'Vendor\HomeController@updateBankAccount')->name('update.bank-account');
+    Route::get('mop', 'Vendor\HomeController@showMOPForm')->name('mop');
+    Route::post('mop/update', 'Vendor\HomeController@updateMOP')->name('update.mop');
 });
 
 Route::get('/upload-documents', 'Vendor\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");

@@ -484,14 +484,39 @@
 {{--            </li>--}}
 {{--        @endcan--}}
         @can('setting_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.settings.index") }}"
-                   class="c-sidebar-nav-link {{ request()->is("admin/settings") || request()->is("admin/settings/*") ? "c-active" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/settings*") ? "c-show" : "" }} {{ request()->is("admin/shiprocket-settings*") ? "c-show" : "" }} {{ request()->is("admin/site-setting*") ? "c-show" : "" }}">
+                <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fas fa-cogs c-sidebar-nav-icon"></i>
-
-                    {{ trans('cruds.setting.title') }}
+                    Settings
                 </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.settings.index") }}"
+                           class="c-sidebar-nav-link {{ request()->is("admin/settings*") ? "c-active" : "" }}">
+                            <i class="fas fa-cogs c-sidebar-nav-icon"></i>
+
+                            {{ trans('cruds.setting.title') }}
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.shiprocket.settings.index") }}"
+                           class="c-sidebar-nav-link {{ request()->is("admin/shiprocket-settings*") ? "c-active" : "" }}">
+                            <i class="fas fa-cogs c-sidebar-nav-icon"></i>
+
+                            Shiprocket Settings
+                        </a>
+                    </li>
+                    <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.site-setting.index") }}"
+                           class="c-sidebar-nav-link {{ request()->is("admin/site-settings") ? "c-active" : "" }}">
+                            <i class="fas fa-cogs c-sidebar-nav-icon"></i>
+
+                            Site Settings
+                        </a>
+                    </li>
+                </ul>
             </li>
+
         @endcan
         @can('admin_management_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/permissions*") ? "c-show" : "" }} {{ request()->is("admin/roles*") ? "c-show" : "" }} {{ request()->is("admin/audit-logs*") ? "c-show" : "" }} {{ request()->is("admin/admins*") ? "c-show" : "" }}">

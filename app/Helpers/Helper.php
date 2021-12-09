@@ -8,9 +8,14 @@ function applyPrice($amount, $percentage = null, $discount = 0){
 }
 
 //To get portal charge applied to each product
-function getPortalChargePercentage(): float
+function getPortalChargePercentage($productId = null)
 {
-    return 5;
+    $charge = 5;
+    if (!is_null($productId)){
+        $charge = \App\Models\ProductPortalCharge::where('product_id', $productId)->first()->charge ?? null;
+        if (is_null($charge)) $charge = 5;
+    }
+    return $charge;
 }
 
 function getPercentAmount($amount, $percent){
@@ -18,9 +23,9 @@ function getPercentAmount($amount, $percent){
 }
 
 //To get minimum order amount set by vendor
-function getMinimumOrderAmount($vendorId = null): float
+function getMinimumOrderAmount($vendorId): float
 {
-    return rand(1, 50000000);
+    return \App\Models\VendorProfile::where('vendor_id', $vendorId)->first()->mop ?? 0;
 }
 
 function getMaximumCodAllowed(): int

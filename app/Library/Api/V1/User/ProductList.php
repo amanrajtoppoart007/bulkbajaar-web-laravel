@@ -30,6 +30,9 @@ class ProductList
                 $data[$i]['price'] = applyPrice($product['price']);
                 $data[$i]['mop'] = getMinimumOrderAmount($product['vendor_id']);
                 $data[$i]['moq'] = $product['moq'];
+                $data[$i]['sku'] = $product['sku'];
+                $data[$i]['hsn'] = $product['hsn'];
+                $data[$i]['vendor_id'] = $product['vendor_id'];
                 $data[$i]['discount'] = $product['discount'];
                 $data[$i]['discounted_price'] = applyPrice($product['price'], null, $product['discount']);
                 $data[$i]['quantity'] = $product['quantity'];

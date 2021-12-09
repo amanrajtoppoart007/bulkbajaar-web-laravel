@@ -45,6 +45,7 @@
     Route::post('products/approve/{product}', 'Admin\ProductController@approve')->name('products.approve');
     Route::resource('products', 'Admin\ProductController');
     Route::post('products/update', 'Admin\ProductController@update')->name('products.update');
+    Route::post('products/update-portal-charge', 'Admin\ProductController@updatePortalCharge')->name('products.update-portal-charge');
 
 
 
@@ -325,7 +326,6 @@
     Route::post('site-setting/ckmedia', 'Admin\SiteSettingController@storeCKEditorImages')->name('site-setting.storeCKEditorImages');
 
     //Push Notification
-
     Route::get('push-notifications', [\App\Http\Controllers\Admin\PushNotificationController::class, 'index'])->name('push-notifications.index');
     Route::post('push-notifications/store', [\App\Http\Controllers\Admin\PushNotificationController::class, 'store'])->name('push-notifications.store');
     Route::post('push-notifications/delete', [\App\Http\Controllers\Admin\PushNotificationController::class, 'destroy'])->name('push-notifications.destroy');
@@ -333,16 +333,13 @@
     Route::post('push-notifications/media', 'Admin\PushNotificationController@storeMedia')->name('push-notifications.storeMedia');
     Route::post('push-notifications/send', [\App\Http\Controllers\Admin\PushNotificationController::class, 'send'])->name('push-notifications.send');
 
-    //MEMBERSHIP PLANS
-    Route::resource('membership-plans', 'Admin\MembershipPlanController');
 
-    //Help Center Memberships
-    Route::resource('help-center-memberships', 'Admin\HelpCenterMembershipController');
 
-    //Franchisee Memberships
-    Route::resource('franchisee-memberships', 'Admin\FranchiseeMembershipController');
 
     //BILLS AND STOCK
     Route::resource('bills', 'Admin\BillController');
     Route::resource('master-stocks', 'Admin\MasterStockController');
     Route::post('master-stocks/update-stock', 'Admin\MasterStockController@updateStock')->name('master-stocks.update.stock');
+
+    Route::get('shiprocket-settings', [\App\Http\Controllers\Admin\ShiprocketController::class, 'index'])->name('shiprocket.settings.index');
+    Route::post('shiprocket-settings/save', [\App\Http\Controllers\Admin\ShiprocketController::class, 'save'])->name('shiprocket.settings.save');

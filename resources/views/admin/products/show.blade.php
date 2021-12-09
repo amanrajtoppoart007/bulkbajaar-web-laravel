@@ -103,6 +103,21 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>
+                        Portal Charge
+                    </th>
+                    <td>
+                        <form id="charge-form">
+                            <div class="input-group mb-3">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="number" name="charge" step="0.1" min="0" max="100" value="{{ getPortalChargePercentage($product->id) }}" class="form-control" placeholder="Charge" aria-label="Charge" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
                 <tr>
                     <th>
                         Expected Dispatch Time
@@ -156,7 +171,7 @@
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
             <a class="nav-link active" href="#product_prices" role="tab" data-toggle="tab">
-                {{ trans('cruds.productPrice.title') }}
+                Options
             </a>
         </li>
     </ul>
@@ -166,6 +181,39 @@
         </div>
     </div>
 </div>
+@endsection
 
 
+@section('scripts')
+    <script>
+        $(document).on('submit', '#charge-form', function(e) {
+            var formData = new FormData($(this)[0]);
+            $.ajax({
+                url: "{{route('admin.products.update-portal-charge')}}",
+                type: 'POST',
+                dataType: 'json',
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function(result) {
+                    if (result.status) {
+                        alert(result.msg);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 100);
+                    } else {
+                        alert(result);
+                    }
+                },
+                error: function(result) {
+                    console.log(result);
+                }
+            });
+
+            e.preventDefault();
+        });
+
+
+    </script>
 @endsection

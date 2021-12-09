@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.productPrice.title_singular') }} {{ trans('global.list') }}
+        Option {{ trans('global.list') }}
     </div>
 
     <div class="card-body">

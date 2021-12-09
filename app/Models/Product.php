@@ -144,4 +144,9 @@ class Product extends Model implements HasMedia
     {
         return $this->hasMany(ProductOption::class);
     }
+
+    public function orderItems() : HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
