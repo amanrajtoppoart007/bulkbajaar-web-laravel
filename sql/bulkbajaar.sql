@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2021 at 05:40 PM
+-- Generation Time: Dec 09, 2021 at 04:18 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -243,7 +243,26 @@ INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `ad
 (56, 'created', 36, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1505971194675460\",\"order_group_number\":4286845059661474,\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":32500,\"discount_amount\":325,\"charge_percent\":5,\"charge_amount\":1608.75,\"grand_total\":33783.75,\"updated_at\":\"2021-12-04 09:47:45\",\"created_at\":\"2021-12-04 09:47:45\",\"id\":36}', '127.0.0.1', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
 (57, 'created', 37, 'App\\Models\\Order', NULL, '{\"payment_status\":\"PENDING\",\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1648034493656266\",\"order_group_number\":4286845059661474,\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":2400,\"discount_amount\":0,\"charge_percent\":5,\"charge_amount\":120,\"grand_total\":2520,\"updated_at\":\"2021-12-04 09:47:45\",\"created_at\":\"2021-12-04 09:47:45\",\"id\":37}', '127.0.0.1', '2021-12-04 04:17:45', '2021-12-04 04:17:45'),
 (58, 'updated', 32, 'App\\Models\\Order', NULL, '{\"id\":32,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9257593798472135\",\"order_group_number\":\"4566010513130747\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CONFIRMED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:11:08\",\"updated_at\":\"2021-12-04 16:36:38\",\"deleted_at\":null}', '127.0.0.1', '2021-12-04 11:06:38', '2021-12-04 11:06:38'),
-(59, 'updated', 28, 'App\\Models\\Order', NULL, '{\"id\":28,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9158607488421383\",\"order_group_number\":\"692869393061991\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CANCELLED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:09:19\",\"updated_at\":\"2021-12-04 16:40:31\",\"deleted_at\":null}', '127.0.0.1', '2021-12-04 11:10:31', '2021-12-04 11:10:31');
+(59, 'updated', 28, 'App\\Models\\Order', NULL, '{\"id\":28,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-9158607488421383\",\"order_group_number\":\"692869393061991\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CANCELLED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:09:19\",\"updated_at\":\"2021-12-04 16:40:31\",\"deleted_at\":null}', '127.0.0.1', '2021-12-04 11:10:31', '2021-12-04 11:10:31'),
+(60, 'created', 2, 'App\\Models\\User', 1, '{\"approved\":1,\"updated_at\":\"2021-12-06 13:19:28\",\"created_at\":\"2021-12-06 13:19:28\",\"id\":2}', '127.0.0.1', '2021-12-06 07:49:28', '2021-12-06 07:49:28'),
+(61, 'updated', 37, 'App\\Models\\Order', 1, '{\"id\":37,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1648034493656266\",\"order_group_number\":\"4286845059661474\",\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":\"2400.00\",\"discount_amount\":\"0.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"120.00\",\"grand_total\":\"2520.00\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"CONFIRMED\",\"is_invoice_generated\":0,\"created_at\":\"2021-12-04 09:47:45\",\"updated_at\":\"2021-12-06 15:27:23\",\"deleted_at\":null}', '127.0.0.1', '2021-12-06 09:57:23', '2021-12-06 09:57:23'),
+(62, 'updated', 37, 'App\\Models\\Order', 1, '{\"id\":37,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1648034493656266\",\"order_group_number\":\"4286845059661474\",\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":\"2400.00\",\"discount_amount\":\"0.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"120.00\",\"grand_total\":\"2520.00\",\"amount_paid\":\"0.00\",\"payment_status\":\"SUCCESS\",\"status\":\"CONFIRMED\",\"is_invoice_generated\":0,\"payment_verified_by_id\":1,\"created_at\":\"2021-12-04 09:47:45\",\"updated_at\":\"2021-12-07 05:13:56\",\"deleted_at\":null}', '127.0.0.1', '2021-12-06 23:43:56', '2021-12-06 23:43:56'),
+(63, 'updated', 37, 'App\\Models\\Order', 1, '{\"id\":37,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1648034493656266\",\"order_group_number\":\"4286845059661474\",\"vendor_id\":2,\"payment_type\":\"ONLINE\",\"sub_total\":\"2400.00\",\"discount_amount\":\"0.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"120.00\",\"grand_total\":\"2520.00\",\"amount_paid\":\"0.00\",\"payment_status\":\"VERIFIED\",\"status\":\"CONFIRMED\",\"is_invoice_generated\":0,\"payment_verified_by_id\":1,\"created_at\":\"2021-12-04 09:47:45\",\"updated_at\":\"2021-12-07 05:14:34\",\"deleted_at\":null}', '127.0.0.1', '2021-12-06 23:44:34', '2021-12-06 23:44:34'),
+(64, 'updated', 36, 'App\\Models\\Order', 1, '{\"id\":36,\"user_id\":1,\"billing_address_id\":1,\"shipping_address_id\":1,\"order_number\":\"BB-ORD-1505971194675460\",\"order_group_number\":\"4286845059661474\",\"vendor_id\":1,\"payment_type\":\"ONLINE\",\"sub_total\":\"32500.00\",\"discount_amount\":\"325.00\",\"charge_percent\":\"5.00\",\"charge_amount\":\"1608.75\",\"grand_total\":\"33783.75\",\"amount_paid\":\"0.00\",\"payment_status\":\"PENDING\",\"status\":\"SHIPPED\",\"is_invoice_generated\":0,\"payment_verified_by_id\":0,\"created_at\":\"2021-12-04 09:47:45\",\"updated_at\":\"2021-12-07 05:22:22\",\"deleted_at\":null}', '127.0.0.1', '2021-12-06 23:52:22', '2021-12-06 23:52:22'),
+(66, 'created', 4, 'App\\Models\\User', 1, '{\"mobile\":\"7893210477\",\"email\":\"test@test.com\",\"approved\":1,\"verified\":1,\"updated_at\":\"2021-12-07 12:36:56\",\"created_at\":\"2021-12-07 12:36:56\",\"id\":4}', '127.0.0.1', '2021-12-07 07:06:56', '2021-12-07 07:06:56'),
+(67, 'updated', 4, 'App\\Models\\User', 1, '{\"id\":4,\"name\":\"COmp\",\"email\":\"test@test.com\",\"mobile\":\"7893210477\",\"email_verified_at\":null,\"approved\":1,\"verified\":1,\"verified_at\":null,\"verification_token\":null,\"mobile_verified_at\":null,\"referral_code\":null,\"device_token\":null,\"created_at\":\"2021-12-07 12:36:56\",\"updated_at\":\"2021-12-07 13:49:35\",\"deleted_at\":null}', '127.0.0.1', '2021-12-07 08:19:35', '2021-12-07 08:19:35'),
+(68, 'updated', 2, 'App\\Models\\User', 1, '{\"id\":2,\"name\":\"new\",\"email\":\"admin@bulkbajaar.com\",\"mobile\":\"0321456987\",\"email_verified_at\":null,\"approved\":1,\"verified\":0,\"verified_at\":null,\"verification_token\":null,\"mobile_verified_at\":null,\"referral_code\":null,\"device_token\":null,\"created_at\":\"2021-12-06 13:19:28\",\"updated_at\":\"2021-12-08 08:44:41\",\"deleted_at\":null}', '127.0.0.1', '2021-12-08 03:14:41', '2021-12-08 03:14:41'),
+(75, 'created', 11, 'App\\Models\\Product', 1, '{\"discount\":\"0\",\"name\":\"Product Test\",\"price\":\"78\",\"moq\":\"50\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"description\":null,\"sku\":\"SKU\",\"hsn\":null,\"quantity\":null,\"vendor_id\":\"1\",\"slug\":\"product-test\",\"updated_at\":\"2021-12-08 09:22:18\",\"created_at\":\"2021-12-08 09:22:18\",\"id\":11,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-08 03:52:18', '2021-12-08 03:52:18'),
+(76, 'created', 12, 'App\\Models\\Product', 1, '{\"discount\":\"0\",\"name\":\"Product Test\",\"price\":\"78\",\"moq\":\"50\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"description\":null,\"sku\":\"SKU\",\"hsn\":null,\"quantity\":null,\"vendor_id\":\"2\",\"slug\":\"product-test1\",\"updated_at\":\"2021-12-08 09:22:18\",\"created_at\":\"2021-12-08 09:22:18\",\"id\":12,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-08 03:52:18', '2021-12-08 03:52:18'),
+(77, 'created', 13, 'App\\Models\\Product', 1, '{\"discount\":\"0\",\"name\":\"Product Test1\",\"price\":\"50\",\"moq\":\"15\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":null,\"product_sub_category_id\":null,\"description\":null,\"sku\":\"SKU1\",\"hsn\":\"HSN\",\"quantity\":null,\"vendor_id\":\"1\",\"slug\":\"product-test11\",\"updated_at\":\"2021-12-08 09:23:24\",\"created_at\":\"2021-12-08 09:23:24\",\"id\":13,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-08 03:53:24', '2021-12-08 03:53:24'),
+(81, 'created', 17, 'App\\Models\\Product', 1, '{\"discount\":\"0\",\"vendor_id\":\"1\",\"name\":\"Product Test2\",\"price\":\"78\",\"moq\":\"1\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":\"1\",\"product_sub_category_id\":\"5\",\"description\":null,\"sku\":\"SKU\",\"hsn\":null,\"quantity\":null,\"slug\":\"product-test2\",\"updated_at\":\"2021-12-08 10:17:24\",\"created_at\":\"2021-12-08 10:17:24\",\"id\":17,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-08 04:47:24', '2021-12-08 04:47:24'),
+(82, 'updated', 17, 'App\\Models\\Product', 1, '{\"id\":17,\"vendor_id\":1,\"name\":\"Product Test2\",\"slug\":\"product-test2\",\"description\":null,\"price\":\"78.00\",\"moq\":\"1\",\"discount\":\"0.00\",\"product_category_id\":\"1\",\"product_sub_category_id\":\"5\",\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"APPROVED\",\"quantity\":null,\"sku\":\"SKU\",\"hsn\":\"HSN5\",\"created_at\":\"2021-12-08 10:17:24\",\"updated_at\":\"2021-12-08 10:25:19\",\"deleted_at\":null,\"brand_id\":null,\"images\":[{\"id\":18,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"49c4a67e-eb47-472c-b614-c3d081e23061\",\"collection_name\":\"images\",\"name\":\"61b086319cbac_61IO4txt5ZL._SL1200_\",\"file_name\":\"61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":76769,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":11,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:24.000000Z\",\"updated_at\":\"2021-12-08T10:17:25.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-preview.jpg\"},{\"id\":19,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"979d3ae2-0906-425e-b806-a3e65e878ad0\",\"collection_name\":\"images\",\"name\":\"61b086321beec_31g08PW3dtL._SX466_\",\"file_name\":\"61b086321beec_31g08PW3dtL._SX466_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":12500,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":12,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:25.000000Z\",\"updated_at\":\"2021-12-08T10:17:26.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/61b086321beec_31g08PW3dtL._SX466_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/61b086321beec_31g08PW3dtL._SX466_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-preview.jpg\"},{\"id\":20,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"f31c7e01-3739-4e99-bdb9-8fbc607e0757\",\"collection_name\":\"images\",\"name\":\"61b086328dc88_61SsDH42C2L._SL1500_\",\"file_name\":\"61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":66673,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":13,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:26.000000Z\",\"updated_at\":\"2021-12-08T10:17:27.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-preview.jpg\"}],\"media\":[{\"id\":18,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"49c4a67e-eb47-472c-b614-c3d081e23061\",\"collection_name\":\"images\",\"name\":\"61b086319cbac_61IO4txt5ZL._SL1200_\",\"file_name\":\"61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":76769,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":11,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:24.000000Z\",\"updated_at\":\"2021-12-08T10:17:25.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/61b086319cbac_61IO4txt5ZL._SL1200_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/18\\/conversions\\/61b086319cbac_61IO4txt5ZL._SL1200_-preview.jpg\"},{\"id\":19,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"979d3ae2-0906-425e-b806-a3e65e878ad0\",\"collection_name\":\"images\",\"name\":\"61b086321beec_31g08PW3dtL._SX466_\",\"file_name\":\"61b086321beec_31g08PW3dtL._SX466_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":12500,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":12,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:25.000000Z\",\"updated_at\":\"2021-12-08T10:17:26.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/61b086321beec_31g08PW3dtL._SX466_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/61b086321beec_31g08PW3dtL._SX466_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/19\\/conversions\\/61b086321beec_31g08PW3dtL._SX466_-preview.jpg\"},{\"id\":20,\"model_type\":\"App\\\\Models\\\\Product\",\"model_id\":17,\"uuid\":\"f31c7e01-3739-4e99-bdb9-8fbc607e0757\",\"collection_name\":\"images\",\"name\":\"61b086328dc88_61SsDH42C2L._SL1500_\",\"file_name\":\"61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":66673,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":13,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-08T10:17:26.000000Z\",\"updated_at\":\"2021-12-08T10:17:27.000000Z\",\"url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"thumbnail\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-thumb.jpg\",\"preview\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-preview.jpg\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/61b086328dc88_61SsDH42C2L._SL1500_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/20\\/conversions\\/61b086328dc88_61SsDH42C2L._SL1500_-preview.jpg\"}]}', '127.0.0.1', '2021-12-08 04:55:19', '2021-12-08 04:55:19'),
+(83, 'created', 18, 'App\\Models\\Product', NULL, '{\"discount\":\"0\",\"name\":\"Product Test\",\"price\":\"478\",\"moq\":\"78\",\"dispatch_time\":null,\"rrp\":null,\"product_category_id\":\"4\",\"product_sub_category_id\":\"48\",\"description\":null,\"sku\":\"SKU\",\"hsn\":null,\"quantity\":null,\"vendor_id\":1,\"slug\":\"product-test3\",\"updated_at\":\"2021-12-08 13:42:31\",\"created_at\":\"2021-12-08 13:42:31\",\"id\":18,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-08 08:12:31', '2021-12-08 08:12:31'),
+(84, 'updated', 1, 'App\\Models\\Vendor', NULL, '{\"id\":1,\"name\":\"Company\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"user_type\":\"MANUFACTURER\",\"email_verified_at\":null,\"mobile_verified_at\":null,\"verification_token\":null,\"mobile_verification_token\":null,\"approved\":0,\"verified\":1,\"verified_at\":null,\"created_at\":\"2021-12-03 09:16:38\",\"updated_at\":\"2021-12-08 14:01:56\",\"deleted_at\":null}', '127.0.0.1', '2021-12-08 08:31:56', '2021-12-08 08:31:56');
+INSERT INTO `audit_logs` (`id`, `description`, `subject_id`, `subject_type`, `admin_id`, `properties`, `host`, `created_at`, `updated_at`) VALUES
+(85, 'updated', 1, 'App\\Models\\VendorProfile', NULL, '{\"id\":1,\"vendor_id\":1,\"company_name\":\"Company\",\"representative_name\":\"Representative\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"GSIN\",\"pan_number\":\"PAN\",\"billing_address\":\"Billing Address\",\"billing_address_two\":null,\"billing_state_id\":\"7\",\"billing_district_id\":\"111\",\"billing_pincode\":\"492001\",\"pickup_address\":\"pickup\",\"pickup_address_two\":null,\"pickup_state_id\":\"1\",\"pickup_district_id\":\"2\",\"pickup_pincode\":\"492001\",\"bank_name\":\"Bank\",\"account_number\":\"123456\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSC\",\"created_at\":\"2021-12-03 09:16:38\",\"updated_at\":\"2021-12-08 14:01:56\",\"deleted_at\":null,\"pan_card\":{\"id\":2,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"b2908050-0271-41e2-ab9a-665af17ea831\",\"collection_name\":\"pan_card\",\"name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":2,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:39.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/conversions\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},\"gst\":{\"id\":1,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"21365fc1-5794-4fdb-82d5-a5243d86207c\",\"collection_name\":\"gst\",\"name\":\"515DsF20K1L._SL1080_\",\"file_name\":\"515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":1,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:38.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/conversions\\/515DsF20K1L._SL1080_-preview.jpg\"},\"media\":[{\"id\":1,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"21365fc1-5794-4fdb-82d5-a5243d86207c\",\"collection_name\":\"gst\",\"name\":\"515DsF20K1L._SL1080_\",\"file_name\":\"515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":1,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:38.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/conversions\\/515DsF20K1L._SL1080_-preview.jpg\"},{\"id\":2,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"b2908050-0271-41e2-ab9a-665af17ea831\",\"collection_name\":\"pan_card\",\"name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":2,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:39.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/conversions\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"}]}', '127.0.0.1', '2021-12-08 08:31:56', '2021-12-08 08:31:56'),
+(86, 'updated', 18, 'App\\Models\\Product', 1, '{\"id\":18,\"vendor_id\":1,\"name\":\"Product Test\",\"slug\":\"product-test3\",\"description\":null,\"price\":\"478.00\",\"moq\":78,\"discount\":\"0.00\",\"product_category_id\":4,\"product_sub_category_id\":48,\"dispatch_time\":null,\"rrp\":null,\"approval_status\":\"APPROVED\",\"quantity\":null,\"sku\":\"SKU\",\"hsn\":null,\"created_at\":\"2021-12-08 13:42:31\",\"updated_at\":\"2021-12-09 09:02:56\",\"deleted_at\":null,\"brand_id\":null,\"images\":[],\"media\":[]}', '127.0.0.1', '2021-12-09 03:32:56', '2021-12-09 03:32:56'),
+(87, 'updated', 1, 'App\\Models\\VendorProfile', NULL, '{\"id\":1,\"vendor_id\":1,\"company_name\":\"Company\",\"representative_name\":\"Representative\",\"email\":\"homver30@gmail.com\",\"mobile\":\"9109844778\",\"gst_number\":\"GSIN\",\"pan_number\":\"PAN\",\"billing_address\":\"Billing Address\",\"billing_address_two\":null,\"billing_state_id\":7,\"billing_district_id\":111,\"billing_pincode\":\"492001\",\"pickup_address\":\"pickup\",\"pickup_address_two\":null,\"pickup_state_id\":1,\"pickup_district_id\":2,\"pickup_pincode\":\"492001\",\"bank_name\":\"Bank\",\"account_number\":\"123456\",\"account_holder_name\":\"Homesh\",\"ifsc_code\":\"IFSC\",\"mop\":\"2000\",\"created_at\":\"2021-12-03 09:16:38\",\"updated_at\":\"2021-12-09 09:25:17\",\"deleted_at\":null,\"pan_card\":{\"id\":2,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"b2908050-0271-41e2-ab9a-665af17ea831\",\"collection_name\":\"pan_card\",\"name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":2,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:39.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/conversions\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"},\"gst\":{\"id\":1,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"21365fc1-5794-4fdb-82d5-a5243d86207c\",\"collection_name\":\"gst\",\"name\":\"515DsF20K1L._SL1080_\",\"file_name\":\"515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":1,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:38.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/conversions\\/515DsF20K1L._SL1080_-preview.jpg\"},\"media\":[{\"id\":1,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"21365fc1-5794-4fdb-82d5-a5243d86207c\",\"collection_name\":\"gst\",\"name\":\"515DsF20K1L._SL1080_\",\"file_name\":\"515DsF20K1L._SL1080_.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":61899,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":1,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:38.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/515DsF20K1L._SL1080_.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/1\\/conversions\\/515DsF20K1L._SL1080_-preview.jpg\"},{\"id\":2,\"model_type\":\"App\\\\Models\\\\VendorProfile\",\"model_id\":1,\"uuid\":\"b2908050-0271-41e2-ab9a-665af17ea831\",\"collection_name\":\"pan_card\",\"name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC\",\"file_name\":\"500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"mime_type\":\"image\\/jpeg\",\"disk\":\"public\",\"conversions_disk\":\"public\",\"size\":48510,\"manipulations\":[],\"custom_properties\":[],\"responsive_images\":[],\"order_column\":2,\"generated_conversions\":{\"thumb\":true,\"preview\":true},\"created_at\":\"2021-12-03T09:16:39.000000Z\",\"updated_at\":\"2021-12-03T09:16:39.000000Z\",\"original_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC.jpg\",\"preview_url\":\"http:\\/\\/localhost:8000\\/storage\\/2\\/conversions\\/500_F_218680465_Evhez3l0Sff6yqkPbZnLFcRissJ67uZC-preview.jpg\"}]}', '127.0.0.1', '2021-12-09 03:55:17', '2021-12-09 03:55:17');
 
 -- --------------------------------------------------------
 
@@ -1352,7 +1371,11 @@ INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, 
 (6, 'App\\Models\\Product', 2, '59d4a7ef-89d1-4249-b097-4f578c646f70', 'images', '61a9e1d3add75_2-stroke-brush-cutter-500x500', '61a9e1d3add75_2-stroke-brush-cutter-500x500.jpg', 'image/jpeg', 'public', 'public', 18040, '[]', '[]', '[]', 6, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:09', '2021-12-03 03:54:10'),
 (7, 'App\\Models\\Product', 2, '6d2bbd7b-0391-496c-8dc0-e71780ccdd95', 'images', '61a9e1d429f80_1-500x500', '61a9e1d429f80_1-500x500.jpg', 'image/jpeg', 'public', 'public', 61857, '[]', '[]', '[]', 7, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:10', '2021-12-03 03:54:11'),
 (8, 'App\\Models\\Product', 2, 'c41e7d27-e610-475d-84a8-000593ed6599', 'images', '61a9e1d4ab01c_31g08PW3dtL._SX466_', '61a9e1d4ab01c_31g08PW3dtL._SX466_.jpg', 'image/jpeg', 'public', 'public', 12500, '[]', '[]', '[]', 8, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:11', '2021-12-03 03:54:12'),
-(9, 'App\\Models\\Product', 2, 'fcf14910-0272-4aae-9444-a32c254cfd29', 'images', '61a9e1d532bc8_80-512', '61a9e1d532bc8_80-512.png', 'image/png', 'public', 'public', 30162, '[]', '[]', '[]', 9, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:12', '2021-12-03 03:54:12');
+(9, 'App\\Models\\Product', 2, 'fcf14910-0272-4aae-9444-a32c254cfd29', 'images', '61a9e1d532bc8_80-512', '61a9e1d532bc8_80-512.png', 'image/png', 'public', 'public', 30162, '[]', '[]', '[]', 9, '{\"thumb\":true,\"preview\":true}', '2021-12-03 03:54:12', '2021-12-03 03:54:12'),
+(16, 'App\\Models\\Product', 13, 'bc48fdf2-39be-42af-8fc0-51e038727b6a', 'images', '61b0797026d47_250px-Irrigat', '61b0797026d47_250px-Irrigat.jpg', 'image/jpeg', 'public', 'public', 15187, '[]', '[]', '[]', 10, '{\"thumb\":true,\"preview\":true}', '2021-12-08 03:53:24', '2021-12-08 03:53:24'),
+(18, 'App\\Models\\Product', 17, '49c4a67e-eb47-472c-b614-c3d081e23061', 'images', '61b086319cbac_61IO4txt5ZL._SL1200_', '61b086319cbac_61IO4txt5ZL._SL1200_.jpg', 'image/jpeg', 'public', 'public', 76769, '[]', '[]', '[]', 11, '{\"thumb\":true,\"preview\":true}', '2021-12-08 04:47:24', '2021-12-08 04:47:25'),
+(19, 'App\\Models\\Product', 17, '979d3ae2-0906-425e-b806-a3e65e878ad0', 'images', '61b086321beec_31g08PW3dtL._SX466_', '61b086321beec_31g08PW3dtL._SX466_.jpg', 'image/jpeg', 'public', 'public', 12500, '[]', '[]', '[]', 12, '{\"thumb\":true,\"preview\":true}', '2021-12-08 04:47:25', '2021-12-08 04:47:26'),
+(20, 'App\\Models\\Product', 17, 'f31c7e01-3739-4e99-bdb9-8fbc607e0757', 'images', '61b086328dc88_61SsDH42C2L._SL1500_', '61b086328dc88_61SsDH42C2L._SL1500_.jpg', 'image/jpeg', 'public', 'public', 66673, '[]', '[]', '[]', 13, '{\"thumb\":true,\"preview\":true}', '2021-12-08 04:47:26', '2021-12-08 04:47:27');
 
 -- --------------------------------------------------------
 
@@ -1386,7 +1409,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2021_01_27_000011_create_article_comments_table', 1),
 (15, '2021_01_27_000012_create_followers_table', 1),
 (16, '2021_01_27_000013_create_logistics_table', 1),
-(17, '2021_01_27_000015_create_transactions_table', 1),
+(17, '2021_01_27_000037_create_transactions_table.php', 1),
 (18, '2021_01_27_000015_create_users_table', 1),
 (19, '2021_01_27_000016_create_user_addresses_table', 1),
 (20, '2021_01_27_000017_create_settings_table', 1),
@@ -1436,7 +1459,25 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (64, '2021_03_09_075532_add_columns_to_orders_table', 1),
 (65, '2021_03_09_075619_create_order_items_table', 1),
 (66, '2021_03_09_091846_create_otps_table', 1),
-(67, '2021_01_27_000002_create_media_table', 2);
+(67, '2021_01_27_000002_create_media_table', 2),
+(68, '2021_01_27_000037_create_transactions_table.php', 2),
+(69, '2021_01_27_000037_create_transactions_table', 3),
+(70, '2021_03_10_062703_create_product_stocks_table', 4),
+(71, '2021_03_10_133403_create_sliders_table', 5),
+(72, '2021_03_10_133713_create_slider_items_table', 6),
+(73, '2021_05_11_100736_create_reviews_table', 7),
+(74, '2021_05_15_074441_create_wishlists_table', 8),
+(75, '2021_05_16_064229_create_site_settings_table', 9),
+(76, '2021_05_17_090636_create_push_notifications_table', 10),
+(77, '2021_05_26_082650_create_jobs_table', 11),
+(78, '2021_05_29_120747_add_unit_quantity_column_to_product_stocks_table', 11),
+(79, '2021_06_02_083341_create_push_notification_user_table', 12),
+(80, '2021_06_08_064846_create_invoices_table', 13),
+(81, '2021_06_09_075952_create_master_stocks_table', 13),
+(82, '2021_06_09_080513_create_bills_table', 13),
+(83, '2021_06_09_081642_create_bill_items_table', 13),
+(84, '2021_12_08_140726_create_ship_rocket_settings_table', 14),
+(85, '2021_12_09_081904_create_product_portal_charges_table', 15);
 
 -- --------------------------------------------------------
 
@@ -1462,6 +1503,7 @@ CREATE TABLE `orders` (
   `payment_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
   `is_invoice_generated` tinyint(1) NOT NULL DEFAULT 0,
+  `payment_verified_by_id` bigint(1) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1471,19 +1513,19 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `billing_address_id`, `shipping_address_id`, `order_number`, `order_group_number`, `vendor_id`, `payment_type`, `sub_total`, `discount_amount`, `charge_percent`, `charge_amount`, `grand_total`, `amount_paid`, `payment_status`, `status`, `is_invoice_generated`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(26, 1, 1, 1, 'BB-ORD-8056203749787165', '272476833759884', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
-(27, 1, 1, 1, 'BB-ORD-2399343030096663', '272476833759884', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
-(28, 1, 1, 1, 'BB-ORD-9158607488421383', '692869393061991', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CANCELLED', 0, '2021-12-04 03:39:19', '2021-12-04 11:10:31', NULL),
-(29, 1, 1, 1, 'BB-ORD-7245525560049674', '692869393061991', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:39:19', '2021-12-04 03:39:19', NULL),
-(30, 1, 1, 1, 'BB-ORD-4400240771660847', '1945955497533715', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
-(31, 1, 1, 1, 'BB-ORD-3289057823648718', '1945955497533715', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
-(32, 1, 1, 1, 'BB-ORD-9257593798472135', '4566010513130747', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CONFIRMED', 0, '2021-12-04 03:41:08', '2021-12-04 11:06:38', NULL),
-(33, 1, 1, 1, 'BB-ORD-6615082323258955', '4566010513130747', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 03:41:08', '2021-12-04 03:41:08', NULL),
-(34, 1, 1, 1, 'BB-ORD-8295003435385035', '1109501312987155', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
-(35, 1, 1, 1, 'BB-ORD-9977721774006869', '1109501312987155', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
-(36, 1, 1, 1, 'BB-ORD-1505971194675460', '4286845059661474', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:17:45', '2021-12-04 04:17:45', NULL),
-(37, 1, 1, 1, 'BB-ORD-1648034493656266', '4286845059661474', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, '2021-12-04 04:17:45', '2021-12-04 04:17:45', NULL);
+INSERT INTO `orders` (`id`, `user_id`, `billing_address_id`, `shipping_address_id`, `order_number`, `order_group_number`, `vendor_id`, `payment_type`, `sub_total`, `discount_amount`, `charge_percent`, `charge_amount`, `grand_total`, `amount_paid`, `payment_status`, `status`, `is_invoice_generated`, `payment_verified_by_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(26, 1, 1, 1, 'BB-ORD-8056203749787165', '272476833759884', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
+(27, 1, 1, 1, 'BB-ORD-2399343030096663', '272476833759884', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:17:44', '2021-12-04 03:17:44', NULL),
+(28, 1, 1, 1, 'BB-ORD-9158607488421383', '692869393061991', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CANCELLED', 0, 0, '2021-12-04 03:39:19', '2021-12-04 11:10:31', NULL),
+(29, 1, 1, 1, 'BB-ORD-7245525560049674', '692869393061991', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:39:19', '2021-12-04 03:39:19', NULL),
+(30, 1, 1, 1, 'BB-ORD-4400240771660847', '1945955497533715', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
+(31, 1, 1, 1, 'BB-ORD-3289057823648718', '1945955497533715', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:40:48', '2021-12-04 03:40:48', NULL),
+(32, 1, 1, 1, 'BB-ORD-9257593798472135', '4566010513130747', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'CONFIRMED', 0, 0, '2021-12-04 03:41:08', '2021-12-04 11:06:38', NULL),
+(33, 1, 1, 1, 'BB-ORD-6615082323258955', '4566010513130747', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 03:41:08', '2021-12-04 03:41:08', NULL),
+(34, 1, 1, 1, 'BB-ORD-8295003435385035', '1109501312987155', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
+(35, 1, 1, 1, 'BB-ORD-9977721774006869', '1109501312987155', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'PENDING', 'PENDING', 0, 0, '2021-12-04 04:11:04', '2021-12-04 04:11:04', NULL),
+(36, 1, 1, 1, 'BB-ORD-1505971194675460', '4286845059661474', 1, 'ONLINE', '32500.00', '325.00', '5.00', '1608.75', '33783.75', '0.00', 'PENDING', 'SHIPPED', 0, 0, '2021-12-04 04:17:45', '2021-12-06 23:52:22', NULL),
+(37, 1, 1, 1, 'BB-ORD-1648034493656266', '4286845059661474', 2, 'ONLINE', '2400.00', '0.00', '5.00', '120.00', '2520.00', '0.00', 'VERIFIED', 'CONFIRMED', 0, 1, '2021-12-04 04:17:45', '2021-12-06 23:44:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -2255,6 +2297,8 @@ CREATE TABLE `products` (
   `rrp` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Refund & Return Policy',
   `approval_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDING',
   `quantity` int(10) UNSIGNED DEFAULT NULL,
+  `sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hsn` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -2265,11 +2309,16 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `vendor_id`, `name`, `slug`, `description`, `price`, `moq`, `discount`, `product_category_id`, `product_sub_category_id`, `dispatch_time`, `rrp`, `approval_status`, `quantity`, `created_at`, `updated_at`, `deleted_at`, `brand_id`) VALUES
-(1, 1, 'Product One', 'product-one', NULL, '5000.00', 5, '1.00', 1, 1, '2 days', NULL, 'PENDING', NULL, '2021-12-03 03:51:35', '2021-12-03 03:51:35', NULL, NULL),
-(2, 2, 'Product Two', 'product-two', NULL, '200.00', 12, '0.00', 2, 30, '2 days', NULL, 'PENDING', NULL, '2021-12-03 03:54:09', '2021-12-03 03:54:09', NULL, NULL),
-(3, 1, 'Product Three', 'product-three', NULL, '500.00', 5, '1.00', NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-12-03 03:55:56', '2021-12-03 04:10:24', NULL, NULL),
-(4, 1, 'Product Four', 'product-four', NULL, '1400.00', 14, '5.00', NULL, NULL, NULL, NULL, 'PENDING', NULL, '2021-12-03 04:00:00', '2021-12-03 04:11:21', NULL, NULL);
+INSERT INTO `products` (`id`, `vendor_id`, `name`, `slug`, `description`, `price`, `moq`, `discount`, `product_category_id`, `product_sub_category_id`, `dispatch_time`, `rrp`, `approval_status`, `quantity`, `sku`, `hsn`, `created_at`, `updated_at`, `deleted_at`, `brand_id`) VALUES
+(1, 1, 'Product One', 'product-one', NULL, '5000.00', 5, '1.00', 1, 1, '2 days', NULL, 'APPROVED', NULL, NULL, NULL, '2021-12-03 03:51:35', '2021-12-08 04:49:50', NULL, NULL),
+(2, 2, 'Product Two', 'product-two', NULL, '200.00', 12, '0.00', 2, 30, '2 days', NULL, 'APPROVED', NULL, NULL, NULL, '2021-12-03 03:54:09', '2021-12-08 04:49:50', NULL, NULL),
+(3, 1, 'Product Three', 'product-three', NULL, '500.00', 5, '1.00', NULL, NULL, NULL, NULL, 'APPROVED', NULL, NULL, NULL, '2021-12-03 03:55:56', '2021-12-08 04:49:50', NULL, NULL),
+(4, 1, 'Product Four', 'product-four', NULL, '1400.00', 14, '5.00', NULL, NULL, NULL, NULL, 'APPROVED', NULL, NULL, NULL, '2021-12-03 04:00:00', '2021-12-08 04:49:50', NULL, NULL),
+(11, 1, 'Product Test', 'product-test', NULL, '78.00', 50, '0.00', NULL, NULL, NULL, NULL, 'APPROVED', NULL, 'SKU', NULL, '2021-12-08 03:52:18', '2021-12-08 04:49:50', NULL, NULL),
+(12, 2, 'Product Test', 'product-test1', NULL, '78.00', 50, '0.00', NULL, NULL, NULL, NULL, 'APPROVED', NULL, 'SKU', NULL, '2021-12-08 03:52:18', '2021-12-08 04:49:50', NULL, NULL),
+(13, 1, 'Product Test1', 'product-test11', NULL, '50.00', 15, '0.00', NULL, NULL, NULL, NULL, 'APPROVED', NULL, 'SKU1', 'HSN', '2021-12-08 03:53:24', '2021-12-08 04:49:50', NULL, NULL),
+(17, 1, 'Product Test2', 'product-test2', NULL, '78.00', 1, '0.00', 1, 5, NULL, NULL, 'APPROVED', NULL, 'SKU', 'HSN5', '2021-12-08 04:47:24', '2021-12-08 04:55:19', NULL, NULL),
+(18, 1, 'Product Test', 'product-test3', NULL, '478.00', 78, '0.00', 4, 48, NULL, NULL, 'APPROVED', NULL, 'SKU', NULL, '2021-12-08 08:12:31', '2021-12-09 03:32:56', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2325,7 +2374,30 @@ CREATE TABLE `product_options` (
 --
 
 INSERT INTO `product_options` (`id`, `product_id`, `option`, `unit`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, '25 KG', 'KG', NULL, '2021-12-03 03:51:37', '2021-12-03 03:51:37', NULL);
+(1, 1, '25 KG', 'KG', NULL, '2021-12-03 03:51:37', '2021-12-03 03:51:37', NULL),
+(2, 18, '478', 'KG', NULL, '2021-12-08 08:15:12', '2021-12-08 08:15:12', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_portal_charges`
+--
+
+CREATE TABLE `product_portal_charges` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED NOT NULL,
+  `charge` decimal(5,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_portal_charges`
+--
+
+INSERT INTO `product_portal_charges` (`id`, `product_id`, `charge`, `created_at`, `updated_at`) VALUES
+(1, 18, '10.00', '2021-12-09 03:30:44', '2021-12-09 03:30:53'),
+(2, 13, '2.00', '2021-12-09 04:06:11', '2021-12-09 04:06:11');
 
 -- --------------------------------------------------------
 
@@ -2352,7 +2424,8 @@ CREATE TABLE `product_stocks` (
   `unit` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `unit_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2605,6 +2678,28 @@ CREATE TABLE `settings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ship_rocket_settings`
+--
+
+CREATE TABLE `ship_rocket_settings` (
+  `id` tinyint(3) UNSIGNED NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ship_rocket_settings`
+--
+
+INSERT INTO `ship_rocket_settings` (`id`, `email`, `password`, `token`, `created_at`, `updated_at`) VALUES
+(1, 'homesh3007@gmail.com', 'homesh', NULL, '2021-12-09 01:55:25', '2021-12-09 01:55:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `site_settings`
 --
 
@@ -2728,6 +2823,13 @@ CREATE TABLE `transactions` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `payment_id`, `gateway`, `amount`, `status`, `currency`, `method`, `meta_data`, `order_group`, `user_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'pay_123456', 'razorpay', 3630375, 'captured', 'inr', 'card', '', '4286845059661474', 1, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -2784,7 +2886,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `email_verified_at`, `password`, `remember_token`, `approved`, `verified`, `verified_at`, `verification_token`, `mobile_verified_at`, `referral_code`, `device_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Company', 'homver301@gmail.com', '9109844771', NULL, '$2y$10$11LjdDcvpkJi8hpzpILpUO5uL.nGh6C.47XrUUUGqYbj.lGYaf8yG', NULL, 0, 0, NULL, NULL, NULL, NULL, 'ehf7jciXSDSiEyulFGKe1h:APA91bFht6Q6hep_PGtxB9Khk4wVAv93zGjLpq530XO8sXxdNL3uLiubLdefu4tFZJlBvECc7cL4CBZpKVZ0LWkcLvnbewl-D_RaakjWeGdYFIEsDyXqZWjcUTwvJ92Sonf4y0VeLP3Q', '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
+(1, 'Company', 'homver301@gmail.com', '9109844771', NULL, '$2y$10$11LjdDcvpkJi8hpzpILpUO5uL.nGh6C.47XrUUUGqYbj.lGYaf8yG', NULL, 1, 0, NULL, NULL, NULL, NULL, 'ehf7jciXSDSiEyulFGKe1h:APA91bFht6Q6hep_PGtxB9Khk4wVAv93zGjLpq530XO8sXxdNL3uLiubLdefu4tFZJlBvECc7cL4CBZpKVZ0LWkcLvnbewl-D_RaakjWeGdYFIEsDyXqZWjcUTwvJ92Sonf4y0VeLP3Q', '2021-12-03 04:00:54', '2021-12-06 07:33:21', NULL),
+(2, 'new', 'admin@bulkbajaar.com', '0321456987', NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, NULL, '2021-12-06 07:49:28', '2021-12-08 03:14:41', NULL),
+(4, 'COmp', 'test@test.com', '7893210477', NULL, '$2y$10$VyH..Bd3FNaiJqiXALBrleg1F50.R0I87IRkcH4.S1OPKNvCvGg4a', NULL, 1, 1, NULL, NULL, NULL, NULL, NULL, '2021-12-07 07:06:56', '2021-12-07 08:19:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -2814,7 +2918,13 @@ CREATE TABLE `user_addresses` (
 
 INSERT INTO `user_addresses` (`id`, `user_id`, `name`, `address`, `address_line_two`, `state_id`, `district_id`, `pincode`, `address_type`, `is_default`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, NULL, '9109844778', NULL, 1, 1, '25554', 'BILLING', 0, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL),
-(2, 1, NULL, '9109844778', NULL, 1, 1, '25554', 'BILLING', 0, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
+(2, 1, NULL, '9109844778', NULL, 1, 1, '25554', 'BILLING', 0, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL),
+(3, 4, NULL, 'Billing', NULL, 3, 19, '4777', 'BILLING', 0, '2021-12-07 07:06:56', '2021-12-07 08:21:54', NULL),
+(4, 4, NULL, 'Billing', NULL, 3, 17, '4777', 'SHIPPING', 0, '2021-12-07 07:06:56', '2021-12-07 08:21:54', NULL),
+(5, 4, NULL, 'Billing', NULL, 3, 21, '4777', 'BILLING', 0, '2021-12-07 08:19:50', '2021-12-07 08:19:50', NULL),
+(6, 4, NULL, 'Billing', NULL, 3, 20, '4777', 'SHIPPING', 0, '2021-12-07 08:19:50', '2021-12-07 08:19:50', NULL),
+(7, 2, NULL, 'Shipping', 'line2', 3, 19, '459877', 'SHIPPING', 1, '2021-12-08 02:22:29', '2021-12-08 03:14:41', NULL),
+(8, 2, NULL, 'billing', NULL, 1, 1, '47888', 'BILLING', 0, '2021-12-08 03:14:41', '2021-12-08 03:14:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -2855,7 +2965,9 @@ CREATE TABLE `user_profiles` (
 --
 
 INSERT INTO `user_profiles` (`id`, `user_id`, `company_name`, `representative_name`, `email`, `mobile`, `gst_number`, `pan_number`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Company', 'homver30@gmail.com', 'homver301@gmail.com', '9109844771', NULL, NULL, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL);
+(1, 1, 'Company', 'homver30@gmail.com', 'homver301@gmail.com', '9109844771', NULL, NULL, '2021-12-03 04:00:54', '2021-12-03 04:00:54', NULL),
+(2, 4, 'COmp', 'Test', 'test@test.com', '7893210477', NULL, '45698712PAN', '2021-12-07 07:06:56', '2021-12-07 08:19:35', NULL),
+(3, 2, 'new', 'test', 'admin@bulkbajaar.com', '0321456987', 'gst', 'Pan', '2021-12-08 03:14:41', '2021-12-08 03:14:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -2900,8 +3012,8 @@ CREATE TABLE `vendors` (
 --
 
 INSERT INTO `vendors` (`id`, `name`, `email`, `mobile`, `password`, `user_type`, `email_verified_at`, `mobile_verified_at`, `verification_token`, `mobile_verification_token`, `remember_token`, `approved`, `verified`, `verified_at`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Company', 'homver30@gmail.com', '9109844778', '$2y$10$O5R4jFIgvw4oNYUh/A1vJOcPECAnJ73Dw9ktTgyfOKqojl2.hPk.S', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, '2021-12-03 03:46:38', '2021-12-03 03:46:38', NULL),
-(2, 'New Vendor', 'homver10@gmail.com', '9109844774', '$2y$10$tZL3gydnQNGVkK5w/qPvCuoZWy6AcLTQNEXieKc7R5346kz17xNMu', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2021-12-03 11:57:24', '2021-12-03 11:59:26', NULL);
+(1, 'Company', 'homver30@gmail.com', '9109844778', '$2y$10$O5R4jFIgvw4oNYUh/A1vJOcPECAnJ73Dw9ktTgyfOKqojl2.hPk.S', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 0, 1, NULL, '2021-12-03 03:46:38', '2021-12-08 08:31:56', NULL),
+(2, 'New Vendor', 'homver10@gmail.com', '9109844774', '$2y$10$tZL3gydnQNGVkK5w/qPvCuoZWy6AcLTQNEXieKc7R5346kz17xNMu', 'MANUFACTURER', NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, '2021-12-03 11:57:24', '2021-12-06 07:28:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -2932,6 +3044,7 @@ CREATE TABLE `vendor_profiles` (
   `account_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `account_holder_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ifsc_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mop` decimal(15,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -2941,9 +3054,9 @@ CREATE TABLE `vendor_profiles` (
 -- Dumping data for table `vendor_profiles`
 --
 
-INSERT INTO `vendor_profiles` (`id`, `vendor_id`, `company_name`, `representative_name`, `email`, `mobile`, `gst_number`, `pan_number`, `billing_address`, `billing_address_two`, `billing_state_id`, `billing_district_id`, `billing_pincode`, `pickup_address`, `pickup_address_two`, `pickup_state_id`, `pickup_district_id`, `pickup_pincode`, `bank_name`, `account_number`, `account_holder_name`, `ifsc_code`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Company', 'Representative', 'homver30@gmail.com', '9109844778', 'GSIN', 'PAN', 'Billing Address', NULL, 7, 111, '492001', NULL, NULL, NULL, NULL, NULL, 'Bank', '123456', 'Homesh', 'IFSC', '2021-12-03 03:46:38', '2021-12-03 03:46:38', NULL),
-(2, 2, '9109844778', 'homver30@gmail.com', 'homver30@gmail.com', '9109844778', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', 1, 1, '25554', '9109844778', 'homver30@gmail.com', 1, 1, '25554', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', '2021-12-03 11:59:27', '2021-12-03 11:59:31', NULL);
+INSERT INTO `vendor_profiles` (`id`, `vendor_id`, `company_name`, `representative_name`, `email`, `mobile`, `gst_number`, `pan_number`, `billing_address`, `billing_address_two`, `billing_state_id`, `billing_district_id`, `billing_pincode`, `pickup_address`, `pickup_address_two`, `pickup_state_id`, `pickup_district_id`, `pickup_pincode`, `bank_name`, `account_number`, `account_holder_name`, `ifsc_code`, `mop`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'Company', 'Representative', 'homver30@gmail.com', '9109844778', 'GSIN', 'PAN', 'Billing Address', NULL, 7, 111, '492001', 'pickup', NULL, 1, 2, '492001', 'Bank', '123456', 'Homesh', 'IFSC', '2000.00', '2021-12-03 03:46:38', '2021-12-09 03:55:17', NULL),
+(2, 2, '9109844778', 'homver30@gmail.com', 'homver30@gmail.com', '9109844778', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', 1, 1, '25554', '9109844778', 'homver30@gmail.com', 1, 1, '25554', 'homver30@gmail.com', '9109844778', '9109844778', 'homver30@gmail.com', '0.00', '2021-12-03 11:59:27', '2021-12-03 11:59:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -3275,6 +3388,13 @@ ALTER TABLE `product_options`
   ADD KEY `product_options_product_id_foreign` (`product_id`) USING BTREE;
 
 --
+-- Indexes for table `product_portal_charges`
+--
+ALTER TABLE `product_portal_charges`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_portal_charges_product_id_foreign` (`product_id`);
+
+--
 -- Indexes for table `product_product_tag`
 --
 ALTER TABLE `product_product_tag`
@@ -3319,10 +3439,10 @@ ALTER TABLE `push_notification_user`
 -- Indexes for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `reviews_product_id_foreign` (`product_id`) USING BTREE,
-  ADD KEY `reviews_user_id_foreign` (`user_id`) USING BTREE,
-  ADD KEY `reviews_vendor_id_foreign` (`vendor_id`) USING BTREE;
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reviews_product_id_foreign` (`product_id`),
+  ADD KEY `reviews_user_id_foreign` (`user_id`),
+  ADD KEY `reviews_vendor_id_foreign` (`vendor_id`);
 
 --
 -- Indexes for table `roles`
@@ -3363,6 +3483,12 @@ ALTER TABLE `role_vendor`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`) USING BTREE;
+
+--
+-- Indexes for table `ship_rocket_settings`
+--
+ALTER TABLE `ship_rocket_settings`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `site_settings`
@@ -3518,7 +3644,7 @@ ALTER TABLE `article_tags`
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `bills`
@@ -3626,13 +3752,13 @@ ALTER TABLE `master_stocks`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -3674,7 +3800,7 @@ ALTER TABLE `pincodes`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
@@ -3686,7 +3812,13 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `product_options`
 --
 ALTER TABLE `product_options`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `product_portal_charges`
+--
+ALTER TABLE `product_portal_charges`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_stocks`
@@ -3731,6 +3863,12 @@ ALTER TABLE `settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `ship_rocket_settings`
+--
+ALTER TABLE `ship_rocket_settings`
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `site_settings`
 --
 ALTER TABLE `site_settings`
@@ -3758,7 +3896,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `unit_types`
@@ -3770,13 +3908,13 @@ ALTER TABLE `unit_types`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
 --
 ALTER TABLE `user_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_alerts`
@@ -3788,7 +3926,7 @@ ALTER TABLE `user_alerts`
 -- AUTO_INCREMENT for table `user_profiles`
 --
 ALTER TABLE `user_profiles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vendors`
@@ -3952,6 +4090,12 @@ ALTER TABLE `product_options`
   ADD CONSTRAINT `product_options_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
+-- Constraints for table `product_portal_charges`
+--
+ALTER TABLE `product_portal_charges`
+  ADD CONSTRAINT `product_portal_charges_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `product_product_tag`
 --
 ALTER TABLE `product_product_tag`
@@ -3970,6 +4114,14 @@ ALTER TABLE `product_stocks`
 --
 ALTER TABLE `product_sub_categories`
   ADD CONSTRAINT `product_sub_categories_product_category_id_foreign` FOREIGN KEY (`product_category_id`) REFERENCES `product_categories` (`id`);
+
+--
+-- Constraints for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD CONSTRAINT `reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `reviews_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `reviews_vendor_id_foreign` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`);
 
 --
 -- Constraints for table `role_admin`
