@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendFarmerRegisteredMessage implements ShouldQueue
+class SendUserRegisteredMessage implements ShouldQueue
 {
     use SmsSenderTrait;
     /**
@@ -31,7 +31,7 @@ class SendFarmerRegisteredMessage implements ShouldQueue
     public function handle(UserRegistered $event)
     {
         Mail::to($event->data['email'])->send(new UserWelcomeMessage($event->data));
-        $this->sendRegisteredUserSms($event->data);
+//        $this->sendRegisteredUserSms($event->data);
         return true;
     }
 }

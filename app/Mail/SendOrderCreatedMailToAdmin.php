@@ -29,6 +29,6 @@ class SendOrderCreatedMailToAdmin extends Mailable
      */
     public function build()
     {
-        return $this->subject("नया आर्डर आया है")->markdown('emails.admins.orderCreatedMail');
+        return $this->subject("New order received")->markdown('emails.admins.orderCreatedMail');
     }
 }

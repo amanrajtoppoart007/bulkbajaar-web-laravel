@@ -3,8 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\OrderCreated;
+use App\Mail\SendOrderCreatedEmailToVendor;
 use App\Mail\SendOrderCreatedMailToAdmin;
-use App\Mail\SendOrderCreatedMailToFarmer;
+use App\Mail\SendOrderCreatedMailToUser;
 use App\Mail\SendOrderCreatedMailToHelpCenter;
 use App\Models\Admin;
 use App\Traits\SmsSenderTrait;
@@ -40,11 +41,11 @@ class SendOrderCreatedMessage implements ShouldQueue
             Mail::to($emails)->send(new SendOrderCreatedMailToAdmin($order));
         }
 
-        if(!is_null($order->helpCenter)){
-            Mail::to($order->helpCenter)->send(new SendOrderCreatedMailToHelpCenter($order));
+        if(!is_null($order->vendor)){
+            Mail::to($order->vendor)->send(new SendOrderCreatedEmailToVendor($order));
         }
 
-        Mail::to($order->user)->send(new SendOrderCreatedMailToFarmer($order));
+        Mail::to($order->user)->send(new SendOrderCreatedMailToUser($order));
 
         $data = [
             'name' => $order->user->name,

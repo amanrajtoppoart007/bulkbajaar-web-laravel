@@ -1,15 +1,19 @@
 @component('mail::message')
-# नमस्ते {{ $data['name'] }}
+# Hello {{ $data['name'] }}
 
-www.krishakvikas.com में आपका स्वागत है।
+Welcome to Bulk Bajaar.
 
-आप कृषक  के रूप में सफलतापूर्वक पंजीकृत हैं।<br>
-आप अब हमारे पोर्टल का उपयोग  शुरू कर सकते हैं, पोर्टल के लिंक और क्रेडेंशियल्स नीचे दिए गए हैं।<br>
-उपयोगकर्ता नाम :- {{ $data['email'] }}<br>
-पासवर्ड :- {{ $data['password']  }}<br>
+You are registered as buyer. <br>
 
-अपनी साख किसी के साथ साझा न करें
+You can now use our portal, credentials are given below. <br>
 
-धन्यवाद,<br>
+Mobile :- {{ $data['mobile'] }}<br>
+Email :- {{ $data['email'] }}<br>
+@if(!empty($data['password']))
+Password :- {{ $data['password'] ?? ''  }}<br>
+@endif
+Please don't share these credentials to anyone.
+
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

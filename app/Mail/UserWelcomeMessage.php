@@ -29,6 +29,6 @@ class UserWelcomeMessage extends Mailable
      */
     public function build()
     {
-        return $this->subject('KV Pro में आपका स्वागत है')->markdown('emails.users.welcome');
+        return $this->subject('Welcome to Bulk Bajaar')->markdown('emails.users.welcome');
     }
 }

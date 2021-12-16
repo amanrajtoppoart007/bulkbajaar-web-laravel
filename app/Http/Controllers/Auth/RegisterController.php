@@ -9,7 +9,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\VendorRegistrationRequest;
 use App\Http\Requests\HelpCenterRegistrationRequest;
 use App\Library\TextLocal\TextLocal;
-use App\Mail\FranchiseeWelcomeMessage;
+use App\Mail\VendorWelcomeMessage;
 use App\Mail\HelpCenterWelcomeMessage;
 use App\Mail\UserWelcomeMessage;
 use App\Models\City;

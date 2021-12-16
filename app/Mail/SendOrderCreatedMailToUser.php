@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class FranchiseeWelcomeMessage extends Mailable
+class SendOrderCreatedMailToUser extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $order;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($order)
     {
-        $this->data = $data;
+        $this->order = $order;
     }
 
     /**
@@ -28,6 +28,6 @@ class FranchiseeWelcomeMessage extends Mailable
      */
     public function build()
     {
-        return $this->subject('KV Pro में आपका स्वागत है')->markdown('emails.franchisee.welcome');
+        return $this->subject("Your order has been placed")->markdown('emails.users.orderCreatedMail');
     }
 }

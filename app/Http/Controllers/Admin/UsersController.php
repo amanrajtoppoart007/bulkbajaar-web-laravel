@@ -144,7 +144,7 @@ class UsersController extends Controller
             $data['password'] = $password;
             $data['mobile'] = $user->mobile;
             DB::commit();
-//            event(new UserRegistered($data));
+            event(new UserRegistered($data));
             return redirect()->route('admin.users.show', $user->id);
         } catch (\Exception $exception) {
             DB::rollBack();

@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\OrderAssigned;
-use App\Mail\SendOrderAssignedEmailToFranchisee;
+use App\Mail\SendOrderCreatedEmailToVendor;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +29,6 @@ class SendOrderAssignedMail implements ShouldQueue
      */
     public function handle(OrderAssigned $event)
     {
-        return Mail::to($event->order->assignee)->send(new SendOrderAssignedEmailToFranchisee($event->order));
+        return Mail::to($event->order->assignee)->send(new SendOrderCreatedEmailToVendor($event->order));
     }
 }

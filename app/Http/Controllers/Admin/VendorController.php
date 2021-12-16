@@ -118,7 +118,7 @@ class VendorController extends Controller
             $data['username'] = $vendor->email;
             $data['password'] = $password;
             $data['mobile'] = $vendor->mobile;
-//            event(new VendorRegistered($data));
+            event(new VendorRegistered($data));
             return redirect()->route('admin.vendors.index');
         } catch (Exception $e) {
             DB::rollBack();

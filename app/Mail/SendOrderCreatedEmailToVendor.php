@@ -2,12 +2,13 @@
 
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendOrderCreatedMailToFarmer extends Mailable
+class SendOrderCreatedEmailToVendor extends Mailable
 {
     use Queueable, SerializesModels;
     public $order;
@@ -16,7 +17,7 @@ class SendOrderCreatedMailToFarmer extends Mailable
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct(Order $order)
     {
         $this->order = $order;
     }
@@ -28,6 +29,6 @@ class SendOrderCreatedMailToFarmer extends Mailable
      */
     public function build()
     {
-        return $this->subject("आपका आर्डर प्लेस हुआ")->markdown('emails.users.orderCreatedMail');
+        return $this->subject("You have received new order in Bulk Bajaar")->markdown('emails.vendor.orderCreated');
     }
 }

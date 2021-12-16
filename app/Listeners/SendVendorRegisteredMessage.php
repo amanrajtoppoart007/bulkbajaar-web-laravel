@@ -3,14 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\VendorRegistered;
-use App\Mail\FranchiseeWelcomeMessage;
+use App\Mail\VendorWelcomeMessage;
 use App\Mail\UserWelcomeMessage;
 use App\Traits\SmsSenderTrait;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendFranchiseeRegisteredMessage implements ShouldQueue
+class SendVendorRegisteredMessage implements ShouldQueue
 {
     use SmsSenderTrait;
     /**
@@ -31,8 +31,8 @@ class SendFranchiseeRegisteredMessage implements ShouldQueue
      */
     public function handle(VendorRegistered $event)
     {
-        Mail::to($event->data['email'])->send(new FranchiseeWelcomeMessage($event->data));
-        $this->sendRegisteredFranchiseeSms($event->data);
+        Mail::to($event->data['email'])->send(new VendorWelcomeMessage($event->data));
+//        $this->sendRegisteredFranchiseeSms($event->data);
         return true;
     }
 }

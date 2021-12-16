@@ -10,7 +10,6 @@ use App\Events\OrderAssigned;
 use App\Events\OrderNotAssigned;
 use App\Events\ProductCreated;
 use App\Events\UserRegistered;
-use App\Events\HelpCenterRegistered;
 use App\Events\VendorRegistered;
 use App\Events\PushNotificationCreated;
 use App\Events\OrderCreated;
@@ -18,9 +17,9 @@ use App\Listeners\SendOrderAssignedMail;
 use App\Listeners\SendOrderNotAssignedMail;
 use App\Listeners\SendProductCreatedPushNotification;
 use App\Listeners\PushNotificationCreatedListener;
-use App\Listeners\SendFarmerRegisteredMessage;
+use App\Listeners\SendUserRegisteredMessage;
 use App\Listeners\SendHelpCenterRegisteredMessage;
-use App\Listeners\SendFranchiseeRegisteredMessage;
+use App\Listeners\SendVendorRegisteredMessage;
 use App\Listeners\SendOrderCreatedMessage;
 use App\Listeners\GenerateOrderInvoice;
 
@@ -35,9 +34,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        OrderAssigned::class => [
-            SendOrderAssignedMail::class
-        ],
         OrderNotAssigned::class => [
             SendOrderNotAssignedMail::class
         ],
@@ -48,17 +44,14 @@ class EventServiceProvider extends ServiceProvider
             PushNotificationCreatedListener::class
         ],
         UserRegistered::class => [
-            SendFarmerRegisteredMessage::class
-        ],
-        HelpCenterRegistered::class => [
-            SendHelpCenterRegisteredMessage::class
+            SendUserRegisteredMessage::class
         ],
         VendorRegistered::class => [
-            SendFranchiseeRegisteredMessage::class
+            SendVendorRegisteredMessage::class
         ],
         OrderCreated::class => [
             SendOrderCreatedMessage::class,
-            GenerateOrderInvoice::class
+//            GenerateOrderInvoice::class
         ],
     ];
 

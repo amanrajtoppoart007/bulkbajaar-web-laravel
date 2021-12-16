@@ -1,11 +1,12 @@
 @component('mail::message')
-    # नमस्ते Admin<br>
+    # Hello Admin<br>
 
-    www.krishakvikas.com में किसान {{ $order->user->name }} के लिए नया आर्डर न. {{ $order->order_number }} आया है, कृपया आर्डर प्रोसेस करें|
+    New order placed by {{ $order->user->name }} in Bulk Bajaar Order #{{ $order->order_number }}.
+
 
     @component('mail::button', ['url' => route('admin.orders.show', $order->id)])
-        देखें
+        View
     @endcomponent
-    धन्यवाद,<br>
+    Thanks,<br>
     {{ config('app.name') }}
 @endcomponent

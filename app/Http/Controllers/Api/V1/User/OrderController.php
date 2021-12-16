@@ -102,13 +102,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 ];
                 $ordersTotal += $orderGrandTotal;
 
-//                $minimumOrderAmount = getMinimumOrderAmount($vendorId);
-//                if ($orderGrandTotal < $minimumOrderAmount) {
-//                    $vendorName = Vendor::find($vendorId)->name ?? '';
-//                    $message = "Total amount of order from seller $vendorName must greater than or equal to $minimumOrderAmount, current amount is $orderGrandTotal .";
-//                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $message];
-//                    return response()->json($result, 200);
-//                }
+                $minimumOrderAmount = getMinimumOrderAmount($vendorId);
+                if ($orderGrandTotal < $minimumOrderAmount) {
+                    $vendorName = Vendor::find($vendorId)->name ?? '';
+                    $message = "Total amount of order from seller $vendorName must greater than or equal to $minimumOrderAmount, current amount is $orderGrandTotal .";
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $message];
+                    return response()->json($result, 200);
+                }
 
             }
             DB::beginTransaction();
@@ -120,12 +120,12 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         OrderItem::create($orderItem);
                     }
                 }
+                $orderObj->load(['user', 'vendor']);
+
+                event(new OrderCreated($orderObj));
             }
 
             DB::commit();
-//            die;
-
-
 
             $razorOrder = null;
             if ($request->payment_method != 'COD'){
@@ -352,7 +352,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'option' => $orderItem->productOption->option ?? null,
                     'unit' => $orderItem->productOption->unit ?? null,
                     'quantity' => $orderItem->quantity,
-                    'amount' => $orderItem->amount, $orderItem->charge_percent,
+                    'amount' => applyPrice($orderItem->amount, $orderItem->charge_percent, $orderItem->discount),
                     'discount' => $orderItem->discount,
                     'discount_amount' => $orderItem->discount_amount,
                     'charge_percent' => $orderItem->charge_percent,

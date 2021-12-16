@@ -200,7 +200,7 @@ class AuthController extends BaseController
 
                     $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
                     $data['access_token'] = $user->createToken('user_token')->plainTextToken;
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'verified', 'data' => $data, 'message' => 'User register successfully'];
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'upload', 'data' => $data, 'message' => 'User register successfully'];
                     DB::commit();
                 } else {
                     DB::rollBack();
@@ -254,11 +254,11 @@ class AuthController extends BaseController
                     'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
                 ];
                 //Send notification to admin for approval
-//                $userData['name'] = $input['name'];
-//                $userData['username'] = $input['email'];
-//                $userData['email'] = $input['email'];
-//                $userData['mobile'] = $input['mobile'];
-//                        event(new UserRegistered($userData));
+                $userData['name'] = auth()->user()->name;
+                $userData['username'] =auth()->user()->email;
+                $userData['email'] = auth()->user()->email;
+                $userData['mobile'] = auth()->user()->mobile;
+                event(new UserRegistered($userData));
             } catch (\Exception $exception) {
                 $result = [
                     'status' => 0,

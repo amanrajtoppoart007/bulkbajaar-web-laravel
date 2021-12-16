@@ -16,7 +16,7 @@ trait SmsSenderTrait {
 
     public function sendRegisteredFranchiseeSms($data)
     {
-        $message = "Welcome to KV PRO. Your username is ". $data['username'];
+        $message = "Welcome to Bulk Bajaar. Your username is ". $data['username'];
         $message .= " and your password is " . $data['password'];
         $message .= " Do not share your credentials with anyone";
         $sms = new TextLocal();
