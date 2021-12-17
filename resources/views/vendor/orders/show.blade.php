@@ -19,6 +19,16 @@
                         Confirm
                     </button>
                 @endif
+                @if($order->is_invoice_generated)
+                    <a target="_blank" href="{{ route('orders.print.invoice', $order->invoice->invoice_number ?? '') }}" class="btn btn-sm btn-danger">
+                        {{ trans('global.print') }} {{ trans('global.invoice') }}
+                    </a>
+                @endif
+                @if(in_array($order->status, \App\Models\Order::CANCELLATION_ALLOWED))
+                    <a target="_blank" href="{{ route('vendor.orders.show.ship-form', $order->order_number ?? '') }}" class="btn btn-sm btn-success">
+                        Ship
+                    </a>
+                @endif
             </div>
         </div>
 

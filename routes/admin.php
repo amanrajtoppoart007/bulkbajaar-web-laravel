@@ -103,7 +103,7 @@
     Route::resource('orders', 'Admin\OrderController');
     Route::post('orders/cancel', 'Admin\OrderController@cancelOrder')->name('orders.cancel');
     Route::post('orders/verify-payment', 'Admin\OrderController@verifyPayment')->name('orders.verify.payment');
-    Route::post('orders/generate-invoice', 'HelpCenter\OrderController@generateInvoice')->name('orders.generate.invoice');
+    Route::post('orders/generate-invoice', 'Admin\OrderController@generateInvoice')->name('orders.generate.invoice');
     Route::post('orders/update-status', 'Admin\OrderController@updateStatus')->name('orders.update.status');
     Route::post('orders/update-stock', 'Admin\OrderController@updateStock')->name('orders.update.stock');
 

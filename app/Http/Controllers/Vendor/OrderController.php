@@ -113,4 +113,11 @@ class OrderController extends Controller
         }
         return response()->json($result, 200);
     }
+
+    public function showShipForm($orderNumber)
+    {
+        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
+        abort_if($order->vendor_id != auth()->id(), 401);
+        return view('vendor.orders.shipmentForm', compact('order'));
+    }
 }

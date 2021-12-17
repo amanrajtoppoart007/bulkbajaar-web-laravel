@@ -16,7 +16,7 @@ class AuthCommonRouteMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->guard('admin')->check() || auth()->guard('help_center')->check()){
+        if(auth()->guard('admin')->check() || auth()->guard('vendor')->check()){
             return $next($request);
         }else{
             return back();

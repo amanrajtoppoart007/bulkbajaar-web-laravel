@@ -19,44 +19,29 @@
             <div class="row">
                 <div class="col-12 text-center"><h1>INVOICE</h1></div>
                 <div class="col-6">
-                    <h5>Creatrix Health Private Limited</h5>
-                    <span>2nd Floor, Satish Tower, Above Kamla Medicose,</span><br>
-                    <span>Near Gharhi Chowk, Supela, Bhilai Nagar, 490023</span><br>
-                    <span>info@krishakvikas.com</span><br>
-                    <span> +91 8815752022</span>
+                    <h5>Bulk Bajaar</h5>
+                    <span>Address Line 1,</span><br>
+                    <span>Address Line 2</span><br>
+                    <span>email</span><br>
+                    <span> Phone</span>
                 </div>
                 <div class="col-6 text-right">
-                    <img height="100px" src="{{ asset('assets/assets/images/logo-1.png') }}" alt="">
+{{--                    <img height="100px" src="{{ asset('assets/assets/images/logo-1.png') }}" alt="">--}}
+                    Logo
                 </div>
             </div>
             <div class="row mt-5">
                 <div class="col-6">
                     <h4>Bill To</h4>
                     <span>{{ $order->user->name }}</span><br>
-                    <span>{{ $order->address->address }}</span><br>
-                    @isset($order->address->address_line_two)
-                        <span>{{ $order->address->address_line_two ?? '' }}</span><br>
+                    <span>{{ $order->billingAddress->address ?? '' }}</span><br>
+                    @isset($order->billingAddress->address_line_two)
+                        <span>{{ $order->billingAddress->address_line_two ?? '' }}</span><br>
                     @endisset
-                    @isset($order->address->village)
-                        <span>{{ $order->address->village ?? '' }}</span><br>
-                    @endisset
-                    @isset($order->address->street)
-                        <span>{{ $order->address->street ?? '' }}</span><br>
-                    @endisset
-                    @isset($order->address->area->area)
-                        <span>{{ $order->address->area->area ?? '' }}</span><br>
-                    @endisset
-                    @isset($order->address->block->name)
-                        <span>{{ $order->address->block->name ?? '' }}</span>,
-                    @endisset
-                    @isset($order->address->district->name)
-                        <span>{{ $order->address->district->name ?? '' }}</span>,
-                    @endisset
-                    @if($order->address->state->name)
-                        <span>{{ $order->address->state->name ?? '' }}</span>
-                    @endif
+                    <span>{{ $order->billingAddress->district->name ?? '' }}</span>,
+                    <span>{{ $order->billingAddress->state->name ?? '' }}</span>
                     -
-                    <span>{{ $order->address->pincode->pincode ?? '' }}</span><br>
+                    <span>{{ $order->billingAddress->pincode ?? '' }}</span><br>
                     <span>{{ $order->user->mobile ?? '' }}</span>
                 </div>
                 <div class="col-6 text-right">
@@ -81,11 +66,9 @@
                     <thead>
                     <tr>
                         <th style="width: 350px">Description</th>
-                        <th>Unit</th>
                         <th>Price</th>
                         <th>Qty</th>
-                        <th>GST</th>
-                        <th colspan="2">Discount</th>
+                        <th>Discount</th>
                         <th>Total</th>
                     </tr>
                     </thead>
@@ -93,22 +76,16 @@
                     @foreach($order->orderItems  as $orderItem)
                         <tr>
                             <td>
-                                {{ $orderItem->product->name }}
-                            </td>
-                            <td>
-                                {{ $orderItem->unit_quantity . ' ' . $orderItem->unit }}
+                                {{ $orderItem->product->name ?? '' }}
+                                @if($orderItem->product_option_id)
+                                    {{ $orderItem->productOption->option ?? '' }}
+                                @endif
                             </td>
                             <td>
                                 &#8377;{{ $orderItem->amount }}
                             </td>
                             <td>
                                 {{ $orderItem->quantity }}
-                            </td>
-                            <td>
-                                {{ $orderItem->gst }}%
-                            </td>
-                            <td>
-                                {{ $orderItem->discount }}%
                             </td>
                             <td>
                                 &#8377;{{ $orderItem->discount_amount }}
@@ -124,13 +101,10 @@
                         <th rowspan="6" colspan="4" style="text-align: center">Thank your for your business</th>
                     </tr>
                     <tr>
-                        <th colspan="5">SUBTOTAL: <span class="pull-right">&#8377;{{ $order->sub_total }}</span></th>
+                        <th colspan="5">SUBTOTAL: <span class="pull-right">&#8377;{{ $order->sub_total + $order->charge_amount }}</span></th>
                     </tr>
                     <tr>
-                        <th colspan="5">GST: <span class="pull-right">+ &#8377;{{ $order->gst }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="5">DISCOUNT: <span class="pull-right">- &#8377;{{ $order->discount }}</span></th>
+                        <th colspan="5">DISCOUNT: <span class="pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="5">GRAND TOTAL:<span class="pull-right">&#8377;{{ $order->grand_total }}</span>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Invoice extends Model
 {
@@ -14,25 +15,29 @@ class Invoice extends Model
     protected $fillable = [
         'invoice_number',
         'date_time',
-        'invoiceable_type',
-        'invoiceable_id',
-        'userable_type',
-        'userable_id',
+        'order_id',
+        'user_id',
+        'vendor_id',
         'transaction_id',
         'payment_type',
         'amount',
-        'gst',
         'discount',
+        'charge',
         'total',
     ];
 
-    public function invoiceable()
+    public function user(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(User::class);
     }
 
-    public function userable()
+    public function order(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(Order::class);
+    }
+
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
     }
 }

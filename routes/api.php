@@ -21,26 +21,31 @@ Route::prefix('v1/user')->group(function (){
 
     Route::middleware('auth:sanctum')->group(function (){
         Route::post('access_step_four', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'accessStepFour']);
-        Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
-        Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
-        Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
-        Route::post('update-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateAddress']);
-        Route::get('get-addresses', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getAddresses']);
-        Route::post('make-default-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'makeDefaultAddress']);
-        Route::post('remove-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'removeAddress']);
-        Route::post('add-to-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'addToCart']);
-        Route::get('get-carts', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getCarts']);
-        Route::post('update-cart-quantity', [\App\Http\Controllers\Api\V1\User\CartController::class, 'updateCartQuantity']);
-        Route::post('remove-from-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'removeFromCart']);
-        Route::post('place-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'placeOrder']);
-        Route::post('make-payment', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'makePayment']);
-        Route::get('get-orders', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrders']);
-        Route::get('get-order-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderDetails']);
-        Route::post('cancel-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'cancelOrder']);
-        Route::post('write-review', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'writeReview']);
-        Route::post('add-to-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'addToWishlist']);
-        Route::post('remove-from-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'removeFromWishlist']);
-        Route::get('get-wishlists', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'getWishlists']);
+        Route::get('get-vendors', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendors']);
+        Route::get('get-vendor-details', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendorDetails']);
+
+        ROute::middleware([\App\Http\Middleware\UnApprovedApi::class])->group(function (){
+            Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
+            Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
+            Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
+            Route::post('update-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateAddress']);
+            Route::get('get-addresses', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getAddresses']);
+            Route::post('make-default-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'makeDefaultAddress']);
+            Route::post('remove-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'removeAddress']);
+            Route::post('add-to-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'addToCart']);
+            Route::get('get-carts', [\App\Http\Controllers\Api\V1\User\CartController::class, 'getCarts']);
+            Route::post('update-cart-quantity', [\App\Http\Controllers\Api\V1\User\CartController::class, 'updateCartQuantity']);
+            Route::post('remove-from-cart', [\App\Http\Controllers\Api\V1\User\CartController::class, 'removeFromCart']);
+            Route::post('place-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'placeOrder']);
+            Route::post('make-payment', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'makePayment']);
+            Route::get('get-orders', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrders']);
+            Route::get('get-order-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderDetails']);
+            Route::post('cancel-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'cancelOrder']);
+            Route::post('write-review', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'writeReview']);
+            Route::post('add-to-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'addToWishlist']);
+            Route::post('remove-from-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'removeFromWishlist']);
+            Route::get('get-wishlists', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'getWishlists']);
+        });
         Route::get('get-push-notifications', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotifications']);
         Route::get('get-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotification']);
         Route::post('delete-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'deletePushNotification']);

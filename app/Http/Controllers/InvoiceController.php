@@ -10,16 +10,15 @@ class InvoiceController extends Controller
 {
     public function printInvoice($invoiceNo)
     {
+
         $invoice = Invoice::where('invoice_number', $invoiceNo)->first();
+        $invoice->load(['order.billingAddress', 'order.shippingAddress']);
         if(is_null($invoiceNo)){
             abort(404);
         }
 
-        if($invoice->invoiceable_type != Order::class){
-            abort(404);
-        }
 
-        $order = $invoice->invoiceable;
+        $order = $invoice->order;
 
         return view('extra.orderInvoice', compact('invoice', 'order'));
     }

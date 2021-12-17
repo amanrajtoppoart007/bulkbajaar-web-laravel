@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
@@ -48,6 +49,11 @@ class Order extends Model
         'RETURN_RECEIVED'    => 'Return - Received',
         'RETURN_REFUNDED'    => 'Return - Refunded',
         'CANCELLED'    => 'Cancelled',
+    ];
+
+    const CANCELLATION_ALLOWED = [
+        'PENDING',
+        'CONFIRMED'
     ];
 
     public static $searchable = [
@@ -129,9 +135,9 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function invoice()
+    public function invoice(): HasOne
     {
-        return $this->morphOne(Invoice::class, 'invoiceable');
+        return $this->hasOne(Invoice::class);
     }
 
     public function vendor()

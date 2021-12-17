@@ -352,7 +352,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'option' => $orderItem->productOption->option ?? null,
                     'unit' => $orderItem->productOption->unit ?? null,
                     'quantity' => $orderItem->quantity,
-                    'amount' => applyPrice($orderItem->amount, $orderItem->charge_percent, $orderItem->discount),
+                    'amount' => applyPrice($orderItem->amount, $orderItem->charge_percent),
                     'discount' => $orderItem->discount,
                     'discount_amount' => $orderItem->discount_amount,
                     'charge_percent' => $orderItem->charge_percent,
@@ -394,7 +394,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+        $order = Order::whereOrderNumber($request->input('order_number'))->first();
+
+        if ($order->user_id != auth()->id()) {
             $result = [
                 'status' => 0,
                 'response' => 'error',
@@ -404,8 +406,30 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
+        if (!in_array('PENDING', Order::CANCELLATION_ALLOWED)){
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'rejected',
+                'message' => "You are not allowed to cancel this order."
+            ];
+            return response()->json($result, 200);
+        }else{
+            $currentTime = Carbon::now();
+            $orderTime = Carbon::parse($order->created_at);
+            if ($currentTime->diffInHours($orderTime) > 24){
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'rejected',
+                    'message' => "You are not allowed to cancel this order."
+                ];
+                return response()->json($result, 200);
+            }
+        }
+
         try {
-            $order = Order::whereOrderNumber($request->input('order_number'))->first();
+
             $order->status = "CANCELLED";
             if ($order->save()) {
                 $result = [
