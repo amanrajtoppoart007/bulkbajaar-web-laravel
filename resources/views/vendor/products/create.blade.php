@@ -68,20 +68,6 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="required" for="price">Minimum Order Quantity</label>
-                                    <input class="form-control {{ $errors->has('moq') ? 'is-invalid' : '' }}"
-                                           type="number"
-                                           name="moq" id="moq" value="{{ old('moq', '') }}" required>
-                                    @if($errors->has('moq'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('moq') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
                                     <label required for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
                                            type="number"
@@ -89,6 +75,36 @@
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('discount') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label required for="display_price">Display Price</label>
+                                    <input class="form-control {{ $errors->has('display_price') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="display_price" id="display_price" value="{{ old('display_price', 0) }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label required for="charged_price">You will get (after deducting portal charge {{ $portalChargePercentage }}%)</label>
+                                    <input class="form-control {{ $errors->has('charged_price') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="charged_price" id="charged_price" value="{{ old('charged_price', 0) }}" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="price">Minimum Order Quantity</label>
+                                    <input class="form-control {{ $errors->has('moq') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="moq" id="moq" value="{{ old('moq', '') }}" required>
+                                    @if($errors->has('moq'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('moq') }}
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
@@ -406,5 +422,19 @@
                 }
             });
         });
+
+        let portalChargePercentage = "{{ $portalChargePercentage }}";
+        const calculatePrice = () => {
+            let price = parseFloat($('#price').val());
+            let discount = parseFloat($('#discount').val());
+            if(isNaN(price)) price = 0;
+            if(isNaN(discount)) discount = 0;
+            $('#display_price').val(price + ((price * discount) / 100))
+            $('#charged_price').val(price - ((price * portalChargePercentage) / 100))
+        }
+        $(document).on('blur', '#price, #discount', function (){
+            calculatePrice();
+        });
+        calculatePrice();
     </script>
 @endsection

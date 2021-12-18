@@ -27,14 +27,14 @@ class ProductList
             foreach ($this->products as $product) {
                 $data[$i]['id'] = $product['id'];
                 $data[$i]['name'] = $product['name'];
-                $data[$i]['price'] = applyPrice($product['price']);
+                $data[$i]['price'] = applyPrice($product['price'], $product['discount']);
                 $data[$i]['mop'] = getMinimumOrderAmount($product['vendor_id']);
                 $data[$i]['moq'] = $product['moq'];
                 $data[$i]['sku'] = $product['sku'];
                 $data[$i]['hsn'] = $product['hsn'];
                 $data[$i]['vendor_id'] = $product['vendor_id'];
                 $data[$i]['discount'] = $product['discount'];
-                $data[$i]['discounted_price'] = applyPrice($product['price'], null, $product['discount']);
+                $data[$i]['discounted_price'] = $product['price'];
                 $data[$i]['quantity'] = $product['quantity'];
                 $data[$i]['description'] = $product['description'];
                 $data[$i]['category'] = $product['product_category']['name'] ?? null;

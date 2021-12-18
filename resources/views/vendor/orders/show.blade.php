@@ -25,7 +25,7 @@
                     </a>
                 @endif
                 @if(in_array($order->status, \App\Models\Order::CANCELLATION_ALLOWED))
-                    <a target="_blank" href="{{ route('vendor.orders.show.ship-form', $order->order_number ?? '') }}" class="btn btn-sm btn-success">
+                    <a target="_blank" href="{{ route('vendor.orders.show.ship-form', $order->order_number ?? '') }}" class="btn btn-success d-none">
                         Ship
                     </a>
                 @endif
@@ -71,9 +71,11 @@
                     <tr>
                         <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
                         <th>Option</th>
+                        <th>Display Price</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.price') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.quantity') }}</th>
-                        <th colspan="2">{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
+                        <th>{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
+                        <th>Portal Charge</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.total_amount') }}</th>
                     </tr>
                     </thead>
@@ -87,6 +89,9 @@
                                 {{ $orderItem->productOption->option ?? '' }}
                             </td>
                             <td>
+                                &#8377;{{ applyPrice($orderItem->amount, $orderItem->discount) }}
+                            </td>
+                            <td>
                                 &#8377;{{ $orderItem->amount }}
                             </td>
                             <td>
@@ -94,13 +99,14 @@
                             </td>
 
                             <td>
-                                {{ $orderItem->discount }}%
+                                &#8377;{{ $orderItem->discount_amount }} ({{ $orderItem->discount }}%)
                             </td>
                             <td>
-                                &#8377;{{ $orderItem->discount_amount }}
+                                &#8377;{{ $orderItem->charge_amount }} ({{ $orderItem->charge_percent }}%)
                             </td>
+
                             <td>
-                                &#8377;{{ ($orderItem->amount * $orderItem->quantity) - $orderItem->discount_amount }}
+                                &#8377;{{ $orderItem->total_amount }}
                             </td>
                         </tr>
                     @endforeach
@@ -112,11 +118,11 @@
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
+                        <th colspan="5">Portal Charge: <span class="pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.grand_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total - $order->discount_amount }}</span></th>
+                        <th colspan="5">You receive: <span class="pull-right">&#8377;{{ $order->sub_total - $order->charge_amount }}</span></th>
                     </tr>
                     </tfoot>
                 </table>

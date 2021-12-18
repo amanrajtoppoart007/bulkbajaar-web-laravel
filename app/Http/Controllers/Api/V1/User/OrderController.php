@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Events\OrderCreated;
+use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -51,7 +52,6 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             });
 
 
-            $portalChargePercent = getPortalChargePercentage();
             $orderGroupNo = $this->generateOrderGroupNumber(Order::class);
             $orders = [];
             $orderItems = [];
@@ -66,9 +66,10 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 foreach ($cartGroup as $cart) {
                     $product = $cart->product;
                     $price = $product->price;
+                    $portalChargePercent = getPortalChargePercentage($product->id);
                     $discountAmount = getPercentAmount($price * $cart->quantity, $product->discount);
-                    $chargeAmount = getPercentAmount(($price * $cart->quantity) - $discountAmount, $portalChargePercent);
-                    $totalAmount = applyPrice($price * $cart->quantity, $portalChargePercent, $product->discount);
+                    $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
+                    $totalAmount = $price * $cart->quantity;
                     $orderItems[$vendorId][] = [
                         'order_number' => $orderNo.'-'.($index++),
                         'product_id' => $product->id,
@@ -122,7 +123,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 }
                 $orderObj->load(['user', 'vendor']);
 
-                event(new OrderCreated($orderObj));
+//                event(new OrderCreated($orderObj));
             }
 
             DB::commit();
@@ -246,15 +247,23 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
     public function getOrders()
     {
         try {
-            $orders = Order::whereUserId(auth()->user()->id)->get();
+
+            $query = Order::query();
+            $query->where('user_id', auth()->id());
+            $query->with('vendor')->withCount('orderItems');
+            $query->orderByDesc('created_at');
+
+            $orders = $query->paginate(10);
             if (count($orders)) {
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'fetched',
-                    'data' => $orders,
-                    'message' => 'Order data fetched successfully'
-                ];
+                $orderList = $orders->toArray();
+                $data['current_page'] = $orderList['current_page'];
+                $data['next_page_url'] = $orderList['next_page_url'];
+                $data['last_page_url'] = $orderList['last_page_url'];
+                $data['per_page'] = $orderList['per_page'];
+                $data['total'] = $orderList['total'];
+                $class = new OrderList($orderList['data']);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Order data fetched successfully'];
             } else {
                 $result = [
                     'status' => 0,
@@ -324,7 +333,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'order_number' => $order->order_number,
                 'order_group_number' => $order->order_group_number,
                 'payment_type' => $order->payment_type,
-                'sub_total' => $order->sub_total + $order->charge_amount,
+                'sub_total' => $order->sub_total + $order->discount_amount,
                 'discount_amount' => $order->discount_amount,
                 'grand_total' => $order->grand_total,
                 'status' => $order->status,
@@ -350,13 +359,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'product' => $orderItem->product->name,
                     'product_option_id' => $orderItem->product_option_id,
                     'option' => $orderItem->productOption->option ?? null,
-                    'unit' => $orderItem->productOption->unit ?? null,
+                    'amount' => applyPrice($orderItem->amount, $orderItem->discount),
                     'quantity' => $orderItem->quantity,
-                    'amount' => applyPrice($orderItem->amount, $orderItem->charge_percent),
-                    'discount' => $orderItem->discount,
                     'discount_amount' => $orderItem->discount_amount,
-                    'charge_percent' => $orderItem->charge_percent,
-                    'charge_amount' => $orderItem->charge_amount,
                     'total_amount' => $orderItem->total_amount,
                     'thumb_link' => $thumbLink
                 ];

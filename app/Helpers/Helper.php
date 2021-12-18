@@ -1,9 +1,7 @@
 <?php
 
-function applyPrice($amount, $percentage = null, $discount = 0){
-    if (is_null($percentage)) $percentage = getPortalChargePercentage();
-    $discountedPrice = $amount - (($amount * $discount) / 100);
-    $total = $discountedPrice + getPercentAmount($discountedPrice, $percentage);
+function applyPrice($amount, $percentage = 0){
+    $total = $amount + getPercentAmount($amount, $percentage);
     return round($total, 2);
 }
 
@@ -41,3 +39,5 @@ function checkIfUserCanPlaceOrderWithCod($userId): bool
 function getOrderNumbersByOrderGroup($orderGroup){
     return \App\Models\Order::where('order_group_number', $orderGroup)->pluck('order_number');
 }
+
+

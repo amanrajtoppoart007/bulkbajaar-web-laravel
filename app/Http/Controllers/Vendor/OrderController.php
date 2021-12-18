@@ -40,11 +40,11 @@ class OrderController extends Controller
                 return Order::PAYMENT_STATUS_SElECT[$row->payment_status] ?? '';
             });
             $table->addColumn('sub_total', function ($row) {
-                return $row->sub_total ?? '';
+                return $row->sub_total + $row->discount_amount;
             });
 
             $table->addColumn('total_amount', function ($row) {
-                return $row->sub_total - $row->discount_amount ;
+                return $row->grand_total;
             });
             $table->addColumn('status', function ($row) {
                 return Order::STATUS_SELECT[$row->status] ?? '';

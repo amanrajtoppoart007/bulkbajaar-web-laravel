@@ -102,8 +102,8 @@
                 <thead>
                 <tr>
                     <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.orderItem.fields.product') }}</th>
-                    <th>Option</th>
-                    <th>{{ trans('cruds.orderItem.fields.amount') }}</th>
+                    <th>Display Price</th>
+                    <th>Vendor Price</th>
                     <th>{{ trans('cruds.orderItem.fields.quantity') }}</th>
                     <th colspan="2">Charge</th>
                     <th colspan="2">{{ trans('cruds.orderItem.fields.discount') }}</th>
@@ -114,10 +114,10 @@
                 @foreach($order->orderItems  as $orderItem)
                     <tr>
                         <td>
-                            {{ $orderItem->product->name }}
+                            {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}
                         </td>
                         <td>
-                            {{ $orderItem->productOption->option ?? '' }}
+                            &#8377;{{ applyPrice($orderItem->amount, $orderItem->discount) }}
                         </td>
                         <td>
                             &#8377;{{ $orderItem->amount }}
@@ -146,11 +146,7 @@
                 <tfoot>
                 <tr>
                     <th colspan="4"></th>
-                    <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total }}</span></th>
-                </tr>
-                <tr>
-                    <th colspan="4"></th>
-                    <th colspan="5">Charge: <span class="text-danger pull-right">+ &#8377;{{ $order->charge_amount }}</span></th>
+                    <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total + $order->discount_amount }}</span></th>
                 </tr>
                 <tr>
                     <th colspan="4"></th>
@@ -168,6 +164,15 @@
                     <th colspan="4"></th>
                     <th colspan="5">Balance: <span class="pull-right">&#8377;{{ $order->grand_total - $order->amount_paid }}</span></th>
                 </tr>
+                <tr>
+                    <th colspan="4"></th>
+                    <th colspan="5">Portal Charge: <span class="text-danger pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="4"></th>
+                    <th colspan="5">Vendor receive: <span class="pull-right">+ &#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
+                </tr>
+
                 </tfoot>
             </table>
         </div>

@@ -69,8 +69,8 @@ class CartController extends \App\Http\Controllers\Api\BaseController
             $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
             foreach ($carts as $cart) {
                 $product = $cart->product;
-                $price = applyPrice($product->price);
-                $discountedPrice = applyPrice($product->price, null, $product->discount);
+                $price = applyPrice($product->price, $product->discount);
+                $discountedPrice = $product->price;
                 $totalPrice = $discountedPrice * $cart->quantity;
                 $data[] = [
                     'id' => $cart->id,

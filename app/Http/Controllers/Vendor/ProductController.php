@@ -94,7 +94,8 @@ class ProductController extends Controller
     {
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
-        return view('vendor.products.create', compact('categories', 'unitTypes'));
+        $portalChargePercentage = getPortalChargePercentage();
+        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage'));
     }
 
     public function show(Product $product)
@@ -173,8 +174,9 @@ class ProductController extends Controller
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $productOptions = ProductOption::where('product_id', $product->id)->get();
+        $portalChargePercentage = getPortalChargePercentage($product->id);
         return view('vendor.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions', 'portalChargePercentage'));
     }
 
     public function update(UpdateProductRequest $request)

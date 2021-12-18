@@ -101,7 +101,7 @@
                         <th rowspan="6" colspan="4" style="text-align: center">Thank your for your business</th>
                     </tr>
                     <tr>
-                        <th colspan="5">SUBTOTAL: <span class="pull-right">&#8377;{{ $order->sub_total + $order->charge_amount }}</span></th>
+                        <th colspan="5">SUBTOTAL: <span class="pull-right">&#8377;{{ $order->sub_total + $order->discount_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="5">DISCOUNT: <span class="pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
