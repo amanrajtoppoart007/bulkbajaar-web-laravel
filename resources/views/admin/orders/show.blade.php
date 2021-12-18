@@ -170,7 +170,7 @@
                 </tr>
                 <tr>
                     <th colspan="4"></th>
-                    <th colspan="5">Vendor receive: <span class="pull-right">+ &#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
+                    <th colspan="5">Vendor receive: <span class="pull-right">&#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
                 </tr>
 
                 </tfoot>
