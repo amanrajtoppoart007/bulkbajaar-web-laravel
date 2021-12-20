@@ -6,6 +6,7 @@ use App\Events\UserRegistered;
 use App\Http\Controllers\Api\BaseController;
 use App\Models\UserAddress;
 use App\Models\UserProfile;
+use App\Models\Vendor;
 use App\Traits\SmsSenderTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Illuminate\Http\Request;
@@ -35,6 +36,14 @@ class AuthController extends BaseController
             ];
         } else {
             try {
+                if (Vendor::where('mobile', $request->input('mobile'))->exists()){
+                    $result = [
+                        'response' => 'success',
+                        'action' => 'register',
+                        'message' => 'Already registered'
+                    ];
+                    return response()->json($result, 200);
+                }
                 if (User::where('mobile', $request->input('mobile'))->doesntExist()) {
                     Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
                     $otp = rand(1000, 9999);
@@ -322,6 +331,7 @@ class AuthController extends BaseController
                     'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
                 ];
                 //Send notification to admin for approval
+                $userData['id'] = auth()->user()->id;
                 $userData['name'] = auth()->user()->name;
                 $userData['username'] = auth()->user()->email;
                 $userData['email'] = auth()->user()->email;

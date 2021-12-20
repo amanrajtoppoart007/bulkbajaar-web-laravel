@@ -21,6 +21,6 @@ class CheckIfVendorDocumentsAreUploaded
                 return $next($request);
             }
         }
-        return redirect()->route('vendor.show.upload.documents.form');
+        return redirect()->route('vendor.register.step-two');
     }
 }

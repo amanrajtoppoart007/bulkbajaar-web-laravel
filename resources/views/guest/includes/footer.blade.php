@@ -5,7 +5,7 @@
         <div class="row">
 
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <img src="{{asset('assets/assets/images/logo-1.png')}}" alt="logo" class="logo img-fluid ml-n2">
+{{--                <img src="{{asset('assets/assets/images/logo-1.png')}}" alt="logo" class="logo img-fluid ml-n2">--}}
                 <p class="text-success font-weight-bolder">
                     Company Address
                 <a href="mailto:" class="card-link font-weight-bolder text-theme-1">demo@company.com</a>

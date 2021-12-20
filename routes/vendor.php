@@ -22,3 +22,8 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
 
 Route::get('/upload-documents', 'Vendor\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");
 Route::post('/upload-documents', 'Vendor\HomeController@uploadDocuments')->name("upload.documents");
+
+Route::get('/address-details', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'showRegistrationFormStepTwo'])->name("register.step-two");
+Route::post('/store/step-two', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'storeStepTwo'])->name("register.step-two.store");
+Route::get('/document-details', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'showRegistrationFormStepThree'])->name("register.step-three");
+Route::post('/store/step-three', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'storeStepThree'])->name("register.step-three.store");
