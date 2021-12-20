@@ -223,6 +223,13 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $query->where('product_category_id', $request->input('sub_category_id'));
             }
 
+            if ($request->input('vendor_id')) {
+                $query->where('vendor_id', $request->input('vendor_id'));
+                $query->orderByDesc('order_count');
+            }
+
+            $query->where('approval_status', 'APPROVED');
+
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);
             if (count($products)) {
                 $productList = $products->toArray();
