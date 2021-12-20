@@ -71,6 +71,7 @@ class VendorRegistrationController extends Controller
 
             $vendor = \auth()->user();
             $vendor->name = $request->company_name;
+            $vendor->user_type = $request->user_type;
             $vendor->save();
             $validated['email'] = $vendor->email;
             $validated['mobile'] = $vendor->mobile;

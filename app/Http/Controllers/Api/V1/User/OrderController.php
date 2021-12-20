@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Vendor;
 use App\Models\Transaction;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
