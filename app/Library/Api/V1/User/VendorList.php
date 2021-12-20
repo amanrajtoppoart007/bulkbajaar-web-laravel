@@ -25,9 +25,10 @@ class VendorList
             foreach ($this->vendors as $vendor) {
                 $data[$i]['id'] = $vendor['id'];
                 $data[$i]['name'] = $vendor['name'];
+                $data[$i]['representative_name'] = $vendor['profile']['representative_name'] ?? '';
                 $data[$i]['mop'] = getMinimumOrderAmount($vendor['id']);
                 $data[$i]['district'] = $vendor['profile']['pickup_district']['name'] ?? '';
-                $data[$i]['total_product'] = $vendor['products_count'];
+                $data[$i]['products_count'] = $vendor['products_count'];
                 $i++;
             }
         }
