@@ -4,7 +4,8 @@
 Route::prefix('v1/user')->group(function (){
     Route::post('access_step_one', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'access_step_one']);
     Route::post('access_step_two', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'access_step_two']);
-    Route::post('access_step_three', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'access_step_third']);
+
+    Route::post('register/step-one/user-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepOne']);
     Route::get('get-states', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getStates']);
     Route::get('get-districts', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getDistricts']);
     Route::get('get-blocks', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getBlocks']);
@@ -20,7 +21,8 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
 
     Route::middleware('auth:sanctum')->group(function (){
-        Route::post('access_step_four', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'accessStepFour']);
+        Route::post('register/step-two/user-address-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepTwo']);
+        Route::post('register/step-three/user-document-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepThree']);
         Route::get('get-vendors', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendors']);
         Route::get('get-vendor-details', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendorDetails']);
 

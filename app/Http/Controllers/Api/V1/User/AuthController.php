@@ -27,7 +27,12 @@ class AuthController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'validation_error', 'action' => 'retry', 'message' => $validator->errors()->all()];
+            $result = [
+                'status' => 0,
+                'response' => 'validation_error',
+                'action' => 'retry',
+                'message' => $validator->errors()->all()
+            ];
         } else {
             try {
                 if (User::where('mobile', $request->input('mobile'))->doesntExist()) {
@@ -43,7 +48,12 @@ class AuthController extends BaseController
 //                    $otpObj->sms_status = $gatewayResponse->status;
 //                    $otpObj->gateway_response = json_encode($gatewayResponse);
                     $otpObj->save();
-                    $result = ['response' => 'success', 'action' => 'register', 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
+                    $result = [
+                        'response' => 'success',
+                        'action' => 'register',
+                        'otp' => $otp,
+                        'message' => 'Please check your mobile for OTP'
+                    ];
                 } else {
                     Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
                     $otp = rand(1000, 9999);
@@ -58,7 +68,12 @@ class AuthController extends BaseController
 //                    $otpObj->gateway_response = json_encode($gatewayResponse);
                     $otpObj->save();
 
-                    $result = ['response' => 'success', 'action' => 'login', 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
+                    $result = [
+                        'response' => 'success',
+                        'action' => 'login',
+                        'otp' => $otp,
+                        'message' => 'Please check your mobile for OTP'
+                    ];
 
                 }
             } catch (\Exception $exception) {
@@ -103,12 +118,22 @@ class AuthController extends BaseController
                             $user = User::where('mobile', $request->input('mobile'))->first();
                             $access_token = $user->createToken('user_token')->plainTextToken;
                             $user['access_token'] = $access_token;
-                            $result = ['response' => 'success', 'action' => 'logged_in', 'data' => $user, 'message' => 'User logged in successfully'];
+                            $result = [
+                                'response' => 'success',
+                                'action' => 'logged_in',
+                                'data' => $user,
+                                'message' => 'User logged in successfully'
+                            ];
                             DB::commit();
                         } else {
                             DB::commit();
                             $data['verification_token'] = $v_token;
-                            $result = ['response' => 'success', 'action' => 'register', 'data' => $data, 'message' => 'Otp verification successful ,please create your account'];
+                            $result = [
+                                'response' => 'success',
+                                'action' => 'register',
+                                'data' => $data,
+                                'message' => 'Otp verification successful ,please create your account'
+                            ];
                         }
                     } else {
                         DB::rollBack();
@@ -116,7 +141,11 @@ class AuthController extends BaseController
                     }
                 } else {
                     DB::rollBack();
-                    $result = ['response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong ,please try after some time'];
+                    $result = [
+                        'response' => 'error',
+                        'action' => 'retry',
+                        'message' => 'Something went wrong ,please try after some time'
+                    ];
                 }
             } catch (\Exception $exception) {
                 DB::rollBack();
@@ -128,13 +157,56 @@ class AuthController extends BaseController
         return response()->json($result, 200);
     }
 
-    public function access_step_third(Request $request)
+    public function registrationStepOne(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
             'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
             'email' => 'required|email|unique:users,email|unique:vendors,email',
             'password' => ['required', 'string', 'confirmed'],
             'device_token' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'validation_error', 'message' => $validator->errors()->all()];
+        } else {
+            try {
+                $input = $request->json()->all();
+                $user = new User();
+                $user->email = $input['email'];
+                $user->mobile = $input['mobile'];
+                $user->password = Hash::make($input['password']);
+                $user->device_token = $input['device_token'];
+                if ($user->save()) {
+                    $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
+                    $data['access_token'] = $user->createToken('user_token')->plainTextToken;
+                    $result = [
+                        'status' => 1,
+                        'response' => 'success',
+                        'action' => 'add_address details',
+                        'data' => $data,
+                        'message' => 'Please add address details.'
+                    ];
+                } else {
+                    $result = [
+                        'status' => 0,
+                        'response' => 'error',
+                        'action' => 'retry',
+                        'message' => 'User register failed'
+                    ];
+                }
+
+            } catch (\Exception $exception) {
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+            }
+        }
+
+        return response()->json($result, 200);
+
+    }
+
+    public function registrationStepTwo(Request $request)
+    {
+        $validator = Validator::make($request->json()->all(), [
             'company_name' => 'required|string',
             'representative_name' => 'required|string',
             'billing_address' => 'required|string',
@@ -156,57 +228,53 @@ class AuthController extends BaseController
             DB::beginTransaction();
             try {
                 $input = $request->json()->all();
-                $user = new User();
+                $user = auth()->user();
+
                 $user->name = $input['company_name'];
-                $user->email = $input['email'];
-                $user->mobile = $input['mobile'];
-                $user->password = Hash::make($input['password']);
-                $user->device_token = $input['device_token'];
-                if ($user->save()) {
-                    $userProfile = new UserProfile();
-                    $userProfile->company_name = $input['company_name'];
-                    $userProfile->representative_name = $input['representative_name'];
-                    $userProfile->email = $input['email'];
-                    $userProfile->mobile = $input['mobile'];
-                    $userProfile->user_id = $user->id;
-                    $userProfile->save();
+                $user->save();
+                $userProfile = new UserProfile();
+                $userProfile->company_name = $input['company_name'];
+                $userProfile->representative_name = $input['representative_name'];
+                $userProfile->email = $user->email;
+                $userProfile->mobile = $user->mobile;
+                $userProfile->user_id = $user->id;
+                $userProfile->save();
 
-                    $billingAddressData = [
+                $billingAddressData = [
+                    'user_id' => $user->id,
+                    'address' => $request->billing_address,
+                    'address_two' => $request->billing_address_two,
+                    'state_id' => $request->billing_state_id,
+                    'district_id' => $request->billing_district_id,
+                    'pincode' => $request->billing_pincode,
+                    'address_type' => 'BILLING',
+                ];
+
+                UserAddress::create($billingAddressData);
+
+                if ($request->shipping_address_same == 0) {
+                    UserAddress::create([
                         'user_id' => $user->id,
-                        'address' => $request->billing_address,
-                        'address_two' => $request->billing_address_two,
-                        'state_id' => $request->billing_state_id,
-                        'district_id' => $request->billing_district_id,
-                        'pincode' => $request->billing_pincode,
-                        'address_type' => 'BILLING',
-                    ];
-
-                    UserAddress::create($billingAddressData);
-
-                    if ($request->shipping_address_same == 0){
-                        UserAddress::create([
-                            'user_id' => $user->id,
-                            'address' => $request->shipping_address,
-                            'address_two' => $request->shipping_address_two,
-                            'state_id' => $request->shipping_state_id,
-                            'district_id' => $request->shipping_district_id,
-                            'pincode' => $request->shipping_pincode,
-                            'is_default' => 1,
-                            'address_type' => 'SHIPPING',
-                        ]);
-                    }else{
-                        UserAddress::create(array_merge($billingAddressData, ['is_default' => 1, 'address_type' => 'SHIPPING']));
-                    }
-
-                    $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
-                    $data['access_token'] = $user->createToken('user_token')->plainTextToken;
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'upload', 'data' => $data, 'message' => 'User register successfully'];
-                    DB::commit();
+                        'address' => $request->shipping_address,
+                        'address_two' => $request->shipping_address_two,
+                        'state_id' => $request->shipping_state_id,
+                        'district_id' => $request->shipping_district_id,
+                        'pincode' => $request->shipping_pincode,
+                        'is_default' => 1,
+                        'address_type' => 'SHIPPING',
+                    ]);
                 } else {
-                    DB::rollBack();
-                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'User register failed'];
+                    UserAddress::create(array_merge($billingAddressData,
+                        ['is_default' => 1, 'address_type' => 'SHIPPING']));
                 }
 
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'upload',
+                    'message' => 'Please upload documents.'
+                ];
+                DB::commit();
             } catch (\Exception $exception) {
                 DB::rollBack();
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
@@ -216,7 +284,7 @@ class AuthController extends BaseController
         return response()->json($result, 200);
     }
 
-    public function accessStepFour(Request $request)
+    public function registrationStepThree(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'pan_number' => 'required|string',
@@ -255,10 +323,10 @@ class AuthController extends BaseController
                 ];
                 //Send notification to admin for approval
                 $userData['name'] = auth()->user()->name;
-                $userData['username'] =auth()->user()->email;
+                $userData['username'] = auth()->user()->email;
                 $userData['email'] = auth()->user()->email;
                 $userData['mobile'] = auth()->user()->mobile;
-                event(new UserRegistered($userData));
+//                event(new UserRegistered($userData));
             } catch (\Exception $exception) {
                 $result = [
                     'status' => 0,
