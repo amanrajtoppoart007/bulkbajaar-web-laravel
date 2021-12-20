@@ -49,6 +49,7 @@ class Product extends Model implements HasMedia
         'quantity',
         'sku',
         'hsn',
+        'order_count',
         'brand_id',
         'created_at',
         'updated_at',

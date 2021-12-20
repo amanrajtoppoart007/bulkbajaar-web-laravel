@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('quantity')->nullable();
             $table->string('sku')->nullable();
             $table->string('hsn')->nullable();
+            $table->unsignedBigInteger('order_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

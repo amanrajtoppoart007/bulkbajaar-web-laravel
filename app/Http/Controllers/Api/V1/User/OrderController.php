@@ -8,6 +8,7 @@ use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
@@ -118,6 +119,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 if (!empty($orderItems[$key])) {
                     foreach ($orderItems[$key] as $orderItem) {
                         $orderItem['order_id'] = $orderObj->id;
+                        $product = Product::find($orderItem['product_id']);
+                        $product->order_count += 1;
+                        $product->save();
                         OrderItem::create($orderItem);
                     }
                 }
@@ -125,6 +129,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
 
 //                event(new OrderCreated($orderObj));
             }
+
+            //Delete cart items
+//            Cart::where('user_id', auth()->id())->delete();
 
             DB::commit();
 
