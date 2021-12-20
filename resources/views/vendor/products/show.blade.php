@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="form-group">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.products.index') }}">
+                <a class="btn btn-default" href="{{ route('vendor.products.index') }}">
                     {{ trans('global.back_to_list') }}
                 </a>
             </div>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Minimum Price Quantity
+                            Minimum Order Quantity
                         </th>
                         <td>
                             {{ $product->moq ?? 0 }}
@@ -77,7 +77,7 @@
                             {{ trans('cruds.product.fields.discount') }}
                         </th>
                         <td>
-                            {{ $product->discount }}
+                            {{ $product->discount }}%
                         </td>
                     </tr>
                     <tr>

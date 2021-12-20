@@ -74,6 +74,20 @@ class VendorRegistrationController extends Controller
             $vendor->save();
             $validated['email'] = $vendor->email;
             $validated['mobile'] = $vendor->mobile;
+
+            if ($request->pickup_address_same == 0){
+                $validated['pickup_address'] = $request->pickup_address;
+                $validated['pickup_address_two'] = $request->pickup_address_two;
+                $validated['pickup_state_id'] = $request->pickup_state_id;
+                $validated['pickup_district_id'] = $request->pickup_district_id;
+                $validated['pickup_pincode'] = $request->pickup_pincode;
+            }else{
+                $validated['pickup_address'] = $request->billing_address;
+                $validated['pickup_address_two'] = $request->billing_address_two;
+                $validated['pickup_state_id'] = $request->billing_state_id;
+                $validated['pickup_district_id'] = $request->billing_district_id;
+                $validated['pickup_pincode'] = $request->billing_pincode;
+            }
             $vendorProfile = VendorProfile::updateOrCreate([
                 'vendor_id' => \auth()->id()
             ],$validated);

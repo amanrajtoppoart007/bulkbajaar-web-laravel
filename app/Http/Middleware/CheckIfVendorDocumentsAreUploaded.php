@@ -17,9 +17,9 @@ class CheckIfVendorDocumentsAreUploaded
     public function handle(Request $request, Closure $next)
     {
         if(!is_null(auth()->user()->profile)){
-            if (auth()->user()->profile->pan_card && auth()->user()->profile->gst) {
+//            if (auth()->user()->profile->pan_card && auth()->user()->profile->gst) {
                 return $next($request);
-            }
+//            }
         }
         return redirect()->route('vendor.register.step-two');
     }

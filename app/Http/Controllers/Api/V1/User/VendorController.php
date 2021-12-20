@@ -23,7 +23,7 @@ class VendorController extends \App\Http\Controllers\Api\BaseController
                 });
             }
 
-            $query->where('approved', true);
+//            $query->where('approved', true);
 
             $vendors = $query->with(['profile.pickupDistrict'])->withCount('products')->paginate(10);
             if (count($vendors)) {

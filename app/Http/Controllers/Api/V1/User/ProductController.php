@@ -23,7 +23,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
     {
         try {
             $products = Product::latest()
-                ->where('approval_status', 'APPROVED')
+//                ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
@@ -230,7 +230,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $query->orderByDesc('order_count');
             }
 
-            $query->where('approval_status', 'APPROVED');
+//            $query->where('approval_status', 'APPROVED');
 
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);
             if (count($products)) {
@@ -268,7 +268,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
     {
         try {
             $products = Product::limit(10)
-                ->where('approval_status', 'APPROVED')
+//                ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
                 ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->get()->toArray();

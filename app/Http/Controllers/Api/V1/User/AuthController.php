@@ -221,13 +221,13 @@ class AuthController extends BaseController
             'billing_address' => 'required|string',
             'billing_address_two' => 'nullable|string',
             'billing_state_id' => 'required|exists:states,id',
-            'billing_district_id' => 'required|exists:districts,id',
+//            'billing_district_id' => 'required|exists:districts,id',
             'billing_pincode' => 'required',
             'shipping_address_same' => 'required|in:0,1',
             'shipping_address' => 'required_if:shipping_address_same,0|string',
             'shipping_address_two' => 'nullable|string',
             'shipping_state_id' => 'required_if:shipping_address_same,0|exists:states,id',
-            'shipping_district_id' => 'required_if:shipping_address_same,0|exists:districts,id',
+//            'shipping_district_id' => 'required_if:shipping_address_same,0|exists:districts,id',
             'shipping_pincode' => 'required_if:shipping_address_same,0',
         ]);
 
@@ -254,7 +254,7 @@ class AuthController extends BaseController
                     'address' => $request->billing_address,
                     'address_two' => $request->billing_address_two,
                     'state_id' => $request->billing_state_id,
-                    'district_id' => $request->billing_district_id,
+//                    'district_id' => $request->billing_district_id,
                     'pincode' => $request->billing_pincode,
                     'address_type' => 'BILLING',
                 ];
@@ -267,7 +267,7 @@ class AuthController extends BaseController
                         'address' => $request->shipping_address,
                         'address_two' => $request->shipping_address_two,
                         'state_id' => $request->shipping_state_id,
-                        'district_id' => $request->shipping_district_id,
+//                        'district_id' => $request->shipping_district_id,
                         'pincode' => $request->shipping_pincode,
                         'is_default' => 1,
                         'address_type' => 'SHIPPING',

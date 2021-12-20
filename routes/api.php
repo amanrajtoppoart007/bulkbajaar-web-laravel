@@ -21,13 +21,14 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-top-selling-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopSellingProducts']);
     Route::get('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
 
+    Route::get('get-vendors', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendors']);
+    Route::get('get-vendor-details', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendorDetails']);
+
     Route::middleware('auth:sanctum')->group(function (){
         Route::post('register/step-two/user-address-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepTwo']);
         Route::post('register/step-three/user-document-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepThree']);
-        Route::get('get-vendors', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendors']);
-        Route::get('get-vendor-details', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendorDetails']);
 
-        ROute::middleware([\App\Http\Middleware\UnApprovedApi::class])->group(function (){
+//        ROute::middleware([\App\Http\Middleware\UnApprovedApi::class])->group(function (){
             Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
             Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
             Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
@@ -52,7 +53,7 @@ Route::prefix('v1/user')->group(function (){
         Route::get('get-push-notifications', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotifications']);
         Route::get('get-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotification']);
         Route::post('delete-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'deletePushNotification']);
-    });
+//    });
 });
 
 
