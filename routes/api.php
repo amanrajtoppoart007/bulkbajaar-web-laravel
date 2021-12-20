@@ -18,6 +18,7 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-sliders', [\App\Http\Controllers\Api\V1\User\SliderController::class, 'getSliders']);
     Route::get('get-latest-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getLatestProducts']);
     Route::get('get-top-rated-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopRatedProducts']);
+    Route::get('get-top-selling-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopSellingProducts']);
     Route::get('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
 
     Route::middleware('auth:sanctum')->group(function (){

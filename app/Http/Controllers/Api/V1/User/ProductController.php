@@ -23,6 +23,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
     {
         try {
             $products = Product::latest()
+                ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
@@ -42,6 +43,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
     {
         try {
             $products = Product::limit(10)
+                ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
                 ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
                 ->get()->toArray();
@@ -255,6 +257,27 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'action' => 'retry',
                     'message' => 'No product found'
                 ];
+            }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function getTopSellingProducts(Request $request)
+    {
+        try {
+            $products = Product::limit(10)
+                ->where('approval_status', 'APPROVED')
+                ->orderByDesc('order_count')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->get()->toArray();
+            if (count($products)) {
+                $class = new ProductList($products);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
