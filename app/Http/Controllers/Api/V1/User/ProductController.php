@@ -230,6 +230,14 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $query->orderByDesc('order_count');
             }
 
+            if ($request->input('min_price')) {
+                $query->where('price','>=', $request->input('min_price'));
+            }
+
+            if ($request->input('max_price')) {
+                $query->where('price','<=', $request->input('max_price'));
+            }
+
 //            $query->where('approval_status', 'APPROVED');
 
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);

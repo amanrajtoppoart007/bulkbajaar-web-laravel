@@ -85,4 +85,14 @@ class UserProfile extends Model implements HasMedia
 
         return $file;
     }
+
+    public function getGstAttribute()
+    {
+        return $this->getMedia('gst')->last();
+    }
+
+    public function getPanCardAttribute()
+    {
+        return $this->getMedia('pan_card')->last();
+    }
 }

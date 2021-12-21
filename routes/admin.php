@@ -17,7 +17,7 @@
     Route::post('users/mass-approve', 'Admin\UsersController@massApprove')->name('users.massApprove');
     Route::post('users/parse-csv-import', 'Admin\UsersController@parseCsvImport')->name('users.parseCsvImport');
     Route::post('users/process-csv-import', 'Admin\UsersController@processCsvImport')->name('users.processCsvImport');
-    Route::post('users/approve/{vendor}', 'Admin\UsersController@approve')->name('users.approve');
+    Route::post('users/approve/{user}', 'Admin\UsersController@approve')->name('users.approve');
     Route::resource('users', 'Admin\UsersController');
     Route::post('users/change/approval/status', 'Admin\UsersController@changeApprovalStatus')->name('users.changeApprovalStatus');
     Route::post('users/change/verification/status', 'Admin\UsersController@changeVerificationStatus')->name('users.changeVerificationStatus');

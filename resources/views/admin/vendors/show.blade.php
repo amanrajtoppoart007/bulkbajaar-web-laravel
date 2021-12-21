@@ -76,7 +76,7 @@
                         <td>
                             @if($profile->gst)
                                 <a href="{{ $profile->gst->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $profile->gst->getUrl('thumb') }}">
+                                    <img src="{{ $profile->gst->getUrl() }}" height="50px">
                                 </a>
                             @else
                                 Not uploaded
@@ -98,7 +98,7 @@
                         <td>
                             @if($profile->pan_card)
                                 <a href="{{ $profile->pan_card->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $profile->pan_card->getUrl('thumb') }}">
+                                    <img src="{{ $profile->pan_card->getUrl() }}" height="50px">
                                 </a>
                             @else
                                 Not uploaded
