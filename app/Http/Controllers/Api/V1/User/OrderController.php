@@ -8,6 +8,7 @@ use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderReturnRequest;
 use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\Transaction;
@@ -137,8 +138,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             DB::commit();
 
             $razorOrder = null;
-            if ($request->payment_method != 'COD'){
-                if ($request->payment_method == 'ONLINE'){
+            if ($request->payment_method != 'COD') {
+                if ($request->payment_method == 'ONLINE') {
                     $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
                     $razorOrder = $razorPayApi->order->create(
                         [
@@ -147,7 +148,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                             'currency' => 'INR'
                         ]
                     );
-                }elseif ($request->payment_method == 'HALF'){
+                } elseif ($request->payment_method == 'HALF') {
                     $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
                     $razorOrder = $razorPayApi->order->create(
                         [
@@ -194,10 +195,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
         $razorpayOrderId = $request->razorpay_order_id;
         $razorpayId = $request->razorpay_payment_id;
 
-        $generatedSignature = hash_hmac('SHA256', $razorpayOrderId . "|" . $razorpayId, env('RAZOR_SECRET'));
+        $generatedSignature = hash_hmac('SHA256', $razorpayOrderId."|".$razorpayId, env('RAZOR_SECRET'));
 
         if ($generatedSignature != $request->razorpay_signature) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Payment Verification failed.'];
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'retry',
+                'message' => 'Payment Verification failed.'
+            ];
             return response()->json($result, 200);
         }
 
@@ -218,13 +224,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             ]);
 
             if ($razorPayment->status != 'failed') {
-                DB::transaction(function () use ($orderGroupNo, $razorPayment){
+                DB::transaction(function () use ($orderGroupNo, $razorPayment) {
                     $orders = Order::where($orderGroupNo)->with('orderItems')->get();
-                    foreach ($orders as $order){
+                    foreach ($orders as $order) {
                         $type = $order->payment_type;
-                        if($type == 'HALF'){
+                        if ($type == 'HALF') {
                             $order->amount_paid += ($order->grand_total / 2);
-                        }else{
+                        } else {
                             $order->amount_paid += $order->grand_total;
                         }
                         $order->payment_status = $order->grand_total > $order->amount_paid ? 'PARTLY_PAID' : 'PAID';
@@ -238,15 +244,16 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'action' => 'paid',
                     'message' => 'Your payment was successful..'
                 ];
-            }else
+            } else {
                 $result = [
                     'status' => 1,
                     'response' => 'error',
                     'action' => 'retry',
                     'message' => 'Your payment was failed, please try again.'
                 ];
+            }
 
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -271,7 +278,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 $data['total'] = $orderList['total'];
                 $class = new OrderList($orderList['data']);
                 $data['list'] = $class->execute();
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Order data fetched successfully'];
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Order data fetched successfully'
+                ];
             } else {
                 $result = [
                     'status' => 0,
@@ -298,28 +311,37 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
-            $result = [
-                'status' => 0,
-                'response' => 'error',
-                'action' => 'rejected',
-                'message' => "This order does not belong to you."
-            ];
-            return response()->json($result, 200);
-        }
+//        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+//            $result = [
+//                'status' => 0,
+//                'response' => 'error',
+//                'action' => 'rejected',
+//                'message' => "This order does not belong to you."
+//            ];
+//            return response()->json($result, 200);
+//        }
 
         try {
             $order = Order::whereOrderNumber($request->input('order_number'))->first();
 
             $orderItems = OrderItem::where('order_id', $order->id)->with('product')->get();
 
-            $order->load(['vendor','orderItems.product','orderItems.productOption', 'billingAddress.state:id,name', 'billingAddress.district:id,name', 'shippingAddress.state:id,name', 'shippingAddress.district:id,name']);
+            $order->load([
+                'vendor',
+                'orderItems.product',
+                'orderItems.product.productReturnConditions:id,title',
+                'orderItems.productOption:id,option',
+                'billingAddress.state:id,name',
+                'billingAddress.district:id,name',
+                'shippingAddress.state:id,name',
+                'shippingAddress.district:id,name'
+            ]);
 
             $billingAddressObj = $order->billingAddress;
             $shippingAddressObj = $order->shippingAddress;
 
             $billingAddress = '';
-            if (!is_null($billingAddressObj)){
+            if (!is_null($billingAddressObj)) {
                 $billingAddress = $billingAddressObj->address;
                 $billingAddress .= $billingAddressObj->address_line_two ? ", ".$billingAddressObj->address_line_two : "";
                 $billingAddress .= $billingAddressObj->district ? ", ".$billingAddressObj->district->name : "";
@@ -328,7 +350,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             }
 
             $shippingAddress = "";
-            if (!is_null($shippingAddressObj)){
+            if (!is_null($shippingAddressObj)) {
                 $shippingAddress = $shippingAddressObj->address ?? '';
                 $shippingAddress .= $shippingAddressObj->address_line_two ? ", ".$shippingAddressObj->address_line_two : "";
                 $shippingAddress .= $shippingAddressObj->district ? ", ".$shippingAddressObj->district->name : "";
@@ -371,6 +393,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
                     'total_amount' => $orderItem->total_amount,
+                    'is_returnable' => (bool)($orderItem->product->is_returnable ?? 0),
+                    'return_conditions' => $orderItem->product->productReturnConditions ?? [],
                     'thumb_link' => $thumbLink
                 ];
             }
@@ -419,7 +443,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if (!in_array('PENDING', Order::CANCELLATION_ALLOWED)){
+        if (!in_array('PENDING', Order::CANCELLATION_ALLOWED)) {
             $result = [
                 'status' => 0,
                 'response' => 'error',
@@ -427,10 +451,10 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'message' => "You are not allowed to cancel this order."
             ];
             return response()->json($result, 200);
-        }else{
+        } else {
             $currentTime = Carbon::now();
             $orderTime = Carbon::parse($order->created_at);
-            if ($currentTime->diffInHours($orderTime) > 24){
+            if ($currentTime->diffInHours($orderTime) > 24) {
                 $result = [
                     'status' => 0,
                     'response' => 'error',
@@ -464,4 +488,78 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
         }
         return response()->json($result, 200);
     }
+
+    public function returnOrderItems(Request $request)
+    {
+        $validator = Validator::make($request->json()->all(), [
+            'order_items' => 'required|array',
+            'order_items.*.id' => 'required|exists:order_items,id',
+            'order_items.*.quantity' => 'required|numeric',
+            'order_items.*.condition_id' => 'required|exists:product_return_conditions,id',
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
+        DB::beginTransaction();
+        try {
+            foreach ($request->order_items as $order_item) {
+                $orderItem = OrderItem::find($order_item['id'])->load(['order', 'product']);
+                $order = $orderItem->order;
+                //Check if condition allowed or not
+                if (!$orderItem->product->is_returnable) {
+                    $result = [
+                        'status' => 0,
+                        'response' => 'error',
+                        'action' => 'rejected',
+                        'message' => "Return not allowed for this product." . ($orderItem->product->name ?? '')
+                    ];
+                    return response()->json($result, 200);
+                }
+
+                if ($order_item['quantity'] > $orderItem->quantity) {
+                    $result = [
+                        'status' => 0,
+                        'response' => 'error',
+                        'action' => 'rejected',
+                        'message' => "Return quantity must not be greater than ordered quantity."
+                    ];
+                    return response()->json($result, 200);
+                }
+
+                OrderReturnRequest::create([
+                    'order_id' => $order->id,
+                    'order_item_id' => $orderItem->id,
+                    'product_id'  => $orderItem->product_id,
+                    'product_option_id' => $orderItem->product_option_id,
+                    'product_return_condition_id' => $order_item['condition_id'],
+                    'quantity' => $order_item['quantity'],
+                    'vendor_id' => $order->vendor_id,
+                ]);
+
+                $orderItem->status = 'RETURN_REQUESTED';
+                $orderItem->save();
+
+                $order->status = 'RETURN_REQUESTED';
+                $order->save();
+            }
+
+            $result = [
+                'status' => 1,
+                'response' => 'success',
+                'action' => 'requested',
+                'message' => 'Return request sent successfully'
+            ];
+
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
 }

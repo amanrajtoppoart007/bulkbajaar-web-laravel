@@ -55,7 +55,7 @@
 
     <ul class="c-sidebar-nav mt-2">
         <li class="c-sidebar-nav-item">
-            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link">
+            <a href="{{ route("admin.home") }}" class="c-sidebar-nav-link {{ request()->is("admin/home") || request()->is("admin/dashboard") ? "c-active" : "" }}">
                 <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
                 {{ trans('global.dashboard') }}
             </a>
@@ -191,6 +191,14 @@
 
                             <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
                             {{ trans('cruds.unitType.title') }}
+                        </a>
+                    </li>
+                        <li class="c-sidebar-nav-item">
+                        <a href="{{ route("admin.product-return-conditions.index") }}"
+                           class="c-sidebar-nav-link {{ request()->is("admin/product-return-conditions") || request()->is("admin/product-return-conditions/*") ? "c-active" : "" }}">
+
+                            <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                            Return Conditions
                         </a>
                     </li>
                 </ul>

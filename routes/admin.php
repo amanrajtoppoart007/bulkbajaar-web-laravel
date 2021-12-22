@@ -343,3 +343,10 @@
 
     Route::get('shiprocket-settings', [\App\Http\Controllers\Admin\ShiprocketController::class, 'index'])->name('shiprocket.settings.index');
     Route::post('shiprocket-settings/save', [\App\Http\Controllers\Admin\ShiprocketController::class, 'save'])->name('shiprocket.settings.save');
+
+    // Product Return Conditions
+    Route::delete('product-return-conditions/destroy', 'Admin\ProductReturnConditionController@massDestroy')->name('product-return-conditions.massDestroy');
+    Route::resource('product-return-conditions', 'Admin\ProductReturnConditionController');
+    Route::get('get-product-return-condition', [\App\Http\Controllers\Admin\ProductReturnConditionController::class, 'getCondition'])->name('get.product-return-conditions');
+    Route::post('add-product-return-condition', [\App\Http\Controllers\Admin\ProductReturnConditionController::class, 'store'])->name('product-return-conditions.add');
+    Route::post('update-product-return-condition', [\App\Http\Controllers\Admin\ProductReturnConditionController::class, 'update'])->name('product-return-conditions.update');

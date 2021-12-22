@@ -36,6 +36,9 @@ class StoreProductRequest extends FormRequest
             'unit.*' => 'nullable|string',
             'quantity' => 'nullable|array',
             'quantity.*' => 'nullable|numeric',
+            'is_returnable' => 'nullable|boolean',
+            'return_conditions' => 'required_if:is_returnable,1|array',
+            'return_conditions.*' => 'numeric',
         ];
 
     }

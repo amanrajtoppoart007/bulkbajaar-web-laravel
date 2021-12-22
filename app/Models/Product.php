@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -51,6 +52,7 @@ class Product extends Model implements HasMedia
         'hsn',
         'order_count',
         'brand_id',
+        'is_returnable',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -149,5 +151,10 @@ class Product extends Model implements HasMedia
     public function orderItems() : HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function productReturnConditions(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductReturnCondition::class, 'product_product_return_condition');
     }
 }

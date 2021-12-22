@@ -208,6 +208,23 @@
                                         class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="is_returnable" id="is_returnable" value="1" checked>
+                                        <label class="form-check-label" for="is_returnable">Is this product returnable?</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    Return will be allowed with these conditions
+                                    @foreach($returnConditions as $key => $returnCondition)
+                                        <div class="form-check">
+                                            <input class="form-check-input return_conditions" type="checkbox" name="return_conditions[]" id="conditions-{{ $key }}" value="{{ $key }}">
+                                            <label class="form-check-label" for="conditions-{{ $key }}">{{$returnCondition}}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                             <div class="col-12 table-responsive">
                                 <table class="table">
                                     <thead>
@@ -367,6 +384,15 @@
         });
 
         $(document).on('submit', '#productForm', function(e) {
+            e.preventDefault();
+            let isReturnable = $('#is_returnable').is(':checked')
+            if (isReturnable){
+                const atLeastOneIsChecked = $('.return_conditions:checked').length > 0;
+                if (!atLeastOneIsChecked){
+                    alert('Please select at least one return condition.')
+                    return;
+                }
+            }
             var formData = new FormData($(this)[0]);
             $.ajax({
                 url: "{{route('admin.products.store')}}",
@@ -390,8 +416,6 @@
                     console.log(result);
                 }
             });
-
-            e.preventDefault();
         });
 
         let category = "{{ old('product_category_id') }}";

@@ -10,6 +10,7 @@ use App\Http\Requests\Vendor\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
+use App\Models\ProductReturnCondition;
 use App\Models\ProductSubCategory;
 use App\Models\UnitType;
 use App\Traits\SlugGeneratorTrait;
@@ -95,7 +96,8 @@ class ProductController extends Controller
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $portalChargePercentage = getPortalChargePercentage();
-        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage'));
+        $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
+        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage', 'returnConditions'));
     }
 
     public function show(Product $product)
@@ -150,6 +152,10 @@ class ProductController extends Controller
                 }
             }
 
+            if ($request->boolean('is_returnable')){
+                $product->productReturnConditions()->sync($request->return_conditions);
+            }
+
             DB::commit();
             $data = array(
                 "status" => true,
@@ -175,8 +181,15 @@ class ProductController extends Controller
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $productOptions = ProductOption::where('product_id', $product->id)->get();
         $portalChargePercentage = getPortalChargePercentage($product->id);
+        $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
+        $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
         return view('vendor.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions', 'portalChargePercentage'));
+            compact('categories', 'product',
+                'unitTypes', 'productOptions',
+                'portalChargePercentage',
+                'returnConditions',
+                'selectedReturnConditions'
+            ));
     }
 
     public function update(UpdateProductRequest $request)
@@ -236,6 +249,11 @@ class ProductController extends Controller
                         'id' => $value['pu_id']
                     ], $productUnit);
                 }
+            }
+            if ($request->boolean('is_returnable')){
+                $product->productReturnConditions()->sync($request->return_conditions);
+            }else{
+                $product->productReturnConditions()->sync([]);
             }
             DB::commit();
             $data = array(

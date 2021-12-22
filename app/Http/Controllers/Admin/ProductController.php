@@ -15,6 +15,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\ProductPortalCharge;
 use App\Models\ProductPrice;
+use App\Models\ProductReturnCondition;
 use App\Models\ProductSubCategory;
 use App\Models\ProductTag;
 use App\Models\UnitType;
@@ -108,7 +109,8 @@ class ProductController extends Controller
         $vendors = Vendor::all()->pluck('name', 'id');
         $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
-        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors'));
+        $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
+        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions'));
     }
 
     public function store(StoreProductRequest $request)
@@ -148,6 +150,10 @@ class ProductController extends Controller
                 }
             }
 
+            if ($request->boolean('is_returnable')){
+                $product->productReturnConditions()->sync($request->return_conditions);
+            }
+
             DB::commit();
             $data = array(
                 "status" => true,
@@ -171,8 +177,10 @@ class ProductController extends Controller
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $productOptions = ProductOption::where('product_id', $product->id)->get();
+        $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
+        $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
         return view('admin.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions'));
     }
 
     public function update(UpdateProductRequest $request)
@@ -224,6 +232,11 @@ class ProductController extends Controller
                         'id' => $value['pu_id']
                     ], $productUnit);
                 }
+            }
+            if ($request->boolean('is_returnable')){
+                $product->productReturnConditions()->sync($request->return_conditions);
+            }else{
+                $product->productReturnConditions()->sync([]);
             }
             DB::commit();
             $data = array(

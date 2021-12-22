@@ -32,6 +32,7 @@ class ProductList
                 $data[$i]['moq'] = $product['moq'];
                 $data[$i]['sku'] = $product['sku'];
                 $data[$i]['hsn'] = $product['hsn'];
+                $data[$i]['is_returnable'] = (bool)$product['is_returnable'];
                 $data[$i]['vendor_id'] = $product['vendor_id'];
                 $data[$i]['discount'] = $product['discount'];
                 $data[$i]['discounted_price'] = $product['price'];

@@ -107,7 +107,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $product = Product::find($request->product_id);
             try {
 
-                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor']);
+                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
 
                 $data = [
                     'id' => $product->id,
@@ -123,6 +123,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'rrp' => $product->rrp,
                     'product_options' => $product->productOptions,
                     'vendor' => $product->vendor->name ?? '',
+                    'return_conditions' => $product->productReturnConditions ?? [],
                 ];
                 $result = [
                     'status' => 1,
@@ -248,7 +249,6 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $data['last_page_url'] = $productList['last_page_url'];
                 $data['per_page'] = $productList['per_page'];
                 $data['total'] = $productList['total'];
-                $data['list'] = $productList['data'];
                 $class = new ProductList($productList['data']);
                 $data['list'] = $class->execute();
                 $result = [
