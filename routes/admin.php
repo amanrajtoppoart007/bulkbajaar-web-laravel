@@ -106,6 +106,7 @@
     Route::post('orders/generate-invoice', 'Admin\OrderController@generateInvoice')->name('orders.generate.invoice');
     Route::post('orders/update-status', 'Admin\OrderController@updateStatus')->name('orders.update.status');
     Route::post('orders/update-stock', 'Admin\OrderController@updateStock')->name('orders.update.stock');
+    Route::post('orders/refund', 'Admin\OrderController@refund')->name('orders.refund');
 
 // Carts
     Route::delete('carts/destroy', 'Admin\CartController@massDestroy')->name('carts.massDestroy');

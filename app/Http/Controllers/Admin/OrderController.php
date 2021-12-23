@@ -8,6 +8,9 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\OrderItem;
+use App\Models\OrderReturnRequest;
+use App\Models\Transaction;
 use App\Models\Vendor;
 use App\Models\FranchiseeArea;
 use App\Models\Invoice;
@@ -146,7 +149,7 @@ class OrderController extends Controller
     {
         abort_if(Gate::denies('order_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $order->load('user', 'billingAddress', 'shippingAddress', 'transactions', 'orderItems', 'vendor');
+        $order->load('user', 'billingAddress', 'shippingAddress', 'transactions', 'orderItems', 'vendor', 'orderReturnRequests');
         return view('admin.orders.show', compact('order'));
     }
 
@@ -304,6 +307,63 @@ class OrderController extends Controller
             $data = array(
                 "status" => true,
                 "message" => 'Stock updated successfully'
+            );
+            return json_encode($data);
+        } catch (Exception $e) {
+            DB::rollBack();
+            $data = array(
+                "status" => false,
+                "message" => 'Something went wrong!!'
+            );
+            return json_encode($data);
+        }
+    }
+
+    public function refund(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:orders',
+            'amount' => 'required|numeric',
+            'requested_items' => 'required|array',
+            'requested_items.*.id' => 'required|exists:order_return_requests,id',
+            'requested_items.*.amount' => 'required|numeric',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $order = Order::find($request->id);
+            $order->status = 'RETURN_REFUNDED';
+
+
+            $refundAmount = 0;
+
+            foreach ($request->requested_items as $requested_item){
+                $refundAmount += $requested_item['amount'] ?? 0;
+                $orderReturnRequest = OrderReturnRequest::find($requested_item['id']);
+                $orderReturnRequest->status = 'REFUNDED';
+                $orderReturnRequest->save();
+
+                $orderItem = OrderItem::find($orderReturnRequest->order_item_id);
+                $orderItem->status = 'RETURN_REFUNDED';
+                $orderItem->save();
+            }
+            $order->amount_refunded = $refundAmount;
+            $order->save();
+
+            Transaction::create([
+                'entity' => 'refund',
+                'amount' => $refundAmount * 100,
+                'gateway' => null,
+                'status' => 'refunded',
+                'currency' => 'INR',
+                'order_group' => $order->order_group_number,
+                'user_id' => $order->user_id,
+            ]);
+
+            DB::commit();
+            $data = array(
+                "status" => true,
+                "message" => 'Refunded successfully'
             );
             return json_encode($data);
         } catch (Exception $e) {

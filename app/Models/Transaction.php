@@ -36,14 +36,24 @@ class Transaction extends Model
     ];
 
     protected $fillable = [
-        'order_id',
-        'user_id',
-        'status',
+        'payment_id',
+        'refund_id',
+        'gateway',
+        'entity',
         'amount',
-        'transaction_number',
+        'status',
+        'currency',
+        'method',
+        'meta_data',
+        'order_group',
+        'user_id',
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $attributes = [
+        'gateway' => 'razorpay'
     ];
 
     protected function serializeDate(DateTimeInterface $date)

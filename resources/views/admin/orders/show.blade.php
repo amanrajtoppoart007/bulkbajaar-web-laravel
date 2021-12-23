@@ -21,6 +21,9 @@
             @if($order->status != 'CANCELLED' || $order->status != 'RECEIVED')
                 <button type="button" class="btn btn-sm btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
             @endif
+            @if(in_array($order->status, \App\Models\Order::RETURN_FORM_ALLOWEDD))
+                <button type="button" class="btn btn-sm btn-warning" id="refund-button" data-toggle="modal" data-target="#refundModal">Refund</button>
+            @endif
             @if($order->is_invoice_generated)
                 <a target="_blank" href="{{ route('orders.print.invoice', $order->invoice->invoice_number ?? '') }}" class="btn btn-sm btn-danger">
                     {{ trans('global.print') }} {{ trans('global.invoice') }}
@@ -44,7 +47,7 @@
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.status') }}: </label>
-                <span>{{ $order->status }}</span>
+                <span>{{ \App\Models\Order::STATUS_SELECT_FOR_ADMIN[$order->status] ?? '' }}</span>
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>
@@ -189,10 +192,18 @@
                 {{ trans('cruds.transaction.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#order_return_requests" role="tab" data-toggle="tab">
+                Return Requests
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active show" role="tabpanel" id="order_transactions">
             @includeIf('admin.orders.relationships.orderTransactions', ['transactions' => $order->transactions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="order_return_requests">
+            @includeIf('admin.orders.relationships.orderReturnRequests', ['orderReturnRequests' => $order->orderReturnRequests])
         </div>
     </div>
 </div>
@@ -226,12 +237,136 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="refundModal" role="dialog" aria-labelledby="returnModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Refund form</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <form id="refundForm">
+                <input type="hidden" name="id" id="id" value="{{ $order->id }}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Select</label>
+                        <table class=" table table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th width="10">
+
+                                </th>
+                                <th>
+                                    Product
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Order Qty
+                                </th>
+                                <th>
+                                    Return Qty
+                                </th>
+                                <th>
+                                    Refund Amount
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php $totalRefundAmount = 0 @endphp
+                            @foreach($order->orderReturnRequests as $index => $orderReturnRequest)
+                                @php
+                                    $refundAmount = ($orderReturnRequest->orderItem->amount ?? 0) * $orderReturnRequest->quantity;
+                                    $totalRefundAmount += $refundAmount;
+                                @endphp
+                                <tr data-entry-id="{{ $orderReturnRequest->id }}">
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="requested_items[{{ $index }}][id]" class="form-check-input select-refund-id" value="{{ $orderReturnRequest->id }}" checked>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ $orderReturnRequest->product->name ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $orderReturnRequest->orderItem->amount ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $orderReturnRequest->orderItem->quantity ?? '' }}
+                                    </td>
+                                    <td>
+                                        {{ $orderReturnRequest->quantity ?? '' }}
+                                    </td>
+
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" name="requested_items[{{ $index }}][amount]" class="form-control refund-amount" id="amount-{{ $orderReturnRequest->id }}" placeholder="Refund Amount" value="{{ $refundAmount }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="5"></td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="number" name="amount" id="total-refund-amount" class="form-control" placeholder="Refund Amount" value="{{ $totalRefundAmount }}" required>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">{{ trans('global.save') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
     @parent
     <script>
         $(function () {
+
+
+            $(document).on('change', '.select-refund-id', function (){
+                if (this.checked){
+                    $(this).closest('tr').find('.refund-amount').prop({
+                        disabled: false,
+                        required: true
+                    })
+                }else {
+                    $(this).closest('tr').find('.refund-amount').prop({
+                        disabled: true,
+                        required: false
+                    })
+                }
+                calculateTotal()
+            })
+
+            $(document).on('change', '.refund-amount', function (){
+                calculateTotal()
+            })
+
+            const calculateTotal = () => {
+                let total = 0;
+                $('.refund-amount').map(function (){
+                    if($(this).is(':disabled')){
+                        total += 0;
+                    }else{
+                        total += parseFloat($(this).val())
+                    }
+                });
+                $('#total-refund-amount').val(total)
+            }
 
             jQuery.ajaxSetup({
                 headers: {
@@ -275,6 +410,16 @@
                 event.preventDefault();
 
                 $.post("{{ route("admin.orders.update.status") }}", $(this).serialize(), result => {
+                    alert(result.message);
+                    if(result.status){
+                        location.reload()
+                    }
+                }, 'json')
+            });
+
+            $('#refundForm').submit(function (event){
+                event.preventDefault();
+                $.post("{{ route("admin.orders.refund") }}", $(this).serialize(), result => {
                     alert(result.message);
                     if(result.status){
                         location.reload()

@@ -6,6 +6,7 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
@@ -56,6 +57,11 @@ class Order extends Model
         'CONFIRMED'
     ];
 
+    const RETURN_FORM_ALLOWEDD = [
+        'RETURN_REQUESTED',
+        'RETURN_RECEIVED'
+    ];
+
     public static $searchable = [
         'payment_type',
     ];
@@ -92,6 +98,7 @@ class Order extends Model
         'charge_amount',
         'grand_total',
         'amount_paid',
+        'amount_refunded',
         'payment_status',
         'status',
         'is_invoice_generated',
@@ -148,5 +155,10 @@ class Order extends Model
     public function paymentVerifiedBy(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'payment_verified_by_id');
+    }
+
+    public function orderReturnRequests(): HasMany
+    {
+        return $this->hasMany(OrderReturnRequest::class);
     }
 }

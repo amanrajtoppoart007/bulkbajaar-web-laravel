@@ -48,7 +48,7 @@ class VendorController extends \App\Http\Controllers\Api\BaseController
 
     public function getVendorDetails(Request $request)
     {
-        $validator = Validator::make($request->json()->all(), [
+        $validator = Validator::make($request->all(), [
             'vendor_id' => 'required|exists:vendors,id',
         ]);
 

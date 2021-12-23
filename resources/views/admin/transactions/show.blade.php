@@ -19,6 +19,12 @@
                         : </label>
                     <span>{{ $transaction->payment_id ?? '' }}</span>
                 </div>
+            </div><div class="col-4">
+                <div class="form-group">
+                    <label for="" class="font-weight-bolder">Type
+                        : </label>
+                    <span>{{ $transaction->entity ?? '' }}</span>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">

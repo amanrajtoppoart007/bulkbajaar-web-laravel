@@ -12,6 +12,7 @@ use App\Models\OrderReturnRequest;
 use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\Transaction;
+use App\PaymentGateway\Razorpay\RazorpayTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ use Validator;
 
 class OrderController extends \App\Http\Controllers\Api\BaseController
 {
-    use UniqueIdentityGeneratorTrait;
+    use UniqueIdentityGeneratorTrait, RazorpayTrait;
 
     public function placeOrder(Request $request)
     {
@@ -140,23 +141,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             $razorOrder = null;
             if ($request->payment_method != 'COD') {
                 if ($request->payment_method == 'ONLINE') {
-                    $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
-                    $razorOrder = $razorPayApi->order->create(
-                        [
-                            'receipt' => $orderGroupNo,
-                            'amount' => $ordersTotal * 100,
-                            'currency' => 'INR'
-                        ]
-                    );
+                    $razorOrder = $this->createOrder($orderGroupNo, $ordersTotal);
                 } elseif ($request->payment_method == 'HALF') {
-                    $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
-                    $razorOrder = $razorPayApi->order->create(
-                        [
-                            'receipt' => $orderGroupNo,
-                            'amount' => ($ordersTotal / 2) * 100,
-                            'currency' => 'INR'
-                        ]
-                    );
+                    $razorOrder = $this->createOrder($orderGroupNo, $ordersTotal / 2);
                 }
             }
             $result = [
@@ -165,8 +152,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'action' => $request->payment_method == 'COD' ? 'placed' : 'pay',
                 'data' => [
                     'order_number' => $orderGroupNo,
-                    'razor_order_id' => $razorOrder['id'] ?? null,
-                    'amount' => $razorOrder['amount'] ?? null,
+                    'razor_order_id' => $razorOrder['data']['id'] ?? null,
+                    'amount' => $razorOrder['data']['amount'] ?? null,
                 ],
                 'message' => 'Order placed successfully'
             ];
@@ -214,6 +201,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             Transaction::create([
                 'payment_id' => $razorPayment->id,
                 'gateway' => 'razorpay',
+                'entity' => 'payment',
                 'amount' => $razorPayment->amount,
                 'status' => $razorPayment->status,
                 'currency' => $razorPayment->currency,

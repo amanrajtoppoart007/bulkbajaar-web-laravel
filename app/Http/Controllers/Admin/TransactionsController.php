@@ -53,6 +53,10 @@ class TransactionsController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
+            $table->addColumn('entity', function ($row) {
+                return $row->entity ?? '';
+            });
+
             $table->editColumn('status', function ($row) {
                 return $row->status ? $row->status : '';
             });

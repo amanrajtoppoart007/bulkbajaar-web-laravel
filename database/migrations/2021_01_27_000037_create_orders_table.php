@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('charge_amount')->default(0)->comment('platform charge');
             $table->decimal('grand_total');
             $table->decimal('amount_paid')->default(0);
+            $table->decimal('amount_refunded')->default(0);
             $table->string('payment_status')->nullable();
             $table->string('status')->default('PENDING');
             $table->boolean('is_invoice_generated')->default(false);

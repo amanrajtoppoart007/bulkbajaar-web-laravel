@@ -31,7 +31,7 @@
                         {{ trans('cruds.transaction.fields.user') }}
                     </th>
                     <th>
-                        Payment ID
+                        Type
                     </th>
                     <th>
                         {{ trans('cruds.transaction.fields.status') }}
@@ -134,7 +134,7 @@
 { data: 'id', name: 'id' },
 { data: 'order_order_number', name: 'order_group' },
 { data: 'user_name', name: 'user_id' },
-{ data: 'payment_id', name: 'payment_id' },
+{ data: 'entity', name: 'entity' },
 { data: 'status', name: 'status' },
 { data: 'amount', name: 'amount' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

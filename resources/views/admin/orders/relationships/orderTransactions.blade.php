@@ -19,7 +19,7 @@
                             Order(s)
                         </th>
                         <th>
-                            Payment ID
+                            Type
                         </th>
 
                         <th>
@@ -27,9 +27,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.transaction.fields.amount') }}
-                        </th>
-                        <th>
-                            Method
                         </th>
                         <th>
                             &nbsp;
@@ -49,16 +46,13 @@
                                 {{ collect(getOrderNumbersByOrderGroup($transaction->order_group))->implode(', ') }}
                             </td>
                             <td>
-                                {{ $transaction->payment_id ?? '' }}
+                                {{ $transaction->entity ?? '' }}
                             </td>
                             <td>
                                 {{ $transaction->status ?? '' }}
                             </td>
                             <td>
                                 {{ ($transaction->amount ?? 0) / 100 }}
-                            </td>
-                            <td>
-                                {{ $transaction->method ?? '' }}
                             </td>
                             <td>
                                 @can('transaction_show')
