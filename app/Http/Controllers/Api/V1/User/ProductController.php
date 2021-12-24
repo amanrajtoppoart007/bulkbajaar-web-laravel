@@ -136,6 +136,9 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                         $data['product_options'][] = [
                             'id' => $productOption->id,
                             'product_id' => $productOption->product_id,
+                            'option' => $productOption->option,
+                            'size' => $productOption->size,
+                            'color' => $productOption->color,
                             'unit' => $productOption->unit,
                             'quantity' => $productOption->quantity,
                             'liked' => $this->checkIfProductOptionLiked($productOption->id),

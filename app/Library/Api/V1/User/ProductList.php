@@ -49,8 +49,11 @@ class ProductList
                         $data[$i]['product_options'][] = [
                             'id' => $productOption['id'],
                             'product_id' => $productOption['product_id'],
+                            'option' => $productOption['option'],
                             'unit' => $productOption['unit'],
                             'quantity' => $productOption['quantity'],
+                            'size' => $productOption['size'],
+                            'color' => $productOption['color'],
                             'liked' => $this->checkIfProductOptionLiked($productOption['id']),
                         ];
                     }

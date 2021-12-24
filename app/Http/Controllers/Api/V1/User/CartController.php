@@ -63,15 +63,20 @@ class CartController extends \App\Http\Controllers\Api\BaseController
                 $price = applyPrice($product->price, $product->discount);
                 $discountedPrice = $product->price;
                 $totalPrice = $discountedPrice * $cart->quantity;
+
                 $data[] = [
                     'id' => $cart->id,
                     'product_id' => $cart->product_id,
                     'product' => $product->name,
                     'product_option_id' => $cart->product_option_id,
+                    'liked' => $this->checkIfProductLiked($cart->product_id),
                     'product_option' => [
                         'option' => $cart->productOption->option ?? null,
                         'unit' => $cart->productOption->unit ?? null,
+                        'size' => $cart->productOption->size ?? null,
+                        'color' => $cart->productOption->color ?? null,
                         'quantity' => $cart->productOption->quantity ?? null,
+                        'liked' => $this->checkIfProductOptionLiked($cart->productOption->id ?? null),
                     ],
                     'quantity' => $cart->quantity,
                     'amount' => $price,
