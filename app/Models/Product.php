@@ -53,6 +53,7 @@ class Product extends Model implements HasMedia
         'order_count',
         'brand_id',
         'is_returnable',
+        'product_attributes',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -62,6 +63,10 @@ class Product extends Model implements HasMedia
         'PENDING' => 'Pending',
         'APPROVED' => 'Approved',
         'REJECTED' => 'Reject',
+    ];
+
+    protected $casts = [
+        'product_attributes' => 'json'
     ];
 
 

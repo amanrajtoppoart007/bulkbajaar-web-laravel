@@ -318,7 +318,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'vendor',
                 'orderItems.product',
                 'orderItems.product.productReturnConditions:id,title',
-                'orderItems.productOption:id,option',
+                'orderItems.productOption',
                 'billingAddress.state:id,name',
                 'billingAddress.district:id,name',
                 'shippingAddress.state:id,name',
@@ -376,14 +376,20 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'product_id' => $orderItem->product_id,
                     'product' => $orderItem->product->name,
                     'product_option_id' => $orderItem->product_option_id,
-                    'option' => $orderItem->productOption->option ?? null,
                     'amount' => applyPrice($orderItem->amount, $orderItem->discount),
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
                     'total_amount' => $orderItem->total_amount,
                     'is_returnable' => (bool)($orderItem->product->is_returnable ?? 0),
                     'return_conditions' => $orderItem->product->productReturnConditions ?? [],
-                    'thumb_link' => $thumbLink
+                    'thumb_link' => $thumbLink,
+                    'product_option' => [
+                        'id' => $orderItem->product_option_id,
+                        'option' => $orderItem->productOption->option ?? null,
+                        'unit' => $orderItem->productOption->unit ?? null,
+                        'size' => $orderItem->productOption->size ?? null,
+                        'color' => $orderItem->productOption->color ?? null,
+                    ]
                 ];
             }
             if (!empty($data)) {

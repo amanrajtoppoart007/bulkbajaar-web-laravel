@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->string('hsn')->nullable();
             $table->unsignedBigInteger('order_count')->default(0);
             $table->boolean('is_returnable')->default(false);
+            $table->json('product_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

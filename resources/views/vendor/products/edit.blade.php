@@ -236,71 +236,38 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group mb-2">
+                                    <label for="color">Select Color</label>
+                                    <select name="" id="color" class="select2" multiple>
+                                        @foreach(\App\Models\ProductOption::COLOR_SELECT as $color)
+                                            <option value="{{ $color }}">{{ $color }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="size">Select Size</label>
+                                    <select name="" id="size" class="select2" multiple>
+                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
+                                            <option value="{{ $size }}">{{ $size }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary mb-2" id="generate-option-button">Generate Options</button>
+                            </div>
                             <div class="col-12 table-responsive">
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
+                                        <th>Color</th>
+                                        <th>Size</th>
                                         <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                                         <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
                                         <th></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @forelse($productOptions as $productOption)
-                                        <tr>
-                                            <td>
-                                                <input type="hidden" name="pu_id[]" value="{{$productOption->id}}">
-
-                                                <input class="form-control option" style="min-width: 100px" type="text" value="{{ $productOption->option }}" name="option[]"
-                                                       required>
-                                            </td>
-                                            <td>
-                                                <select class="form-control" name="unit[]" style="min-width: 100px;">
-                                                    @foreach($unitTypes as $unitType)
-                                                        <option
-                                                            value="{{ $unitType->name }}" {{ $productOption->unit == $unitType->name ? 'selected' : '' }}>{{ $unitType->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" style="min-width: 100px" type="number"
-                                                       step="1" value="{{ $productOption->quantity }}" name="quantity[]">
-                                            </td>
-                                            <td>
-                                                @if($loop->last)
-                                                    <button type="button" class="btn btn-sm btn-success add-button"><i
-                                                            class="fa fa-plus"></i></button>
-                                                @else
-                                                    <button type="button" class="btn btn-sm btn-danger delete-button"><i
-                                                            class="fa fa-trash"></i></button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td>
-                                                <input type="hidden" name="pu_id[]">
-                                                <input class="form-control option" type="text"
-                                                       name="option[]" style="min-width: 100px">
-                                            </td>
-                                            <td>
-                                                <select class="form-control" name="unit[]" style="min-width: 100px;">
-                                                    @foreach($unitTypes as $unitType)
-                                                        <option
-                                                            value="{{ $unitType->name }}" {{ old('unit') == $unitType->name ? 'selected' : '' }}>{{ $unitType->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" style="min-width: 100px" type="number" step="1" name="quantity[]">
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
@@ -314,8 +281,6 @@
             </form>
         </div>
     </div>
-
-
 
 @endsection
 
@@ -381,43 +346,92 @@
             }
         }
 
-        const addProductUnitTemplate = () => {
+        let variations = <?= json_encode($productOptions) ?>;
+
+        const generateVariations = (colors, sizes) => {
+            if(colors.length<=0)
+            {
+                alert('Please select at least one color');
+                variations = [];
+                return;
+            }
+
+            colors?.forEach((color, i)=>{
+                if(sizes?.length > 0)
+                {
+                    sizes?.forEach((size, j)=>{
+                        let option = `${color}-${size}`;
+                        const exists = variations.filter(opt => opt.option == option).length > 0;
+                        if (!exists) {
+                            let object = {
+                                id: '',
+                                option,
+                                color,
+                                size,
+                                quantity: 0,
+                                unit: ''
+                            }
+                            variations.push(object);
+                        }
+                    });
+                }else {
+                    let option = color;
+                    const exists = variations.filter(opt => opt.option == option).length > 0;
+                    if (!exists) {
+                        let object = {
+                            id: '',
+                            option,
+                            color,
+                            size: '',
+                            quantity: 0,
+                            unit: ''
+                        }
+                        variations.push(object);
+                    }
+                }
+            });
+            createOptions();
+        }
+
+        $('#generate-option-button').click(() => {
+            let colors = $('#color').val()
+            let sizes = $('#size').val();
+            generateVariations(colors, sizes)
+        })
+
+        const createOptions = () => {
+            let template = '';
+            variations?.forEach((variation, index)=>{
+                template += productOptionTemplate(variation, index);
+            });
+            $('table tbody').html(template)
+        }
+
+        const productOptionTemplate = (variation, index) => {
+
             let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px">`;
+            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
             $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}">${e.name}</option>`;
+                unitSelect += `<option value="${e.name}" ${variation.unit == e.name ? 'selected' : ''}>${e.name}</option>`;
             })
             unitSelect += "</select>";
 
-            let template = `<tr>`+
-                `<td><input type="hidden" name="pu_id[]"><input class="form-control option" type="text" name="option[]" style="min-width: 100px"></td>`+
+            return `<tr data-index="${index}">`+
+                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
+                `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
+                `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
                 `<td>${unitSelect}</td>`+
-                `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px"></td>`+
-                `<td><button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button></td>`+
+                `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
+                `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
                 `</tr>`;
-
-            $('table tbody').append(template)
         }
 
-        $(document).on('click', '.add-button', function (){
-            let tr = $(this).closest('tr');
-
-            let isNotEmpty = $($(tr).find('.option')).filter(function () {
-                return $.trim($(this).val()).length == 0
-            }).length == 0;
-
-            if(isNotEmpty){
-                addProductUnitTemplate()
-                let deleteButton = '<button type="button" class="btn btn-danger btn-sm delete-button"><i class="fa fa-trash"></i></button>';
-                $(this).parent().append(deleteButton);
-                $(this).remove();
-            }else{
-                alert('Please enter values then add more')
-            }
-        });
+        createOptions();
 
         $(document).on('click', '.delete-button', function (){
             let tr = $(this).closest('tr');
+            let index = $(tr).data('index');
+            variations.splice(index, 1);
             $(tr).remove()
         });
 
@@ -430,6 +444,20 @@
                     alert('Please select at least one return condition.')
                     return;
                 }
+            }
+
+            if(variations.length <= 0){
+                alert('Please create variations')
+                return;
+            }
+
+            let isNotEmpty = $('.option, .color').filter(function (){
+                return $.trim($(this).val()).length == 0
+            }).length == 0;
+
+            if(!isNotEmpty){
+                alert('Option or color from any variation cannot be blank')
+                return;
             }
             var formData = new FormData($(this)[0]);
             $.ajax({

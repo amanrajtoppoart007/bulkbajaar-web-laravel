@@ -128,6 +128,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'vendor' => $product->vendor->name ?? '',
                     'liked' => $this->checkIfProductLiked($product->id),
                     'return_conditions' => $product->productReturnConditions ?? [],
+                    'product_attributes' => $product->product_attributes ?? [],
                 ];
                 $data['product_options'] = [];
 

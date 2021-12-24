@@ -36,15 +36,15 @@ class StoreProductRequest extends FormRequest
             'description' => 'nullable',
             'sku' => 'required|string',
             'hsn' => 'nullable|string',
-            'option' => 'nullable|array',
-            'option.*' => 'nullable|string',
-            'unit' => 'nullable|array',
-            'unit.*' => 'nullable|string',
-            'quantity' => 'nullable|array',
-            'quantity.*' => 'nullable|numeric',
             'is_returnable' => 'nullable|boolean',
             'return_conditions' => 'required_if:is_returnable,1|array',
             'return_conditions.*' => 'numeric',
+            'product_options' => 'required|array',
+            'product_options.*.option' => 'required|string',
+            'product_options.*.color' => 'required|string',
+            'product_options.*.size' => 'nullable|string',
+            'product_options.*.unit' => 'nullable|string',
+            'product_options.*.quantity' => 'nullable|numeric'
         ];
     }
 }

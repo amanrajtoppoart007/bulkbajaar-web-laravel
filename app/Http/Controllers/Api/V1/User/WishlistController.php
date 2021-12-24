@@ -88,6 +88,8 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
                         'product_id' => $wishlist->productOption->product_id ?? null,
                         'option' => $wishlist->productOption->option ?? null,
                         'unit' => $wishlist->productOption->unit ?? null,
+                        'size' => $wishlist->productOption->size ?? null,
+                        'color' => $wishlist->productOption->color ?? null,
                         'quantity' => $wishlist->productOption->quantity ?? null,
                     ],
                     'price' => applyPrice($product->price, $product->discount),

@@ -43,6 +43,7 @@ class ProductList
                 $data[$i]['vendor'] = $product['vendor']['name'] ?? null;
                 $data[$i]['liked'] = $this->checkIfProductLiked($product['id']);
                 $data[$i]['product_options'] = [];
+                $data[$i]['product_attributes'] = $product['product_attributes'] ?? [];
 
                 if (isset($product['product_options'])) {
                     foreach ($product['product_options'] as $productOption){

@@ -15,6 +15,8 @@ class ProductOption extends Model
         'product_id',
         'option',
         'unit',
+        'size',
+        'color',
         'quantity',
         'created_at',
         'updated_at',
@@ -25,6 +27,24 @@ class ProductOption extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    public const SIZE_SELECT = [
+        'XXL',
+        'XL',
+        'L',
+        'M',
+        'S',
+        'XS',
+    ];
+
+    public const COLOR_SELECT = [
+        'Green',
+        'Blue',
+        'Yellow',
+        'Pink',
+        'Black',
+        'White',
     ];
 
     public function product(): BelongsTo
