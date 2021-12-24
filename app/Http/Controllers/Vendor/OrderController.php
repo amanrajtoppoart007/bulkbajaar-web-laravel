@@ -61,7 +61,7 @@ class OrderController extends Controller
 
     public function show($orderNumber)
     {
-        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
+        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems', 'orderReturnRequests');
         abort_if($order->vendor_id != auth()->id(), 401);
         return view('vendor.orders.show', compact('order'));
     }
@@ -119,5 +119,36 @@ class OrderController extends Controller
         $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
         abort_if($order->vendor_id != auth()->id(), 401);
         return view('vendor.orders.shipmentForm', compact('order'));
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:orders',
+            'status' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $result = array(
+                'status' => false,
+                'message' => $validator->errors()->all()
+            );
+            return response($result);
+        }
+
+        $order = Order::find($request->id);
+        $oldStatus = $order->status;
+        $order->status = $request->status;
+        if($order->save()){
+            return response([
+                'status' => true,
+                'message' => 'Status changed from ' . ucfirst(strtolower($oldStatus)) . ' to ' . ucfirst(strtolower($request->status))
+            ]);
+        }
+
+        return response([
+            'status' => false,
+            'message' => 'Something went wrong'
+        ]);
     }
 }

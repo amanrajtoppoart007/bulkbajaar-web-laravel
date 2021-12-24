@@ -47,7 +47,7 @@
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.status') }}: </label>
-                <span>{{ \App\Models\Order::STATUS_SELECT_FOR_ADMIN[$order->status] ?? '' }}</span>
+                <span>{{ \App\Models\Order::STATUS_SELECT[$order->status] ?? $order->status }}</span>
             </div>
             <div class="col-4">
                 <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>

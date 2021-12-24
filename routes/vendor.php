@@ -5,6 +5,7 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
     Route::resource('orders', 'Vendor\OrderController');
     Route::post('cancel-order', [\App\Http\Controllers\Vendor\OrderController::class, 'cancelOrder'])->name('orders.cancel');
     Route::post('confirm-order', [\App\Http\Controllers\Vendor\OrderController::class, 'confirmOrder'])->name('orders.confirm');
+    Route::post('/orders/update-status', [\App\Http\Controllers\Vendor\OrderController::class, 'updateStatus'])->name('orders.update-status');
     Route::get('orders/ship/{order:order_number}', [\App\Http\Controllers\Vendor\OrderController::class, 'showShipForm'])->name('orders.show.ship-form');
     Route::get('profile', 'Vendor\HomeController@showProfileForm')->name('profile');
     Route::post('profile/update', 'Vendor\HomeController@updateProfile')->name('update.profile');

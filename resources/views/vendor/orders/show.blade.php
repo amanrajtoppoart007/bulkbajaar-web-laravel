@@ -19,6 +19,9 @@
                         Confirm
                     </button>
                 @endif
+
+                <button type="button" class="btn btn-sm btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
+
                 @if($order->is_invoice_generated)
                     <a target="_blank" href="{{ route('orders.print.invoice', $order->invoice->invoice_number ?? '') }}" class="btn btn-sm btn-danger">
                         {{ trans('global.print') }} {{ trans('global.invoice') }}
@@ -42,7 +45,7 @@
                 </div>
                 <div class="col-4">
                     <label for="" class="font-weight-bolder">{{ trans('cruds.order.fields.status') }}: </label>
-                    <span>{{ $order->status }}</span>
+                    <span>{{ \App\Models\Order::STATUS_SELECT[$order->status] ?? $order->status }}</span>
                 </div>
                 <div class="col-4">
                     <label for="" class="font-weight-bolder">{{ trans('global.date') }}: </label>
@@ -129,6 +132,87 @@
             </div>
         </div>
     </div>
+
+    @if($order->orderReturnRequests->count())
+    <div class="card">
+        <div class="card-header">
+            Order Returns
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
+
+                        <th>Price</th>
+                        <th>Order Qty</th>
+                        <th>Return Qty</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($order->orderReturnRequests  as $orderReturnRequest)
+                        <tr>
+                            <td>
+                                {{ $orderReturnRequest->product->name ?? '' }}
+                            </td>
+                            <td>
+                                &#8377;{{ $orderReturnRequest->orderItem->amount ?? '' }}
+                            </td>
+                            <td>
+                                {{ $orderReturnRequest->orderItem->quantity ?? 0 }}
+                            </td>
+                            <td>
+                                {{ $orderReturnRequest->quantity ?? 0 }}
+                            </td>
+                            <td>
+                                {{ $orderReturnRequest->productReturnCondition->title ?? '' }}
+                            </td>
+
+                            <td>
+                                {{ \App\Models\OrderReturnRequest::STATUS_SELECT[$orderReturnRequest->status] ?? '' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <div class="modal fade" id="statusModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ trans('global.update_status') }}</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                </div>
+                <form id="statusForm">
+                    <input type="hidden" name="id" id="id" value="{{ $order->id }}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="required" for="status">{{ trans('cruds.franchiseeOrder.fields.status') }}</label>
+                            <select class="custom-select select2" name="status">
+                                <option value="">{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Models\Order::STATUS_SELECT_FOR_VENDOR as $key => $item)
+                                    <option value="{{ $key }}" {{ $order->status == $key ? 'selected' : '' }}>{{ $item }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-danger" type="submit">{{ trans('global.save') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
     @parent
@@ -162,6 +246,17 @@
                     }, 'json');
                 }
             })
+
+            $('#statusForm').submit(function (event){
+                event.preventDefault();
+
+                $.post("{{ route("vendor.orders.update-status") }}", $(this).serialize(), result => {
+                    alert(result.message);
+                    if(result.status){
+                        location.reload()
+                    }
+                }, 'json')
+            });
         });
 
     </script>
