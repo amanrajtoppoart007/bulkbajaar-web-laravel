@@ -113,18 +113,36 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'id' => $product->id,
                     'vendor_id' => $product->vendor_id,
                     'name' => $product->name,
+                    'sku' => $product->sku,
+                    'hsn' => $product->hsn,
                     'description' => $product->description,
-                    'price' => applyPrice($product->price, null, $product->discount),
-                    'moq' => $product->moq,
+                    'price' => applyPrice($product->price, $product->discount),
+                    'threshold_quantity' => $product->moq,
+                    'threshold_price' => getMinimumOrderAmount($product->vendor_id),
                     'discount' => $product->discount,
+                    'discounted_price' => $product->price,
                     'category' => $product->productCategory->name ?? '',
                     'sub_category' => $product->productSubCategory->name ?? '',
                     'dispatch_time' => $product->dispatch_time,
-                    'rrp' => $product->rrp,
-                    'product_options' => $product->productOptions,
+                    'refund_and_return_policy' => $product->rrp,
                     'vendor' => $product->vendor->name ?? '',
+                    'liked' => $this->checkIfProductLiked($product->id),
                     'return_conditions' => $product->productReturnConditions ?? [],
                 ];
+                $data['product_options'] = [];
+
+                if (isset($product->productOptions)) {
+                    foreach ($product->productOptions as $productOption){
+                        $data['product_options'][] = [
+                            'id' => $productOption->id,
+                            'product_id' => $productOption->product_id,
+                            'unit' => $productOption->unit,
+                            'quantity' => $productOption->quantity,
+                            'liked' => $this->checkIfProductOptionLiked($productOption->id),
+                        ];
+                    }
+                }
+
                 $result = [
                     'status' => 1,
                     'response' => 'success',

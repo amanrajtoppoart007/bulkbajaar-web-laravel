@@ -41,7 +41,21 @@ class ProductList
                 $data[$i]['category'] = $product['product_category']['name'] ?? null;
                 $data[$i]['sub_category'] = $product['product_sub_category']['name'] ?? null;
                 $data[$i]['vendor'] = $product['vendor']['name'] ?? null;
-                $data[$i]['product_options'] = $product['product_options'] ?? [];
+                $data[$i]['liked'] = $this->checkIfProductLiked($product['id']);
+                $data[$i]['product_options'] = [];
+
+                if (isset($product['product_options'])) {
+                    foreach ($product['product_options'] as $productOption){
+                        $data[$i]['product_options'][] = [
+                            'id' => $productOption['id'],
+                            'product_id' => $productOption['product_id'],
+                            'unit' => $productOption['unit'],
+                            'quantity' => $productOption['quantity'],
+                            'liked' => $this->checkIfProductOptionLiked($productOption['id']),
+                        ];
+                    }
+                }
+
                 if (isset($product['images'][0]['thumbnail'])) {
                     $data[$i]['thumb_link'] = $product['images'][0]['thumbnail'] ? $product['images'][0]['thumbnail'] : null;
                 } else {
