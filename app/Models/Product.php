@@ -76,11 +76,6 @@ class Product extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(ProductCategory::class);
-    }
-
     public function tags()
     {
         return $this->belongsToMany(ProductTag::class);
@@ -103,29 +98,10 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function subCategories()
-    {
-        return $this->belongsToMany(ProductSubCategory::class);
-    }
-
-    public function productUnits()
-    {
-        return $this->hasMany(ProductUnit::class);
-    }
-
-    public function productPrices()
-    {
-        return $this->hasMany(ProductPrice::class);
-    }
 
     public function reviews()
     {
         return $this->hasMany(Review::class);
-    }
-
-    public function getLowestAttribute()
-    {
-        return $this->productPrices->where('price', '>=', 0)->min('price');
     }
 
     public function vendor(): BelongsTo

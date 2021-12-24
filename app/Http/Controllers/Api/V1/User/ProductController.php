@@ -24,7 +24,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         try {
             $products = Product::latest()
 //                ->where('approval_status', 'APPROVED')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -45,7 +45,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $products = Product::limit(10)
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -241,7 +241,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
 //            $query->where('approval_status', 'APPROVED');
 
-            $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions'])->paginate(10);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -278,7 +278,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $products = Product::limit(10)
 //                ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);

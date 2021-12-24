@@ -17,7 +17,7 @@ class CartController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'product_option_id' => 'nullable|exists:product_options,id',
+            'product_option_id' => 'required|exists:product_options,id',
             'quantity' => 'nullable|numeric',
         ]);
 
@@ -26,19 +26,10 @@ class CartController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if ($request->product_option_id){
-            $isExists = Cart::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
-
-        }else{
-            $isExists = Cart::where('product_id', $request->product_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
+        $isExists = Cart::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+        if ($isExists){
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
+            return response()->json($result, 200);
         }
 
         try {
