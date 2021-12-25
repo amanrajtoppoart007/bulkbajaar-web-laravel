@@ -29,6 +29,7 @@ class StoreProductRequest extends FormRequest
             'mop' => 'nullable|numeric',
             'moq' => 'required|numeric',
             'discount' => 'required|numeric|max:100',
+            'gst' => 'required|numeric|max:100',
             'dispatch_time' => 'nullable|string',
             'rrp' => 'nullable',
             'product_category_id' => 'nullable|exists:product_categories,id',

@@ -16,8 +16,6 @@ class InvoiceController extends Controller
         if(is_null($invoiceNo)){
             abort(404);
         }
-
-
         $order = $invoice->order;
 
         return view('extra.orderInvoice', compact('invoice', 'order'));

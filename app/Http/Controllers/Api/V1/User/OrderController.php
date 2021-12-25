@@ -38,7 +38,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
         try {
-            $carts = Cart::where('user_id', auth()->id())->with(['product:id,vendor_id,price,moq,discount'])->get();
+            $carts = Cart::where('user_id', auth()->id())->with(['product'])->get();
             if (!count($carts)) {
                 $result = [
                     'status' => 0,
@@ -66,14 +66,18 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 $orderDiscountTotal = 0;
                 $orderGrandTotal = 0;
                 $orderChargeAmount = 0;
+                $orderGstAmount = 0;
                 $index = 1;
                 foreach ($cartGroup as $cart) {
                     $product = $cart->product;
                     $price = $product->price;
+                    $gst = $product->gst;
                     $portalChargePercent = getPortalChargePercentage($product->id);
                     $discountAmount = getPercentAmount($price * $cart->quantity, $product->discount);
                     $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
-                    $totalAmount = $price * $cart->quantity;
+                    $gstAmount = getPercentAmount($price * $cart->quantity, $gst);
+                    $totalAmount = ($price * $cart->quantity) + $gstAmount;
+
                     $orderItems[$vendorId][] = [
                         'order_number' => $orderNo.'-'.($index++),
                         'product_id' => $product->id,
@@ -84,11 +88,14 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         'discount_amount' => $discountAmount,
                         'charge_percent' => $portalChargePercent,
                         'charge_amount' => $chargeAmount,
+                        'gst' => $gst,
+                        'gst_amount' => $gstAmount,
                         'total_amount' => $totalAmount,
                     ];
                     $orderSubTotal += ($price * $cart->quantity);
                     $orderDiscountTotal += $discountAmount;
                     $orderChargeAmount += $chargeAmount;
+                    $orderGstAmount += $gstAmount;
                     $orderGrandTotal += $totalAmount;
                 }
                 $orders[$vendorId] = [
@@ -103,6 +110,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'discount_amount' => $orderDiscountTotal,
                     'charge_percent' => $portalChargePercent,
                     'charge_amount' => $orderChargeAmount,
+                    'gst_amount' => $orderGstAmount,
                     'grand_total' => $orderGrandTotal,
                 ];
                 $ordersTotal += $orderGrandTotal;
@@ -353,6 +361,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'payment_type' => $order->payment_type,
                 'sub_total' => $order->sub_total + $order->discount_amount,
                 'discount_amount' => $order->discount_amount,
+                'gst_amount' => $order->gst_amount,
                 'grand_total' => $order->grand_total,
                 'status' => $order->status,
                 'payment_status' => $order->payment_status,
@@ -379,6 +388,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'amount' => applyPrice($orderItem->amount, $orderItem->discount),
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
+                    'gst_amount' => $orderItem->gst_amount,
                     'total_amount' => $orderItem->total_amount,
                     'is_returnable' => (bool)($orderItem->product->is_returnable ?? 0),
                     'return_conditions' => $orderItem->product->productReturnConditions ?? [],

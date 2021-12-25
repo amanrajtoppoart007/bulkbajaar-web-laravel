@@ -17,6 +17,8 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 15, 2)->nullable();
             $table->unsignedSmallInteger('moq')->default(4)->comment('Minimum order quantity');
             $table->decimal('discount', 5, 2)->default(0);
+            $table->unsignedTinyInteger('gst')->default(0);
+            $table->string('gst_type')->default('exclusive');
             $table->foreignId('product_category_id')->nullable()->constrained();
             $table->foreignId('product_sub_category_id')->nullable()->constrained();
             $table->string('dispatch_time')->nullable()->comment('Expected Dispatch Time');

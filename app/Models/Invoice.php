@@ -23,6 +23,7 @@ class Invoice extends Model
         'amount',
         'discount',
         'charge',
+        'gst',
         'total',
     ];
 

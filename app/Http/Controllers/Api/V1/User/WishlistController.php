@@ -93,6 +93,8 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
                         'quantity' => $wishlist->productOption->quantity ?? null,
                     ],
                     'price' => applyPrice($product->price, $product->discount),
+                    'gst' => $product->gst,
+                    'gst_type' => $product->gst_type,
                     'discount' => $product->discount,
                     'discounted_amount' => applyPrice($product->price, null, $product->discount),
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null

@@ -25,6 +25,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('amount')->default(0);
             $table->decimal('discount')->default(0);
             $table->decimal('charge')->default(0);
+            $table->decimal('gst')->default(0);
             $table->decimal('total')->default(0);
             $table->timestamps();
         });

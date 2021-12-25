@@ -381,13 +381,8 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         }
 
         try {
-            $exceptOrderStatuses = [
-                'PENDING' => 'PENDING',
-                'APPROVED' => 'APPROVED',
-                'CONFIRMED' => 'CONFIRMED',
-                'DISPATCHED' => 'DISPATCHED',
-            ];
-            if (Order::whereAddressId($request->input('id'))->whereIn('status', $exceptOrderStatuses)->exists()) {
+            $exceptOrderStatuses = Order::ADDRESS_DELETE_ALLOWED;
+            if (Order::whereShippingAddressId($request->id)->whereIn('status', $exceptOrderStatuses)->exists()) {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'This address has active order.'];
             } else {
                 if (UserAddress::destroy($request->input('id'))) {

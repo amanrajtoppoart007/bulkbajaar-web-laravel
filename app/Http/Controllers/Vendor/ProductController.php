@@ -104,19 +104,19 @@ class ProductController extends Controller
     {
         abort_if($product->vendor_id != auth()->id(), 401);
         $product->load('productCategory', 'productSubCategory', 'productOptions');
-
-        return view('vendor.products.show', compact('product'));
+        $portalChargePercent = getPortalChargePercentage($product->id);
+        return view('vendor.products.show', compact('product', 'portalChargePercent'));
     }
 
     public function store(StoreProductRequest $request)
     {
-        if (!auth()->user()->approved){
-            $result = [
-                'status' => false,
-                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-            ];
-            return response()->json($result, 200);
-        }
+//        if (!auth()->user()->approved){
+//            $result = [
+//                'status' => false,
+//                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
+//            ];
+//            return response()->json($result, 200);
+//        }
         DB::beginTransaction();
         try {
             $validated = $request->validated();

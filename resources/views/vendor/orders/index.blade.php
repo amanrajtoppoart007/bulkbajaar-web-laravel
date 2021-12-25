@@ -32,6 +32,7 @@
                         {{ trans('cruds.franchiseeOrder.fields.status') }}
                     </th>
                     <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <td></td>
@@ -61,6 +62,7 @@
                         </select>
                     </td>
                     <td></td>
+                    <td></td>
                 </tr>
                 </thead>
             </table>
@@ -88,10 +90,11 @@
                     {data: 'discount_amount', name: 'discount_amount'},
                     {data: 'total_amount', name: 'total_amount'},
                     {data: 'status', name: 'status'},
+                    {data: 'created_at', name: 'created_at', visible:false},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
-                order: [[1, 'desc']],
+                order: [[8, 'desc']],
                 pageLength: 10,
             };
             let table = $('.datatable-Order').DataTable(dtOverrideGlobals);

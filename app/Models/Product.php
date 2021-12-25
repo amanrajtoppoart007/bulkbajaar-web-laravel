@@ -25,7 +25,9 @@ class Product extends Model implements HasMedia
     ];
 
     protected $attributes = [
-        'discount' => 0
+        'discount' => 0,
+        'gst' => 18,
+        'gst_type' => 'exclusive',
     ];
 
     protected $dates = [
@@ -42,6 +44,8 @@ class Product extends Model implements HasMedia
         'price',
         'moq',
         'discount',
+        'gst',
+        'gst_type',
         'product_category_id',
         'product_sub_category_id',
         'dispatch_time',

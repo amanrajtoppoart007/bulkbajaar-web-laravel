@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="vendor_id">Seller</label>
+                                    <label class="required" for="vendor_id">Seller</label>
                                     <select
                                         class="form-control select2 {{ $errors->has('vendor_id') ? 'is-invalid' : '' }}"
                                         name="vendor_id" id="vendor_id" required>
@@ -108,6 +108,20 @@
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('discount') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="gst">GST</label>
+                                    <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="gst" id="gst" value="{{ old('gst', 18) }}" required>
+                                    @if($errors->has('gst'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('gst') }}
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>

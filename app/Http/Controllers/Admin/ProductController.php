@@ -285,9 +285,9 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('productCategory', 'productSubCategory', 'vendor');
-
-        return view('admin.products.show', compact('product'));
+        $product->load('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'productReturnConditions');
+        $portalChargePercent = getPortalChargePercentage($product->id);
+        return view('admin.products.show', compact('product', 'portalChargePercent'));
     }
 
     public function destroy(Product $product)

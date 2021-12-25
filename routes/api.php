@@ -28,7 +28,7 @@ Route::prefix('v1/user')->group(function (){
         Route::post('register/step-two/user-address-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepTwo']);
         Route::post('register/step-three/user-document-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepThree']);
 
-//        ROute::middleware([\App\Http\Middleware\UnApprovedApi::class])->group(function (){
+//        Route::middleware([\App\Http\Middleware\UnApprovedApi::class])->group(function (){
             Route::get('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);
             Route::post('update-profile', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateProfile']);
             Route::post('add-address', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'addAddress']);
@@ -50,11 +50,11 @@ Route::prefix('v1/user')->group(function (){
             Route::post('add-to-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'addToWishlist']);
             Route::post('remove-from-wishlist', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'removeFromWishlist']);
             Route::get('get-wishlists', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'getWishlists']);
-        });
+//        });
         Route::get('get-push-notifications', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotifications']);
         Route::get('get-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'getPushNotification']);
         Route::post('delete-push-notification', [\App\Http\Controllers\Api\V1\User\PushNotificationController::class, 'deletePushNotification']);
-//    });
+    });
 });
 
 

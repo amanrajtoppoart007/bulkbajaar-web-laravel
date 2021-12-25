@@ -15,7 +15,13 @@
                         Option
                     </th>
                     <th>
-                        {{ trans('cruds.productPrice.fields.unit_type') }}
+                        Color
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                        Unit
                     </th>
                     <th>
                         {{ trans('cruds.productPrice.fields.quantity') }}
@@ -30,6 +36,12 @@
                         </td>
                         <td>
                             {{ $productOption->option ?? '' }}
+                        </td>
+                        <td>
+                            {{ $productOption->color ?? '' }}
+                        </td>
+                        <td>
+                            {{ $productOption->size ?? '' }}
                         </td>
                         <td>
                             {{ $productOption->unit ?? '' }}

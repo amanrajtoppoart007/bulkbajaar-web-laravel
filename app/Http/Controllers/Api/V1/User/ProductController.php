@@ -109,6 +109,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
                 $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
 
+                $reviewCounts = $this->getProductReviewCounts($product->id);
                 $data = [
                     'id' => $product->id,
                     'vendor_id' => $product->vendor_id,
@@ -117,6 +118,8 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'hsn' => $product->hsn,
                     'description' => $product->description,
                     'price' => applyPrice($product->price, $product->discount),
+                    'gst' => $product->gst,
+                    'gst_type' => $product->gst_type,
                     'threshold_quantity' => $product->moq,
                     'threshold_price' => getMinimumOrderAmount($product->vendor_id),
                     'discount' => $product->discount,
@@ -129,6 +132,8 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'liked' => $this->checkIfProductLiked($product->id),
                     'return_conditions' => $product->productReturnConditions ?? [],
                     'product_attributes' => $product->product_attributes ?? [],
+                    'ratings' => $reviewCounts ?? [],
+                    'rating' => $reviewCounts['average'] ?? 0,
                 ];
                 $data['product_options'] = [];
 

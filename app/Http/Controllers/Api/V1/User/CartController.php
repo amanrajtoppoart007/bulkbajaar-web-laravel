@@ -81,6 +81,8 @@ class CartController extends \App\Http\Controllers\Api\BaseController
                     'quantity' => $cart->quantity,
                     'amount' => $price,
                     'discount' => $cart->product->discount ?? 0,
+                    'gst' => $cart->product->gst ?? 0,
+                    'gst_type' => $cart->product->gst_type ?? 0,
                     'discounted_amount' => $discountedPrice,
                     'total' => $totalPrice,
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null

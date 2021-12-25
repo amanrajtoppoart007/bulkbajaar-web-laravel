@@ -19,8 +19,9 @@ class CreateOrdersTable extends Migration
             $table->string('payment_type')->nullable();
             $table->decimal('sub_total');
             $table->decimal('discount_amount')->nullable();
-            $table->decimal('charge_percent', 5,2)->default(0)->comment('platform chargecharge');
+            $table->decimal('charge_percent', 5,2)->default(0)->comment('platform charge');
             $table->decimal('charge_amount')->default(0)->comment('platform charge');
+            $table->decimal('gst_amount')->default(0);
             $table->decimal('grand_total');
             $table->decimal('amount_paid')->default(0);
             $table->decimal('amount_refunded')->default(0);

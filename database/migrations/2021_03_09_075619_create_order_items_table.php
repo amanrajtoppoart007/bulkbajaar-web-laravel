@@ -23,8 +23,10 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedSmallInteger('quantity');
             $table->double('discount', 5, 2);
             $table->double('discount_amount');
-            $table->decimal('charge_percent', 5,2)->default(0)->comment('platform chargecharge');
+            $table->decimal('charge_percent', 5,2)->default(0)->comment('platform charge');
             $table->decimal('charge_amount')->default(0)->comment('platform charge');
+            $table->unsignedTinyInteger('gst')->default(0);
+            $table->decimal('gst_amount')->default(0);
             $table->double('total_amount');
             $table->string('status')->default('PENDING');
             $table->timestamps();

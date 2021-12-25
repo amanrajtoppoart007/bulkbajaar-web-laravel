@@ -73,12 +73,12 @@
                     <thead>
                     <tr>
                         <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
-                        <th>Option</th>
                         <th>Display Price</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.price') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.quantity') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
                         <th>Portal Charge</th>
+                        <th>GST</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.total_amount') }}</th>
                     </tr>
                     </thead>
@@ -86,10 +86,7 @@
                     @foreach($order->orderItems  as $orderItem)
                         <tr>
                             <td>
-                                {{ $orderItem->product->name }}
-                            </td>
-                            <td>
-                                {{ $orderItem->productOption->option ?? '' }}
+                                {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}, {{ $orderItem->productOption->color ?? '' }}, {{ $orderItem->productOption->size ?? '' }}
                             </td>
                             <td>
                                 &#8377;{{ applyPrice($orderItem->amount, $orderItem->discount) }}
@@ -107,6 +104,9 @@
                             <td>
                                 &#8377;{{ $orderItem->charge_amount }} ({{ $orderItem->charge_percent }}%)
                             </td>
+                            <td>
+                                &#8377;{{ $orderItem->gst_amount }} ({{ $orderItem->gst }}%)
+                            </td>
 
                             <td>
                                 &#8377;{{ $orderItem->total_amount }}
@@ -117,15 +117,27 @@
                     <tfoot>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total }}</span></th>
+                        <th colspan="4">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total + $order->discount_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">Portal Charge: <span class="pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
+                        <th colspan="4">Discount: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th colspan="5">You receive: <span class="pull-right">&#8377;{{ $order->sub_total - $order->charge_amount }}</span></th>
+                        <th colspan="4">GST: <span class="text-danger pull-right">+ &#8377;{{ $order->gst_amount }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th colspan="4">Total: <span class="pull-right">&#8377;{{ $order->grand_total }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th colspan="4">Portal Charge: <span class="text-danger pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th colspan="4">You receive: <span class="pull-right">&#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
                     </tr>
                     </tfoot>
                 </table>

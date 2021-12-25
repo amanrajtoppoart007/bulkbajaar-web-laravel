@@ -82,6 +82,20 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="required" for="gst">GST</label>
+                                    <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="gst" id="gst" value="{{ old('gst', 18) }}" required>
+                                    @if($errors->has('gst'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('gst') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label required for="display_price">Display Price</label>
                                     <input class="form-control {{ $errors->has('display_price') ? 'is-invalid' : '' }}"
                                            type="number"

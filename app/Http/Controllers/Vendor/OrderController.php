@@ -54,7 +54,6 @@ class OrderController extends Controller
 
             return $table->make(true);
         }
-
         return view('vendor.orders.index');
     }
 

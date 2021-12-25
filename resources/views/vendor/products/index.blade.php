@@ -87,7 +87,6 @@
     <script>
         $(function () {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-            @can('product_delete')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
@@ -118,7 +117,6 @@
                 }
             }
             dtButtons.push(deleteButton)
-            @endcan
 
             let dtOverrideGlobals = {
                 buttons: dtButtons,

@@ -85,6 +85,19 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="required" for="gst">GST</label>
+                                    <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="gst" id="gst" max="100" value="{{ old('gst', $product->gst ?? 18) }}" required>
+                                    @if($errors->has('gst'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('gst') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label required for="display_price">Display Price</label>
                                     <input class="form-control {{ $errors->has('display_price') ? 'is-invalid' : '' }}"
                                            type="number"
@@ -101,7 +114,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="required" for="price">Minimum Order Quantity</label>
+                                    <label class="required" for="moq">Minimum Order Quantity</label>
                                     <input class="form-control {{ $errors->has('moq') ? 'is-invalid' : '' }}"
                                            type="number"
                                            name="moq" id="moq" value="{{ old('moq', $product->moq) }}" required>

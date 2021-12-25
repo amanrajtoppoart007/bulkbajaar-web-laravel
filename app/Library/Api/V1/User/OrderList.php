@@ -33,6 +33,7 @@ class OrderList
                 $data[$i]['payment_type'] = getMinimumOrderAmount($order['vendor_id']);
                 $data[$i]['sub_total'] = $order['sub_total'] + $order['discount_amount'];
                 $data[$i]['discount_amount'] = $order['discount_amount'];
+                $data[$i]['gst_amount'] = $order['gst_amount'];
                 $data[$i]['grand_total'] = $order['grand_total'];
                 $data[$i]['amount_paid'] = $order['amount_paid'];
                 $data[$i]['payment_status'] = $order['payment_status'];

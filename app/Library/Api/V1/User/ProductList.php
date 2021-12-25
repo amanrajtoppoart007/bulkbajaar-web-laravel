@@ -30,6 +30,8 @@ class ProductList
                 $data[$i]['price'] = applyPrice($product['price'], $product['discount']);
                 $data[$i]['threshold_price'] = getMinimumOrderAmount($product['vendor_id']);
                 $data[$i]['threshold_quantity'] = $product['moq'];
+                $data[$i]['gst'] = $product['gst'];
+                $data[$i]['gst_type'] = $product['gst_type'];
                 $data[$i]['sku'] = $product['sku'];
                 $data[$i]['hsn'] = $product['hsn'];
                 $data[$i]['is_returnable'] = (bool)$product['is_returnable'];
@@ -44,6 +46,7 @@ class ProductList
                 $data[$i]['liked'] = $this->checkIfProductLiked($product['id']);
                 $data[$i]['product_options'] = [];
                 $data[$i]['product_attributes'] = $product['product_attributes'] ?? [];
+                $data[$i]['rating'] = $this->getProductReviewCounts($product['id'])['average'] ?? 0;
 
                 if (isset($product['product_options'])) {
                     foreach ($product['product_options'] as $productOption){

@@ -99,6 +99,19 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="required" for="gst">GST</label>
+                                    <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="gst" id="gst" max="100" value="{{ old('gst', $product->gst ?? 18) }}" required>
+                                    @if($errors->has('gst'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('gst') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label for="dispatch_time">Expected Dispatch Time</label>
                                     <input class="form-control {{ $errors->has('dispatch_time') ? 'is-invalid' : '' }}"
                                            type="text"

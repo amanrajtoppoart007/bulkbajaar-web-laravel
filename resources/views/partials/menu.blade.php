@@ -260,13 +260,13 @@
 {{--                </a>--}}
 {{--            </li>--}}
 {{--        @endcan--}}
-{{--        <li class="c-sidebar-nav-item">--}}
-{{--            <a href="{{ route("admin.push-notifications.index") }}"--}}
-{{--               class="c-sidebar-nav-link {{ request()->is("admin/push-notifications") ? "c-active" : "" }}">--}}
-{{--                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>--}}
-{{--                {{ trans('cruds.notifications.title') }}--}}
-{{--            </a>--}}
-{{--        </li>--}}
+        <li class="c-sidebar-nav-item">
+            <a href="{{ route("admin.push-notifications.index") }}"
+               class="c-sidebar-nav-link {{ request()->is("admin/push-notifications") ? "c-active" : "" }}">
+                <i class="fas fa-tachometer-alt c-sidebar-nav-icon"></i>
+                {{ trans('cruds.notifications.title') }}
+            </a>
+        </li>
         @can('content_management_access')
             <li class="c-sidebar-nav-dropdown {{ request()->is("admin/content-categories*") ? "c-show" : "" }} {{ request()->is("admin/content-tags*") ? "c-show" : "" }} {{ request()->is("admin/content-pages*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
