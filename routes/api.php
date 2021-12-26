@@ -14,6 +14,7 @@ Route::prefix('v1/user')->group(function (){
     Route::get('get-address-types', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getAddressTypes']);
     Route::get('get-categories', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getCategories']);
     Route::get('get-sub-categories', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getSubCategories']);
+    Route::get('get-brands', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getBrands']);
     Route::get('get-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProducts']);
     Route::get('get-sliders', [\App\Http\Controllers\Api\V1\User\SliderController::class, 'getSliders']);
     Route::get('get-latest-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getLatestProducts']);

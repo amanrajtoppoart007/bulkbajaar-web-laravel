@@ -234,7 +234,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             $address->name = $request->name ?? auth()->user()->name;
             $address->address = $request->input('address');
             $address->address_line_two = $request->input('address_line_two');
-            $address->address_type = $request->input('address_type') ?? 'BILLING';
+            $address->address_type = strtoupper($request->input('address_type') ?? 'BILLING');
             $address->state_id = $request->input('state_id');
             $address->district_id = $request->input('district_id');
             $address->pincode = $request->input('pincode');
@@ -278,7 +278,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             if ($address) {
                 $address->name = $request->input('name') ?? auth()->user()->name;
                 $address->address = $request->input('address');
-                $address->address_type = $request->input('address_type');
+                $address->address_type = strtoupper($request->input('address_type'));
                 $address->address_line_two = $request->input('address_line_two');
                 $address->state_id = $request->input('state_id');
                 $address->district_id = $request->input('district_id');
@@ -313,7 +313,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     'district_id' => $address->district_id,
                     'district' => $address->district->name ?? null,
                     'pincode' => $address->pincode ?? null,
-                    'address_type' => UserAddress::ADDRESS_TYPE_RADIO[$address->address_type] ?? null,
+                    'address_type' => $address->address_type,
                     'is_default' => (bool)$address->is_default,
                     'checked' => false,
                 ];

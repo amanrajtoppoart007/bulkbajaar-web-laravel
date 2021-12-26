@@ -3,9 +3,11 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Library\Api\V1\User\BrandList;
 use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
 use App\Library\Api\V1\User\SubCategoryList;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
@@ -24,7 +26,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         try {
             $products = Product::latest()
 //                ->where('approval_status', 'APPROVED')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
+                ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -45,7 +47,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $products = Product::limit(10)
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
+                ->with('productCategory', 'productSubCategory', 'brand', 'vendor', 'productOptions')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -107,7 +109,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $product = Product::find($request->product_id);
             try {
 
-                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
+                $product->load(['productCategory','productSubCategory', 'brand', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
 
                 $reviewCounts = $this->getProductReviewCounts($product->id);
                 $data = [
@@ -126,6 +128,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'discounted_price' => $product->price,
                     'category' => $product->productCategory->name ?? '',
                     'sub_category' => $product->productSubCategory->name ?? '',
+                    'brand' => $product->brand->title ?? '',
                     'dispatch_time' => $product->dispatch_time,
                     'refund_and_return_policy' => $product->rrp,
                     'vendor' => $product->vendor->name ?? '',
@@ -223,7 +226,6 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $data['last_page_url'] = $subCategoryList['last_page_url'];
                 $data['per_page'] = $subCategoryList['per_page'];
                 $data['total'] = $subCategoryList['total'];
-                $data['list'] = $subCategoryList['data'];
                 $class = new SubCategoryList($subCategoryList['data']);
                 $data['list'] = $class->execute();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'SubCategory data fetched successfully'];
@@ -258,6 +260,10 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $query->orderByDesc('order_count');
             }
 
+            if ($request->input('brand_id')) {
+                $query->where('brand_id', $request->input('brand_id'));
+            }
+
             if ($request->input('min_price')) {
                 $query->where('price','>=', $request->input('min_price'));
             }
@@ -268,7 +274,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
 //            $query->where('approval_status', 'APPROVED');
 
-            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions'])->paginate(10);
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(10);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -305,7 +311,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $products = Product::limit(10)
 //                ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor', 'productOptions')
+                ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -314,6 +320,38 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function getBrands(Request $request)
+    {
+        try {
+            $query = Brand::query();
+
+            if (!empty($request->input('keyword'))) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'LIKE', "%" . $request->input('keyword') . "%");
+                });
+            }
+
+            $brands = $query->paginate(10);
+            if (count($brands)) {
+                $brandList = $brands->toArray();
+                $data['current_page'] = $brandList['current_page'];
+                $data['next_page_url'] = $brandList['next_page_url'];
+                $data['last_page_url'] = $brandList['last_page_url'];
+                $data['per_page'] = $brandList['per_page'];
+                $data['total'] = $brandList['total'];
+                $class = new BrandList($brandList['data']);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Brand data fetched successfully'];
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No brand found'];
+            }
+
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }

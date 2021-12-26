@@ -42,6 +42,7 @@ class ProductList
                 $data[$i]['description'] = $product['description'];
                 $data[$i]['category'] = $product['product_category']['name'] ?? null;
                 $data[$i]['sub_category'] = $product['product_sub_category']['name'] ?? null;
+                $data[$i]['brand'] = $product['brand']['title'] ?? null;
                 $data[$i]['vendor'] = $product['vendor']['name'] ?? null;
                 $data[$i]['liked'] = $this->checkIfProductLiked($product['id']);
                 $data[$i]['product_options'] = [];
