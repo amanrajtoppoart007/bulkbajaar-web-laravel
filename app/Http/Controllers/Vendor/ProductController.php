@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\Vendor\StoreProductRequest;
 use App\Http\Requests\Vendor\UpdateProductRequest;
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
@@ -97,7 +98,8 @@ class ProductController extends Controller
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $portalChargePercentage = getPortalChargePercentage();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
-        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage', 'returnConditions'));
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage', 'returnConditions', 'brands'));
     }
 
     public function show(Product $product)
@@ -193,24 +195,26 @@ class ProductController extends Controller
         $portalChargePercentage = getPortalChargePercentage($product->id);
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('vendor.products.edit',
             compact('categories', 'product',
                 'unitTypes', 'productOptions',
                 'portalChargePercentage',
                 'returnConditions',
-                'selectedReturnConditions'
+                'selectedReturnConditions',
+                'brands'
             ));
     }
 
     public function update(UpdateProductRequest $request)
     {
-        if (!auth()->user()->approved){
-            $result = [
-                'status' => false,
-                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-            ];
-            return response()->json($result, 200);
-        }
+//        if (!auth()->user()->approved){
+//            $result = [
+//                'status' => false,
+//                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
+//            ];
+//            return response()->json($result, 200);
+//        }
         DB::beginTransaction();
         try {
             $validated = $request->validated();

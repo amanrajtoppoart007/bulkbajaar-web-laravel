@@ -143,6 +143,14 @@
                 </tr>
                 <tr>
                     <th>
+                        Brand
+                    </th>
+                    <td>
+                        {{ $product->brand->title ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         Expected Dispatch Time
                     </th>
                     <td>

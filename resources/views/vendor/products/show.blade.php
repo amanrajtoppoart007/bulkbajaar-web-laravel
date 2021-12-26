@@ -127,6 +127,14 @@
                             {{ $product->productSubCategory->name ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            Brand
+                        </th>
+                        <td>
+                            {{ $product->brand->title ?? '' }}
+                        </td>
+                    </tr>
 
 
                     <tr>

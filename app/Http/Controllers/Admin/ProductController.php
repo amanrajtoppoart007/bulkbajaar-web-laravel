@@ -110,7 +110,8 @@ class ProductController extends Controller
         $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
-        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions'));
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions', 'brands'));
     }
 
     public function store(StoreProductRequest $request)
@@ -188,8 +189,9 @@ class ProductController extends Controller
         $productOptions = ProductOption::where('product_id', $product->id)->get();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('admin.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions', 'brands'));
     }
 
     public function update(UpdateProductRequest $request)

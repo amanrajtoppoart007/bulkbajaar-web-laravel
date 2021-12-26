@@ -172,6 +172,24 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="brand_id">Brand</label>
+                                    <select
+                                        class="form-control select2 {{ $errors->has('brand_id') ? 'is-invalid' : '' }}"
+                                        name="brand_id" id="brand_id">
+                                        @foreach($brands as $id => $brand)
+                                            <option
+                                                value="{{ $id }}" {{ $id == old('brand_id') ? 'selected' : '' }}>{{ $brand }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('brand_id'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('brand_id') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
 
                             <div class="col-12">
                                 <div class="form-group">
