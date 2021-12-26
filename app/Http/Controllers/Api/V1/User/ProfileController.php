@@ -296,12 +296,17 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
-    public function getAddresses()
+    public function getAddresses(Request $request)
     {
         try {
-            $data = [];
-            $addresses = UserAddress::where('user_id', auth()->user()->id)->get();
+            $query = UserAddress::query();
+            $query->where('user_id', auth()->id());
+            if ($request->input('address_type')) {
+                $query->where('address_type', $request->input('address_type'));
+            }
+            $addresses = $query->get();
 
+            $data = [];
             foreach ($addresses as $address) {
                 $data[] = [
                     'id' => $address->id,
