@@ -20,18 +20,16 @@
                     </button>
                 @endif
 
-                <button type="button" class="btn btn-sm btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
+                <button type="button" class="btn btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
 
                 @if($order->is_invoice_generated)
                     <a target="_blank" href="{{ route('orders.print.invoice', $order->invoice->invoice_number ?? '') }}" class="btn btn-sm btn-danger">
                         {{ trans('global.print') }} {{ trans('global.invoice') }}
                     </a>
                 @endif
-                @if(in_array($order->status, \App\Models\Order::CANCELLATION_ALLOWED))
-                    <a target="_blank" href="{{ route('vendor.orders.show.ship-form', $order->order_number ?? '') }}" class="btn btn-success d-none">
-                        Ship
-                    </a>
-                @endif
+                <a target="_blank" href="{{ route('vendor.orders.show.ship-form', $order->order_number ?? '') }}" class="btn btn-success">
+                    Ship
+                </a>
             </div>
         </div>
 

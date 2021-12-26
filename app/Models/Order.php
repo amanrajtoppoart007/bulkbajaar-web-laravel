@@ -112,6 +112,8 @@ class Order extends Model
         'status',
         'is_invoice_generated',
         'payment_verified_by_id',
+        'tracking_id',
+        'shipment_data',
         'created_at',
         'updated_at',
         'deleted_at',

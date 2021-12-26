@@ -162,6 +162,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'order_number' => $orderGroupNo,
                     'razor_order_id' => $razorOrder['data']['id'] ?? null,
                     'amount' => $razorOrder['data']['amount'] ?? null,
+                    'razorpay_key' => env('RAZOR_KEY') ?? null,
+                    'razorpay_secret' => env('RAZOR_SECRET') ?? null,
                 ],
                 'message' => 'Order placed successfully'
             ];
@@ -221,13 +223,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
 
             if ($razorPayment->status != 'failed') {
                 DB::transaction(function () use ($orderGroupNo, $razorPayment) {
-                    $orders = Order::where($orderGroupNo)->with('orderItems')->get();
+                    $orders = Order::where('order_group_number', $orderGroupNo)->with('orderItems')->get();
                     foreach ($orders as $order) {
                         $type = $order->payment_type;
                         if ($type == 'HALF') {
-                            $order->amount_paid += ($order->grand_total / 2);
+                            $order->amount_paid = ($order->grand_total / 2);
                         } else {
-                            $order->amount_paid += $order->grand_total;
+                            $order->amount_paid = $order->grand_total;
                         }
                         $order->payment_status = $order->grand_total > $order->amount_paid ? 'PARTLY_PAID' : 'PAID';
                         $order->save();

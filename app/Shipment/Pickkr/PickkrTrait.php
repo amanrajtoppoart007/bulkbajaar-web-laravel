@@ -13,10 +13,7 @@ trait PickkrTrait {
         $response = Http::post($this->baseUrl . 'api/place-order/', $data)
             ->json();
         if ($response['success'] == true){
-            return [
-                'order_id' => $response['order_id'],
-                'tracking_id' => $response['tracking_id'],
-            ];
+            return $response;
         }
         return false;
     }

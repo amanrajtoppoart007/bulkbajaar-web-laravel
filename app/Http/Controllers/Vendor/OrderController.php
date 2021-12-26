@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Vendor\ShipmentFormRequest;
 use App\Models\Order;
+use App\Shipment\Pickkr\PickkrTrait;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
+    use PickkrTrait;
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -115,9 +119,44 @@ class OrderController extends Controller
 
     public function showShipForm($orderNumber)
     {
-        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user', 'orderItems');
+        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user.userProfile', 'orderItems', 'shippingAddress');
         abort_if($order->vendor_id != auth()->id(), 401);
-        return view('vendor.orders.shipmentForm', compact('order'));
+        $vendor = auth()->user();
+        $profile = $vendor->profile ?? null;
+
+        $user = $order->user ?? null;
+        $userProfile = $user->userProfile ?? null;
+        $shippingAddress = $order->shippingAddress ?? null;
+
+        $fromAddress = '';
+        if ($profile->pickup_address){
+            $fromAddress .= $profile->pickup_address . ', ';
+        }
+        if ($profile->pickup_address_two){
+            $fromAddress .= $profile->pickup_address_two . ', ';
+        }
+        if ($profile->pickup_district_id){
+            $fromAddress .= ($profile->pickupDistrict->name ?? '') . ', ';
+        }
+        if ($profile->pickup_state_id){
+            $fromAddress .= ($profile->pickupState->name ?? '');
+        }
+
+        $toAddress = '';
+        if ($shippingAddress->address){
+            $toAddress .= $shippingAddress->address . ', ';
+        }
+        if ($shippingAddress->address_two){
+            $toAddress .= $shippingAddress->address_two . ', ';
+        }
+        if ($shippingAddress->district_id){
+            $toAddress .= ($shippingAddress->district->name ?? '') . ', ';
+        }
+        if ($shippingAddress->state_id){
+            $toAddress .= ($shippingAddress->state->name ?? '');
+        }
+
+        return view('vendor.orders.shipmentForm', compact('order', 'vendor', 'profile', 'user', 'userProfile', 'shippingAddress', 'fromAddress', 'toAddress'));
     }
 
     public function updateStatus(Request $request)
@@ -149,5 +188,24 @@ class OrderController extends Controller
             'status' => false,
             'message' => 'Something went wrong'
         ]);
+    }
+
+    public function ship(ShipmentFormRequest $request, Order $order)
+    {
+        $validated = $request->validated();
+
+        $validated['client_order_id'] = $order->order_number;
+
+        $shipment = $this->createOrder($validated);
+
+        if ($shipment !== false){
+            $order->tracking_id = $shipment['tracking_id'] ?? null;
+            $order->shipment_data = $shipment;
+            $order->status = 'SHIPPED';
+            $order->save();
+            return redirect()->route('vendor.orders.index')->with('message' , 'Shipment form submitted!');
+        }
+
+        return back()->withInput();
     }
 }
