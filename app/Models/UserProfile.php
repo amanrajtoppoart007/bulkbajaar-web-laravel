@@ -95,4 +95,9 @@ class UserProfile extends Model implements HasMedia
     {
         return $this->getMedia('pan_card')->last();
     }
+
+    public function getProfilePhotoAttribute()
+    {
+        return $this->getMedia('profile_photo')->last();
+    }
 }

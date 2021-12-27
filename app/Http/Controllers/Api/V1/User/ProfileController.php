@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Pincode;
 use App\Models\State;
 use App\Models\UserAddress;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -20,7 +21,19 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     public function getProfileDetails()
     {
         try {
-            $data = auth()->user();
+            $user = auth()->user();
+            $profile = $user->userProfile;
+
+            $data = [
+                'name' => $user->name ?? '',
+                'email' => $user->email ?? '',
+                'mobile' => $user->mobile ?? '',
+                'company_name' => $profile->company_name ?? '',
+                'representative_name' => $profile->representative_name ?? '',
+                'gst_number' => $profile->gst_number ?? '',
+                'pan_number' => $profile->pan_number ?? '',
+                'profile_photo' => $profile->profile_photo ? $profile->profile_photo->getUrl() : null,
+            ];
             if (!empty($data)) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Profile data fetched successfully'];
             } else {
@@ -37,7 +50,12 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|unique:users,mobile,' . auth()->user()->id,
             'email' => 'unique:users,email,' . auth()->user()->id,
-            'name' => 'required',
+            'name' => 'required|string',
+            'company_name' => 'required|string',
+            'representative_name' => 'required|string',
+            'gst_number' => 'required|string',
+            'pan_number' => 'required|string',
+            'profile_photo' => 'required|mimes:jpeg,png',
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +68,18 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->mobile = $request->input('mobile');
+            $profile = UserProfile::updateOrCreate([
+                'user_id' => auth()->id()
+            ], [
+                'company_name' => $request->company_name,
+                'representative_name' => $request->representative_name,
+                'gst_number' => $request->gst_number,
+                'pan_number' => $request->pan_number,
+            ]);
+            if ($request->hasFile('profile_photo')) {
+                $profile->clearMediaCollection('profile_photo');
+                $profile->addMedia($request->file('profile_photo'))->toMediaCollection('profile_photo');
+            }
             if ($user->save()) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Profile updated successfully'];
             } else {

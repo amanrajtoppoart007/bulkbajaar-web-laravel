@@ -179,6 +179,17 @@
                     <div class="col-12">
                         <h4>Shipment Details</h4>
                         <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="item_name">Item Name</label>
+                                    <input class="form-control {{ $errors->has('item_name') ? 'is-invalid' : '' }}" type="text" name="item_name" id="item_name" value="{{ old('quantity', $itemName) }}" required>
+                                    @if($errors->has('item_name'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('item_name') }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="required" for="quantity">Quantity (total no of items)</label>

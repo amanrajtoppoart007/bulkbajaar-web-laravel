@@ -47,7 +47,8 @@ class ShipmentFormRequest extends FormRequest
 
             'invoice_number' => 'nullable|string',
             'total_discount' => 'nullable|numeric',
-            'ewaybill_no' => 'required_if:invoice_value,>=50000|',
+            'ewaybill_no' => 'required_if:invoice_value,>=50000',
+            'item_name' => 'required|string',
 
             'item_list' => 'required|array',
             'item_list.*.item_name' => 'required|string',

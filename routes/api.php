@@ -45,6 +45,7 @@ Route::prefix('v1/user')->group(function (){
             Route::post('make-payment', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'makePayment']);
             Route::get('get-orders', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrders']);
             Route::get('get-order-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderDetails']);
+            Route::get('get-order-group-details', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'getOrderGroupDetails']);
             Route::post('cancel-order', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'cancelOrder']);
             Route::post('return-order-items', [\App\Http\Controllers\Api\V1\User\OrderController::class, 'returnOrderItems']);
             Route::post('write-review', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'writeReview']);

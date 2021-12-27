@@ -568,4 +568,82 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
+    public function getOrderGroupDetails(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'order_number' => 'required|exists:orders,order_group_number',
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
+
+//        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+//            $result = [
+//                'status' => 0,
+//                'response' => 'error',
+//                'action' => 'rejected',
+//                'message' => "This order does not belong to you."
+//            ];
+//            return response()->json($result, 200);
+//        }
+
+        try {
+            $orders = Order::whereOrderGroupNumber($request->order_number)->withCount('orderItems')->get();
+            $transaction = Transaction::where('order_group', $request->order_number)->first();
+
+            $orderDate = "";
+            $itemsCount = 0;
+            $itemsTotal = 0;
+            $gst = 0;
+            $orderTotal = 0;
+            $paid = 0;
+
+            foreach ($orders as $order){
+                $orderDate = $order->created_at->format('d-m-Y');
+                $itemsCount += $order->order_items_count;
+                $itemsTotal += $order->sub_total;
+                $gst += $order->gst_amount;
+                $orderTotal += $order->grand_total;
+                $paid += $order->amount_paid;
+            }
+
+
+            $data = [
+                'order_group_number' => $request->order_number,
+                'items_count' => $itemsCount,
+                'order_date' => $orderDate,
+                'items_total' => $itemsTotal,
+                'gst' => $gst,
+                'order_total' => $orderTotal,
+                'paid' => $paid,
+                'method' => $transaction->method ?? '',
+            ];
+
+            $class = new OrderList($orders);
+            $data['list'] = $class->execute();
+            if (!empty($data)) {
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Order details fetched successfully'
+                ];
+            } else {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'add',
+                    'message' => 'Order details not available'
+                ];
+            }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
 }

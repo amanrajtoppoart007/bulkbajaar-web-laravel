@@ -9,6 +9,7 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
     Route::get('orders/ship/{order:order_number}', [\App\Http\Controllers\Vendor\OrderController::class, 'showShipForm'])->name('orders.show.ship-form');
     Route::post('orders/ship/{order}', [\App\Http\Controllers\Vendor\OrderController::class, 'ship'])->name('orders.ship');
     Route::get('profile', 'Vendor\HomeController@showProfileForm')->name('profile');
+    Route::get('shipment/pickkr/pickup-address', 'Vendor\HomeController@showPickkrPickupAddressForm')->name('shipment.pickkr.pickup-address');
     Route::post('profile/update', 'Vendor\HomeController@updateProfile')->name('update.profile');
     Route::get('change-password', 'Vendor\HomeController@showChangePasswordForm')->name('show.change.password.form');
     Route::post('change-password', 'Vendor\HomeController@changePassword')->name('change.password');

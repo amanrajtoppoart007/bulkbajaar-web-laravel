@@ -119,8 +119,15 @@ class OrderController extends Controller
 
     public function showShipForm($orderNumber)
     {
-        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user.userProfile', 'orderItems', 'shippingAddress');
+        $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user.userProfile', 'orderItems.product', 'orderItems.productOption', 'shippingAddress');
         abort_if($order->vendor_id != auth()->id(), 401);
+        $itemName = "";
+        foreach ($order->orderItems as $orderItem){
+            $itemName .= ($orderItem->product->name ?? '') . ' - ' . ($orderItem->productOption->option ?? '') . ', ';
+        }
+
+        $itemName = rtrim($itemName, ', ');
+
         $vendor = auth()->user();
         $profile = $vendor->profile ?? null;
 
@@ -156,7 +163,7 @@ class OrderController extends Controller
             $toAddress .= ($shippingAddress->state->name ?? '');
         }
 
-        return view('vendor.orders.shipmentForm', compact('order', 'vendor', 'profile', 'user', 'userProfile', 'shippingAddress', 'fromAddress', 'toAddress'));
+        return view('vendor.orders.shipmentForm', compact('order', 'vendor', 'profile', 'user', 'userProfile', 'shippingAddress', 'fromAddress', 'toAddress', 'itemName'));
     }
 
     public function updateStatus(Request $request)

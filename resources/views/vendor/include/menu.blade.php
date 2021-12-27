@@ -101,6 +101,14 @@
                         Min Order Price
                     </a>
                 </li>
+{{--                <li class="c-sidebar-nav-item">--}}
+{{--                    <a href="{{ route("vendor.shipment.pickkr.pickup-address") }}"--}}
+{{--                       class="c-sidebar-nav-link {{ request()->is("vendor/shipment/pickkr/pickup-address") ? "c-active" : "" }}">--}}
+{{--                        <i class="fas fa-cogs c-sidebar-nav-icon"></i>--}}
+
+{{--                        Shipment Pickup address--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="c-sidebar-nav-item">
                     <a href="{{ route("vendor.show.change.password.form") }}" class="c-sidebar-nav-link {{ request()->is("vendor/change-password") ? "c-active" : "" }}">
                         <i class="c-sidebar-nav-icon fas fa-fw fa-asterisk">

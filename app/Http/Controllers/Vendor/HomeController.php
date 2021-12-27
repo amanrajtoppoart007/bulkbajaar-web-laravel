@@ -168,4 +168,13 @@ class HomeController extends Controller
             return back()->withInput()->withErrors($exception->getMessage());
         }
     }
+
+    public function showPickkrPickupAddressForm()
+    {
+        $vendor = auth()->user();
+        $profile = auth()->user()->profile;
+        $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $districts = District::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('vendor.shipment.pickkrPickupAddress', compact('profile', 'states', 'districts', 'vendor'));
+    }
 }
