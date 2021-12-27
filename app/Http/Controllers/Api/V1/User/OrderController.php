@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Events\OrderCreated;
 use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
@@ -13,6 +12,7 @@ use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\Transaction;
 use App\PaymentGateway\Razorpay\RazorpayTrait;
+use App\Traits\FirebaseNotificationTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ use Validator;
 
 class OrderController extends \App\Http\Controllers\Api\BaseController
 {
-    use UniqueIdentityGeneratorTrait, RazorpayTrait;
+    use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait;
 
     public function placeOrder(Request $request)
     {
@@ -137,12 +137,10 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     }
                 }
                 $orderObj->load(['user', 'vendor']);
-
-//                event(new OrderCreated($orderObj));
             }
 
             //Delete cart items
-//            Cart::where('user_id', auth()->id())->delete();
+            Cart::where('user_id', auth()->id())->delete();
 
             DB::commit();
 
@@ -231,6 +229,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         } else {
                             $order->amount_paid = $order->grand_total;
                         }
+                        $order->status = 'CONFIRMED';
                         $order->payment_status = $order->grand_total > $order->amount_paid ? 'PARTLY_PAID' : 'PAID';
                         $order->save();
                     }
@@ -309,15 +308,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-//        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
-//            $result = [
-//                'status' => 0,
-//                'response' => 'error',
-//                'action' => 'rejected',
-//                'message' => "This order does not belong to you."
-//            ];
-//            return response()->json($result, 200);
-//        }
+        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'rejected',
+                'message' => "This order does not belong to you."
+            ];
+            return response()->json($result, 200);
+        }
 
         try {
             $order = Order::whereOrderNumber($request->input('order_number'))->first();
@@ -580,15 +579,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
         }
 
 
-//        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
-//            $result = [
-//                'status' => 0,
-//                'response' => 'error',
-//                'action' => 'rejected',
-//                'message' => "This order does not belong to you."
-//            ];
-//            return response()->json($result, 200);
-//        }
+        if (!Order::whereOrderGroupNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'rejected',
+                'message' => "This order does not belong to you."
+            ];
+            return response()->json($result, 200);
+        }
 
         try {
             $orders = Order::whereOrderGroupNumber($request->order_number)->withCount('orderItems')->get();

@@ -6,7 +6,7 @@ trait FirebaseNotificationTrait {
 
     public function sendPushNotification($deviceTokens, $message)
     {
-        $SERVER_API_KEY = 'AAAAUq-G1qw:APA91bE1OuW8z4SywDAiYbMcBpfOHEqdk12AAgWypHQxM2EggURLYTCHnOvEI4f4j1Gf56-y_D36Y75PQOkl-d7kRistINgmpmToLLB3Obf-3oeVf3NMStIC3e4gMFtuCctkry0M309S';
+        $SERVER_API_KEY = 'AAAAoVJwcTg:APA91bH8XTN_QSAa0QZ5t__QXibBSGjUebRLCJ7hWD4OKu9U-AB76nA5mXR6-dNoKvxI83uS6rMSMbfsax-KZMsK7CHfyWyfykuYXYTj7D4pWJFX87b24jUs2JETa3I-6osw7mXEoE4d';
 
         $data = [
             "registration_ids" => $deviceTokens,

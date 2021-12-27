@@ -8,6 +8,8 @@ use App\Mail\SendOrderCreatedMailToAdmin;
 use App\Mail\SendOrderCreatedMailToUser;
 use App\Mail\SendOrderCreatedMailToHelpCenter;
 use App\Models\Admin;
+use App\Models\PushNotification;
+use App\Traits\FirebaseNotificationTrait;
 use App\Traits\SmsSenderTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendOrderCreatedMessage implements ShouldQueue
 {
-    use SmsSenderTrait;
+    use SmsSenderTrait, FirebaseNotificationTrait;
     /**
      * Create the event listener.
      *
@@ -53,7 +55,14 @@ class SendOrderCreatedMessage implements ShouldQueue
             'order_number' => $order->user->order_number,
             'date' => Carbon::parse($order->creatred_at)->format('d M Y')
         ];
-
 //        return $this->sendUserOrderPlacedSms($data);
+
+
+        //PUSH NOTIFICATION
+        $notification = new PushNotification();
+        $notification->title = "Your order has been placed.";
+        $notification->message = "Order no." . $order->order_number;
+        $notification->save();
+        $notification->users()->sync($order->user_id);
     }
 }

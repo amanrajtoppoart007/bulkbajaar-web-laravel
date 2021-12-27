@@ -30,7 +30,7 @@ class OrderList
                 $data[$i]['order_group_number'] = $order['order_group_number'];
                 $data[$i]['vendor_id'] = $order['vendor_id'];
                 $data[$i]['vendor'] = $order['vendor']['name'] ?? '';
-                $data[$i]['payment_type'] = getMinimumOrderAmount($order['vendor_id']);
+                $data[$i]['payment_type'] = $order['payment_type'];
                 $data[$i]['sub_total'] = $order['sub_total'] + $order['discount_amount'];
                 $data[$i]['discount_amount'] = $order['discount_amount'];
                 $data[$i]['gst_amount'] = $order['gst_amount'];
@@ -39,6 +39,7 @@ class OrderList
                 $data[$i]['payment_status'] = $order['payment_status'];
                 $data[$i]['status'] = $order['status'];
                 $data[$i]['items_count'] = $order['order_items_count'];
+                $data[$i]['created_at'] = $order['created_at'];
                 $i++;
             }
         }

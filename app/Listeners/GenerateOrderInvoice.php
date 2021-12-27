@@ -39,23 +39,20 @@ class GenerateOrderInvoice implements ShouldQueue
             $invoice = new Invoice();
             $invoice->invoice_number = $this->generateInvoiceNumber();
             $invoice->date_time = Carbon::now()->format('Y-m-d h:i:s');
-            $invoice->invoiceable_type = "App\Models\Order";
-            $invoice->invoiceable_id = $order->id;
-            $invoice->userable_type = "App\Models\User";
-            $invoice->userable_id = $order->user_id;
-            $invoice->transaction_id = $order->transaction_id;
+            $invoice->order_id = $order->id;
+            $invoice->user_id = $order->user_id;
+            $invoice->vendor_id = $order->vendor_id;
             $invoice->payment_type = $order->payment_type;
             $invoice->amount = $order->sub_total;
-            $invoice->gst = $order->gst;
-            $invoice->discount = $order->discount;
+            $invoice->charge = $order->charge_amount;
+            $invoice->discount = $order->discount_amount;
+            $invoice->gst = $order->gst_amount;
             $invoice->total = $order->grand_total;
             $invoice->save();
-
-            $order->is_invoice_generated;
+            $order->is_invoice_generated = true;
             $order->save();
             DB::commit();
             return true;
-
         } catch (\Exception $exception) {
             DB::rollBack();
             return $exception->getMessage();
