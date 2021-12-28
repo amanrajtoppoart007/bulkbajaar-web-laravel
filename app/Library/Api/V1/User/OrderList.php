@@ -39,7 +39,7 @@ class OrderList
                 $data[$i]['payment_status'] = $order['payment_status'];
                 $data[$i]['status'] = $order['status'];
                 $data[$i]['items_count'] = $order['order_items_count'];
-                $data[$i]['created_at'] = $order['created_at'];
+                $data[$i]['created_at'] = date('d-m-Y', strtotime($order['created_at']));
                 $i++;
             }
         }
