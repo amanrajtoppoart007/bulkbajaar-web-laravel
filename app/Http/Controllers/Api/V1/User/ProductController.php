@@ -139,6 +139,13 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'rating' => $reviewCounts['average'] ?? 0,
                 ];
                 $data['product_options'] = [];
+                $data['images'] = [];
+
+                if (isset($product->images)) {
+                    foreach ($product->images as $image){
+                        $data['images'][] = $image->thumbnail;
+                    }
+                }
 
                 if (isset($product->productOptions)) {
                     foreach ($product->productOptions as $productOption){
