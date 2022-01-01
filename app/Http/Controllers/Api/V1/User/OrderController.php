@@ -31,6 +31,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             'payment_method' => ['required', Rule::in(['ONLINE', 'COD', 'HALF'])],
             'billing_address_id' => ['required', 'exists:user_addresses,id,deleted_at,NULL'],
             'shipping_address_id' => ['required', 'exists:user_addresses,id,deleted_at,NULL'],
+            'cart_ids' => 'nullable|array',
+            'cart_ids.*' => "numeric"
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +40,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
         try {
-            $carts = Cart::where('user_id', auth()->id())->with(['product'])->get();
+            if ($request->cart_ids){
+                $carts = Cart::whereUserId(auth()->id())
+                    ->whereIn('id', $request->cart_ids)
+                    ->with(['product'])->get();
+            }else{
+                $carts = Cart::whereUserId(auth()->id())->with(['product'])->get();
+            }
             if (!count($carts)) {
                 $result = [
                     'status' => 0,
@@ -136,11 +144,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         OrderItem::create($orderItem);
                     }
                 }
-                $orderObj->load(['user', 'vendor']);
             }
-
             //Delete cart items
-            Cart::where('user_id', auth()->id())->delete();
+            if($request->cart_ids){
+                Cart::where('user_id', auth()->id())->whereIn('id', $request->cart_ids)->delete();
+            }else{
+                Cart::where('user_id', auth()->id())->delete();
+            }
 
             DB::commit();
 

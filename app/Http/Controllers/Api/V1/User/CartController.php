@@ -53,11 +53,27 @@ class CartController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
-    public function getCarts()
+    public function getCarts(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'cart_ids' => 'nullable|array',
+            'cart_ids.*' => "numeric"
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
         try {
             $data = [];
-            $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
+            if ($request->cart_ids){
+                $carts = Cart::whereUserId(auth()->user()->id)
+                    ->whereIn('id', $request->cart_ids)
+                    ->with(['product', 'productOption'])->get();
+            }else{
+                $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
+            }
             foreach ($carts as $cart) {
                 $product = $cart->product;
                 $price = applyPrice($product->price, $product->discount);

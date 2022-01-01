@@ -18,6 +18,7 @@ class OrderObserver
      */
     public function created(Order $order)
     {
+        $order->load('vendor', 'user');
         event(new OrderCreated($order));
     }
 
