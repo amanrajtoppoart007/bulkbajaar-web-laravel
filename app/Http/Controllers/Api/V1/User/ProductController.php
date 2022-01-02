@@ -189,7 +189,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
                 if (isset($product->images)) {
                     foreach ($product->images as $image){
-                        $data['images'][] = $image->thumbnail;
+                        $data['images'][] = $image->url;
                     }
                 }
 

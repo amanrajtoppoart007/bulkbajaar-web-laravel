@@ -64,8 +64,8 @@ class ProductList
                     }
                 }
 
-                if (isset($product['images'][0]['thumbnail'])) {
-                    $data[$i]['thumb_link'] = $product['images'][0]['thumbnail'] ? $product['images'][0]['thumbnail'] : null;
+                if (isset($product['images'][0]['preview'])) {
+                    $data[$i]['thumb_link'] = $product['images'][0]['preview'] ?: null;
                 } else {
                     $data[$i]['thumb_link'] = null;
                 }
