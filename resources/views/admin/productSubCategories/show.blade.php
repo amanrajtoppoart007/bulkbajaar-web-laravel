@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.productSubCategory.title') }}
-    </div>
+    <div class="card">
+        <div class="card-header">
+            {{ trans('global.show') }} {{ trans('cruds.productSubCategory.title') }}
+        </div>
 
-    <div class="card-body">
-        <div class="form-group">
+        <div class="card-body">
             <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.product-sub-categories.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
-            </div>
-            <table class="table table-bordered table-striped">
-                <tbody>
+                <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.product-sub-categories.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <tbody>
                     <tr>
                         <th>
                             {{ trans('cruds.productSubCategory.fields.id') }}
@@ -54,21 +54,21 @@
                         <td>
                             @if($productSubCategory->photo)
                                 <a href="{{ $productSubCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $productSubCategory->photo->getUrl('thumb') }}">
+                                    <img src="{{ $productSubCategory->photo->getUrl('thumb') }}" height="50px">
                                 </a>
                             @endif
                         </td>
                     </tr>
-                </tbody>
-            </table>
-            <div class="form-group">
-                <a class="btn btn-default" href="{{ route('admin.product-sub-categories.index') }}">
-                    {{ trans('global.back_to_list') }}
-                </a>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <a class="btn btn-default" href="{{ route('admin.product-sub-categories.index') }}">
+                        {{ trans('global.back_to_list') }}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 

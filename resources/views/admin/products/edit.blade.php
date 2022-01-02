@@ -339,7 +339,7 @@
                     for (var i in files) {
                     var file = files[i]
                     this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview)
+                    this.options.thumbnail.call(this, file, file.preview_url)
                     file.previewElement.classList.add('dz-complete')
                     $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
                 }
