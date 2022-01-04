@@ -31,6 +31,6 @@ class SendOrderNotAssignedMail implements ShouldQueue
     {
         $emails = Admin::whereApproved(true)->whereVerified(true)->pluck('email');
         if(empty($emails)) return true;
-        return Mail::to($emails)->send(new SendOrderNotAssignedMailToAdmin($event->order));
+//        return Mail::to($emails)->send(new SendOrderNotAssignedMailToAdmin($event->order));
     }
 }

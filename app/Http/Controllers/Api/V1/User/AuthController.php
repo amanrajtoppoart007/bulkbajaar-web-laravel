@@ -336,7 +336,7 @@ class AuthController extends BaseController
                 $userData['username'] = auth()->user()->email;
                 $userData['email'] = auth()->user()->email;
                 $userData['mobile'] = auth()->user()->mobile;
-                event(new UserRegistered($userData));
+//                event(new UserRegistered($userData));
             } catch (\Exception $exception) {
                 $result = [
                     'status' => 0,

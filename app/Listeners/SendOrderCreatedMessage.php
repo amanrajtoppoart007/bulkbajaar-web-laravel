@@ -40,14 +40,14 @@ class SendOrderCreatedMessage implements ShouldQueue
         $order = $event->order;
         $emails = Admin::whereApproved(true)->whereVerified(true)->pluck('email');
         if(!empty($emails)){
-            Mail::to($emails)->send(new SendOrderCreatedMailToAdmin($order));
+//            Mail::to($emails)->send(new SendOrderCreatedMailToAdmin($order));
         }
 
         if(!is_null($order->vendor)){
-            Mail::to($order->vendor)->send(new SendOrderCreatedEmailToVendor($order));
+//            Mail::to($order->vendor)->send(new SendOrderCreatedEmailToVendor($order));
         }
 
-        Mail::to($order->user)->send(new SendOrderCreatedMailToUser($order));
+//        Mail::to($order->user)->send(new SendOrderCreatedMailToUser($order));
 
         $data = [
             'name' => $order->user->name,
