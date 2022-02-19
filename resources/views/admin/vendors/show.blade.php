@@ -21,6 +21,18 @@
             </div>
             <table class="table table-bordered table-striped">
                 <tbody>
+                <tr>
+                        <th>
+                           Shop Image *
+                        </th>
+                        <td>
+
+                            @if($vendor->shop_image)
+                                <img alt="vendor image" src="{{$vendor->shop_image->preview}}"
+                                     style="width: 100px;height: 100px;"/>
+                            @endif
+                        </td>
+                    </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.franchisee.fields.id') }}

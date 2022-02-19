@@ -12,6 +12,20 @@
             @method('PUT')
             @csrf
             <div class="row">
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="shopImage-dropzone">Vendor Shop Image</label>
+                        <div class="needsclick dropzone {{ $errors->has('shop_image') ? 'is-invalid' : '' }}" id="shopImage-dropzone">
+                        </div>
+                        @if($errors->has('shop_image'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('shop_image') }}
+                            </div>
+                        @endif
+                        <span class="help-block">Please upload vendor shop image</span>
+                    </div>
+                </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label class="required" for="company_name">Company Name</label>
@@ -301,9 +315,62 @@
 
 
 @endsection
-
 @section('scripts')
     @parent
+    <script>
+    Dropzone.options.shopImageDropzone = {
+    url: '{{ route('admin.vendors.storeMedia') }}',
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="shop_image"]').remove()
+      $('form').append('<input type="hidden" name="shop_image" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="shop_image"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($profile) && $profile->shop_image)
+      var file = {!! json_encode($profile->shop_image) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="shop_image" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            let message = response //dropzone sends it's own error messages in string
+        } else {
+            let message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+</script>
     <script>
         $(function () {
 

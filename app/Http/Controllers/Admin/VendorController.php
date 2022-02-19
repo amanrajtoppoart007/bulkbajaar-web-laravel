@@ -11,7 +11,6 @@ use App\Http\Requests\UpdateVendorRequest;
 use App\Models\Block;
 use App\Models\District;
 use App\Models\Vendor;
-use App\Models\FranchiseeArea;
 use App\Models\Pincode;
 use App\Models\State;
 use App\Models\VendorProfile;
@@ -22,10 +21,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 class VendorController extends Controller
 {
-    use CsvImportTrait;
+    use CsvImportTrait,MediaUploadingTrait;
 
     public function index(Request $request)
     {
@@ -120,7 +119,7 @@ class VendorController extends Controller
             $data['mobile'] = $vendor->mobile;
             event(new VendorRegistered($data));
             return redirect()->route('admin.vendors.index');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors()->withInput();
         }
@@ -151,9 +150,22 @@ class VendorController extends Controller
             VendorProfile::updateOrCreate([
                 'vendor_id' => $vendor->id
             ], $request->validated());
+
+            if ($request->input('shop_image', false)) {
+                if (!$vendor->shop_image || $request->input('shop_image') !== $vendor->shop_image->file_name) {
+                    if ($vendor->shop_image) {
+                        $vendor->shop_image->delete();
+                    }
+
+                    $vendor->addMedia(storage_path('tmp/uploads/' . $request->input('shop_image')))->toMediaCollection('shopImage');
+                }
+            } elseif ($vendor->shop_image) {
+                $vendor->shop_image->delete();
+            }
+
             DB::commit();
             return redirect()->route('admin.vendors.index');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors()->withInput();
         }
@@ -164,8 +176,6 @@ class VendorController extends Controller
 //        abort_if(Gate::denies('franchisee_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $vendor->load(['profile', 'profile.billingState', 'profile.billingDistrict', 'profile.pickupState', 'profile.pickupState']);
-//        echo "<pre>";
-//        print_r($vendor->toArray());die;
         $profile = $vendor->profile ?? null;
         return view('admin.vendors.show', compact('vendor', 'profile'));
     }

@@ -7,16 +7,24 @@ use App\Traits\Auditable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
-class Vendor extends Authenticatable
+use Spatie\MediaLibrary\Conversions\Conversion;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class Vendor extends Authenticatable implements HasMedia
 {
-    use SoftDeletes, Notifiable, Auditable, HasFactory, HasApiTokens;
+    use SoftDeletes, Notifiable, Auditable, HasFactory, HasApiTokens,InteractsWithMedia;
 
     const ROLE_SELECT = [
         'vendor' => "Vendor"
@@ -37,6 +45,11 @@ class Vendor extends Authenticatable
     protected $hidden = [
         'remember_token',
         'password',
+    ];
+
+
+    protected $appends = [
+        'shop_image',
     ];
 
     protected $dates = [
@@ -64,6 +77,19 @@ class Vendor extends Authenticatable
         'approved',
         'verified',
     ];
+
+
+    public function getShopImageAttribute()
+    {
+        $file = $this->getMedia('shopImage')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
+    }
 
 
     public function roles()
@@ -111,4 +137,15 @@ class Vendor extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop',50,50)->nonQueued();;
+        $this->addMediaConversion('preview')->fit('crop', 120, 120)->nonQueued();;
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use App\Channels\SmsChannel;
 
@@ -30,7 +31,9 @@ class AppServiceProvider extends ServiceProvider
          Notification::extend('sms', function ($app) {
             return new SmsChannel();
         });
-        
-     \URL::forceScheme('https');
+
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

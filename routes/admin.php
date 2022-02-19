@@ -120,6 +120,7 @@
     Route::post('vendors/parse-csv-import', 'Admin\VendorController@parseCsvImport')->name('vendors.parseCsvImport');
     Route::post('vendors/process-csv-import', 'Admin\VendorController@processCsvImport')->name('vendors.processCsvImport');
     Route::post('vendors/approve/{vendor}', 'Admin\VendorController@approve')->name('vendors.approve');
+    Route::post('vendors/media', 'Admin\VendorController@storeMedia')->name('vendors.storeMedia');
     Route::resource('vendors', 'Admin\VendorController');
 
     // Pincodes
