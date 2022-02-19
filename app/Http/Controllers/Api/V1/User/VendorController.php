@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
 use App\Library\Api\V1\User\VendorList;
-use App\Models\OrderItem;
-use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -47,7 +44,12 @@ class VendorController extends BaseController
         return response()->json($result, 200);
     }
 
-    public function getVendorDetails(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function getVendorDetails(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'vendor_id' => 'required|exists:vendors,id',
@@ -61,7 +63,7 @@ class VendorController extends BaseController
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $vendor = Vendor::find($request->vendor_id);
+            $vendor = Vendor::find($request->input('vendor_id'));
             try {
 
                 $vendor->load(['profile','profile.pickupState', 'profile.pickupDistrict']);
