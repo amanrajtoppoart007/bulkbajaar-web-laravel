@@ -68,6 +68,7 @@ class VendorController extends \App\Http\Controllers\Api\BaseController
                 $data = [
                     'id' => $vendor->id,
                     'name' => $vendor->name,
+                    'shop_image'=>$vendor->shop_image ? $vendor->shop_image->preview : null,
                     'company_name' => $vendor->profile->company_name ?? '',
                     'representative_name' => $vendor->profile->representative_name ?? '',
                     'gst_number' => $vendor->profile->gst_number ?? '',
