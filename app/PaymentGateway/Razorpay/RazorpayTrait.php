@@ -7,7 +7,8 @@ use Razorpay\Api\Api;
 trait RazorpayTrait {
 
     private function getApiInstance() : Api{
-        return new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+       // return new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+       return new Api('rzp_test_dEFEKCc7EjchRB', '30TngJly2aUDFln09AFssmF8');
     }
 
     private function createOrder($receiptNo, $amount, $currency = 'INR')

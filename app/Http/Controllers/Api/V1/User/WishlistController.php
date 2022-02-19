@@ -8,15 +8,15 @@ use App\Models\Wishlist;
 use App\Traits\ProductTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
-class WishlistController extends \App\Http\Controllers\Api\BaseController
+use \App\Http\Controllers\Api\BaseController as BaseController;
+class WishlistController extends BaseController
 {
     use ProductTrait;
     public function addToWishlist(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'product_option_id' => 'nullable|exists:product_options,id',
+            'product_option_id' => 'required|exists:product_options,id',
         ]);
 
         if ($validator->fails()) {
@@ -24,19 +24,10 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if ($request->product_option_id){
-            $isExists = Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
-
-        }else{
-            $isExists = Wishlist::where('product_id', $request->product_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
+        $isExists = Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+        if ($isExists){
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
+            return response()->json($result, 200);
         }
 
         try {
@@ -60,7 +51,7 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:wishlists',
-            'product_option_id' => 'nullable|exists:wishlists',
+            'product_option_id' => 'required|exists:wishlists',
         ]);
 
         if ($validator->fails()) {
@@ -69,18 +60,10 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
         }
 
         try {
-            if ($request->product_option_id){
-                if (Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->delete()){
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
-                }else{
-                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
-                }
+            if (Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->delete()){
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
             }else{
-                if (Wishlist::where('product_id', $request->product_id)->where('user_id', auth()->id())->delete()){
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
-                }else{
-                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
-                }
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
@@ -101,11 +84,17 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
                     'product' => $product->name ?? '',
                     'product_option_id' => $wishlist->product_price_id,
                     'product_option' => [
+                        'id' => $wishlist->productOption->id ?? null,
+                        'product_id' => $wishlist->productOption->product_id ?? null,
                         'option' => $wishlist->productOption->option ?? null,
                         'unit' => $wishlist->productOption->unit ?? null,
+                        'size' => $wishlist->productOption->size ?? null,
+                        'color' => $wishlist->productOption->color ?? null,
                         'quantity' => $wishlist->productOption->quantity ?? null,
                     ],
-                    'price' => applyPrice($product->price),
+                    'price' => applyPrice($product->price, $product->discount),
+                    'gst' => $product->gst,
+                    'gst_type' => $product->gst_type,
                     'discount' => $product->discount,
                     'discounted_amount' => applyPrice($product->price, null, $product->discount),
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null
@@ -116,6 +105,21 @@ class WishlistController extends \App\Http\Controllers\Api\BaseController
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Wishlist data fetched successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Your wishlist is empty'];
+            }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function removeAllFromWishlist(Request $request)
+    {
+
+        try {
+            if (Wishlist::truncate()){
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'removed', 'message' => 'Product removed from wishlist successfully'];
+            }else{
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];

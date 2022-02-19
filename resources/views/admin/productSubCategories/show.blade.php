@@ -54,7 +54,7 @@
                         <td>
                             @if($productSubCategory->photo)
                                 <a href="{{ $productSubCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $productSubCategory->photo->getUrl('thumb') }}">
+                                    <img src="{{ $productSubCategory->photo->getUrl('thumb') }}" height="50px">
                                 </a>
                             @endif
                         </td>

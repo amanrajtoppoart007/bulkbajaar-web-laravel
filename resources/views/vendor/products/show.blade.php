@@ -41,10 +41,66 @@
                     </tr>
                     <tr>
                         <th>
+                            Display Price
+                        </th>
+                        <td>
+                            {{ applyPrice($product->price, $product->discount) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.discount') }}
+                        </th>
+                        <td>
+                            {{ $product->discount }}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.product.fields.price') }}
                         </th>
                         <td>
                             {{ $product->price }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            GST
+                        </th>
+                        <td>
+                            {{ $product->gst }}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Portal Charge %
+                        </th>
+                        <td>
+                            {{ $portalChargePercent }}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            You will get
+                        </th>
+                        <td>
+                            {{ $product->price - getPercentAmount($product->price, $portalChargePercent) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            SKU
+                        </th>
+                        <td>
+                            {{ $product->sku ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            HSN
+                        </th>
+                        <td>
+                            {{ $product->hsn ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -71,16 +127,16 @@
                             {{ $product->productSubCategory->name ?? '' }}
                         </td>
                     </tr>
-
                     <tr>
                         <th>
-                            {{ trans('cruds.product.fields.discount') }}
+                            Brand
                         </th>
                         <td>
-                            {{ $product->discount }}%
+                            {{ $product->brand->title ?? '' }}
                         </td>
                     </tr>
-                    <tr>
+
+
                     <tr>
                         <th>
                             Expected Dispatch Time
@@ -103,10 +159,36 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.product.fields.description') }}
+                        </th>
+                        <td>
+                            {{ $product->description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             Refund & Return Policy
                         </th>
                         <td>
                             {{ $product->rrp ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Returnable
+                        </th>
+                        <td>
+                            {{ $product->is_returnable ? 'Yes' : 'No' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Returnable Conditions
+                        </th>
+                        <td>
+                            @foreach($product->productReturnConditions as $productReturnCondition)
+                                {{ ($loop->index + 1) . '. ' .  $productReturnCondition->title ?? '' }}<br>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

@@ -47,10 +47,58 @@
                 </tr>
                 <tr>
                     <th>
+                        Display Price
+                    </th>
+                    <td>
+                        &#8377;{{ applyPrice($product->price, $product->discount) }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        {{ trans('cruds.product.fields.discount') }}
+                    </th>
+                    <td>
+                        {{ $product->discount }}% (&#8377;{{ getPercentAmount($product->price, $product->discount) }})
+                    </td>
+                </tr>
+                <tr>
+                    <th>
                         {{ trans('cruds.product.fields.price') }}
                     </th>
                     <td>
-                        {{ $product->price }}
+                        &#8377;{{ $product->price }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        GST
+                    </th>
+                    <td>
+                        {{ $product->gst }}%
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Portal Charge %
+                    </th>
+                    <td>
+                        <form id="charge-form">
+                            <div class="input-group mb-3">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="number" name="charge" step="0.1" min="0" max="100" value="{{ $portalChargePercent }}" class="form-control" placeholder="Charge" aria-label="Charge" aria-describedby="button-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-save"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Vendor Receive
+                    </th>
+                    <td>
+                        &#8377;{{ $product->price - getPercentAmount($product->price, $portalChargePercent) }}
                     </td>
                 </tr>
                 <tr>
@@ -93,29 +141,12 @@
                         {{ $product->productSubCategory->name ?? '' }}
                     </td>
                 </tr>
-
                 <tr>
                     <th>
-                        {{ trans('cruds.product.fields.discount') }}
+                        Brand
                     </th>
                     <td>
-                        {{ $product->discount }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Portal Charge
-                    </th>
-                    <td>
-                        <form id="charge-form">
-                            <div class="input-group mb-3">
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="number" name="charge" step="0.1" min="0" max="100" value="{{ getPortalChargePercentage($product->id) }}" class="form-control" placeholder="Charge" aria-label="Charge" aria-describedby="button-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-save"></i></button>
-                                </div>
-                            </div>
-                        </form>
+                        {{ $product->brand->title ?? '' }}
                     </td>
                 </tr>
                 <tr>
@@ -152,6 +183,24 @@
                     </th>
                     <td>
                         {{ $product->rrp ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Returnable
+                    </th>
+                    <td>
+                        {{ $product->is_returnable ? 'Yes' : 'No' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Returnable Conditions
+                    </th>
+                    <td>
+                        @foreach($product->productReturnConditions as $productReturnCondition)
+                            {{ ($loop->index + 1) . '. ' .  $productReturnCondition->title ?? '' }}<br>
+                        @endforeach
                     </td>
                 </tr>
                 </tbody>

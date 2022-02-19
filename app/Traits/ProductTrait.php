@@ -40,12 +40,12 @@ trait ProductTrait
 
     public function checkIfProductLiked($productId)
     {
-        return Wishlist::whereProductId($productId)->whereUserId(auth('sanctum')->user()->id)->exists();
+        return Wishlist::whereProductId($productId)->whereUserId(auth('sanctum')->id())->exists();
     }
 
-    public function checkIfProductProductLiked($productPriceId)
+    public function checkIfProductOptionLiked($productOptionId)
     {
-        return Wishlist::whereProductPriceId($productPriceId)->whereUserId(auth('sanctum')->user()->id)->exists();
+        return Wishlist::whereProductOptionId($productOptionId)->whereUserId(auth('sanctum')->id())->exists();
     }
 
     public static function checkMasterStock($productPriceId){

@@ -3,13 +3,16 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Resources\UserApiResource;
 use App\Models\Area;
 use App\Models\Block;
 use App\Models\District;
 use App\Models\Order;
 use App\Models\Pincode;
 use App\Models\State;
+use App\Models\User;
 use App\Models\UserAddress;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -20,7 +23,19 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     public function getProfileDetails()
     {
         try {
-            $data = auth()->user();
+            $user = auth()->user();
+            $profile = $user->userProfile;
+
+            $data = [
+                'name' => $user->name ?? '',
+                'email' => $user->email ?? '',
+                'mobile' => $user->mobile ?? '',
+                'company_name' => $profile->company_name ?? '',
+                'representative_name' => $profile->representative_name ?? '',
+                'gst_number' => $profile->gst_number ?? '',
+                'pan_number' => $profile->pan_number ?? '',
+                'profile_photo' => $profile->profile_photo ? $profile->profile_photo->getUrl() : null,
+            ];
             if (!empty($data)) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Profile data fetched successfully'];
             } else {
@@ -35,9 +50,17 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     public function updateProfile(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'mobile' => 'required|unique:users,mobile,' . auth()->user()->id,
-            'email' => 'unique:users,email,' . auth()->user()->id,
-            'name' => 'required',
+            'mobile' => 'required',
+            'email' => 'required',
+            'name' => 'required|string',
+            'company_name' => 'required|string',
+            'representative_name' => 'required|string',
+            'gst_number' => 'required|string',
+            'pan_number' => 'required|string',
+            'profile_photo' => 'required|mimes:jpeg,png',
+            'gst'=>'required|mimes:jpeg,png',
+            'pan'=>'required|mimes:jpeg,png',
+
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +73,29 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->mobile = $request->input('mobile');
+            $profile = UserProfile::updateOrCreate([
+                'user_id' => auth()->id()
+            ], [
+                'company_name' => $request->input('company_name'),
+                'representative_name' => $request->input('representative_name'),
+                'gst_number' => $request->input('gst_number'),
+                'pan_number' => $request->input('pan_number'),
+            ]);
+            if ($request->hasFile('profile_photo')) {
+                $profile->clearMediaCollection('profile_photo');
+                $profile->addMedia($request->file('profile_photo'))->toMediaCollection('profile_photo');
+            }
+
+            if ($request->hasFile('pan')) {
+                $profile->clearMediaCollection('pan');
+                $profile->addMedia($request->file('pan'))->toMediaCollection('pan');
+            }
+
+             if ($request->hasFile('gst')) {
+                $profile->clearMediaCollection('gst');
+               $profile->addMedia($request->file('gst'))->toMediaCollection('gst');
+            }
+
             if ($user->save()) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Profile updated successfully'];
             } else {
@@ -234,7 +280,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             $address->name = $request->name ?? auth()->user()->name;
             $address->address = $request->input('address');
             $address->address_line_two = $request->input('address_line_two');
-            $address->address_type = $request->input('address_type') ?? 'BILLING';
+            $address->address_type = strtoupper($request->input('address_type') ?? 'BILLING');
             $address->state_id = $request->input('state_id');
             $address->district_id = $request->input('district_id');
             $address->pincode = $request->input('pincode');
@@ -278,7 +324,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             if ($address) {
                 $address->name = $request->input('name') ?? auth()->user()->name;
                 $address->address = $request->input('address');
-                $address->address_type = $request->input('address_type');
+                $address->address_type = strtoupper($request->input('address_type'));
                 $address->address_line_two = $request->input('address_line_two');
                 $address->state_id = $request->input('state_id');
                 $address->district_id = $request->input('district_id');
@@ -296,12 +342,17 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
-    public function getAddresses()
+    public function getAddresses(Request $request)
     {
         try {
-            $data = [];
-            $addresses = UserAddress::where('user_id', auth()->user()->id)->get();
+            $query = UserAddress::query();
+            $query->where('user_id', auth()->id());
+            if ($request->input('address_type')) {
+                $query->where('address_type', $request->input('address_type'));
+            }
+            $addresses = $query->get();
 
+            $data = [];
             foreach ($addresses as $address) {
                 $data[] = [
                     'id' => $address->id,
@@ -313,7 +364,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     'district_id' => $address->district_id,
                     'district' => $address->district->name ?? null,
                     'pincode' => $address->pincode ?? null,
-                    'address_type' => UserAddress::ADDRESS_TYPE_RADIO[$address->address_type] ?? null,
+                    'address_type' => $address->address_type,
                     'is_default' => (bool)$address->is_default,
                     'checked' => false,
                 ];
@@ -381,13 +432,8 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         }
 
         try {
-            $exceptOrderStatuses = [
-                'PENDING' => 'PENDING',
-                'APPROVED' => 'APPROVED',
-                'CONFIRMED' => 'CONFIRMED',
-                'DISPATCHED' => 'DISPATCHED',
-            ];
-            if (Order::whereAddressId($request->input('id'))->whereIn('status', $exceptOrderStatuses)->exists()) {
+            $exceptOrderStatuses = Order::ADDRESS_DELETE_ALLOWED;
+            if (Order::whereShippingAddressId($request->id)->whereIn('status', $exceptOrderStatuses)->exists()) {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'This address has active order.'];
             } else {
                 if (UserAddress::destroy($request->input('id'))) {
@@ -400,5 +446,69 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
+    }
+
+
+    public function getUser()
+    {
+        try {
+          $user = User::find(auth()->user()->id);
+          if(!empty($user))
+          {
+              $user = new UserApiResource($user);
+              $result = ['status' => 1, 'response' => 'success','data'=>$user, 'message' => 'User fetched successfully'];
+          }
+          else
+          {
+               $result = ['status' => 0, 'response' => 'error', 'message' => 'User not found'];
+          }
+        }
+        catch (\Exception $exception)
+        {
+             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+    
+    public function updateDocument(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'docType' => 'required|string',
+            'gst'=>'nullable|mimes:jpeg,png|required_without:shop_bill_invoice',
+            'shop_bill_invoice'=>'nullable|mimes:jpeg,png|required_without:gst',
+
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+        try {
+
+            $user = auth()->user();
+            $profile = UserProfile::where('user_id',$user->id)->first();
+            
+            if ($request->hasFile('gst_image') && $request->input('docType')==='gst') {
+                $profile->clearMediaCollection('gst_image');
+                $profile->addMedia($request->file('gst_image'))->toMediaCollection('gst_image');
+            }
+
+            
+
+             if ($request->hasFile('shop_bill_invoice') && $request->input('docType')==='shop_bill_invoice') {
+                $profile->clearMediaCollection('shop_bill_invoice');
+               $profile->addMedia($request->file('shop_bill_invoice'))->toMediaCollection('shop_bill_invoice');
+            }
+
+            if ($profile->save()) {
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Profile updated successfully'];
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
+            }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+
     }
 }

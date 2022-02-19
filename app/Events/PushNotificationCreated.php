@@ -31,6 +31,6 @@ class PushNotificationCreated
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('krishakvikas-updates');
+        return new PrivateChannel('bulkbajaar-updates');
     }
 }

@@ -25,7 +25,9 @@ class Product extends Model implements HasMedia
     ];
 
     protected $attributes = [
-        'discount' => 0
+        'discount' => 0,
+        'gst' => 18,
+        'gst_type' => 'exclusive',
     ];
 
     protected $dates = [
@@ -42,6 +44,8 @@ class Product extends Model implements HasMedia
         'price',
         'moq',
         'discount',
+        'gst',
+        'gst_type',
         'product_category_id',
         'product_sub_category_id',
         'dispatch_time',
@@ -53,6 +57,7 @@ class Product extends Model implements HasMedia
         'order_count',
         'brand_id',
         'is_returnable',
+        'product_attributes',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,6 +69,10 @@ class Product extends Model implements HasMedia
         'REJECTED' => 'Reject',
     ];
 
+    protected $casts = [
+        'product_attributes' => 'json'
+    ];
+
 
     protected function serializeDate(DateTimeInterface $date)
     {
@@ -72,13 +81,8 @@ class Product extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(ProductCategory::class);
+        $this->addMediaConversion('thumb');
+        $this->addMediaConversion('preview');
     }
 
     public function tags()
@@ -103,29 +107,10 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function subCategories()
-    {
-        return $this->belongsToMany(ProductSubCategory::class);
-    }
-
-    public function productUnits()
-    {
-        return $this->hasMany(ProductUnit::class);
-    }
-
-    public function productPrices()
-    {
-        return $this->hasMany(ProductPrice::class);
-    }
 
     public function reviews()
     {
         return $this->hasMany(Review::class);
-    }
-
-    public function getLowestAttribute()
-    {
-        return $this->productPrices->where('price', '>=', 0)->min('price');
     }
 
     public function vendor(): BelongsTo

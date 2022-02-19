@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -181,5 +182,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userProfile(): HasOne
     {
         return $this->hasOne(UserProfile::class, 'user_id', 'id');
+    }
+
+    public function pushNotifications(): BelongsToMany
+    {
+        return $this->belongsToMany(PushNotification::class);
     }
 }

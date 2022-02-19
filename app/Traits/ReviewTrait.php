@@ -2,6 +2,7 @@
 namespace App\Traits;
 
 use App\Models\Product;
+use App\Models\Review;
 
 trait ReviewTrait {
 
@@ -22,6 +23,27 @@ trait ReviewTrait {
         }
         $average = (($one * 1) + ($two * 2) + ($three * 3) + ($four * 4) + ($five * 5)) / ($one + $two + $three + $four + $five);
         return number_format($average, 2);
+    }
+
+    public function getProductReviewCounts($productId){
+
+        $reviews = Review::where('product_id', $productId)->pluck('star')->countBy();
+
+        $total = $reviews->sum();
+
+        $sum = $reviews->map(function ($d, $key) use ($reviews) {
+            return $key * $d;
+        })->sum();
+
+        return [
+            1 => $reviews[1] ?? 0,
+            2 => $reviews[2] ?? 0,
+            3 => $reviews[3] ?? 0,
+            4 => $reviews[4] ?? 0,
+            5 => $reviews[5] ?? 0,
+            'total' => $total,
+            'average' => number_format($total == 0 ? 0 : $sum / $total, 2),
+        ];
     }
 
 }

@@ -69,7 +69,7 @@ class ProductController extends Controller
             $table->editColumn('image', function ($row) {
                 if (!empty($row->images[0])) {
                     $imageThumbUrl = $row->images[0]->getUrl('thumb');
-                    return '<a href="'.$imageThumbUrl.'" target="_blank" style="display: inline-block"><img src="'.$imageThumbUrl.'"></a>';
+                    return '<a href="'.$imageThumbUrl.'" target="_blank" style="display: inline-block"><img style="width:80px;height:80px" src="'.$imageThumbUrl.'"></a>';
                 }
                 return "";
             });
@@ -110,7 +110,8 @@ class ProductController extends Controller
         $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
-        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions'));
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions', 'brands'));
     }
 
     public function store(StoreProductRequest $request)
@@ -129,30 +130,39 @@ class ProductController extends Controller
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-
-            $productOptions = $request->only('unit', 'quantity', 'option');
-            $size = sizeof($productOptions['option']);
-            $productOptionsArr = [];
-            foreach ($productOptions as $key => $value) {
-                for ($i = 0; $i < $size; $i++) {
-                    $productOptionsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
+            $colors = [];
+            $sizes = [];
+            foreach ($request->product_options as $product_option){
+                if (!in_array($product_option['color'], $colors)){
+                    $colors[] = $product_option['color'];
                 }
-            }
-            foreach ($productOptionsArr as $value) {
-                if (!empty($value['option'])) {
-                    $data = [
-                        'product_id' => $product->id,
-                        'unit' => !empty($value['unit']) ? $value['unit'] : null,
-                        'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
-                        'option' => $value['option'],
-                    ];
-                    ProductOption::create($data);
+                if (!in_array($product_option['size'], $sizes)){
+                    $sizes[] = $product_option['size'];
                 }
+                ProductOption::create([
+                    'product_id' => $product->id,
+                    'option' => $product_option['option'],
+                    'color' => $product_option['color'],
+                    'size' => $product_option['size'],
+                    'unit' => $product_option['unit'],
+                    'quantity' => $product_option['quantity'],
+                ]);
             }
 
             if ($request->boolean('is_returnable')){
                 $product->productReturnConditions()->sync($request->return_conditions);
             }
+            $product->product_attributes = [
+                [
+                    'key' => 'color',
+                    'values' => $colors
+                ],
+                [
+                    'key' => 'size',
+                    'values' => $sizes
+                ],
+            ];
+            $product->save();
 
             DB::commit();
             $data = array(
@@ -179,8 +189,9 @@ class ProductController extends Controller
         $productOptions = ProductOption::where('product_id', $product->id)->get();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
+        $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
         return view('admin.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions'));
+            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions', 'brands'));
     }
 
     public function update(UpdateProductRequest $request)
@@ -211,33 +222,51 @@ class ProductController extends Controller
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-            $productUnits = $request->only('pu_id', 'unit', 'quantity', 'option');
-            $size = sizeof($productUnits['option']);
-            $productUnitsArr = [];
-            foreach ($productUnits as $key => $value) {
-                for ($i = 0; $i < $size; $i++) {
-                    $productUnitsArr[$i][$key] = !empty($value[$i]) ? $value[$i] : null;
-                }
+
+            $deleteOptions = [];
+            foreach ($request->product_options as $product_option){
+                $deleteOptions[] = $product_option['id'];
             }
-            ProductOption::where('product_id', $request->id)->whereNotIn('id', $request->pu_id)->delete();
-            foreach ($productUnitsArr as $value) {
-                if (!empty($value['option'])) {
-                    $productUnit = [
-                        'product_id' => $product->id,
-                        'unit' => !empty($value['unit']) ? $value['unit'] : null,
-                        'quantity' => !empty($value['quantity']) ? $value['quantity'] : null,
-                        'option' => $value['option'],
-                    ];
-                    ProductOption::updateOrCreate([
-                        'id' => $value['pu_id']
-                    ], $productUnit);
+
+            ProductOption::where('product_id', $request->id)->whereNotIn('id', $deleteOptions)->delete();
+
+            $colors = [];
+            $sizes = [];
+            foreach ($request->product_options as $product_option){
+                if (!in_array($product_option['color'], $colors)){
+                    $colors[] = $product_option['color'];
                 }
+                if (!in_array($product_option['size'], $sizes)){
+                    $sizes[] = $product_option['size'];
+                }
+                ProductOption::updateOrCreate([
+                    'id' => $product_option['id']
+                ],[
+                    'product_id' => $product->id,
+                    'option' => $product_option['option'],
+                    'color' => $product_option['color'],
+                    'size' => $product_option['size'],
+                    'unit' => $product_option['unit'],
+                    'quantity' => $product_option['quantity'],
+                ]);
             }
+
             if ($request->boolean('is_returnable')){
                 $product->productReturnConditions()->sync($request->return_conditions);
             }else{
                 $product->productReturnConditions()->sync([]);
             }
+            $product->product_attributes = [
+                [
+                    'key' => 'color',
+                    'values' => $colors
+                ],
+                [
+                    'key' => 'size',
+                    'values' => $sizes
+                ],
+            ];
+            $product->save();
             DB::commit();
             $data = array(
                 "status" => true,
@@ -258,9 +287,9 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('productCategory', 'productSubCategory', 'vendor');
-
-        return view('admin.products.show', compact('product'));
+        $product->load('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'productReturnConditions');
+        $portalChargePercent = getPortalChargePercentage($product->id);
+        return view('admin.products.show', compact('product', 'portalChargePercent'));
     }
 
     public function destroy(Product $product)

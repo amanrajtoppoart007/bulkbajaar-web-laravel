@@ -65,43 +65,8 @@ class PushNotificationController extends Controller
         $notification = new PushNotification();
         $notification->title = $request->title;
         $notification->message = $request->message;
-
-        if ($request->users) {
-            $notification->save();
-
-            if ($request->input('photo', false)) {
-                $notification->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
-            }
-            $imageUrl = null;
-            if ($notification->photo) {
-                $imageUrl = $notification->photo->getUrl('thumb');
-            } else {
-                $imageUrl = asset('assets/assets/images/logo-1.png');
-            }
-            $deviceTokens = User::whereIn('id', $request->users)->whereNotNull('device_token')->pluck('device_token', 'id')->toArray();
-            if (!empty($deviceTokens)) {
-                $usersIds = [];
-                foreach ($deviceTokens as $key => $value) {
-                    $usersIds[] = $key;
-                }
-                $notification->users()->sync($usersIds);
-
-                $message = [
-                    'title' => $request->title,
-                    'body' => $request->message,
-                    'imageUrl' => $imageUrl,
-                    'created_at' => Carbon::parse($notification->created_at)->format('d M Y h:i A')
-                ];
-                $data = [
-                    'device_tokens' => $deviceTokens,
-                    'message' => $message
-                ];
-
-                event(new PushNotificationCreated($data));
-
-                $result = ['status' => 1, 'response' => 'success', 'message' => 'Notification sent successfully.'];
-                return response()->json($result, 200);
-            }
+        if ($notification->save()) {
+            $notification->users()->sync($request->users);
             $result = ['status' => 1, 'response' => 'success', 'message' => 'Notification saved successfully.'];
             return response()->json($result, 200);
         } else {

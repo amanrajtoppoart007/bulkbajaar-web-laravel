@@ -169,6 +169,7 @@ class AuthController extends BaseController
     public function registrationStepOne(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
+            'name'=>'required',
             'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
             'email' => 'required|email|unique:users,email|unique:vendors,email',
             'password' => ['required', 'string', 'confirmed'],
@@ -185,6 +186,10 @@ class AuthController extends BaseController
                 $user->mobile = $input['mobile'];
                 $user->password = Hash::make($input['password']);
                 $user->device_token = $input['device_token'];
+                if($request->has('name'))
+                {
+                    $user->name = $input['name'];
+                }
                 if ($user->save()) {
                     $data = User::where('id', $user->id)->select('id', 'name', 'email', 'mobile')->first();
                     $data['access_token'] = $user->createToken('user_token')->plainTextToken;

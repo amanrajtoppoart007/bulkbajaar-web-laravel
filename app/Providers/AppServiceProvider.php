@@ -30,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
          Notification::extend('sms', function ($app) {
             return new SmsChannel();
         });
+        
+     \URL::forceScheme('https');
     }
 }

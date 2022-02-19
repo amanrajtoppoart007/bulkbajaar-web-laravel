@@ -250,6 +250,7 @@ class OrderController extends Controller
             $invoice->amount = $order->sub_total;
             $invoice->charge = $order->charge_amount;
             $invoice->discount = $order->discount_amount;
+            $invoice->gst = $order->gst_amount;
             $invoice->total = $order->grand_total;
             $invoice->save();
 

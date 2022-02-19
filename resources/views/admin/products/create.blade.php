@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="vendor_id">Seller</label>
+                                    <label class="required" for="vendor_id">Seller</label>
                                     <select
                                         class="form-control select2 {{ $errors->has('vendor_id') ? 'is-invalid' : '' }}"
                                         name="vendor_id" id="vendor_id" required>
@@ -115,6 +115,20 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <label class="required" for="gst">GST</label>
+                                    <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="gst" id="gst" value="{{ old('gst', 18) }}" required>
+                                    @if($errors->has('gst'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('gst') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
                                     <label for="dispatch_time">Expected Dispatch Time</label>
                                     <input class="form-control {{ $errors->has('dispatch_time') ? 'is-invalid' : '' }}"
                                            type="text"
@@ -159,6 +173,24 @@
                                         </div>
                                     @endif
                                     <span class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="brand_id">Brand</label>
+                                    <select
+                                        class="form-control select2 {{ $errors->has('brand_id') ? 'is-invalid' : '' }}"
+                                        name="brand_id" id="brand_id">
+                                        @foreach($brands as $id => $brand)
+                                            <option
+                                                value="{{ $id }}" {{ $id == old('brand_id') ? 'selected' : '' }}>{{ $brand }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('brand_id'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('brand_id') }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -225,48 +257,43 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group mb-2">
+                                    <label for="color">Select Color</label>
+                                    <select name="" id="color" class="select2" multiple>
+                                        @foreach(\App\Models\ProductOption::COLOR_SELECT as $color)
+                                            <option value="{{ $color }}">{{ $color }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="size">Select Size</label>
+                                    <select name="" id="size" class="select2" multiple>
+                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
+                                            <option value="{{ $size }}">{{ $size }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-primary mb-2" id="generate-option-button">Generate Options</button>
+                            </div>
                             <div class="col-12 table-responsive">
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>Option</th>
+                                        <th>Color</th>
+                                        <th>Size</th>
                                         <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                                         <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
                                         <th></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="form-control option" type="text"
-                                                   name="option[]" style="min-width: 100px">
-                                        </td>
-                                        <td>
-                                            <select class="form-control" name="unit[]" style="min-width: 100px;">
-                                                @foreach($unitTypes as $unitType)
-                                                    <option
-                                                        value="{{ $unitType->name }}" {{ old('unit') == $unitType->name ? 'selected' : '' }}>{{ $unitType->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input class="form-control" style="min-width: 100px" type="number" step="1" name="quantity[]">
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
 
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-
-
                 </div>
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">
@@ -343,43 +370,91 @@
             }
         }
 
-        const addProductUnitTemplate = () => {
+
+        let variations = [];
+
+        const generateVariations = (colors, sizes) => {
+            if(colors.length<=0)
+            {
+                alert('Please select at least one color');
+                variations = [];
+                return;
+            }
+
+            colors?.forEach((color, i)=>{
+                if(sizes?.length > 0)
+                {
+                    sizes?.forEach((size, j)=>{
+                        let option = `${color}-${size}`;
+                        const exists = variations.filter(opt => opt.option == option).length > 0;
+                        if (!exists) {
+                            let object = {
+                                option,
+                                color,
+                                size,
+                                quantity: 0,
+                                unit: ''
+                            }
+                            variations.push(object);
+                        }
+                    });
+                }else {
+                    let option = color;
+                    const exists = variations.filter(opt => opt.option == option).length > 0;
+                    if (!exists) {
+                        let object = {
+                            option,
+                            color,
+                            size: '',
+                            quantity: 0,
+                            unit: ''
+                        }
+                        variations.push(object);
+                    }
+                }
+            });
+            createOptions();
+        }
+
+        $('#generate-option-button').click(() => {
+            let colors = $('#color').val()
+            let sizes = $('#size').val();
+            generateVariations(colors, sizes)
+        })
+
+        const createOptions = () => {
+            let template = '';
+            variations?.forEach((variation, index)=>{
+                template += productOptionTemplate(variation, index);
+            });
+            $('table tbody').html(template)
+        }
+
+        const productOptionTemplate = (variation, index) => {
+
             let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="unit[]" style="min-width: 100px">`;
+            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
             $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}">${e.name}</option>`;
+                unitSelect += `<option value="${e.name}" ${variation.unit == e.name ? 'selected' : ''}>${e.name}</option>`;
             })
             unitSelect += "</select>";
 
-            let template = `<tr>`+
-                `<td><input class="form-control option" type="text" name="option[]" style="min-width: 100px"></td>`+
-                `<td>${unitSelect}</td>`+
-                `<td><input class="form-control" type="number" step="1" name="quantity[]" style="min-width: 100px"></td>`+
-                `<td><button type="button" class="btn btn-sm btn-success add-button"><i class="fa fa-plus"></i></button></td>`+
-                `</tr>`;
+            return `<tr data-index="${index}">`+
+                        `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
+                        `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
+                        `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
+                        `<td>${unitSelect}</td>`+
+                        `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
+                        `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
+                    `</tr>`;
 
-            $('table tbody').append(template)
+
         }
-
-        $(document).on('click', '.add-button', function (){
-            let tr = $(this).closest('tr');
-
-            let isNotEmpty = $($(tr).find('.option')).filter(function () {
-                return $.trim($(this).val()).length == 0;
-            }).length == 0;
-
-            if(isNotEmpty){
-                addProductUnitTemplate()
-                let deleteButton = '<button type="button" class="btn btn-danger btn-sm delete-button"><i class="fa fa-trash"></i></button>';
-                $(this).parent().append(deleteButton);
-                $(this).remove();
-            }else{
-                alert('Please enter values then add more')
-            }
-        });
 
         $(document).on('click', '.delete-button', function (){
             let tr = $(this).closest('tr');
+            let index = $(tr).data('index');
+            variations.splice(index, 1);
             $(tr).remove()
         });
 
@@ -393,6 +468,21 @@
                     return;
                 }
             }
+
+            if(variations.length <= 0){
+                alert('Please create variations')
+                return;
+            }
+
+            let isNotEmpty = $('.option, .color').filter(function (){
+                return $.trim($(this).val()).length == 0
+            }).length == 0;
+
+            if(!isNotEmpty){
+                alert('Option or color from any variation cannot be blank')
+                return;
+            }
+
             var formData = new FormData($(this)[0]);
             $.ajax({
                 url: "{{route('admin.products.store')}}",

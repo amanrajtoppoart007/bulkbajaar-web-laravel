@@ -9,6 +9,29 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'order_id',
+        'order_number',
+        'product_id',
+        'product_option_id',
+        'amount',
+        'quantity',
+        'discount',
+        'discount_amount',
+        'charge_percent',
+        'charge_amount',
+        'gst',
+        'gst_amount',
+        'total_amount',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $attributes = [
+        'gst' => 18
+    ];
+
     protected $guarded = [];
 
     public function order()

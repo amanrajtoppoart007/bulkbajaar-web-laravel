@@ -35,9 +35,9 @@ class SendUserRegisteredMessage implements ShouldQueue
     {
         $emails = Admin::whereApproved(true)->whereVerified(true)->pluck('email');
         if(!empty($emails)){
-            Mail::to($emails)->send(new SendUserRegisteredMailToAdmin($event->data));
+//            Mail::to($emails)->send(new SendUserRegisteredMailToAdmin($event->data));
         }
-        Mail::to($event->data['email'])->send(new UserWelcomeMessage($event->data));
+//        Mail::to($event->data['email'])->send(new UserWelcomeMessage($event->data));
 //        $this->sendRegisteredUserSms($event->data);
         return true;
     }

@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Events\OrderCreated;
 use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
@@ -13,17 +12,18 @@ use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\Transaction;
 use App\PaymentGateway\Razorpay\RazorpayTrait;
+use App\Traits\FirebaseNotificationTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Razorpay\Api\Api;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends \App\Http\Controllers\Api\BaseController
 {
-    use UniqueIdentityGeneratorTrait, RazorpayTrait;
+    use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait;
 
     public function placeOrder(Request $request)
     {
@@ -31,6 +31,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             'payment_method' => ['required', Rule::in(['ONLINE', 'COD', 'HALF'])],
             'billing_address_id' => ['required', 'exists:user_addresses,id,deleted_at,NULL'],
             'shipping_address_id' => ['required', 'exists:user_addresses,id,deleted_at,NULL'],
+            'cart_ids' => 'nullable|array',
+            'cart_ids.*' => "numeric"
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +40,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
         try {
-            $carts = Cart::where('user_id', auth()->id())->with(['product:id,vendor_id,price,moq,discount'])->get();
+            if ($request->cart_ids){
+                $carts = Cart::whereUserId(auth()->id())
+                    ->whereIn('id', $request->cart_ids)
+                    ->with(['product'])->get();
+            }else{
+                $carts = Cart::whereUserId(auth()->id())->with(['product'])->get();
+            }
             if (!count($carts)) {
                 $result = [
                     'status' => 0,
@@ -66,14 +74,18 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 $orderDiscountTotal = 0;
                 $orderGrandTotal = 0;
                 $orderChargeAmount = 0;
+                $orderGstAmount = 0;
                 $index = 1;
                 foreach ($cartGroup as $cart) {
                     $product = $cart->product;
                     $price = $product->price;
+                    $gst = $product->gst;
                     $portalChargePercent = getPortalChargePercentage($product->id);
                     $discountAmount = getPercentAmount($price * $cart->quantity, $product->discount);
                     $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
-                    $totalAmount = $price * $cart->quantity;
+                    $gstAmount = getPercentAmount($price * $cart->quantity, $gst);
+                    $totalAmount = ($price * $cart->quantity) + $gstAmount;
+
                     $orderItems[$vendorId][] = [
                         'order_number' => $orderNo.'-'.($index++),
                         'product_id' => $product->id,
@@ -84,11 +96,14 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         'discount_amount' => $discountAmount,
                         'charge_percent' => $portalChargePercent,
                         'charge_amount' => $chargeAmount,
+                        'gst' => $gst,
+                        'gst_amount' => $gstAmount,
                         'total_amount' => $totalAmount,
                     ];
                     $orderSubTotal += ($price * $cart->quantity);
                     $orderDiscountTotal += $discountAmount;
                     $orderChargeAmount += $chargeAmount;
+                    $orderGstAmount += $gstAmount;
                     $orderGrandTotal += $totalAmount;
                 }
                 $orders[$vendorId] = [
@@ -103,6 +118,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'discount_amount' => $orderDiscountTotal,
                     'charge_percent' => $portalChargePercent,
                     'charge_amount' => $orderChargeAmount,
+                    'gst_amount' => $orderGstAmount,
                     'grand_total' => $orderGrandTotal,
                 ];
                 $ordersTotal += $orderGrandTotal;
@@ -128,13 +144,13 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         OrderItem::create($orderItem);
                     }
                 }
-                $orderObj->load(['user', 'vendor']);
-
-//                event(new OrderCreated($orderObj));
             }
-
             //Delete cart items
-//            Cart::where('user_id', auth()->id())->delete();
+            if($request->cart_ids){
+                Cart::where('user_id', auth()->id())->whereIn('id', $request->cart_ids)->delete();
+            }else{
+                Cart::where('user_id', auth()->id())->delete();
+            }
 
             DB::commit();
 
@@ -154,6 +170,8 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'order_number' => $orderGroupNo,
                     'razor_order_id' => $razorOrder['data']['id'] ?? null,
                     'amount' => $razorOrder['data']['amount'] ?? null,
+                    'razorpay_key' => env('RAZOR_KEY') ?? null,
+                    'razorpay_secret' => env('RAZOR_SECRET') ?? null,
                 ],
                 'message' => 'Order placed successfully'
             ];
@@ -213,14 +231,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
 
             if ($razorPayment->status != 'failed') {
                 DB::transaction(function () use ($orderGroupNo, $razorPayment) {
-                    $orders = Order::where($orderGroupNo)->with('orderItems')->get();
+                    $orders = Order::where('order_group_number', $orderGroupNo)->with('orderItems')->get();
                     foreach ($orders as $order) {
                         $type = $order->payment_type;
                         if ($type == 'HALF') {
-                            $order->amount_paid += ($order->grand_total / 2);
+                            $order->amount_paid = ($order->grand_total / 2);
                         } else {
-                            $order->amount_paid += $order->grand_total;
+                            $order->amount_paid = $order->grand_total;
                         }
+                        $order->status = 'CONFIRMED';
                         $order->payment_status = $order->grand_total > $order->amount_paid ? 'PARTLY_PAID' : 'PAID';
                         $order->save();
                     }
@@ -299,15 +318,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-//        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
-//            $result = [
-//                'status' => 0,
-//                'response' => 'error',
-//                'action' => 'rejected',
-//                'message' => "This order does not belong to you."
-//            ];
-//            return response()->json($result, 200);
-//        }
+        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'rejected',
+                'message' => "This order does not belong to you."
+            ];
+            return response()->json($result, 200);
+        }
 
         try {
             $order = Order::whereOrderNumber($request->input('order_number'))->first();
@@ -318,7 +337,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'vendor',
                 'orderItems.product',
                 'orderItems.product.productReturnConditions:id,title',
-                'orderItems.productOption:id,option',
+                'orderItems.productOption',
                 'billingAddress.state:id,name',
                 'billingAddress.district:id,name',
                 'shippingAddress.state:id,name',
@@ -353,6 +372,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 'payment_type' => $order->payment_type,
                 'sub_total' => $order->sub_total + $order->discount_amount,
                 'discount_amount' => $order->discount_amount,
+                'gst_amount' => $order->gst_amount,
                 'grand_total' => $order->grand_total,
                 'status' => $order->status,
                 'payment_status' => $order->payment_status,
@@ -376,14 +396,21 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     'product_id' => $orderItem->product_id,
                     'product' => $orderItem->product->name,
                     'product_option_id' => $orderItem->product_option_id,
-                    'option' => $orderItem->productOption->option ?? null,
                     'amount' => applyPrice($orderItem->amount, $orderItem->discount),
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
+                    'gst_amount' => $orderItem->gst_amount,
                     'total_amount' => $orderItem->total_amount,
                     'is_returnable' => (bool)($orderItem->product->is_returnable ?? 0),
                     'return_conditions' => $orderItem->product->productReturnConditions ?? [],
-                    'thumb_link' => $thumbLink
+                    'thumb_link' => $thumbLink,
+                    'product_option' => [
+                        'id' => $orderItem->product_option_id,
+                        'option' => $orderItem->productOption->option ?? null,
+                        'unit' => $orderItem->productOption->unit ?? null,
+                        'size' => $orderItem->productOption->size ?? null,
+                        'color' => $orderItem->productOption->color ?? null,
+                    ]
                 ];
             }
             if (!empty($data)) {
@@ -545,6 +572,84 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
 
         } catch (\Exception $exception) {
             DB::rollBack();
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function getOrderGroupDetails(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'order_number' => 'required|exists:orders,order_group_number',
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
+
+        if (!Order::whereOrderGroupNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+            $result = [
+                'status' => 0,
+                'response' => 'error',
+                'action' => 'rejected',
+                'message' => "This order does not belong to you."
+            ];
+            return response()->json($result, 200);
+        }
+
+        try {
+            $orders = Order::whereOrderGroupNumber($request->order_number)->withCount('orderItems')->get();
+            $transaction = Transaction::where('order_group', $request->order_number)->first();
+
+            $orderDate = "";
+            $itemsCount = 0;
+            $itemsTotal = 0;
+            $gst = 0;
+            $orderTotal = 0;
+            $paid = 0;
+
+            foreach ($orders as $order){
+                $orderDate = $order->created_at->format('d-m-Y');
+                $itemsCount += $order->order_items_count;
+                $itemsTotal += $order->sub_total;
+                $gst += $order->gst_amount;
+                $orderTotal += $order->grand_total;
+                $paid += $order->amount_paid;
+            }
+
+
+            $data = [
+                'order_group_number' => $request->order_number,
+                'items_count' => $itemsCount,
+                'order_date' => $orderDate,
+                'items_total' => $itemsTotal,
+                'gst' => $gst,
+                'order_total' => $orderTotal,
+                'paid' => $paid,
+                'method' => $transaction->method ?? '',
+            ];
+
+            $class = new OrderList($orders);
+            $data['list'] = $class->execute();
+            if (!empty($data)) {
+                $result = [
+                    'status' => 1,
+                    'response' => 'success',
+                    'action' => 'fetched',
+                    'data' => $data,
+                    'message' => 'Order details fetched successfully'
+                ];
+            } else {
+                $result = [
+                    'status' => 0,
+                    'response' => 'error',
+                    'action' => 'add',
+                    'message' => 'Order details not available'
+                ];
+            }
+        } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);

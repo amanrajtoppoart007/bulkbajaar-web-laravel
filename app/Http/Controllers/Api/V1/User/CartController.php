@@ -17,7 +17,7 @@ class CartController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'product_id' => 'required|exists:products,id',
-            'product_option_id' => 'nullable|exists:product_options,id',
+            'product_option_id' => 'required|exists:product_options,id',
             'quantity' => 'nullable|numeric',
         ]);
 
@@ -26,19 +26,10 @@ class CartController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if ($request->product_option_id){
-            $isExists = Cart::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
-
-        }else{
-            $isExists = Cart::where('product_id', $request->product_id)->where('user_id', auth()->id())->exists();
-            if ($isExists){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-                return response()->json($result, 200);
-            }
+        $isExists = Cart::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+        if ($isExists){
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
+            return response()->json($result, 200);
         }
 
         try {
@@ -62,29 +53,52 @@ class CartController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
-    public function getCarts()
+    public function getCarts(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'cart_ids' => 'nullable|array',
+            'cart_ids.*' => "numeric"
+        ]);
+
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
         try {
             $data = [];
-            $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
+            if ($request->cart_ids){
+                $carts = Cart::whereUserId(auth()->user()->id)
+                    ->whereIn('id', $request->cart_ids)
+                    ->with(['product', 'productOption'])->get();
+            }else{
+                $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
+            }
             foreach ($carts as $cart) {
                 $product = $cart->product;
                 $price = applyPrice($product->price, $product->discount);
                 $discountedPrice = $product->price;
                 $totalPrice = $discountedPrice * $cart->quantity;
+
                 $data[] = [
                     'id' => $cart->id,
                     'product_id' => $cart->product_id,
                     'product' => $product->name,
                     'product_option_id' => $cart->product_option_id,
+                    'liked' => $this->checkIfProductLiked($cart->product_id),
                     'product_option' => [
                         'option' => $cart->productOption->option ?? null,
                         'unit' => $cart->productOption->unit ?? null,
+                        'size' => $cart->productOption->size ?? null,
+                        'color' => $cart->productOption->color ?? null,
                         'quantity' => $cart->productOption->quantity ?? null,
+                        'liked' => $this->checkIfProductOptionLiked($cart->productOption->id ?? null),
                     ],
                     'quantity' => $cart->quantity,
                     'amount' => $price,
                     'discount' => $cart->product->discount ?? 0,
+                    'gst' => $cart->product->gst ?? 0,
+                    'gst_type' => $cart->product->gst_type ?? 0,
                     'discounted_amount' => $discountedPrice,
                     'total' => $totalPrice,
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null

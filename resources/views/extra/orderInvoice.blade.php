@@ -69,6 +69,8 @@
                         <th>Price</th>
                         <th>Qty</th>
                         <th>Discount</th>
+                        <th>Net Amount</th>
+                        <th colspan="2">GST</th>
                         <th>Total</th>
                     </tr>
                     </thead>
@@ -76,19 +78,25 @@
                     @foreach($order->orderItems  as $orderItem)
                         <tr>
                             <td>
-                                {{ $orderItem->product->name ?? '' }}
-                                @if($orderItem->product_option_id)
-                                    {{ $orderItem->productOption->option ?? '' }}
-                                @endif
+                                {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}, {{ $orderItem->productOption->color ?? '' }}, {{ $orderItem->productOption->size ?? '' }}
                             </td>
                             <td>
-                                &#8377;{{ $orderItem->amount }}
+                                &#8377;{{ applyPrice($orderItem->amount, $orderItem->discount) }}
                             </td>
                             <td>
                                 {{ $orderItem->quantity }}
                             </td>
                             <td>
                                 &#8377;{{ $orderItem->discount_amount }}
+                            </td>
+                            <td>
+                                &#8377;{{ $orderItem->amount * $orderItem->quantity }}
+                            </td>
+                            <td>
+                                {{ $orderItem->gst }} %
+                            </td>
+                            <td>
+                                &#8377;{{ $orderItem->gst_amount }}
                             </td>
                             <td>
                                 &#8377;{{ $orderItem->total_amount }}
@@ -105,6 +113,9 @@
                     </tr>
                     <tr>
                         <th colspan="5">DISCOUNT: <span class="pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">GST: <span class="pull-right">+ &#8377;{{ $order->gst_amount }}</span></th>
                     </tr>
                     <tr>
                         <th colspan="5">GRAND TOTAL:<span class="pull-right">&#8377;{{ $order->grand_total }}</span>

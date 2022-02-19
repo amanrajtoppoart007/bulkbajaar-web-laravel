@@ -19,6 +19,10 @@ class UserProfile extends Model implements HasMedia
 
     protected $appends = [
         'image',
+        'gst',
+        'pan_card',
+        'gst_image',
+        'pan_card_image',
     ];
 
     protected $dates = [
@@ -27,9 +31,6 @@ class UserProfile extends Model implements HasMedia
         'deleted_at',
     ];
 
-    protected $casts = [
-        'crops' => 'array',
-    ];
 
     protected $fillable = [
         'user_id',
@@ -50,8 +51,8 @@ class UserProfile extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
-        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+        $this->addMediaConversion('thumb');
+        $this->addMediaConversion('preview');
     }
 
 
@@ -94,5 +95,31 @@ class UserProfile extends Model implements HasMedia
     public function getPanCardAttribute()
     {
         return $this->getMedia('pan_card')->last();
+    }
+
+    public function getProfilePhotoAttribute()
+    {
+        return $this->getMedia('profile_photo')->last();
+    }
+
+    public function getGstImageAttribute()
+    {
+         $image =  $this->getMedia('gst')->last();
+        if($image)
+        {
+            return $image->getFullUrl();
+        }
+        return null;
+    }
+
+    public function getPanCardImageAttribute()
+    {
+        $image = $this->getMedia('pan_card')->last();
+        if($image)
+        {
+            return $image->getFullUrl();
+        }
+        return null;
+         
     }
 }

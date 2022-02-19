@@ -13,11 +13,10 @@ class PushNotificationController extends Controller
     public function getPushNotifications()
     {
         $notifications = PushNotification::latest()->whereHas('users', function ($q){
-            $q->where('user_id', auth()->user()->id);
+            $q->where('user_id', auth()->id());
         })->get();
 
         $data = [];
-
         foreach ($notifications as $notification){
             $imageUrl = $notification->photo ? $notification->photo->getUrl() : asset('assets/assets/images/logo-1.png');
             $data[] = [

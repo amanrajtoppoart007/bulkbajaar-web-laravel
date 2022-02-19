@@ -3,10 +3,13 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Library\Api\V1\User\BrandList;
 use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
 use App\Library\Api\V1\User\SubCategoryList;
+use App\Models\Brand;
 use App\Models\Product;
+use App\Models\ProductOption;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Review;
@@ -24,7 +27,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         try {
             $products = Product::latest()
 //                ->where('approval_status', 'APPROVED')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -39,13 +42,58 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         return response()->json($result, 200);
     }
 
+    public function getProductOptionId(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'product_id'=>'required|integer',
+            'color'=>'required|string',
+            'size'=>'required|string'
+        ]);
+        if(!$validator->fails())
+        {
+            try {
+                $options = ProductOption::where([
+                    'product_id'=>$request->input('product_id'),
+                    'size'=>$request->input('size'),
+                    'color'=>$request->input('color'),
+                ])->get()->toArray();
+
+
+                if($options)
+                {
+                    $product_option_id = $options[0]['id'];
+
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => ['product_option_id'=>$product_option_id], 'message' => 'Product data fetched successfully'];
+                }
+                else
+                {
+                    $result = ['status' => 0, 'response' => 'failed', 'action' => 'retry', 'message' => 'No data found'];
+                }
+
+
+
+
+
+            } catch (\Exception $exception) {
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+            }
+        }
+        else
+        {
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
+            return response()->json($result, 200);
+        }
+
+        return response()->json($result, 200);
+    }
+
     public function getTopRatedProducts(Request $request)
     {
         try {
             $products = Product::limit(10)
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'brand', 'vendor', 'productOptions')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -107,24 +155,59 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $product = Product::find($request->product_id);
             try {
 
-                $product->load(['productCategory','productSubCategory', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
+                $product->load(['productCategory','productSubCategory', 'brand', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
 
+                $reviewCounts = $this->getProductReviewCounts($product->id);
                 $data = [
                     'id' => $product->id,
                     'vendor_id' => $product->vendor_id,
                     'name' => $product->name,
+                    'sku' => $product->sku,
+                    'hsn' => $product->hsn,
                     'description' => $product->description,
-                    'price' => applyPrice($product->price, null, $product->discount),
-                    'moq' => $product->moq,
+                    'price' => applyPrice($product->price, $product->discount),
+                    'gst' => $product->gst,
+                    'gst_type' => $product->gst_type,
+                    'threshold_quantity' => $product->moq,
+                    'threshold_price' => getMinimumOrderAmount($product->vendor_id),
                     'discount' => $product->discount,
+                    'discounted_price' => $product->price,
                     'category' => $product->productCategory->name ?? '',
                     'sub_category' => $product->productSubCategory->name ?? '',
+                    'brand' => $product->brand->title ?? '',
                     'dispatch_time' => $product->dispatch_time,
-                    'rrp' => $product->rrp,
-                    'product_options' => $product->productOptions,
+                    'refund_and_return_policy' => $product->rrp,
                     'vendor' => $product->vendor->name ?? '',
+                    'liked' => $this->checkIfProductLiked($product->id),
                     'return_conditions' => $product->productReturnConditions ?? [],
+                    'product_attributes' => $product->product_attributes ?? [],
+                    'ratings' => $reviewCounts ?? [],
+                    'rating' => $reviewCounts['average'] ?? 0,
                 ];
+                $data['product_options'] = [];
+                $data['images'] = [];
+
+                if (isset($product->images)) {
+                    foreach ($product->images as $image){
+                        $data['images'][] = $image->url;
+                    }
+                }
+
+                if (isset($product->productOptions)) {
+                    foreach ($product->productOptions as $productOption){
+                        $data['product_options'][] = [
+                            'id' => $productOption->id,
+                            'product_id' => $productOption->product_id,
+                            'option' => $productOption->option,
+                            'size' => $productOption->size,
+                            'color' => $productOption->color,
+                            'unit' => $productOption->unit,
+                            'quantity' => $productOption->quantity,
+                            'liked' => $this->checkIfProductOptionLiked($productOption->id),
+                        ];
+                    }
+                }
+
                 $result = [
                     'status' => 1,
                     'response' => 'success',
@@ -152,16 +235,9 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 });
             }
 
-            $categories = $query->paginate(10);
+            $categories = $query->get()->toArray();
             if (count($categories)) {
-                $categoryList = $categories->toArray();
-                $data['current_page'] = $categoryList['current_page'];
-                $data['next_page_url'] = $categoryList['next_page_url'];
-                $data['last_page_url'] = $categoryList['last_page_url'];
-                $data['per_page'] = $categoryList['per_page'];
-                $data['total'] = $categoryList['total'];
-                $data['list'] = $categoryList['data'];
-                $class = new CategoryList($categoryList['data']);
+                $class = new CategoryList($categories);
                 $data['list'] = $class->execute();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Category data fetched successfully'];
             } else {
@@ -196,7 +272,6 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $data['last_page_url'] = $subCategoryList['last_page_url'];
                 $data['per_page'] = $subCategoryList['per_page'];
                 $data['total'] = $subCategoryList['total'];
-                $data['list'] = $subCategoryList['data'];
                 $class = new SubCategoryList($subCategoryList['data']);
                 $data['list'] = $class->execute();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'SubCategory data fetched successfully'];
@@ -231,6 +306,10 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 $query->orderByDesc('order_count');
             }
 
+            if ($request->input('brand_id')) {
+                $query->where('brand_id', $request->input('brand_id'));
+            }
+
             if ($request->input('min_price')) {
                 $query->where('price','>=', $request->input('min_price'));
             }
@@ -241,7 +320,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
 //            $query->where('approval_status', 'APPROVED');
 
-            $products = $query->with(['productCategory', 'productSubCategory', 'vendor'])->paginate(10);
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(10);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -278,7 +357,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             $products = Product::limit(10)
 //                ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
-                ->with('productCategory', 'productSubCategory', 'reviews', 'vendor')
+                ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->get()->toArray();
             if (count($products)) {
                 $class = new ProductList($products);
@@ -287,6 +366,38 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
+        } catch (\Exception $exception) {
+            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
+        }
+        return response()->json($result, 200);
+    }
+
+    public function getBrands(Request $request)
+    {
+        try {
+            $query = Brand::query();
+
+            if (!empty($request->input('keyword'))) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'LIKE', "%" . $request->input('keyword') . "%");
+                });
+            }
+
+            $brands = $query->paginate(10);
+            if (count($brands)) {
+                $brandList = $brands->toArray();
+                $data['current_page'] = $brandList['current_page'];
+                $data['next_page_url'] = $brandList['next_page_url'];
+                $data['last_page_url'] = $brandList['last_page_url'];
+                $data['per_page'] = $brandList['per_page'];
+                $data['total'] = $brandList['total'];
+                $class = new BrandList($brandList['data']);
+                $data['list'] = $class->execute();
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Brand data fetched successfully'];
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No brand found'];
+            }
+
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }

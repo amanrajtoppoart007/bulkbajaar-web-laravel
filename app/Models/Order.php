@@ -52,6 +52,14 @@ class Order extends Model
         'CANCELLED'    => 'Cancelled',
     ];
 
+    const ADDRESS_DELETE_ALLOWED = [
+        'PENDING',
+        'REJECTED',
+        'DELIVERED',
+        'RETURN_REFUNDED',
+        'CANCELLED',
+    ];
+
     const CANCELLATION_ALLOWED = [
         'PENDING',
         'CONFIRMED'
@@ -96,6 +104,7 @@ class Order extends Model
         'discount_amount',
         'charge_percent',
         'charge_amount',
+        'gst_amount',
         'grand_total',
         'amount_paid',
         'amount_refunded',
@@ -103,13 +112,15 @@ class Order extends Model
         'status',
         'is_invoice_generated',
         'payment_verified_by_id',
+        'tracking_id',
+        'shipment_data',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $attributes = [
-        'payment_status' => 'PENDING'
+        'payment_status' => 'PENDING',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

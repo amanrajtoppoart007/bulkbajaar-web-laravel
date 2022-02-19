@@ -43,8 +43,8 @@ class ProductSubCategory extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop', 50, 50)->keepOriginalImageFormat();
-        $this->addMediaConversion('preview')->fit('crop', 120, 120)->keepOriginalImageFormat();
+        $this->addMediaConversion('thumb')->fit('crop',120,120)->keepOriginalImageFormat();
+        $this->addMediaConversion('preview')->keepOriginalImageFormat();
     }
 
     public function getPhotoAttribute()

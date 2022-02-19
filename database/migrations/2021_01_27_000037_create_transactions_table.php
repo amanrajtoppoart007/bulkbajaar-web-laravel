@@ -10,10 +10,8 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('payment_id')->nullable();
-            $table->string('refund_id')->nullable();
-            $table->string('gateway')->nullable();
-            $table->string('entity')->nullable();
+            $table->string('payment_id');
+            $table->string('gateway');
             $table->double('amount');
             $table->string('status');
             $table->string('currency')->nullable();

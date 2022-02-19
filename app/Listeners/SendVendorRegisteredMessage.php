@@ -37,9 +37,9 @@ class SendVendorRegisteredMessage implements ShouldQueue
     {
         $emails = Admin::whereApproved(true)->whereVerified(true)->pluck('email');
         if(!empty($emails)){
-            Mail::to($emails)->send(new SendVendorRegisteredMailToAdmin($event->data));
+//            Mail::to($emails)->send(new SendVendorRegisteredMailToAdmin($event->data));
         }
-        Mail::to($event->data['email'])->send(new VendorWelcomeMessage($event->data));
+//        Mail::to($event->data['email'])->send(new VendorWelcomeMessage($event->data));
 //        $this->sendRegisteredFranchiseeSms($event->data);
         return true;
     }

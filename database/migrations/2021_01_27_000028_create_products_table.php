@@ -26,7 +26,6 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable();
             $table->string('hsn')->nullable();
             $table->unsignedBigInteger('order_count')->default(0);
-            $table->boolean('is_returnable')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
