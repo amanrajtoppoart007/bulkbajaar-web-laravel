@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Library\Api\V1\User\VendorList;
 use App\Models\OrderItem;
@@ -10,7 +11,7 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class VendorController extends \App\Http\Controllers\Api\BaseController
+class VendorController extends BaseController
 {
     public function getVendors(Request $request)
     {
