@@ -92,8 +92,6 @@ class VendorController extends BaseController
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
-
         return response()->json($result, 200);
-
     }
 }
