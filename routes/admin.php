@@ -177,6 +177,8 @@
     Route::post('add-brand', [\App\Http\Controllers\Admin\BrandController::class, 'addBrand'])->name('brand.add');
     Route::post('update-brand', [\App\Http\Controllers\Admin\BrandController::class, 'updateBrand'])->name('brand.update');
 
+    Route::post('brands/media', [\App\Http\Controllers\Admin\BrandController::class, 'storeMedia'])->name('brands.storeMedia');
+
     // Articles
     Route::delete('articles/destroy', 'Admin\ArticleController@massDestroy')->name('articles.massDestroy');
     Route::post('articles/media', 'Admin\ArticleController@storeMedia')->name('articles.storeMedia');

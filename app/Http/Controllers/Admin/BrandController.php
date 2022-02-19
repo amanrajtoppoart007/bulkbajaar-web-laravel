@@ -12,10 +12,11 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 
 class BrandController extends Controller
 {
-    use CsvImportTrait;
+    use CsvImportTrait,MediaUploadingTrait;
 
     public function index(Request $request)
     {

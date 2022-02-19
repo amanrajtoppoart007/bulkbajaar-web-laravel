@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DateTimeInterface;
 
-class Brand extends Model
+
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class Brand extends Model implements  HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, Auditable, HasFactory,InteractsWithMedia;
 
     public $table = 'brands';
 
@@ -28,6 +33,10 @@ class Brand extends Model
         'deleted_at',
     ];
 
+     protected $appends = [
+        'image',
+    ];
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
@@ -36,5 +45,30 @@ class Brand extends Model
     public function brandProducts()
     {
         return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
+
+      public function getImageAttribute()
+    {
+        $file = $this->getMedia('image')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+        return $file;
+    }
+
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop',50,50)->nonQueued();;
+        $this->addMediaConversion('preview')->fit('crop', 120, 120)->nonQueued();;
     }
 }
