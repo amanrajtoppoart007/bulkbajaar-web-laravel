@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     @can('brand_create')
-        <div style="margin-bottom: 10px;" class="row">
+        <div class="row mb-10">
             <div class="col-lg-12">
                 <button class="btn btn-success" id="addButton">
                     {{ trans('global.add') }} {{ trans('cruds.brand.title_singular') }}

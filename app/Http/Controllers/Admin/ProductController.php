@@ -170,7 +170,7 @@ class ProductController extends Controller
                 "msg" => 'Product added successfully'
             );
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,
@@ -273,7 +273,7 @@ class ProductController extends Controller
                 "msg" => 'Product updated successfully'
             );
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,
@@ -352,7 +352,7 @@ class ProductController extends Controller
                 "msg" => 'Product charge updated successfully'
             );
             return json_encode($data);
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             $data = array(
                 "status" => false,
                 "msg" => 'Something went wrong!!'

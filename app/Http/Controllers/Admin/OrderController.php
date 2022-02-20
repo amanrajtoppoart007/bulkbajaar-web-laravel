@@ -310,7 +310,7 @@ class OrderController extends Controller
                 "message" => 'Stock updated successfully'
             );
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,
@@ -367,7 +367,7 @@ class OrderController extends Controller
                 "message" => 'Refunded successfully'
             );
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,

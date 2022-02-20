@@ -176,7 +176,7 @@ class ProductController extends Controller
             //Send notification to admin for approval
 //            event(new ProductCreated($product));
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,
@@ -293,7 +293,7 @@ class ProductController extends Controller
                 "msg" => 'Product updated successfully'
             );
             return json_encode($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             $data = array(
                 "status" => false,

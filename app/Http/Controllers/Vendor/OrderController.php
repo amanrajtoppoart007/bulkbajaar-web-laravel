@@ -87,7 +87,7 @@ class OrderController extends Controller
             $order->status = 'CANCELLED';
             $order->save();
             $result = ["status" => 1, "response" => "success", "message" => "Order cancelled successful."];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $result = ["status" => 0, "response" => "error", "message" => $e->getMessage()];
         }
         return response()->json($result, 200);
@@ -111,7 +111,7 @@ class OrderController extends Controller
             $order->status = 'CONFIRMED';
             $order->save();
             $result = ["status" => 1, "response" => "success", "message" => "Order confirmed successful."];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $result = ["status" => 0, "response" => "error", "message" => $e->getMessage()];
         }
         return response()->json($result, 200);
