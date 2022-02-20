@@ -7,7 +7,7 @@
 @endisset
 @isset($editGate)
 @can($editGate)
-    <a class="btn btn-xs btn-info" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
+    <a class="btn btn-xs btn-info model-edit-button" data-id="{{$row->id}}" data-url="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}" href="{{ route('admin.' . $crudRoutePart . '.edit', $row->id) }}">
         {{ trans('global.edit') }}
     </a>
 @endcan

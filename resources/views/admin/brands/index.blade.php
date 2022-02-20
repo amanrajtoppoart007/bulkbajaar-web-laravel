@@ -22,8 +22,8 @@
             <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Brand">
                 <thead>
                 <tr>
-                    <th width="10">
-
+                    <th>
+                      #
                     </th>
                     <th>
                         {{ trans('cruds.brand.fields.id') }}
@@ -33,6 +33,9 @@
                     </th>
                     <th>
                         {{ trans('cruds.brand.fields.status') }}
+                    </th>
+                     <th>
+                        Preview
                     </th>
                     <th>
                         &nbsp;
@@ -51,6 +54,8 @@
                     </td>
                     <td>
                     </td>
+                    <td>
+                    </td>
                 </tr>
                 </thead>
             </table>
@@ -64,8 +69,9 @@
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
                 </div>
-                <form id="brandForm">
-                    <input type="hidden" name="id" id="id">
+                <form action="{{route('admin.brands.store')}}"  id="brandForm" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id" id="id" value="">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="required" for="title">{{ trans('cruds.brand.fields.title') }}</label>
@@ -76,6 +82,18 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.brand.fields.title_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="image-dropzone">Image</label>
+                            <div class="needsclick dropzone {{ $errors->has('image') ? 'is-invalid' : '' }}"
+                                 id="image-dropzone">
+                            </div>
+                            @if($errors->has('image'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('image') }}
+                                </div>
+                            @endif
+                            <span class="help-block">Image should not be greater than 5MB and size should be 100*100</span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -92,7 +110,63 @@
 @section('scripts')
     @parent
     <script>
-        $(function () {
+          Dropzone.autoDiscover=false;
+          var imageDropzone;
+        $(document).ready(function () {
+
+
+
+            function imageDropBox()
+            {
+                $("div#image-dropzone").dropzone({
+                url: '{{ route('admin.brands.storeMedia') }}',
+                maxFilesize: 2, // MB
+                acceptedFiles: '.jpeg,.jpg,.png,.gif',
+                maxFiles: 1,
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                params: {
+                    size: 2,
+                    width: 4096,
+                    height: 4096
+                },
+                success: function (file, response) {
+                    const brandForm = $('#brandForm');
+                    brandForm.find('input[name="image"]').remove()
+                    brandForm.append('<input type="hidden" name="image" value="' + response.name + '">')
+                },
+                removedfile: function (file) {
+                    file.previewElement.remove()
+                    if (file.status !== 'error') {
+                        $('#brandForm').find('input[name="image"]').remove()
+                        this.options.maxFiles = this.options.maxFiles + 1
+                    }
+                },
+                init: function () {
+                     imageDropzone = this;
+                },
+                error: function (file, response) {
+                    if ($.type(response) === 'string') {
+                        let message = response //dropzone sends it's own error messages in string
+                    } else {
+                        let message = response.errors.file
+                    }
+                    file.previewElement.classList.add('dz-error')
+                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                    _results = []
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        node = _ref[_i]
+                        _results.push(node.textContent = message)
+                    }
+
+                    return _results
+                },
+            });
+            }
+
+
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
             @can('brand_delete')
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
@@ -101,7 +175,7 @@
                 url: "{{ route('admin.brands.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
-                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                    let ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                         return entry.id
                     });
 
@@ -139,6 +213,9 @@
                     {data: 'id', name: 'id'},
                     {data: 'title', name: 'title'},
                     {data: 'status', name: 'status'},
+                    { data:null, name: 'preview',render : function(row,data,type){
+                            return `<img src="${row.preview}" style="width:100px;height:100px;" class="preview-img">`;
+                        }},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
@@ -178,34 +255,92 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            let isUpdate = false;
-            $('#addButton').click(() => {
-                isUpdate == false;
+
+            $('#addButton').on('click', function () {
+                imageDropzone.destroy();
+                $("#image-dropzone").find('div.dz-preview.dz-complete.dz-image-preview').remove();
+                imageDropBox();
                 $('#addModal').modal('show');
             });
-            $('#brandForm').submit(function (event){
-                event.preventDefault();
-                let url = isUpdate ? "{{ route('admin.brand.update') }}" : "{{ route("admin.brand.add") }}";
-                $.post(url, $(this).serialize(), result => {
-                    alert(result.msg)
-                    if(result.status){
-                        location.reload()
+
+            $(document).on('click', '.model-edit-button', function (e) {
+                e.preventDefault();
+                const url = `{{route('admin.brands.getBrand')}}?id=${$(this).attr('data-id')}`
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    success: function (result) {
+                        if (result.status === 1) {
+                            $("#title").val(result?.data?.title);
+                            $("#id").val(result?.data?.id);
+
+                            console.log(imageDropzone);
+
+                            if(imageDropzone)
+                            {
+                                imageDropzone.destroy();
+                                $("#image-dropzone").find('div.dz-preview.dz-complete.dz-image-preview').remove();
+                                imageDropBox();
+                            }
+
+
+                            if(result.data.image)
+                            {
+                                let file = {name: result.data.image.name, size: result.data.image.size}
+                                imageDropzone.emit("addedfile", file);
+                                imageDropzone.emit("thumbnail", file, result.data.image.preview_url);
+                                imageDropzone.emit("complete", file);
+                            }
+                            else
+                            {
+                                let file = {name: 'no-image', size: 14610}
+                                imageDropzone.emit("addedfile", file);
+                                imageDropzone.emit("thumbnail", file, "{{asset('assets/img/no-image.png')}}");
+                                imageDropzone.emit("complete", file);
+                            }
+                            $('#addModal').modal('show');
+                        }
                     }
-                }, 'json');
+                })
             });
 
-            $('.editButton').click(function (){
-                let id = $(this).data('id');
-                isUpdate = true;
-                $.get("{{ route('admin.get.brand') }}", {id}, result => {
-                    if(result.status){
-                        $('#title').val(result.data.title);
-                        $('#id').val(result.data.id);
-                        $('#addModal').modal('show');
+            function update() {
+
+            }
+
+            function add() {
+                const formData = new FormData(document.getElementById('brandForm'));
+                $.ajax({
+                    url: "{{ route("admin.brands.store") }}",
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.status === 1) {
+                            $("#addModal").modal("hide");
+                            alert(result?.message);
+                        } else {
+                            alert(result?.message);
+                        }
+                    },
+                    error: function (result) {
+
                     }
-                }, 'json');
+                });
+            }
+
+            $('#brandForm').submit(function (event) {
+                event.preventDefault();
+                if (isUpdate) {
+                    update();
+                } else {
+                    add();
+                }
             });
+         imageDropBox();
         });
 
     </script>
+
 @endsection

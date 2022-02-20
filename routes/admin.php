@@ -173,9 +173,7 @@
     Route::post('brands/parse-csv-import', 'Admin\BrandController@parseCsvImport')->name('brands.parseCsvImport');
     Route::post('brands/process-csv-import', 'Admin\BrandController@processCsvImport')->name('brands.processCsvImport');
     Route::resource('brands', 'Admin\BrandController');
-    Route::get('get-brand', [\App\Http\Controllers\Admin\BrandController::class, 'getBrand'])->name('get.brand');
-    Route::post('add-brand', [\App\Http\Controllers\Admin\BrandController::class, 'addBrand'])->name('brand.add');
-    Route::post('update-brand', [\App\Http\Controllers\Admin\BrandController::class, 'updateBrand'])->name('brand.update');
+    Route::get('get-brand', [\App\Http\Controllers\Admin\BrandController::class, 'getBrand'])->name('brands.getBrand');
 
     Route::post('brands/media', [\App\Http\Controllers\Admin\BrandController::class, 'storeMedia'])->name('brands.storeMedia');
 
