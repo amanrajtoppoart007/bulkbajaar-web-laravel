@@ -19,6 +19,7 @@ class BrandList
             foreach ($this->brands as $brand) {
                 $data[$i]['id'] = $brand['id'];
                 $data[$i]['title'] = $brand['title'];
+                $data[$i]['image'] = $brand->image?->preview ?? asset('assets/img/no-image.png');
                 $i++;
             }
         }
