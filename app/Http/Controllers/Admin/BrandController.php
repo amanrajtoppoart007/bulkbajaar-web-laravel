@@ -154,8 +154,6 @@ class BrandController extends Controller
 
                     $brand->addMedia(storage_path('tmp/uploads/' . $request->input('image')))->toMediaCollection('image');
                 }
-            } elseif ($brand->image) {
-                $brand->image->delete();
             }
 
             $result = ['status'=>1,'response'=>'success','message'=>'Brand updated successfully'];

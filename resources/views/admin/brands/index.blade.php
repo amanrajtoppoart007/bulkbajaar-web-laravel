@@ -72,6 +72,8 @@
                 <form action="{{route('admin.brands.store')}}"  id="brandForm" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="id" value="">
+                    <input type="hidden" name="is_edit" id="is_edit" value="false">
+                    <input type="hidden" name="edit_url" id="edit_url" value="">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="required" for="title">{{ trans('cruds.brand.fields.title') }}</label>
@@ -260,22 +262,25 @@
                 imageDropzone.destroy();
                 $("#image-dropzone").find('div.dz-preview.dz-complete.dz-image-preview').remove();
                 imageDropBox();
+                $("#is_edit").val(false);
+                $("#title").val('');
+                $("#id").val('');
                 $('#addModal').modal('show');
             });
 
             $(document).on('click', '.model-edit-button', function (e) {
                 e.preventDefault();
-                const url = `{{route('admin.brands.getBrand')}}?id=${$(this).attr('data-id')}`
+
+                const url = `{{route('admin.brands.getBrand')}}?id=${$(this).attr('data-id')}`;
+                $("#edit_url").val($(this).attr('data-url'));
                 $.ajax({
                     url: url,
                     type: 'get',
                     success: function (result) {
                         if (result.status === 1) {
+                            $("#is_edit").val(true);
                             $("#title").val(result?.data?.title);
                             $("#id").val(result?.data?.id);
-
-                            console.log(imageDropzone);
-
                             if(imageDropzone)
                             {
                                 imageDropzone.destroy();
@@ -291,21 +296,34 @@
                                 imageDropzone.emit("thumbnail", file, result.data.image.preview_url);
                                 imageDropzone.emit("complete", file);
                             }
-                            else
-                            {
-                                let file = {name: 'no-image', size: 14610}
-                                imageDropzone.emit("addedfile", file);
-                                imageDropzone.emit("thumbnail", file, "{{asset('assets/img/no-image.png')}}");
-                                imageDropzone.emit("complete", file);
-                            }
                             $('#addModal').modal('show');
                         }
                     }
                 })
             });
 
-            function update() {
+            function update(url) {
+               const formData = new FormData(document.getElementById('brandForm'));
+                      formData.append('_method','PUT');
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.status === 1) {
+                            $("#addModal").modal("hide");
+                            alert(result?.message);
+                            window.location.href=window.location.href;
+                        } else {
+                            alert(result?.message);
+                        }
+                    },
+                    error: function (result) {
 
+                    }
+                });
             }
 
             function add() {
@@ -332,8 +350,8 @@
 
             $('#brandForm').submit(function (event) {
                 event.preventDefault();
-                if (isUpdate) {
-                    update();
+                if ($("#is_edit").val()==='true') {
+                    update($("#edit_url").val());
                 } else {
                     add();
                 }
