@@ -5,9 +5,6 @@ namespace App\Models;
 use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -113,32 +110,32 @@ class Product extends Model implements HasMedia
         return $this->hasMany(Review::class);
     }
 
-    public function vendor(): BelongsTo
+    public function vendor()
     {
         return $this->belongsTo(Vendor::class);
     }
 
-    public function productCategory(): BelongsTo
+    public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
     }
 
-    public function productSubCategory(): BelongsTo
+    public function productSubCategory()
     {
         return $this->belongsTo(ProductSubCategory::class);
     }
 
-    public function productOptions(): HasMany
+    public function productOptions()
     {
         return $this->hasMany(ProductOption::class);
     }
 
-    public function orderItems() : HasMany
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function productReturnConditions(): BelongsToMany
+    public function productReturnConditions()
     {
         return $this->belongsToMany(ProductReturnCondition::class, 'product_product_return_condition');
     }

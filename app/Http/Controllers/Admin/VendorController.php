@@ -110,6 +110,11 @@ class VendorController extends Controller
 
             $vendorProfile = VendorProfile::create($validated);
 
+            if ($request->input('shop_image', false)) {
+                    $vendor->addMedia(storage_path('tmp/uploads/' . $request->input('shop_image')))->toMediaCollection('shopImage');
+                }
+            
+
             DB::commit();
             //Send to welcome notification
             $data['name'] = $vendor->name;

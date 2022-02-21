@@ -86,9 +86,9 @@
                             GST
                         </th>
                         <td>
-                            @if($profile->gst)
-                                <a href="{{ $profile->gst->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $profile->gst->getUrl() }}" height="50px">
+                            @if($profile?->gst)
+                                <a href="{{ $profile?->gst?->preview }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $profile?->gst?->preview }}" height="50px">
                                 </a>
                             @else
                                 Not uploaded
@@ -100,7 +100,7 @@
                             PAN Number
                         </th>
                         <td>
-                            {{ $profile->pan_number ?? '' }}
+                            {{ $profile?->pan_number ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -108,9 +108,9 @@
                             PAN Card
                         </th>
                         <td>
-                            @if($profile->pan_card)
-                                <a href="{{ $profile->pan_card->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $profile->pan_card->getUrl() }}" height="50px">
+                            @if($profile?->pan_card)
+                                <a href="{{ $profile?->pan_card->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $profile?->pan_card->getUrl() }}" height="50px">
                                 </a>
                             @else
                                 Not uploaded

@@ -344,8 +344,8 @@
       }
     },
     init: function () {
-@if(isset($profile) && $profile->shop_image)
-      var file = {!! json_encode($profile->shop_image) !!}
+@if(isset($vendor) && $vendor->shop_image)
+      var file = {!! json_encode($vendor->shop_image) !!}
           this.options.addedfile.call(this, file)
       this.options.thumbnail.call(this, file, file.preview)
       file.previewElement.classList.add('dz-complete')

@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-
+ <form id="productForm" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ $product->id }}">
+                @csrf
     <div class="card">
         <div class="card-header">
             {{ trans('global.edit') }} {{ trans('cruds.product.title_singular') }}
         </div>
 
         <div class="card-body">
-            <form id="productForm" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="{{ $product->id }}">
-                @csrf
+
                 <div class="row">
                     <div class="col-6">
                         <div class="row">
@@ -160,6 +160,12 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="brand_id">Brand</label>
@@ -178,8 +184,6 @@
                                     @endif
                                 </div>
                             </div>
-
-
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="images">{{ trans('cruds.product.fields.images') }}</label>
@@ -194,10 +198,6 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">{{ trans('cruds.product.fields.description') }}</label>
@@ -251,7 +251,21 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-12">
+
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h6>Edit Variation</h6>
+        </div>
+        <div class="card-body">
+             <div class="col-12">
                                 <div class="form-group mb-2">
                                     <label for="color">Select Color</label>
                                     <select name="" id="color" class="select2" multiple>
@@ -274,6 +288,8 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th>Default</th>
+                                        <th>Image</th>
                                         <th>Option</th>
                                         <th>Color</th>
                                         <th>Size</th>
@@ -285,19 +301,20 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+             <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
-            </form>
         </div>
     </div>
 
-
+  </form>
 
 @endsection
 
@@ -333,16 +350,15 @@
                 $('form').find('input[name="images[]"][value="' + name + '"]').remove()
             },
             init: function () {
-                @if(isset($product) && $product->images)
-                var files =
-                    {!! json_encode($product->images) !!}
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview_url)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
-                }
+                @if(isset($images) && $images)
+                       let files = {!! json_encode($images) !!}
+                             for (let i in files) {
+                               let file = files[i]
+                               this.options.addedfile.call(this, file)
+                               this.options.thumbnail.call(this, file, file.preview_url)
+                                file.previewElement.classList.add('dz-complete')
+                               $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
+                             }
                 @endif
             },
             error: function (file, response) {
@@ -364,7 +380,7 @@
         }
 
 
-        let variations = <?= json_encode($productOptions) ?>;
+        let variations = {!! json_encode($productOptions) !!};
 
         const generateVariations = (colors, sizes) => {
             if(colors.length<=0)
@@ -437,7 +453,9 @@
             unitSelect += "</select>";
 
             return `<tr data-index="${index}">`+
-                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
+                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control" type="text" name="product_options[${index}][is_default]" value="" style="min-width: 100px" required></td>`+
+                `<td><input class="form-control" type="text" name="product_options[${index}][image]" value="" style="min-width: 100px"></td>`+
+                `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
                 `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
                 `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
                 `<td>${unitSelect}</td>`+

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\ProductCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -14,20 +13,16 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\ProductPortalCharge;
-use App\Models\ProductPrice;
 use App\Models\ProductReturnCondition;
-use App\Models\ProductSubCategory;
-use App\Models\ProductTag;
 use App\Models\UnitType;
 use App\Models\Vendor;
 use App\Traits\SlugGeneratorTrait;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Validator;
 
 class ProductController extends Controller
 {
@@ -114,7 +109,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions', 'brands'));
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request,Product $product)
     {
         DB::beginTransaction();
         try {
@@ -122,24 +117,24 @@ class ProductController extends Controller
             $validated['slug'] = $this->generateSlug(Product::class, $request->name);
             $validated['quantity'] = null;
             $validated['approval_status'] = 'APPROVED';
-            $product = Product::create($validated);
+            $product = $product->create($validated);
 
-            foreach ($request->input('images', []) as $file) {
-                $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
-            }
+
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
             $colors = [];
             $sizes = [];
-            foreach ($request->product_options as $product_option){
+            $i=0;
+
+            foreach ($request->input('product_options') as $product_option){
                 if (!in_array($product_option['color'], $colors)){
                     $colors[] = $product_option['color'];
                 }
                 if (!in_array($product_option['size'], $sizes)){
                     $sizes[] = $product_option['size'];
                 }
-                ProductOption::create([
+                $option =  $product->productOptions()->create([
                     'product_id' => $product->id,
                     'option' => $product_option['option'],
                     'color' => $product_option['color'],
@@ -147,10 +142,43 @@ class ProductController extends Controller
                     'unit' => $product_option['unit'],
                     'quantity' => $product_option['quantity'],
                 ]);
+
+
+                $isDefault = $i==$request->input('default_image_index');
+
+                if($i==$request->input('default_image_index'))
+                {
+                    foreach ($request->input('images', []) as $file) {
+                        $option->addMedia(storage_path('tmp/uploads/' . $file))->withCustomProperties([
+                        'color'=>$product_option['color'],
+                        'size'=>$product_option['size'],
+                        'is_default'=>$isDefault,
+                         'option_id'=>$option->id
+                    ])->toMediaCollection('images');
+                    }
+                }
+                $files = $request->file('product_options')[$i];
+                foreach($files as $file)
+                {
+                    $path = $file->store('public');
+                    if($path)
+                    {
+                        $option->addMediaFromDisk($path,'public')
+                            ->withCustomProperties([
+                                'color' => $product_option['color'],
+                                'size' => $product_option['size'],
+                                'is_default' => $isDefault,
+                                 'option_id'=>$option->id
+                            ])->toMediaCollection('images');
+                    }
+
+                }
+
+                $i++;
             }
 
             if ($request->boolean('is_returnable')){
-                $product->productReturnConditions()->sync($request->return_conditions);
+                $product->productReturnConditions()->sync($request->input('return_conditions'));
             }
             $product->product_attributes = [
                 [
@@ -165,24 +193,36 @@ class ProductController extends Controller
             $product->save();
 
             DB::commit();
-            $data = array(
-                "status" => true,
-                "msg" => 'Product added successfully'
-            );
-            return json_encode($data);
+
+            $result = ["status" => 1, "response"=>"success", "msg" => "Product added successfully"];
         } catch (\Exception $e) {
             DB::rollBack();
-            $data = array(
-                "status" => false,
-                "msg" => 'Something went wrong!!'
-            );
-            return json_encode($data);
+            $result = ["status" => 0, "response"=>"exception_error", "msg" => $e->getMessage()];
+
         }
+        return response()->json($result,200);
     }
 
     public function edit(Product $product)
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $images =[];
+
+        if(isset($product->productOptions) && $product->productOptions)
+        {
+             foreach($product->productOptions as $option)
+             {
+                 foreach($option->images as $image)
+                 {
+                    if($image->custom_properties['is_default']==true)
+                     {
+                       $images[] = $image;
+                     }
+                 }
+             }
+        }
+
 
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
@@ -190,8 +230,9 @@ class ProductController extends Controller
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
         $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         return view('admin.products.edit',
-            compact('categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions', 'brands'));
+            compact('images','categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions', 'brands'));
     }
 
     public function update(UpdateProductRequest $request)
@@ -203,43 +244,20 @@ class ProductController extends Controller
             $validated['quantity'] = null;
             $product->update($validated);
 
-            if (count($product->images) > 0) {
-                foreach ($product->images as $media) {
-                    if (!in_array($media->file_name, $request->input('images', []))) {
-                        $media->delete();
-                    }
-                }
-            }
-
-            $media = $product->images->pluck('file_name')->toArray();
-
-            foreach ($request->input('images', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
-                }
-            }
-
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
 
-            $deleteOptions = [];
-            foreach ($request->product_options as $product_option){
-                $deleteOptions[] = $product_option['id'];
-            }
-
-            ProductOption::where('product_id', $request->id)->whereNotIn('id', $deleteOptions)->delete();
-
             $colors = [];
-            $sizes = [];
-            foreach ($request->product_options as $product_option){
+            $sizes  = [];
+            foreach ($request->input('product_options') as $product_option){
                 if (!in_array($product_option['color'], $colors)){
                     $colors[] = $product_option['color'];
                 }
                 if (!in_array($product_option['size'], $sizes)){
                     $sizes[] = $product_option['size'];
                 }
-                ProductOption::updateOrCreate([
+                $option = ProductOption::update([
                     'id' => $product_option['id']
                 ],[
                     'product_id' => $product->id,
@@ -268,19 +286,14 @@ class ProductController extends Controller
             ];
             $product->save();
             DB::commit();
-            $data = array(
-                "status" => true,
-                "msg" => 'Product updated successfully'
-            );
-            return json_encode($data);
+            $result = ["status" => 1,"response"=>"success", "msg" => 'Product updated successfully'];
+
         } catch (\Exception $e) {
             DB::rollBack();
-            $data = array(
-                "status" => false,
-                "msg" => 'Something went wrong!!'
-            );
-            return json_encode($data);
+            $result = ["status"=>0,"response"=>"exception_error","msg"=>$e->getMessage()];
+
         }
+        return response()->json($result,200);
     }
 
     public function show(Product $product)
@@ -295,6 +308,8 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $product->productOptions()->delete();
 
         $product->delete();
 
@@ -355,7 +370,7 @@ class ProductController extends Controller
         }catch (\Exception $e) {
             $data = array(
                 "status" => false,
-                "msg" => 'Something went wrong!!'
+                "msg" => $e->getMessage()
             );
             return json_encode($data);
         }

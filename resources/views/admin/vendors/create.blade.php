@@ -8,9 +8,22 @@
 
         <div class="card-body">
             <h6 class="text-danger">{{ trans('global.required_header') }}</h6>
-            <form method="POST" action="{{ route("admin.vendors.store") }}" enctype="multipart/form-data">
+            <form method="POST" id="vendorForm" action="{{ route("admin.vendors.store") }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+                     <div class="col-6">
+                    <div class="form-group">
+                        <label for="shopImage-dropzone">Vendor Shop Image</label>
+                        <div class="needsclick dropzone {{ $errors->has('shop_image') ? 'is-invalid' : '' }}" id="shopImage-dropzone">
+                        </div>
+                        @if($errors->has('shop_image'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('shop_image') }}
+                            </div>
+                        @endif
+                        <span class="help-block">Image size 500*500</span>
+                    </div>
+                </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label class="required" for="company_name">Company Name</label>
@@ -326,6 +339,51 @@
 
 @section('scripts')
     @parent
+        <script>
+    Dropzone.options.shopImageDropzone = {
+    url: '{{ route('admin.vendors.storeMedia') }}',
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form#vendorForm').find('input[name="shop_image"]').remove()
+      $('form#vendorForm').append('<input type="hidden" name="shop_image" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form#vendorForm').find('input[name="shop_image"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {},
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            let message = response //dropzone sends it's own error messages in string
+        } else {
+            let message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+</script>
     <script>
         $(function () {
 

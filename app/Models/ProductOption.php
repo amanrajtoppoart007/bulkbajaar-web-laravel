@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductOption extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class ProductOption extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes,InteractsWithMedia;
 
     protected $fillable = [
         'product_id',
@@ -29,6 +32,10 @@ class ProductOption extends Model
         'deleted_at',
     ];
 
+    protected $appends =[
+        'images'
+    ];
+
     public const SIZE_SELECT = [
         'XXL',
         'XL',
@@ -45,10 +52,37 @@ class ProductOption extends Model
         'Pink',
         'Black',
         'White',
+        'RED',
+        'CYAN',
+        'GREY',
+        'ORANGE',
+        'SKYBLUE',
+        'DARKBLUE',
+        'LIGHTGREEN',
     ];
 
-    public function product(): BelongsTo
+    public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop',80,80)->nonQueued();
+        $this->addMediaConversion('preview')->fit('crop',200,200)->nonQueued();
+    }
+
+    public function getImagesAttribute()
+    {
+        $files = $this->getMedia('images');
+        $files->each(function ($item) {
+            $item->url       = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview   = $item->getUrl('preview');
+        });
+        return $files;
     }
 }
