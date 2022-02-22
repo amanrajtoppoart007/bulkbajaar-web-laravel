@@ -226,7 +226,7 @@ class ProductController extends Controller
 
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $unitTypes = UnitType::select('name')->whereStatus(true)->get();
-        $productOptions = ProductOption::where('product_id', $product->id)->get();
+        $productOptions = ProductOption::where('product_id', $product->id)->get()->toArray();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
         $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');

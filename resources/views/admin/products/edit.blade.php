@@ -395,7 +395,7 @@
                 {
                     sizes?.forEach((size, j)=>{
                         let option = `${color}-${size}`;
-                        const exists = variations.filter(opt => opt.option == option).length > 0;
+                        const exists = variations.filter(opt => opt.option === option).length > 0;
                         if (!exists) {
                             let object = {
                                 id: '',
@@ -410,7 +410,7 @@
                     });
                 }else {
                     let option = color;
-                    const exists = variations.filter(opt => opt.option == option).length > 0;
+                    const exists = variations.filter(opt => opt.option === option).length > 0;
                     if (!exists) {
                         let object = {
                             id: '',
@@ -453,8 +453,8 @@
             unitSelect += "</select>";
 
             return `<tr data-index="${index}">`+
-                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control" type="text" name="product_options[${index}][is_default]" value="" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control" type="text" name="product_options[${index}][image]" value="" style="min-width: 100px"></td>`+
+                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control" type="checkbox" name="product_options[${index}][is_default]" value=""></td>`+
+                `<td><input class="form-control" type="file" name="product_options[${index}][image]" value="" style="min-width: 100px"></td>`+
                 `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
                 `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
                 `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
