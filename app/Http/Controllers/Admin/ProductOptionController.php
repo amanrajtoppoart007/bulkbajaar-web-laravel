@@ -37,7 +37,6 @@ class ProductOptionController extends Controller
     {
          DB::beginTransaction();
         try {
-
             $product_id = $request->input('product_id');
             $color = $request->input('color');
             $size = $request->input('size');
@@ -128,9 +127,8 @@ class ProductOptionController extends Controller
 
     public function update(UpdateProductOptionRequest $request)
     {
-                 DB::beginTransaction();
+         DB::beginTransaction();
         try {
-
             $product_id = $request->input('product_id');
             $color = $request->input('color');
             $size = $request->input('size');
