@@ -63,7 +63,7 @@ class ProductController extends Controller
             $table->editColumn('image', function ($row) {
                 if (!empty($row->images[0])) {
                     $imageThumbUrl = $row->images[0]->getUrl('thumb');
-                    return '<a href="'.$imageThumbUrl.'" target="_blank" style="display: inline-block"><img style="width:80px;height:80px" src="'.$imageThumbUrl.'"></a>';
+                    return '<a href="'.$imageThumbUrl.'" target="_blank" style="display: inline-block"><img alt="" style="width:80px;height:80px" src="'.$imageThumbUrl.'"></a>';
                 }
                 return "";
             });
@@ -163,19 +163,7 @@ class ProductController extends Controller
             }else{
                 $product->productReturnConditions()->sync([]);
             }
-            /*
-             *
-             * $colors = [];
-            $sizes  = [];$product->product_attributes = [
-                [
-                    'key' => 'color',
-                    'values' => $colors
-                ],
-                [
-                    'key' => 'size',
-                    'values' => $sizes
-                ],
-            ];*/
+
             $product->save();
             DB::commit();
             $result = ["status" => 1,"response"=>"success", "message" => 'Product updated successfully'];
