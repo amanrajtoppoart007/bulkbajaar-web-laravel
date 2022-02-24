@@ -20,9 +20,10 @@ class ProductOptionController extends Controller
     {
             $this->removeMedia();
     }
-      public function index()
+      public function index($id)
     {
-
+         $options = ProductOption::where(['product_id'=>$id])->get();
+         return view("admin.products.options.index",compact("options"));
     }
     public function create($productId)
     {

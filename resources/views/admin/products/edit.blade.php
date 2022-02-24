@@ -253,6 +253,7 @@
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
+                    <a href="{{route('admin.productOptions.list',$product->id)}}" class="btn btn-success">Edit</a>
                 </div>
 
 
@@ -294,10 +295,7 @@
                             icon: 'success',
                             position: 'top-right',
                         });
-                        setTimeout(function () {
-                            location.reload();
-                            window.location = "{{ route('admin.products.index') }}"
-                        }, 100);
+
                     } else {
                         $.toast({
                                 heading: 'Error',

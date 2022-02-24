@@ -49,6 +49,7 @@
 
     Route::resource('productOptions','Admin\ProductOptionController');
     Route::get('product/option/create/{productId}', [\App\Http\Controllers\Admin\ProductOptionController::class,'create'])->name('productOptions.create');
+    Route::get('product/option/list/{id}', [\App\Http\Controllers\Admin\ProductOptionController::class,'index'])->name('productOptions.list');
     Route::post('product/option/remove/file', [\App\Http\Controllers\Admin\ProductOptionController::class,'removeUploadedFiles'])->name('productOptions.remove.files');
 
 // User Alerts
