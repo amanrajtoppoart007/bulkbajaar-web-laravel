@@ -21,6 +21,7 @@ class ProductOption extends Model implements HasMedia
         'size',
         'color',
         'quantity',
+        'is_default',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -44,7 +44,7 @@
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input form-check" type="radio" name="is_default" id="is_default">
+                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default">
                                 <label class="form-check-label" for="is_default">
                                     Default Variation
                                 </label>
@@ -71,7 +71,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Variations
+            Generated Options
         </div>
         <div class="card-body">
             <div class="row">
@@ -86,10 +86,32 @@
                             <th>Size</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
-                            <th></th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+
+                            @foreach($options as $option)
+                                 <tr>
+                                <td>{{$option?->is_default ? 'Yes':'No'}}</td>
+                                <td>
+                                    <div class="row">
+                                        @foreach($option->images as $image)
+                                          <div class="col-12 col-md-2 col-lg-12 col-xl-2">
+                                              <img class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
+                                          </div>
+                                        @endforeach
+                                    </div>
+
+                                </td>
+                                <td>{{$option?->option}}</td>
+                                <td>{{$option?->color}}</td>
+                                <td>{{$option?->size}}</td>
+                                <td>{{$option?->unit}}</td>
+                                <td>{{$option?->quantity}}</td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -220,6 +242,7 @@
 
             $.ajax({
                 url: "{{route('admin.productOptions.store')}}",
+                method:'POST',
                 cache: false,
                 processData: false,
                 contentType: false,

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductOptionRequest;
 use App\Models\ProductOption;
 use App\Models\UnitType;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use Illuminate\Support\Facades\DB;
 
 class ProductOptionController extends Controller
 {
@@ -21,21 +22,25 @@ class ProductOptionController extends Controller
     {
 
     }
-    public function create($productId): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function create($productId)
     {
           $product_id = $productId;
           $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
-          return view("admin.products.options.create",compact('product_id','unitTypes'));
+          $options = ProductOption::where(['product_id'=>$product_id])->get();
+
+          return view("admin.products.options.create",compact('product_id','unitTypes','options'));
     }
 
-    public function store(StoreProductOptionRequest $request): \Illuminate\Http\JsonResponse
+    public function store(StoreProductOptionRequest $request)
     {
+         DB::beginTransaction();
         try {
+
             $color = $request->input('color');
             $size = $request->input('size');
             $unit = $request->input('unit');
             $qty = $request->input('quantity');
-            $isDefault = $request->input('is_default');
+            $isDefault = $request->input('is_default') ==='on'?1:'0';
             $option = $color.'-'.$size;
             $params = [
                 'product_id'=>$request->input('product_id'),
@@ -48,6 +53,7 @@ class ProductOptionController extends Controller
                 $params['option'] = $option;
                 $params['unit'] = $unit;
                 $params['quantity'] = $qty ?? 0;
+                $params['is_default'] = $isDefault;
                 $productOption = ProductOption::create($params);
                 foreach ($request->input('images', []) as $file) {
                     $productOption->addMedia(storage_path('tmp/uploads/' . $file))->withCustomProperties([
@@ -57,10 +63,12 @@ class ProductOptionController extends Controller
                         'option_id' => $productOption->id
                     ])->toMediaCollection('images');
                 }
+                 DB::commit();
                 $result = ["status"=>1,"response"=>"success","message"=>"variation successfully created"];
             }
             else
             {
+                 DB::rollBack();
                 $result = ["status"=>0,"response"=>"error","message"=>"variation already exist"];
             }
 
