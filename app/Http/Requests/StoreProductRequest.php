@@ -10,12 +10,12 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreProductRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return Gate::allows('product_create');
     }
 
-    public function rules()
+    public function rules():array
     {
         return [
             'vendor_id' => 'required|exists:vendors,id',

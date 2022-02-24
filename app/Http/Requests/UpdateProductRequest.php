@@ -8,12 +8,12 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 class UpdateProductRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return Gate::allows('product_edit');
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'id' => 'required|exists:products',
