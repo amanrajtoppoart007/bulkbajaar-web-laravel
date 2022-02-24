@@ -14,7 +14,6 @@ use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\ProductPortalCharge;
 use App\Models\ProductReturnCondition;
-use App\Models\UnitType;
 use App\Models\Vendor;
 use App\Traits\SlugGeneratorTrait;
 use Illuminate\Support\Facades\Gate;
@@ -140,33 +139,13 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $images =[];
-
-        if(isset($product->productOptions) && $product->productOptions)
-        {
-             foreach($product->productOptions as $option)
-             {
-                 foreach($option->images as $image)
-                 {
-                    if($image->custom_properties['is_default']==true)
-                     {
-                       $images[] = $image;
-                     }
-                 }
-             }
-        }
-
-
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $unitTypes = UnitType::select('name')->whereStatus(true)->get();
-        $productOptions = ProductOption::where('product_id', $product->id)->get()->toArray();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $selectedReturnConditions = $product->productReturnConditions->pluck('id')->toArray();
         $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.products.edit',
-            compact('images','categories', 'product', 'unitTypes', 'productOptions', 'returnConditions', 'selectedReturnConditions', 'brands'));
+            compact('categories', 'product',  'returnConditions', 'selectedReturnConditions', 'brands'));
     }
 
     public function update(UpdateProductRequest $request)
@@ -174,41 +153,21 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            $product = Product::findOrFail($request->id);
+            $product = Product::findOrFail($request->input('id'));
             $validated['quantity'] = null;
             $product->update($validated);
-
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-
-            $colors = [];
-            $sizes  = [];
-            foreach ($request->input('product_options') as $product_option){
-                if (!in_array($product_option['color'], $colors)){
-                    $colors[] = $product_option['color'];
-                }
-                if (!in_array($product_option['size'], $sizes)){
-                    $sizes[] = $product_option['size'];
-                }
-                $option = ProductOption::update([
-                    'id' => $product_option['id']
-                ],[
-                    'product_id' => $product->id,
-                    'option' => $product_option['option'],
-                    'color' => $product_option['color'],
-                    'size' => $product_option['size'],
-                    'unit' => $product_option['unit'],
-                    'quantity' => $product_option['quantity'],
-                ]);
-            }
-
             if ($request->boolean('is_returnable')){
                 $product->productReturnConditions()->sync($request->return_conditions);
             }else{
                 $product->productReturnConditions()->sync([]);
             }
-            $product->product_attributes = [
+            /*
+             *
+             * $colors = [];
+            $sizes  = [];$product->product_attributes = [
                 [
                     'key' => 'color',
                     'values' => $colors
@@ -217,14 +176,14 @@ class ProductController extends Controller
                     'key' => 'size',
                     'values' => $sizes
                 ],
-            ];
+            ];*/
             $product->save();
             DB::commit();
-            $result = ["status" => 1,"response"=>"success", "msg" => 'Product updated successfully'];
+            $result = ["status" => 1,"response"=>"success", "message" => 'Product updated successfully'];
 
         } catch (\Exception $e) {
             DB::rollBack();
-            $result = ["status"=>0,"response"=>"exception_error","msg"=>$e->getMessage()];
+            $result = ["status"=>0,"response"=>"exception_error","message"=>$e->getMessage()];
 
         }
         return response()->json($result,200);
@@ -233,7 +192,6 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $product->load('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'productReturnConditions');
         $portalChargePercent = getPortalChargePercentage($product->id);
         return view('admin.products.show', compact('product', 'portalChargePercent'));
@@ -242,37 +200,30 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $product->productOptions()->delete();
-
         $product->delete();
-
         return back();
     }
 
     public function massDestroy(MassDestroyProductRequest $request)
     {
         Product::whereIn('id', request('ids'))->delete();
-
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function storeCKEditorImages(Request $request)
     {
         abort_if(Gate::denies('product_create') && Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $model         = new Product();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
-
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
     public function massApprove(MassDestroyProductRequest $request)
     {
         Product::whereIn('id', request('ids'))->update(['approval_status' => 'APPROVED']);
-
         return response(null, Response::HTTP_NO_CONTENT);
     }
 

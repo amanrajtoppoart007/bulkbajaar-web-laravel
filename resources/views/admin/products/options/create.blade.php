@@ -186,57 +186,9 @@
                     node = _ref[_i]
                     _results.push(node.textContent = message)
                 }
-
                 return _results
             }
         }
-
-
-        let variations = [];
-
-        const generateVariations = (colors, sizes) => {
-            if(colors.length<=0)
-            {
-                alert('Please select at least one color');
-                variations = [];
-                return;
-            }
-
-            colors?.forEach((color, i)=>{
-                if(sizes?.length > 0)
-                {
-                    sizes?.forEach((size, j)=>{
-                        let option = `${color}-${size}`;
-                        const exists = variations.filter(opt => opt.option === option).length > 0;
-                        if (!exists) {
-                            let object = {
-                                option,
-                                color,
-                                size,
-                                quantity: 0,
-                                unit: ''
-                            }
-                            variations.push(object);
-                        }
-                    });
-                }else {
-                    let option = color;
-                    const exists = variations.filter(opt => opt.option === option).length > 0;
-                    if (!exists) {
-                        let object = {
-                            option,
-                            color,
-                            size: '',
-                            quantity: 0,
-                            unit: ''
-                        }
-                        variations.push(object);
-                    }
-                }
-            });
-            createOptions();
-        }
-
         $(document).on("submit","#productOptionForm",function(e){
             e.preventDefault();
 
@@ -251,13 +203,17 @@
                 {
                     if (result?.status === 1) {
 
-                            $.toast({
+                        $.toast({
                                 heading: 'Success',
                                 text: result?.message,
                                 showHideTransition: 'slide',
                                 icon: 'success',
                                 position:'top-right',
                             });
+                         setTimeout(()=>{
+                             window.location.href=window.location.href;
+                         },6000)
+
 
                         } else {
 
@@ -282,44 +238,6 @@
                         });
                     }
             });
-        })
-
-        const createOptions = () => {
-            let template = '';
-            variations?.forEach((variation, index)=>{
-                template += productOptionTemplate(variation, index);
-            });
-            $('table tbody').html(template)
-        }
-
-        const productOptionTemplate = (variation, index) => {
-
-            let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
-            $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}" ${variation.unit === e.name ? 'selected' : ''}>${e.name}</option>`;
-            })
-            unitSelect += "</select>";
-
-            return `<tr data-index="${index}">`+
-                        `<td><input class="form-check-input" type="radio" name="default_image_index" value="${index}" style="min-width: 100px"  ${index===0?'checked':''}></td>`+
-                        `<td><input class="form-control" type="file" name="product_options[${index}][image]" value="" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
-                        `<td>${unitSelect}</td>`+
-                        `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
-                        `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
-                    `</tr>`;
-
-
-        }
-
-        $(document).on('click', '.delete-button', function (){
-            let tr = $(this).closest('tr');
-            let index = $(tr).data('index');
-            variations.splice(index, 1);
-            $(tr).remove()
         });
 
     </script>

@@ -3,13 +3,13 @@ Route::get('test/sms/api','TestController');
 Route::post('submit/enquiry/form','Guest\EnquiryController@store')->name('store.guest.enquiry');
 
 Route::group(['prefix' => 'vendor'], function () {
-    Route::get('login', 'Vendor\LoginController@index')->name("vendor.login");
-    Route::post('login', 'Vendor\LoginController@login')->name("vendor.login.check");
-    Route::post('logout', 'Vendor\LoginController@logout')->name("vendor.logout");
-    Route::get('password/reset', 'Vendor\ForgotPasswordController@showLinkRequestForm')->name("vendor.password.request");
-    Route::post('password/email', 'Vendor\ForgotPasswordController@sendResetLinkEmail')->name("vendor.password.email");
-    Route::post('password/reset', 'Vendor\ResetPasswordController@reset')->name("vendor.password.update");
-    Route::get('password/reset/{token}', 'Vendor\ResetPasswordController@showResetForm')->name("vendor.password.reset");
+    Route::get('login', 'VendorAuth\LoginController@index')->name("vendor.login");
+    Route::post('login', 'VendorAuth\LoginController@login')->name("vendor.login.check");
+    Route::post('logout', 'VendorAuth\LoginController@logout')->name("vendor.logout");
+    Route::get('password/reset', 'VendorAuth\ForgotPasswordController@showLinkRequestForm')->name("vendor.password.request");
+    Route::post('password/email', 'VendorAuth\ForgotPasswordController@sendResetLinkEmail')->name("vendor.password.email");
+    Route::post('password/reset', 'VendorAuth\ResetPasswordController@reset')->name("vendor.password.update");
+    Route::get('password/reset/{token}', 'VendorAuth\ResetPasswordController@showResetForm')->name("vendor.password.reset");
 });
 Route::group(['prefix' => 'logistics'], function () {
     Route::get('login', 'LogisticsAuth\LoginController@index')->name("logistics.login");

@@ -36,14 +36,15 @@ class ProductOptionController extends Controller
          DB::beginTransaction();
         try {
 
+            $product_id = $request->input('product_id');
             $color = $request->input('color');
             $size = $request->input('size');
             $unit = $request->input('unit');
             $qty = $request->input('quantity');
-            $isDefault = $request->input('is_default') ==='on'?1:'0';
+            $isDefault = $request->input('is_default') === 'on'? 1:'0';
             $option = $color.'-'.$size;
             $params = [
-                'product_id'=>$request->input('product_id'),
+                'product_id'=>$product_id,
                 'color'=>$color,
                 'size'=>$size,
             ];
@@ -54,12 +55,20 @@ class ProductOptionController extends Controller
                 $params['unit'] = $unit;
                 $params['quantity'] = $qty ?? 0;
                 $params['is_default'] = $isDefault;
+                if($isDefault)
+                {
+                    $options = ProductOption::where(['product_id' => $product_id])->get();
+                    foreach ($options as $option) {
+                        $option->is_default = 0;
+                        $option->save();
+                    }
+                }
+
                 $productOption = ProductOption::create($params);
                 foreach ($request->input('images', []) as $file) {
                     $productOption->addMedia(storage_path('tmp/uploads/' . $file))->withCustomProperties([
                         'color' => $color,
                         'size' => $size,
-                        'is_default' => $isDefault,
                         'option_id' => $productOption->id
                     ])->toMediaCollection('images');
                 }
@@ -84,9 +93,10 @@ class ProductOptionController extends Controller
     {
 
     }
-    public function edit()
+    public function edit($id)
     {
-
+         $option = ProductOption::find($id);
+         return view("admin.products.options.edit",compact('option'));
     }
 
     public function update()

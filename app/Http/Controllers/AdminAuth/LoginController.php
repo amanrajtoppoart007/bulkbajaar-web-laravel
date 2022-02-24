@@ -33,7 +33,7 @@ class LoginController extends Controller
         if(!$validator->fails())
         {
             if (Auth::guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $request->input('remember'))) {
-                return redirect()->route('admin.dashboard');
+                 return redirect()->intended(route('admin.dashboard'));
             }
             else
             {

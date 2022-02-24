@@ -1,20 +1,17 @@
 @extends('layouts.admin')
 @section('content')
- <form id="productForm" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="{{ $product->id }}">
-                @csrf
-    <div class="card">
-        <div class="card-header">
-            {{ trans('global.edit') }} {{ trans('cruds.product.title_singular') }}
-        </div>
+    <form id="productForm" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="{{ $product->id }}">
+        @csrf
+        <div class="card">
+            <div class="card-header">
+                {{ trans('global.edit') }} {{ trans('cruds.product.title_singular') }}
+            </div>
 
-        <div class="card-body">
-
+            <div class="card-body">
                 <div class="row">
                     <div class="col-6">
                         <div class="row">
-
-
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="required" for="name">{{ trans('cruds.product.fields.name') }}</label>
@@ -88,7 +85,8 @@
                                     <label class="required" for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
                                            type="number"
-                                           name="discount" id="discount" value="{{ old('discount', $product->discount) }}" required>
+                                           name="discount" id="discount"
+                                           value="{{ old('discount', $product->discount) }}" required>
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('discount') }}
@@ -102,7 +100,8 @@
                                     <label class="required" for="gst">GST</label>
                                     <input class="form-control {{ $errors->has('gst') ? 'is-invalid' : '' }}"
                                            type="number"
-                                           name="gst" id="gst" max="100" value="{{ old('gst', $product->gst ?? 18) }}" required>
+                                           name="gst" id="gst" max="100" value="{{ old('gst', $product->gst ?? 18) }}"
+                                           required>
                                     @if($errors->has('gst'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('gst') }}
@@ -115,7 +114,8 @@
                                     <label for="dispatch_time">Expected Dispatch Time</label>
                                     <input class="form-control {{ $errors->has('dispatch_time') ? 'is-invalid' : '' }}"
                                            type="text"
-                                           name="dispatch_time" id="dispatch_time" value="{{ old('dispatch_time', $product->dispatch_time) }}">
+                                           name="dispatch_time" id="dispatch_time"
+                                           value="{{ old('dispatch_time', $product->dispatch_time) }}">
                                     @if($errors->has('dispatch_time'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('dispatch_time') }}
@@ -124,6 +124,13 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
 
                             <div class="col-12">
                                 <div class="form-group">
@@ -157,14 +164,10 @@
                                             {{ $errors->first('product_sub_category_id') }}
                                         </div>
                                     @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
+                                    <span
+                                        class="help-block">{{ trans('cruds.product.fields.sub_category_helper') }}</span>
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
 
                             <div class="col-12">
                                 <div class="form-group">
@@ -182,20 +185,6 @@
                                             {{ $errors->first('brand_id') }}
                                         </div>
                                     @endif
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="images">{{ trans('cruds.product.fields.images') }}</label>
-                                    <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}"
-                                         id="images-dropzone">
-                                    </div>
-                                    @if($errors->has('images'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('images') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -230,8 +219,11 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_returnable" id="is_returnable" value="1" {{ $product->is_returnable ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="is_returnable">Is this product returnable?</label>
+                                        <input class="form-check-input" type="checkbox" name="is_returnable"
+                                               id="is_returnable"
+                                               value="1" {{ $product->is_returnable ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_returnable">Is this product
+                                            returnable?</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -246,7 +238,8 @@
                                                 value="{{ $key }}"
                                                 {{ in_array($key, $selectedReturnConditions) ? 'checked' : '' }}
                                             >
-                                            <label class="form-check-label" for="conditions-{{ $key }}">{{$returnCondition}}</label>
+                                            <label class="form-check-label"
+                                                   for="conditions-{{ $key }}">{{$returnCondition}}</label>
                                         </div>
                                     @endforeach
                                 </div>
@@ -256,249 +249,34 @@
                     </div>
                 </div>
 
-
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <h6>Edit Variation</h6>
-        </div>
-        <div class="card-body">
-             <div class="col-12">
-                                <div class="form-group mb-2">
-                                    <label for="color">Select Color</label>
-                                    <select name="" id="color" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::COLOR_SELECT as $color)
-                                            <option value="{{ $color }}">{{ $color }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="size">Select Size</label>
-                                    <select name="" id="size" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
-                                            <option value="{{ $size }}">{{ $size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <button type="button" class="btn btn-primary mb-2" id="generate-option-button">Generate Options</button>
-                            </div>
-                            <div class="col-12 table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Default</th>
-                                        <th>Image</th>
-                                        <th>Option</th>
-                                        <th>Color</th>
-                                        <th>Size</th>
-                                        <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-             <div class="form-group">
+                <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
                 </div>
-        </div>
-    </div>
 
-  </form>
+
+            </div>
+        </div>
+
+
+    </form>
 
 @endsection
 
 @section('scripts')
     <script>
-        var uploadedImagesMap = {}
-        Dropzone.options.imagesDropzone = {
-            url: '{{ route('admin.products.storeMedia') }}',
-            maxFilesize: 2, // MB
-            acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 2,
-                width: 4096,
-                height: 4096
-            },
-            success: function (file, response) {
-                $('form').append('<input type="hidden" name="images[]" value="' + response.name + '">')
-                uploadedImagesMap[file.name] = response.name
-            },
-            removedfile: function (file) {
-                console.log(file)
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedImagesMap[file.name]
-                }
-                $('form').find('input[name="images[]"][value="' + name + '"]').remove()
-            },
-            init: function () {
-                @if(isset($images) && $images)
-                       let files = {!! json_encode($images) !!}
-                             for (let i in files) {
-                               let file = files[i]
-                               this.options.addedfile.call(this, file)
-                               this.options.thumbnail.call(this, file, file.preview_url)
-                                file.previewElement.classList.add('dz-complete')
-                               $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
-                             }
-                @endif
-            },
-            error: function (file, response) {
-                if ($.type(response) === 'string') {
-                    var message = response //dropzone sends it's own error messages in string
-                } else {
-                    var message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
-            }
-        }
-
-
-        let variations = {!! json_encode($productOptions) !!};
-
-        const generateVariations = (colors, sizes) => {
-            if(colors.length<=0)
-            {
-                alert('Please select at least one color');
-                variations = [];
-                return;
-            }
-
-            colors?.forEach((color, i)=>{
-                if(sizes?.length > 0)
-                {
-                    sizes?.forEach((size, j)=>{
-                        let option = `${color}-${size}`;
-                        const exists = variations.filter(opt => opt.option === option).length > 0;
-                        if (!exists) {
-                            let object = {
-                                id: '',
-                                option,
-                                color,
-                                size,
-                                quantity: 0,
-                                unit: ''
-                            }
-                            variations.push(object);
-                        }
-                    });
-                }else {
-                    let option = color;
-                    const exists = variations.filter(opt => opt.option === option).length > 0;
-                    if (!exists) {
-                        let object = {
-                            id: '',
-                            option,
-                            color,
-                            size: '',
-                            quantity: 0,
-                            unit: ''
-                        }
-                        variations.push(object);
-                    }
-                }
-            });
-            createOptions();
-        }
-
-        $('#generate-option-button').click(() => {
-            let colors = $('#color').val()
-            let sizes = $('#size').val();
-            generateVariations(colors, sizes)
-        })
-
-        const createOptions = () => {
-            let template = '';
-            variations?.forEach((variation, index)=>{
-                template += productOptionTemplate(variation, index);
-            });
-            $('table tbody').html(template)
-        }
-
-
-
-        const productOptionTemplate = (variation, index) => {
-
-            let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
-            $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}" ${variation.unit == e.name ? 'selected' : ''}>${e.name}</option>`;
-            })
-            unitSelect += "</select>";
-
-            return `<tr data-index="${index}">`+
-                `<td><input type="hidden" name="product_options[${index}][id]" value="${variation.id}"><input class="form-control" type="checkbox" name="product_options[${index}][is_default]" value=""></td>`+
-                `<td><input class="form-control" type="file" name="product_options[${index}][image]" value="" style="min-width: 100px"></td>`+
-                `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
-                `<td>${unitSelect}</td>`+
-                `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
-                `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
-                `</tr>`;
-        }
-
-        createOptions();
-
-        $(document).on('click', '.delete-button', function (){
-            let tr = $(this).closest('tr');
-            let index = $(tr).data('index');
-            variations.splice(index, 1);
-            $(tr).remove()
-        });
-
-        $(document).on('submit', '#productForm', function(e) {
+        $(document).on('submit', '#productForm', function (e) {
             e.preventDefault();
             let isReturnable = $('#is_returnable').is(':checked')
-            if (isReturnable){
+            if (isReturnable) {
                 const atLeastOneIsChecked = $('.return_conditions:checked').length > 0;
-                if (!atLeastOneIsChecked){
+                if (!atLeastOneIsChecked) {
                     alert('Please select at least one return condition.')
                     return;
                 }
             }
-
-            if(variations.length <= 0){
-                alert('Please create variations')
-                return;
-            }
-
-            let isNotEmpty = $('.option, .color').filter(function (){
-                return $.trim($(this).val()).length == 0
-            }).length == 0;
-
-            if(!isNotEmpty){
-                alert('Option or color from any variation cannot be blank')
-                return;
-            }
-
-            var formData = new FormData($(this)[0]);
+            let formData = new FormData($(this)[0]);
             $.ajax({
                 url: "{{route('admin.products.update')}}",
                 type: 'POST',
@@ -507,19 +285,38 @@
                 cache: false,
                 processData: false,
                 contentType: false,
-                success: function(result) {
+                success: function (result) {
                     if (result.status) {
-                        alert(result.msg);
-                        setTimeout(function() {
+                        $.toast({
+                            heading: 'Success',
+                            text: result?.message,
+                            showHideTransition: 'slide',
+                            icon: 'success',
+                            position: 'top-right',
+                        });
+                        setTimeout(function () {
                             location.reload();
                             window.location = "{{ route('admin.products.index') }}"
                         }, 100);
                     } else {
-                        alert(result);
+                        $.toast({
+                                heading: 'Error',
+                                text: result?.message,
+                                showHideTransition: 'slide',
+                                icon: "error",
+                                position:'top-right',
+                            });
                     }
                 },
-                error: function(result) {
-                    console.log(result);
+                error: function (jqXHR, textStatus) {
+
+                    $.toast({
+                        heading: 'Error',
+                        text: textStatus,
+                        showHideTransition: 'slide',
+                        icon: "error",
+                        position: 'top-right',
+                    });
                 }
             });
         });
@@ -529,7 +326,10 @@
 
         setTimeout(() => {
             $('#product_category_id').val(category).trigger('change');
-        }, 100)
+        }, 100);
+
+
+
 
         $("#product_category_id").on("change", function () {
 
@@ -551,7 +351,7 @@
                     $('#product_sub_category_id').val(subCategory).trigger('change');
 
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
                     console.log(textStatus);
                 }
             });
