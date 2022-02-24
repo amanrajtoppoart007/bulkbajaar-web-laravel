@@ -11,7 +11,6 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\ProductOption;
 use App\Models\ProductPortalCharge;
 use App\Models\ProductReturnCondition;
 use App\Models\Vendor;
