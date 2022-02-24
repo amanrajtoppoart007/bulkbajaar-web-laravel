@@ -64,16 +64,7 @@ class ProductOptionController extends Controller
                     $options = ProductOption::where(['product_id' => $product_id])->get();
                     foreach ($options as $option) {
                         if ($isDefault) {
-
-                             if($option->id==$productOption->id)
-                             {
-                                 $option->is_default = 1;
-
-                             }
-                             else
-                             {
-                                 $option->is_default = 0;
-                             }
+                             $option->is_default = $option->id==$productOption->id?1:0;
                               $option->save();
                         }
                         if(!in_array($option->color,$colors))
@@ -85,7 +76,6 @@ class ProductOptionController extends Controller
                         {
                            $sizes[] = $option->size;
                         }
-                        $option->is_default = 0;
                         $option->save();
                     }
                     $product = Product::find($product_id);
@@ -164,16 +154,7 @@ class ProductOptionController extends Controller
                  $options = ProductOption::where(['product_id' => $product_id])->get();
                     foreach ($options as $option) {
                         if ($isDefault) {
-
-                             if($option->id==$productOption->id)
-                             {
-                                 $option->is_default = 1;
-
-                             }
-                             else
-                             {
-                                 $option->is_default = 0;
-                             }
+                              $option->is_default = $option->id==$productOption->id?1:0;
                               $option->save();
                         }
                         if(!in_array($option->color,$colors))
@@ -185,7 +166,6 @@ class ProductOptionController extends Controller
                         {
                            $sizes[] = $option->size;
                         }
-                        $option->is_default = 0;
                         $option->save();
                     }
                     $product = Product::find($product_id);
