@@ -47,7 +47,9 @@
     Route::post('products/update', 'Admin\ProductController@update')->name('products.update');
     Route::post('products/update-portal-charge', 'Admin\ProductController@updatePortalCharge')->name('products.update-portal-charge');
 
-
+    Route::resource('productOptions', \App\Http\Controllers\Admin\ProductOptionController::class);
+    Route::get('product/option/create/{productId}', [\App\Http\Controllers\Admin\ProductOptionController::class,'create'])->name('productOptions.create');
+    Route::post('product/option/remove/file', [\App\Http\Controllers\Admin\ProductOptionController::class,'removeUploadedFiles'])->name('productOptions.remove.files');
 
 // User Alerts
     Route::delete('user-alerts/destroy', 'Admin\UserAlertsController@massDestroy')->name('user-alerts.massDestroy');

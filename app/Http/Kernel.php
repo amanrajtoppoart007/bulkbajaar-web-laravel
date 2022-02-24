@@ -26,16 +26,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'admin' => \App\Http\Middleware\IsAdmin::class,
-        'help_center' => \App\Http\Middleware\RedirectIfNotHelpCenter::class,
-        'help_center.guest' => \App\Http\Middleware\RedirectIfHelpCenter::class,
+        'admin' => \App\Http\Middleware\RedirectIfNotAdmin::class,
+        'admin.guest' => \App\Http\Middleware\RedirectIfAdmin::class,
         'logistics' => \App\Http\Middleware\RedirectIfNotLogistics::class,
         'logistics.guest' => \App\Http\Middleware\RedirectIfLogistics::class,
         'vendor' => \App\Http\Middleware\RedirectIfNotVendor::class,
         'vendor.guest' => \App\Http\Middleware\RedirectIfVendor::class,
-        'check_if_help_center_documents_are_uploaded' => \App\Http\Middleware\CheckIfHelpCenterDocumentsAreUploaded::class,
         'check_if_franchisee_documents_are_uploaded' => \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class,
-        'check_if_help_center_has_active_membership_plan' => \App\Http\Middleware\CheckIfHelpCenterHasActiveMembershipPlan::class,
     ];
 
     protected $middlewareGroups = [

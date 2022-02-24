@@ -30,6 +30,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
@@ -103,10 +104,10 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $vendors = Vendor::all()->pluck('name', 'id');
         $categories = ProductCategory::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
+
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-        return view('admin.products.create', compact('categories', 'unitTypes', 'vendors', 'returnConditions', 'brands'));
+        return view('admin.products.create', compact('categories' , 'vendors', 'returnConditions', 'brands'));
     }
 
     public function store(StoreProductRequest $request,Product $product)
@@ -114,90 +115,23 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            $validated['slug'] = $this->generateSlug(Product::class, $request->name);
+            $validated['slug'] = $this->generateSlug(Product::class, $request->input('name'));
             $validated['quantity'] = null;
-            $validated['approval_status'] = 'APPROVED';
             $product = $product->create($validated);
-
-
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-            $colors = [];
-            $sizes = [];
-            $i=0;
-
-            foreach ($request->input('product_options') as $product_option){
-                if (!in_array($product_option['color'], $colors)){
-                    $colors[] = $product_option['color'];
-                }
-                if (!in_array($product_option['size'], $sizes)){
-                    $sizes[] = $product_option['size'];
-                }
-                $option =  $product->productOptions()->create([
-                    'product_id' => $product->id,
-                    'option' => $product_option['option'],
-                    'color' => $product_option['color'],
-                    'size' => $product_option['size'],
-                    'unit' => $product_option['unit'],
-                    'quantity' => $product_option['quantity'],
-                ]);
-
-
-                $isDefault = $i==$request->input('default_image_index');
-
-                if($i==$request->input('default_image_index'))
-                {
-                    foreach ($request->input('images', []) as $file) {
-                        $option->addMedia(storage_path('tmp/uploads/' . $file))->withCustomProperties([
-                        'color'=>$product_option['color'],
-                        'size'=>$product_option['size'],
-                        'is_default'=>$isDefault,
-                         'option_id'=>$option->id
-                    ])->toMediaCollection('images');
-                    }
-                }
-                $files = $request->file('product_options')[$i];
-                foreach($files as $file)
-                {
-                    $path = $file->store('public');
-                    if($path)
-                    {
-                        $option->addMediaFromDisk($path,'public')
-                            ->withCustomProperties([
-                                'color' => $product_option['color'],
-                                'size' => $product_option['size'],
-                                'is_default' => $isDefault,
-                                 'option_id'=>$option->id
-                            ])->toMediaCollection('images');
-                    }
-
-                }
-
-                $i++;
-            }
-
             if ($request->boolean('is_returnable')){
                 $product->productReturnConditions()->sync($request->input('return_conditions'));
             }
-            $product->product_attributes = [
-                [
-                    'key' => 'color',
-                    'values' => $colors
-                ],
-                [
-                    'key' => 'size',
-                    'values' => $sizes
-                ],
-            ];
             $product->save();
-
             DB::commit();
-
-            $result = ["status" => 1, "response"=>"success", "msg" => "Product added successfully"];
-        } catch (\Exception $e) {
+            $nextUrl = route('admin.productOptions.create',['productId'=>$product->id]);
+            $result = ["status" => 1, "response"=>"success","nextUrl"=>$nextUrl, "message" => "Product added successfully"];
+        }
+        catch (\Exception $e) {
             DB::rollBack();
-            $result = ["status" => 0, "response"=>"exception_error", "msg" => $e->getMessage()];
+            $result = ["status" => 0, "response"=>"exception_error", "message" => $e->getMessage()];
 
         }
         return response()->json($result,200);

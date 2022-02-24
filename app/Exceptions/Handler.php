@@ -52,26 +52,16 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return response()->json(['status' => 0, 'error' => 'Unauthenticated.', 'message' => 'Invalid access attempt']);
+            return response()->json(['status' => 0, 'error' => 'unauthenticated.', 'message' => 'Invalid access attempt']);
         }
         $guard = Arr::get($exception->guards(), 0);
-        switch ($guard) {
-            case 'admin':
-                $route = 'admin.login';
-                break;
-            case 'help_center':
-                $route = 'helpCenter.login';
-                break;
-            case 'franchisee':
-                $route = 'franchisee.login';
-                break;
-            case 'logistics':
-                $route = 'logistics.login';
-                break;
-            default:
-                $route = 'login';
-                break;
-        }
+        $route = match ($guard) {
+            'admin' => 'admin.login',
+            'help_center' => 'helpCenter.login',
+            'franchisee' => 'franchisee.login',
+            'logistics' => 'logistics.login',
+            default => 'login',
+        };
         return redirect()->guest(route($route));
 
     }

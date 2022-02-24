@@ -6,7 +6,6 @@
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }} - Basic Details
         </div>
-
         <div class="card-body">
 
                 <div class="row">
@@ -200,20 +199,7 @@
                                     @endif
                                 </div>
                             </div>
-                             <div class="col-12">
-                                <div class="form-group">
-                                    <label for="images">{{ trans('cruds.product.fields.images') }}</label>
-                                    <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}"
-                                         id="images-dropzone">
-                                    </div>
-                                    @if($errors->has('images'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('images') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
-                                </div>
-                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">{{ trans('cruds.product.fields.description') }}</label>
@@ -259,71 +245,14 @@
                                     @endforeach
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
-
-
-
-
-        </div>
-    </div>
-
-    <div class="card">
-         <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }} - Create Variation
-        </div>
-        <div class="card-body">
-              <div class="row">
-                    <div class="col-12">
-                                <div class="form-group mb-2">
-                                    <label for="color">Select Color</label>
-                                    <select name="" id="color" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::COLOR_SELECT as $color)
-                                            <option value="{{ $color }}">{{ $color }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="size">Select Size</label>
-                                    <select name="" id="size" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
-                                            <option value="{{ $size }}">{{ $size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <button type="button" class="btn btn-primary mb-2" id="generate-option-button">Generate Options</button>
-                            </div>
-                            <div class="col-12 table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Default</th>
-                                        <th>Image</th>
-                                        <th>Option</th>
-                                        <th>Color</th>
-                                        <th>Size</th>
-                                        <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-                </div>
-        </div>
-    </div>
-
-      <div class="card">
-        <div class="card-body">
-           <div class="form-group">
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
-                    </button>
-                </div>
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.next') }}
+                </button>
+            </div>
         </div>
     </div>
  </form>
@@ -351,20 +280,6 @@
                 }
             }
 
-            if(variations.length <= 0){
-                alert('Please create variations')
-                return;
-            }
-
-            let isNotEmpty = $('.option, .color').filter(function (){
-                return $.trim($(this).val()).length === 0
-            }).length === 0;
-
-            if(!isNotEmpty){
-                alert('Option or color from any variation cannot be blank')
-                return;
-            }
-
                 const form = new FormData(document.getElementById('productForm'));
                 $.ajax({
                     url: "{{route('admin.products.store')}}",
@@ -375,200 +290,40 @@
                     contentType: false,
                     success: function (result) {
                         if (result?.status === 1) {
-                            Swal.fire({
-                                title: 'Success!',
+
+                            $.toast({
+                                heading: 'Success',
                                 text: result?.message,
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok,Got it",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
+                                showHideTransition: 'slide',
+                                icon: 'success',
+                                position:'top-right',
                             });
-                            window.location.href = '{{route('admin.products.index')}}';
+                           window.location.href = result.nextUrl;
                         } else {
-                            Swal.fire({
-                                    title: 'Error',
-                                    text: result?.message,
-                                    icon: "error",
-                                    buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
-                                    customClass: {
-                                        confirmButton: "btn btn-primary"
-                                    }
-                                });
+
+                            $.toast({
+                                heading: 'Error',
+                                text: result?.message,
+                                showHideTransition: 'slide',
+                                icon: "error",
+                                position:'top-right',
+                            });
+
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        Swal.fire({
-                            text: textStatus,
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
 
+                        $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                     }
                 });
-            })
-        })
-    </script>
-    <script>
-        var uploadedImagesMap = {}
-        Dropzone.options.imagesDropzone = {
-            url: '{{ route('admin.products.storeMedia') }}',
-            maxFilesize: 2, // MB
-            acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 2,
-                width: 4096,
-                height: 4096
-            },
-            success: function (file, response) {
-                $('form#productForm').append('<input type="hidden" name="images[]" value="' + response.name + '">')
-                uploadedImagesMap[file.name] = response.name
-            },
-            removedfile: function (file) {
-                console.log(file)
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedImagesMap[file.name]
-                }
-                $('form').find('input[name="images[]"][value="' + name + '"]').remove()
-            },
-            init: function () {
-                @if(isset($product) && $product->images)
-                var files =
-                    {!! json_encode($product->images) !!}
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form#productForm').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
-                }
-                @endif
-            },
-            error: function (file, response) {
-                let message;
-                if ($.type(response) === 'string') {
-                     message = response //dropzone sends it's own error messages in string
-                } else {
-                     message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
-            }
-        }
-
-
-        let variations = [];
-
-        const generateVariations = (colors, sizes) => {
-            if(colors.length<=0)
-            {
-                alert('Please select at least one color');
-                variations = [];
-                return;
-            }
-
-            colors?.forEach((color, i)=>{
-                if(sizes?.length > 0)
-                {
-                    sizes?.forEach((size, j)=>{
-                        let option = `${color}-${size}`;
-                        const exists = variations.filter(opt => opt.option === option).length > 0;
-                        if (!exists) {
-                            let object = {
-                                option,
-                                color,
-                                size,
-                                quantity: 0,
-                                unit: ''
-                            }
-                            variations.push(object);
-                        }
-                    });
-                }else {
-                    let option = color;
-                    const exists = variations.filter(opt => opt.option === option).length > 0;
-                    if (!exists) {
-                        let object = {
-                            option,
-                            color,
-                            size: '',
-                            quantity: 0,
-                            unit: ''
-                        }
-                        variations.push(object);
-                    }
-                }
             });
-            createOptions();
-        }
-
-        $('#generate-option-button').click(() => {
-            let colors = $('#color').val()
-            let sizes = $('#size').val();
-            generateVariations(colors, sizes)
-        })
-
-        const createOptions = () => {
-            let template = '';
-            variations?.forEach((variation, index)=>{
-                template += productOptionTemplate(variation, index);
-            });
-            $('table tbody').html(template)
-        }
-
-        const productOptionTemplate = (variation, index) => {
-
-            let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
-            $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}" ${variation.unit === e.name ? 'selected' : ''}>${e.name}</option>`;
-            })
-            unitSelect += "</select>";
-
-            return `<tr data-index="${index}">`+
-                        `<td><input class="form-check-input" type="radio" name="default_image_index" value="${index}" style="min-width: 100px"  ${index===0?'checked':''}></td>`+
-                        `<td><input class="form-control" type="file" name="product_options[${index}][image]" value="" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
-                        `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
-                        `<td>${unitSelect}</td>`+
-                        `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
-                        `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
-                    `</tr>`;
-
-
-        }
-
-        $(document).on('click', '.delete-button', function (){
-            let tr = $(this).closest('tr');
-            let index = $(tr).data('index');
-            variations.splice(index, 1);
-            $(tr).remove()
-        });
-
-
-        let category = "{{ old('product_category_id') }}";
+            let category = "{{ old('product_category_id') }}";
         let subCategory = "{{ old('product_sub_category_id') }}";
 
         setTimeout(() => {
@@ -596,9 +351,16 @@
 
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus);
+                     $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                 }
             });
         });
+        })
     </script>
 @endsection

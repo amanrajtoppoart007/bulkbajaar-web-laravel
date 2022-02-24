@@ -46,4 +46,23 @@ trait MediaUploadingTrait
             'original_name' => $file->getClientOriginalName(),
         ]);
     }
+
+    public function removeMedia()
+    {
+        try {
+            $file = request()->input('filename');
+            $path = storage_path("tmp/uploads/$file");
+            if (file_exists($path)) {
+                 unlink($path);
+                 $result = ['status'=>1,'response'=>'success','message'=>'file deleted successfully'];
+            }
+            else
+            {
+                $result = ['status'=>0,'response'=>'no_file','message'=>'file not found successfully'];
+            }
+        } catch (\Exception $e) {
+            $result = ['status'=>0,'response'=>'exception_error','message'=>$e->getMessage()];
+        }
+        return response()->json($result,200);
+    }
 }
