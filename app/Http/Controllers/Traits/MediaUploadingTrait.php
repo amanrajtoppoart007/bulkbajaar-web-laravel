@@ -58,10 +58,10 @@ trait MediaUploadingTrait
                     unlink($path);
                     $result = ['status' => 1, 'response' => 'success', 'message' => 'file deleted successfully'];
                 } else {
-                    $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found successfully'];
+                    $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found'];
                 }
             } else {
-                $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found successfully'];
+                $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found'];
             }
         } catch (\Exception $e) {
             $result = ['status'=>0,'response'=>'exception_error','message'=>$e->getMessage()];
