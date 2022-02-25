@@ -180,40 +180,7 @@
 
     Route::post('brands/media', [\App\Http\Controllers\Admin\BrandController::class, 'storeMedia'])->name('brands.storeMedia');
 
-    // Articles
-    Route::delete('articles/destroy', 'Admin\ArticleController@massDestroy')->name('articles.massDestroy');
-    Route::post('articles/media', 'Admin\ArticleController@storeMedia')->name('articles.storeMedia');
-    Route::post('articles/ckmedia', 'Admin\ArticleController@storeCKEditorImages')->name('articles.storeCKEditorImages');
-    Route::post('articles/parse-csv-import', 'Admin\ArticleController@parseCsvImport')->name('articles.parseCsvImport');
-    Route::post('articles/process-csv-import', 'Admin\ArticleController@processCsvImport')->name('articles.processCsvImport');
-    Route::resource('articles', 'Admin\ArticleController');
 
-    // Article Tags
-    Route::delete('article-tags/destroy', 'Admin\ArticleTagController@massDestroy')->name('article-tags.massDestroy');
-    Route::post('article-tags/parse-csv-import', 'Admin\ArticleTagController@parseCsvImport')->name('article-tags.parseCsvImport');
-    Route::post('article-tags/process-csv-import', 'Admin\ArticleTagController@processCsvImport')->name('article-tags.processCsvImport');
-    Route::resource('article-tags', 'Admin\ArticleTagController');
-    Route::get('get-article-tag', [\App\Http\Controllers\Admin\ArticleTagController::class, 'getTag'])->name('get.article-tag');
-    Route::post('add-article-tag', [\App\Http\Controllers\Admin\ArticleTagController::class, 'addTag'])->name('article-tag.add');
-    Route::post('update-article-tag', [\App\Http\Controllers\Admin\ArticleTagController::class, 'updateTag'])->name('article-tag.update');
-
-    // Article Comments
-    Route::delete('article-comments/destroy', 'Admin\ArticleCommentController@massDestroy')->name('article-comments.massDestroy');
-    Route::post('article-comments/parse-csv-import', 'Admin\ArticleCommentController@parseCsvImport')->name('article-comments.parseCsvImport');
-    Route::post('article-comments/process-csv-import', 'Admin\ArticleCommentController@processCsvImport')->name('article-comments.processCsvImport');
-    Route::resource('article-comments', 'Admin\ArticleCommentController');
-
-    // Followers
-    Route::delete('followers/destroy', 'Admin\FollowerController@massDestroy')->name('followers.massDestroy');
-    Route::post('followers/parse-csv-import', 'Admin\FollowerController@parseCsvImport')->name('followers.parseCsvImport');
-    Route::post('followers/process-csv-import', 'Admin\FollowerController@processCsvImport')->name('followers.processCsvImport');
-    Route::resource('followers', 'Admin\FollowerController');
-
-    // Article Likes
-    Route::delete('article-likes/destroy', 'Admin\ArticleLikeController@massDestroy')->name('article-likes.massDestroy');
-    Route::post('article-likes/parse-csv-import', 'Admin\ArticleLikeController@parseCsvImport')->name('article-likes.parseCsvImport');
-    Route::post('article-likes/process-csv-import', 'Admin\ArticleLikeController@processCsvImport')->name('article-likes.processCsvImport');
-    Route::resource('article-likes', 'Admin\ArticleLikeController');
 
     // Logistics
     Route::delete('logistics/destroy', 'Admin\LogisticsController@massDestroy')->name('logistics.massDestroy');
@@ -252,20 +219,7 @@
     Route::post('add-city', [\App\Http\Controllers\Admin\CityController::class, 'addCity'])->name('city.add');
     Route::post('update-city', [\App\Http\Controllers\Admin\CityController::class, 'updateCity'])->name('city.update');
 
-    // Help Centers
-    Route::delete('help-centers/destroy', 'Admin\HelpCenterController@massDestroy')->name('help-centers.massDestroy');
-    Route::post('help-centers/parse-csv-import', 'Admin\HelpCenterController@parseCsvImport')->name('help-centers.parseCsvImport');
-    Route::post('help-centers/process-csv-import', 'Admin\HelpCenterController@processCsvImport')->name('help-centers.processCsvImport');
-    Route::resource('help-centers', 'Admin\HelpCenterController');
 
-    // Help Center Profiles
-    Route::delete('help-center-profiles/destroy', 'Admin\HelpCenterProfileController@massDestroy')->name('help-center-profiles.massDestroy');
-    Route::post('help-center-profiles/media', 'Admin\HelpCenterProfileController@storeMedia')->name('help-center-profiles.storeMedia');
-    Route::post('help-center-profiles/ckmedia', 'Admin\HelpCenterProfileController@storeCKEditorImages')->name('help-center-profiles.storeCKEditorImages');
-    Route::post('help-center-profiles/parse-csv-import', 'Admin\HelpCenterProfileController@parseCsvImport')->name('help-center-profiles.parseCsvImport');
-    Route::post('help-center-profiles/process-csv-import', 'Admin\HelpCenterProfileController@processCsvImport')->name('help-center-profiles.processCsvImport');
-    Route::resource('help-center-profiles', 'Admin\HelpCenterProfileController');
-    Route::post('help-center-profiles/check-profile', 'Admin\HelpCenterProfileController@checkHelpCenterProfile')->name('help-center-profiles.check-profile');
 
 
 // User Profiles
@@ -280,14 +234,7 @@
     Route::post('crops/ckmedia', 'Admin\CropController@storeCKEditorImages')->name('crops.storeCKEditorImages');
     Route::resource('crops', 'Admin\CropController');
 
-    // Franchisee Profiles
-    Route::delete('franchisee-profiles/destroy', 'Admin\FranchiseeProfileController@massDestroy')->name('franchisee-profiles.massDestroy');
-    Route::post('franchisee-profiles/media', 'Admin\FranchiseeProfileController@storeMedia')->name('franchisee-profiles.storeMedia');
-    Route::post('franchisee-profiles/ckmedia', 'Admin\FranchiseeProfileController@storeCKEditorImages')->name('franchisee-profiles.storeCKEditorImages');
-    Route::post('franchisee-profiles/parse-csv-import', 'Admin\FranchiseeProfileController@parseCsvImport')->name('franchisee-profiles.parseCsvImport');
-    Route::post('franchisee-profiles/process-csv-import', 'Admin\FranchiseeProfileController@processCsvImport')->name('franchisee-profiles.processCsvImport');
-    Route::resource('franchisee-profiles', 'Admin\FranchiseeProfileController');
-    Route::post('franchisee-profiles/check-profile', 'Admin\FranchiseeProfileController@checkFranchiseeProfile')->name('franchisee-profiles.check-profile');
+
 
     Route::get('global-search', 'Admin\GlobalSearchController@search')->name('globalSearch');
     Route::get('user-alerts/read', 'Admin\UserAlertsController@read');
@@ -309,15 +256,7 @@
     Route::post('product-sub-categories/ckmedia', 'Admin\ProductSubCategoryController@storeCKEditorImages')->name('product-sub-categories.storeCKEditorImages');
     Route::resource('product-sub-categories', 'Admin\ProductSubCategoryController');
 
-    // Franchisee Orders
-    Route::delete('franchisee-orders/destroy', 'Admin\FranchiseeOrderController@massDestroy')->name('franchisee-orders.massDestroy');
-    Route::post('franchisee-orders/parse-csv-import', 'Admin\FranchiseeOrderController@parseCsvImport')->name('franchisee-orders.parseCsvImport');
-    Route::post('franchisee-orders/process-csv-import', 'Admin\FranchiseeOrderController@processCsvImport')->name('franchisee-orders.processCsvImport');
-    Route::resource('franchisee-orders', 'Admin\FranchiseeOrderController');
-    Route::post('franchisee-orders/confirm', 'Admin\FranchiseeOrderController@confirmOrder')->name('franchisee-orders.confirm');
-    Route::post('franchisee-orders/verify-payment', 'Admin\FranchiseeOrderController@verifyPayment')->name('franchisee-orders.verify.payment');
-    Route::post('franchisee-orders/update-status', 'Admin\FranchiseeOrderController@updateStatus')->name('franchisee-orders.update.status');
-    Route::post('franchisee-orders/update-stock', 'Admin\FranchiseeOrderController@updateStock')->name('franchisee-orders.update.stock');
+
 
     //SLIDERS
     Route::resource('sliders', 'Admin\SliderController');

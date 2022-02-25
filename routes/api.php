@@ -84,21 +84,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('products/media', 'ProductApiController@storeMedia')->name('products.storeMedia');
     Route::apiResource('products', 'ProductApiController');
 
-    // Content Categories
-    Route::apiResource('content-categories', 'ContentCategoryApiController');
 
-    // Content Tags
-    Route::apiResource('content-tags', 'ContentTagApiController');
 
-    // Content Pages
-    Route::post('content-pages/media', 'ContentPageApiController@storeMedia')->name('content-pages.storeMedia');
-    Route::apiResource('content-pages', 'ContentPageApiController');
 
-    // Faq Categories
-    Route::apiResource('faq-categories', 'FaqCategoryApiController');
 
-    // Faq Questions
-    Route::apiResource('faq-questions', 'FaqQuestionApiController');
+
+
+
 
     // Orders
     Route::apiResource('orders', 'OrderApiController');
@@ -109,8 +101,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Vendors
     Route::apiResource('vendors', 'VendorApiController');
 
-    // Franchisees
-    Route::apiResource('franchisees', 'FranchiseeApiController');
+
 
     // Pincodes
     Route::apiResource('pincodes', 'PincodeApiController');
@@ -132,21 +123,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Brands
     Route::apiResource('brands', 'BrandApiController');
 
-    // Articles
-    Route::post('articles/media', 'ArticleApiController@storeMedia')->name('articles.storeMedia');
-    Route::apiResource('articles', 'ArticleApiController');
 
-    // Article Tags
-    Route::apiResource('article-tags', 'ArticleTagApiController');
-
-    // Article Comments
-    Route::apiResource('article-comments', 'ArticleCommentApiController');
-
-    // Followers
-    Route::apiResource('followers', 'FollowerApiController');
-
-    // Article Likes
-    Route::apiResource('article-likes', 'ArticleLikeApiController');
 
     // Logistics
     Route::apiResource('logistics', 'LogisticsApiController');
@@ -166,28 +143,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Cities
     Route::apiResource('cities', 'CityApiController');
 
-    // Help Centers
-    Route::apiResource('help-centers', 'HelpCenterApiController');
 
-    // Help Center Profiles
-    Route::post('help-center-profiles/media', 'HelpCenterProfileApiController@storeMedia')->name('help-center-profiles.storeMedia');
-    Route::apiResource('help-center-profiles', 'HelpCenterProfileApiController');
 
     // User Profiles
     Route::post('user-profiles/media', 'UserProfileApiController@storeMedia')->name('user-profiles.storeMedia');
     Route::apiResource('user-profiles', 'UserProfileApiController');
 
-    // Crops
-    Route::post('crops/media', 'CropApiController@storeMedia')->name('crops.storeMedia');
-    Route::apiResource('crops', 'CropApiController');
 
-    // Franchisee Profiles
-    Route::post('franchisee-profiles/media', 'FranchiseeProfileApiController@storeMedia')->name('franchisee-profiles.storeMedia');
-    Route::apiResource('franchisee-profiles', 'FranchiseeProfileApiController');
-
-    //enquiries
-
-    Route::apiResource('enquiries', 'EnquiryApiController');
 });
 
 Route::prefix('v1')->group(function (){

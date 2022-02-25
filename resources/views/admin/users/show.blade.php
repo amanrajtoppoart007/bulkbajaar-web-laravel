@@ -129,31 +129,15 @@
                 {{ trans('cruds.order.title') }}
             </a>
         </li>
-        <li class="nav-item d-none">
-            <a class="nav-link" href="#user_articles" role="tab" data-toggle="tab">
-                {{ trans('cruds.article.title') }}
-            </a>
-        </li>
+
         <li class="nav-item d-none">
             <a class="nav-link" href="#user_article_comments" role="tab" data-toggle="tab">
                 {{ trans('cruds.articleComment.title') }}
             </a>
         </li>
-        <li class="nav-item d-none">
-            <a class="nav-link" href="#user_followers" role="tab" data-toggle="tab">
-                {{ trans('cruds.follower.title') }}
-            </a>
-        </li>
-        <li class="nav-item d-none">
-            <a class="nav-link" href="#follow_followers" role="tab" data-toggle="tab">
-                {{ trans('cruds.follower.title') }}
-            </a>
-        </li>
-        <li class="nav-item d-none">
-            <a class="nav-link" href="#user_article_likes" role="tab" data-toggle="tab">
-                {{ trans('cruds.articleLike.title') }}
-            </a>
-        </li>
+
+
+
         <li class="nav-item">
             <a class="nav-link" href="#user_transactions" role="tab" data-toggle="tab">
                 {{ trans('cruds.transaction.title') }}
@@ -173,21 +157,6 @@
     <div class="tab-content">
         <div class="tab-pane active show" role="tabpanel" id="user_orders">
             @includeIf('admin.users.relationships.userOrders', ['orders' => $user->userOrders])
-        </div>
-        <div class="tab-pane d-none" role="tabpanel" id="user_articles">
-            @includeIf('admin.users.relationships.userArticles', ['articles' => $user->userArticles])
-        </div>
-        <div class="tab-pane d-none" role="tabpanel" id="user_article_comments">
-            @includeIf('admin.users.relationships.userArticleComments', ['articleComments' => $user->userArticleComments])
-        </div>
-        <div class="tab-pane d-none" role="tabpanel" id="user_followers">
-            @includeIf('admin.users.relationships.userFollowers', ['followers' => $user->userFollowers])
-        </div>
-        <div class="tab-pane d-none" role="tabpanel" id="follow_followers">
-            @includeIf('admin.users.relationships.followFollowers', ['followers' => $user->followFollowers])
-        </div>
-        <div class="tab-pane d-none" role="tabpanel" id="user_article_likes">
-            @includeIf('admin.users.relationships.userArticleLikes', ['articleLikes' => $user->userArticleLikes])
         </div>
         <div class="tab-pane" role="tabpanel" id="user_transactions">
             @includeIf('admin.users.relationships.userTransactions', ['transactions' => $user->userTransactions])
