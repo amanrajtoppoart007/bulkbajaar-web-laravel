@@ -15,11 +15,6 @@ class ProductOptionController extends Controller
 {
 
     use MediaUploadingTrait;
-
-    public function removeUploadedFiles()
-    {
-            $this->removeMedia();
-    }
       public function index($id)
     {
          $options = ProductOption::where(['product_id'=>$id])->get();
@@ -122,11 +117,13 @@ class ProductOptionController extends Controller
     }
     public function edit($id)
     {
-         $option = ProductOption::find($id);
-         return view("admin.products.options.edit",compact('option'));
+          $option = ProductOption::find($id);
+          $unitTypes= UnitType::select('name')->whereStatus(true)->get();
+          $options = ProductOption::where(['id'=>$id])->get();
+         return view("admin.products.options.edit",compact('option','options','unitTypes'));
     }
 
-    public function update(UpdateProductOptionRequest $request)
+    public function update(UpdateProductOptionRequest $request,ProductOption $productOption)
     {
          DB::beginTransaction();
         try {
@@ -146,7 +143,7 @@ class ProductOptionController extends Controller
                 $params['unit'] = $unit;
                 $params['quantity'] = $qty ?? 0;
                 $params['is_default'] = $isDefault;
-                $productOption = ProductOption::where(['id'=>$request->input('id')])->update($params);
+                ProductOption::where(['id'=>$request->input('id')])->update($params);
 
                    $colors = [];
                     $sizes = [];
@@ -179,16 +176,24 @@ class ProductOptionController extends Controller
                         ],
                     ];
                     $product->save();
+
+                if (count($productOption->images) > 0) {
+                    foreach ($productOption->images as $media) {
+                        if (!in_array($media->file_name, $request->input('images', []))) {
+                            $media->delete();
+                        }
+                    }
+                }
+                 $media = $productOption->images->pluck('file_name')->toArray();
+
                 foreach ($request->input('images', []) as $file) {
-                    if($request->hasFile($file))
-                    {
+                    if (count($media) === 0 || !in_array($file, $media)) {
                         $productOption->addMedia(storage_path('tmp/uploads/' . $file))->withCustomProperties([
                             'color' => $color,
                             'size' => $size,
                             'option_id' => $productOption->id
                         ])->toMediaCollection('images');
                     }
-
                 }
                  DB::commit();
                 $result = ["status"=>1,"response"=>"success","message"=>"variation successfully created"];

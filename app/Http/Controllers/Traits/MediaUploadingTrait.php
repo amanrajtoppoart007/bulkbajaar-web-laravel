@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Traits;
 
+use App\Models\ProductOption;
 use Illuminate\Http\Request;
 
 trait MediaUploadingTrait
@@ -47,18 +48,20 @@ trait MediaUploadingTrait
         ]);
     }
 
-    public function removeMedia()
+    public function removeMedia(Request $request)
     {
         try {
-            $file = request()->input('filename');
-            $path = storage_path("tmp/uploads/$file");
-            if (file_exists($path)) {
-                 unlink($path);
-                 $result = ['status'=>1,'response'=>'success','message'=>'file deleted successfully'];
-            }
-            else
-            {
-                $result = ['status'=>0,'response'=>'no_file','message'=>'file not found successfully'];
+            if ($request->has('filename')) {
+                $file = $request->input('filename');
+                $path = storage_path("tmp/uploads/$file");
+                if (file_exists($path)) {
+                    unlink($path);
+                    $result = ['status' => 1, 'response' => 'success', 'message' => 'file deleted successfully'];
+                } else {
+                    $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found successfully'];
+                }
+            } else {
+                $result = ['status' => 0, 'response' => 'no_file', 'message' => 'file not found successfully'];
             }
         } catch (\Exception $e) {
             $result = ['status'=>0,'response'=>'exception_error','message'=>$e->getMessage()];

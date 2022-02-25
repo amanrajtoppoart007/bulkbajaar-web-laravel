@@ -248,15 +248,12 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">
                         {{ trans('global.save') }}
                     </button>
-                    <a href="{{route('admin.productOptions.list',$product->id)}}" class="btn btn-success">Edit</a>
+                    <a href="{{route('admin.productOptions.list',$product->id)}}" class="btn btn-success">Edit Product Options</a>
                 </div>
-
-
             </div>
         </div>
 

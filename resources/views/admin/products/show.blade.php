@@ -7,7 +7,7 @@
         @if($product->approval_status == 'PENDING')
             <form action="{{ route('admin.products.approve', $product) }}" method="post" class="float-right">
                 @csrf
-                <button class="btn btn-success">Approve</button>
+                <button type="submit" class="btn btn-success">Approve</button>
             </form>
         @endif
     </div>
