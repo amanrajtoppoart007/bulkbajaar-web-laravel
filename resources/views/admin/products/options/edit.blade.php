@@ -73,7 +73,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Options
+            Generated Option
         </div>
         <div class="card-body">
             <div class="row">
