@@ -162,7 +162,7 @@
                         {{ trans('cruds.product.fields.images') }}
                     </th>
                     <td>
-                       
+
                     </td>
                 </tr>
                 <tr>
