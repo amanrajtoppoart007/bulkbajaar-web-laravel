@@ -6,14 +6,12 @@ use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use \DateTimeInterface;
 
-class Product extends Model implements HasMedia
+class Product extends Model
 {
-    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'products';
 
@@ -76,12 +74,6 @@ class Product extends Model implements HasMedia
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb');
-        $this->addMediaConversion('preview');
-    }
-
     public function tags()
     {
         return $this->belongsToMany(ProductTag::class);
@@ -89,15 +81,21 @@ class Product extends Model implements HasMedia
 
     public function getImagesAttribute()
     {
-        $files = $this->getMedia('images');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
+        $option = $this->productOptions->where(['is_default'=>1])->first();
+        if($option)
+        {
+            $files = $option->getMedia('images');
+            $files->each(function ($item) {
+                $item->url = $item->getUrl();
+                $item->thumbnail = $item->getUrl('thumb');
+                $item->preview = $item->getUrl('preview');
+            });
+            return $files;
+        }
+        return null;
 
-        return $files;
     }
+
 
     public function brand()
     {

@@ -162,11 +162,7 @@
                         {{ trans('cruds.product.fields.images') }}
                     </th>
                     <td>
-                        @foreach($product->images as $key => $media)
-                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                <img src="{{ $media->getUrl('thumb') }}">
-                            </a>
-                        @endforeach
+                       
                     </td>
                 </tr>
                 <tr>
