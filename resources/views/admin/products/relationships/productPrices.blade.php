@@ -9,6 +9,9 @@
                 <thead>
                 <tr>
                     <th>
+                        Images
+                    </th>
+                    <th>
                         {{ trans('cruds.productPrice.fields.id') }}
                     </th>
                     <th>
@@ -31,6 +34,13 @@
                 <tbody>
                 @foreach($productOptions as $key => $productOption)
                     <tr data-entry-id="{{ $productOption->id }}">
+                        <td>
+                            @if($productOption->images)
+                                @foreach($productOption->images as $image)
+                                    <img style="width:100px;height:80px;border-radius:4px;margin:4px" class="img-thumbnail" src="{{$image->preview_url}}" alt="">
+                                @endforeach
+                            @endif
+                        </td>
                         <td>
                             {{ $productOption->id ?? '' }}
                         </td>
