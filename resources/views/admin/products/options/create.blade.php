@@ -158,7 +158,7 @@
                          file.previewElement.remove();
                         $('form#productOptionForm').find('input[name="images[]"][value="' + name + '"]').remove()
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -210,9 +210,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                         setTimeout(()=>{
-                             window.location.href=window.location.href;
-                         },6000)
+                          window.location.href=window.location.href;
 
 
                         } else {

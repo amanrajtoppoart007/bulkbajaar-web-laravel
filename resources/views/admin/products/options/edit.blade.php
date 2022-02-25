@@ -223,9 +223,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                         setTimeout(()=>{
-                             window.location.href=window.location.href;
-                         },6000)
+                         window.location.href=window.location.href;
 
 
                         } else {

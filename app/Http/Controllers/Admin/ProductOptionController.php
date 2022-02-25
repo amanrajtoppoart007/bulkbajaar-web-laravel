@@ -18,7 +18,8 @@ class ProductOptionController extends Controller
       public function index($id)
     {
          $options = ProductOption::where(['product_id'=>$id])->get();
-         return view("admin.products.options.index",compact("options"));
+         $product_id = $id;
+         return view("admin.products.options.index",compact("options","product_id"));
     }
     public function create($productId)
     {
