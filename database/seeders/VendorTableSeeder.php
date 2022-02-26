@@ -23,7 +23,7 @@ class VendorTableSeeder extends Seeder
                 'remember_token'     => null,
                 'approved'           => 1,
                 'verified'           => 1,
-                'verified_at'        => '2021-01-26 15:07:08',
+                'verified_at'        => now(),
                 'verification_token' => '',
                 'mobile'             => '',
             ],

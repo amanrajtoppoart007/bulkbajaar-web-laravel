@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             VendorTableSeeder::class,
             LogisticsTableSeeder::class,
             RoleAdminTableSeeder::class,
-            RoleUserTableSeeder::class,
             RoleLogisticsTableSeeder::class,
             RoleVendorTableSeeder::class,
             StateDistrictTableSeeder::class
