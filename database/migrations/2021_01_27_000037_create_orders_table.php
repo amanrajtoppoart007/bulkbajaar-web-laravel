@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_status')->nullable();
             $table->string('status')->default('PENDING');
             $table->boolean('is_invoice_generated')->default(false);
-            $table->foreignId('payment_verified_by_id')->nullable()->constrained();
+            $table->unsignedBigInteger('payment_verified_by_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

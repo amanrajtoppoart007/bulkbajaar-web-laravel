@@ -14,6 +14,6 @@ class RoleVendorTableSeeder extends Seeder
      */
     public function run()
     {
-        Vendor::findOrFail(1)->roles()->sync(4);
+        Vendor::findOrFail(1)->roles()->sync(2);
     }
 }

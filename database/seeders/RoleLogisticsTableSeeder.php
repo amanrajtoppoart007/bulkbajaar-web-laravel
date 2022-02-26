@@ -14,6 +14,6 @@ class RoleLogisticsTableSeeder extends Seeder
      */
     public function run()
     {
-       Logistic::findOrFail(1)->roles()->sync(5);
+       Logistic::findOrFail(1)->roles()->sync(3);
     }
 }
