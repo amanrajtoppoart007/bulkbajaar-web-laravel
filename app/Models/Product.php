@@ -17,6 +17,7 @@ class Product extends Model
 
     protected $appends = [
         'images',
+        'image_list',
     ];
 
     protected $attributes = [
@@ -81,7 +82,7 @@ class Product extends Model
 
     public function getImagesAttribute()
     {
-        $option = $this->productOptions->where(['is_default'=>1])->first();
+        $option = $this->productOptions()->where(['is_default'=>1])->first();
         if($option)
         {
             $files = $option->getMedia('images');
@@ -93,6 +94,35 @@ class Product extends Model
             return $files;
         }
         return null;
+
+    }
+
+      public function getImageListAttribute()
+    {
+        $images = [];
+        $options = $this->productOptions()->get();
+            $i=0;
+            foreach($options as $option)
+            {
+                $files = $option->getMedia('images');
+
+                $image = [];
+                foreach($files as $item)
+                {
+                     $image['url'] = $item->getUrl();
+                     $image['thumbnail'] = $item->getUrl('thumb');
+                     $image['preview']  = $item->getUrl('preview');
+                     $image['color']    = $option->color;
+                     $image['size']     = $option->size;
+                     $image['option_id'] = $option->id;
+                }
+                if($image)
+                {
+                   $images[$i] = $image;
+                   $i++;
+                }
+            }
+            return (object)$images;
 
     }
 
