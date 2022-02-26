@@ -46,6 +46,7 @@ class ProductList
                 $data[$i]['vendor'] = $product['vendor']['name'] ?? null;
                 $data[$i]['liked'] = $this->checkIfProductLiked($product['id']);
                 $data[$i]['product_options'] = [];
+                $data[$i]['image_list'] = $product['image_list'];
                 $data[$i]['product_attributes'] = $product['product_attributes'] ?? [];
                 $data[$i]['rating'] = $this->getProductReviewCounts($product['id'])['average'] ?? 0;
 
