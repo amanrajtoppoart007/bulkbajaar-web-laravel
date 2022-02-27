@@ -137,3 +137,19 @@ table.dataTable thead .sorting_desc {
 .select2-selection__arrow {
     height: 34px !important;
 }
+
+/*  dropzone */
+.dropzone .dz-preview .dz-image {
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
+
+.dropzone .dz-preview .dz-image img {
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+}
