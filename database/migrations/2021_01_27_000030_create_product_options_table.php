@@ -17,6 +17,8 @@ class CreateProductOptionsTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained();
             $table->string('option')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->string('unit')->nullable();
             $table->unsignedSmallInteger('quantity')->nullable();
             $table->timestamps();

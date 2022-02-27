@@ -19,7 +19,7 @@
         </div>
 
         <div class="card-body">
-            <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Brand">
+            <table id="dataTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Brand">
                 <thead>
                 <tr>
                     <th>
@@ -224,7 +224,7 @@
                 order: [[1, 'desc']],
                 pageLength: 10,
             };
-            let table = $('.datatable-Brand').DataTable(dtOverrideGlobals);
+            let table = $('#dataTable').DataTable(dtOverrideGlobals);
             $('a[data-toggle="tab"]').on('shown.bs.tab click', function (e) {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
@@ -314,14 +314,32 @@
                     success: function (result) {
                         if (result.status === 1) {
                             $("#addModal").modal("hide");
-                            alert(result?.message);
-                            window.location.href=window.location.href;
+                            $.toast({
+                                heading: 'Success',
+                                text: result.message,
+                                showHideTransition: 'slide',
+                                icon: "success",
+                                position: 'top-right',
+                            });
+                            $('#dataTable').DataTable().ajax.reload()
                         } else {
-                            alert(result?.message);
+                             $.toast({
+                            heading: 'Error',
+                            text: result.message,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                         }
                     },
-                    error: function (result) {
-
+                    error: function (jqr,textStatus) {
+                       $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                     }
                 });
             }
@@ -337,13 +355,34 @@
                     success: function (result) {
                         if (result.status === 1) {
                             $("#addModal").modal("hide");
-                            alert(result?.message);
+                            $.toast({
+                                heading: 'Success',
+                                text: result.message,
+                                showHideTransition: 'slide',
+                                icon: "success",
+                                position: 'top-right',
+                            });
+
+                             $('#dataTable').DataTable().ajax.reload()
+
                         } else {
-                            alert(result?.message);
+                             $.toast({
+                            heading: 'Error',
+                            text: result.message,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                         }
                     },
-                    error: function (result) {
-
+                    error: function (jqr,textStatus) {
+                       $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                     }
                 });
             }

@@ -14,6 +14,8 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->unique();
             $table->longText('description')->nullable();
+            $table->float('gst')->nullable();
+            $table->string('gst_type')->nullable();
             $table->decimal('price', 15, 2)->nullable();
             $table->unsignedSmallInteger('moq')->default(4)->comment('Minimum order quantity');
             $table->decimal('discount', 5, 2)->default(0);
@@ -26,6 +28,8 @@ class CreateProductsTable extends Migration
             $table->string('sku')->nullable();
             $table->string('hsn')->nullable();
             $table->unsignedBigInteger('order_count')->default(0);
+            $table->integer('is_returnable')->default(0);
+            $table->json('product_attributes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -45,7 +45,10 @@ class ProductReturnConditionController extends Controller
         $request->validate([
             'title' => 'required|string|max:255'
         ]);
-        $condition = ProductReturnCondition::create($request->only('title'));
+        $condition = ProductReturnCondition::create([
+            'title'=>$request->input('title'),
+            'active'=>1
+        ]);
         if($condition){
             $result = array('status'=> true, 'msg'=>'Return condition added successfully.');
         }else {

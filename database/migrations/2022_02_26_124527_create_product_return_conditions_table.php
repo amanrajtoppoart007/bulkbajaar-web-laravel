@@ -16,7 +16,7 @@ class CreateProductReturnConditionsTable extends Migration
         Schema::create('product_return_conditions', function (Blueprint $table) {
             $table->id('id');
             $table->string('title');
-            $table->integer('active');
+            $table->integer('active')->default(0);
             $table->timestamps();
         });
     }
