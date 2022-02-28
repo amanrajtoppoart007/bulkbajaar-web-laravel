@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Library\Api\V1\User\BrandList;
 use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
@@ -18,7 +19,7 @@ use App\Traits\ReviewTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductController extends \App\Http\Controllers\Api\BaseController
+class ProductController extends BaseController
 {
     use ProductTrait, ReviewTrait;
 
@@ -59,7 +60,9 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 ])->first();
                 if($option)
                 {
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => ['product_option_id'=>$option?->id], 'message' => 'Product data fetched successfully'];
+                    $data['product_option_id'] = $option?->id;
+                    $data['images'] = $option->images?->toArray();
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
                 }
                 else
                 {
@@ -131,7 +134,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
 
     public function getProductDetails(Request $request)
     {
-        $validator = \Illuminate\Support\Facades\Validator::make($request->json()->all(), [
+        $validator = Validator::make($request->json()->all(), [
             'product_id' => 'required|exists:products,id',
         ]);
 
@@ -143,7 +146,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $product = Product::find($request->product_id);
+            $product = Product::find($request->input('product_id'));
             try {
 
                 $product->load(['productCategory','productSubCategory', 'brand', 'productOptions', 'vendor', 'productReturnConditions:id,title']);
@@ -174,6 +177,7 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
                     'product_attributes' => $product->product_attributes ?? [],
                     'ratings' => $reviewCounts ?? [],
                     'rating' => $reviewCounts['average'] ?? 0,
+                    'image_list'=>$product?->image_list
                 ];
                 $data['product_options'] = [];
                 $data['images'] = [];
