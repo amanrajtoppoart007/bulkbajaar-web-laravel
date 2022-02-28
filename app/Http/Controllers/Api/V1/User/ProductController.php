@@ -16,7 +16,7 @@ use App\Models\Review;
 use App\Traits\ProductTrait;
 use App\Traits\ReviewTrait;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends \App\Http\Controllers\Api\BaseController
 {

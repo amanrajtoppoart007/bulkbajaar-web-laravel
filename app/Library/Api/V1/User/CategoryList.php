@@ -20,8 +20,8 @@ class CategoryList
                 $data[$i]['id'] = $category['id'];
                 $data[$i]['name'] = $category['name'];
                 $data[$i]['description'] = $category['description'];
-                if (isset($category['photo']['preview'])) {
-                    $data[$i]['thumb_link'] = $category['photo']['preview'] ? $category['photo']['preview'] : null;
+                if (isset($category['photo']['original_url'])) {
+                    $data[$i]['thumb_link'] = $category['photo']['original_url'] ? $category['photo']['original_url'] : null;
                 } else {
                     $data[$i]['thumb_link'] = null;
                 }
