@@ -52,28 +52,19 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         if(!$validator->fails())
         {
             try {
-                $options = ProductOption::where([
+                $option = ProductOption::where([
                     'product_id'=>$request->input('product_id'),
                     'size'=>$request->input('size'),
                     'color'=>$request->input('color'),
-                ])->get()->toArray();
-
-
-                if($options)
+                ])->first();
+                if($option)
                 {
-                    $product_option_id = $options[0]['id'];
-
-                    $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => ['product_option_id'=>$product_option_id], 'message' => 'Product data fetched successfully'];
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => ['product_option_id'=>$option?->id], 'message' => 'Product data fetched successfully'];
                 }
                 else
                 {
                     $result = ['status' => 0, 'response' => 'failed', 'action' => 'retry', 'message' => 'No data found'];
                 }
-
-
-
-
-
             } catch (\Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
@@ -371,6 +362,9 @@ class ProductController extends \App\Http\Controllers\Api\BaseController
         }
         return response()->json($result, 200);
     }
+
+
+
 
     public function getBrands(Request $request)
     {
