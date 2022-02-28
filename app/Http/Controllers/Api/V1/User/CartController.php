@@ -3,13 +3,14 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Traits\ProductTrait;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
-class CartController extends \App\Http\Controllers\Api\BaseController
+class CartController extends BaseController
 {
     use ProductTrait;
 
