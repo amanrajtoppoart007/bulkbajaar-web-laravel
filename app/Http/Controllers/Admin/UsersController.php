@@ -8,13 +8,6 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Area;
-use App\Models\Block;
-use App\Models\Crop;
-use App\Models\District;
-use App\Models\HelpCenter;
-use App\Models\KishanCard;
-use App\Models\Pincode;
 use App\Models\Role;
 use App\Models\State;
 use App\Models\User;
@@ -23,8 +16,7 @@ use App\Models\UserProfile;
 use App\Notifications\RegistrationSuccessSms;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
-use Gate;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -207,7 +199,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('userProfile', 'userOrders', 'userArticles', 'userArticleComments', 'userFollowers', 'followFollowers', 'userArticleLikes', 'userTransactions', 'userUserAddresses', 'userUserAlerts');
+        $user->load('userProfile', 'userOrders','userTransactions', 'userUserAddresses', 'userUserAlerts');
 
         $userProfile = $user->userProfile ?? null;
 

@@ -12,7 +12,7 @@
                         Images
                     </th>
                     <th>
-                        {{ trans('cruds.productPrice.fields.id') }}
+                        Is Default
                     </th>
                     <th>
                         Option
@@ -42,7 +42,7 @@
                             @endif
                         </td>
                         <td>
-                            {{ $productOption->id ?? '' }}
+                            {{ $productOption->is_Default==1 ? 'Yes':'No' }}
                         </td>
                         <td>
                             {{ $productOption->option ?? '' }}

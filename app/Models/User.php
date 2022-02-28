@@ -68,49 +68,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function getIsAdminAttribute()
-    {
-        return $this->roles()->where('id', 1)->exists();
-    }
 
     public function routeNotificationForSms($notifiable) {
         return  $this->id;
     }
 
-    public function help_center()
-    {
-        return $this->belongsTo(HelpCenter::class,"help_center_id","id");
-    }
 
     public function userOrders()
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
-    public function userArticles()
-    {
-        return $this->hasMany(Article::class, 'user_id', 'id');
-    }
 
-    public function userArticleComments()
-    {
-        return $this->hasMany(ArticleComment::class, 'user_id', 'id');
-    }
-
-    public function userFollowers()
-    {
-        return $this->hasMany(Follower::class, 'user_id', 'id');
-    }
-
-    public function followFollowers()
-    {
-        return $this->hasMany(Follower::class, 'follow_id', 'id');
-    }
-
-    public function userArticleLikes()
-    {
-        return $this->hasMany(ArticleLike::class, 'user_id', 'id');
-    }
 
     public function userTransactions()
     {

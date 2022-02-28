@@ -130,14 +130,6 @@
             </a>
         </li>
 
-        <li class="nav-item d-none">
-            <a class="nav-link" href="#user_article_comments" role="tab" data-toggle="tab">
-                {{ trans('cruds.articleComment.title') }}
-            </a>
-        </li>
-
-
-
         <li class="nav-item">
             <a class="nav-link" href="#user_transactions" role="tab" data-toggle="tab">
                 {{ trans('cruds.transaction.title') }}

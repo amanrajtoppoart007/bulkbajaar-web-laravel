@@ -9,7 +9,7 @@
                 <thead>
                 <tr>
                     <th>
-                        {{ trans('cruds.productPrice.fields.id') }}
+                        Is Default
                     </th>
                     <th>Images</th>
                     <th>
@@ -34,7 +34,7 @@
                 @foreach($productOptions as $key => $productOption)
                     <tr data-entry-id="{{ $productOption->id }}">
                         <td>
-                            {{ $productOption->id ?? '' }}
+                            {{ $productOption->is_default==1 ?'Yes':'No' }}
                         </td>
                         <td>
                             <div class="row">

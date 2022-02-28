@@ -82,9 +82,11 @@ class Product extends Model
 
     public function getImagesAttribute()
     {
-        $option = $this->productOptions()->where(['is_default'=>1])->first();
-        if($option)
+        $option = $this->productOptions()->where(['is_default'=>'1'])->first();
+        if(!$option)
         {
+            $option = $this->productOptions()->first();
+        }
             $files = $option->getMedia('images');
             $files->each(function ($item) {
                 $item->url = $item->getUrl();
@@ -92,9 +94,6 @@ class Product extends Model
                 $item->preview = $item->getUrl('preview');
             });
             return $files;
-        }
-        return null;
-
     }
 
       public function getImageListAttribute()
