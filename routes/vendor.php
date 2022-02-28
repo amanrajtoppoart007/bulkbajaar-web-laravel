@@ -1,6 +1,6 @@
 <?php
 
-Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class,])->group(function () {
+Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class, \App\Http\Middleware\RedirectIfVendorAccountNotActivated::class,])->group(function () {
     Route::get('/', 'Vendor\HomeController@index')->name("dashboard");
     Route::resource('orders', 'Vendor\OrderController');
     Route::post('cancel-order', [\App\Http\Controllers\Vendor\OrderController::class, 'cancelOrder'])->name('orders.cancel');
@@ -22,6 +22,9 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
     Route::get('mop', 'Vendor\HomeController@showMOPForm')->name('mop');
     Route::post('mop/update', 'Vendor\HomeController@updateMOP')->name('update.mop');
 });
+
+
+
 
 Route::get('/upload-documents', 'Vendor\HomeController@showDocumentsUploadForm')->name("show.upload.documents.form");
 Route::post('/upload-documents', 'Vendor\HomeController@uploadDocuments')->name("upload.documents");

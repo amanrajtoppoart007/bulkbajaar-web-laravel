@@ -15,6 +15,11 @@ class HomeController extends Controller
         return view("guest.welcome");
     }
 
+    public function vendorApproval()
+    {
+       return view('vendor.approval.pending');
+    }
+
     public function solution($entity)
     {
         switch ($entity)

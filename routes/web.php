@@ -1,6 +1,7 @@
 <?php
 Route::get('test/sms/api','TestController');
 Route::post('submit/enquiry/form','Guest\EnquiryController@store')->name('store.guest.enquiry');
+Route::get('status/view',[\App\Http\Controllers\Guest\HomeController::class,'vendorApproval'])->name('vendor.status.pending');
 
 Route::group(['prefix' => 'vendor'], function () {
     Route::get('login', 'VendorAuth\LoginController@index')->name("vendor.login");

@@ -10,15 +10,6 @@
         <section class="bg-light" id="registration-form-section">
             <br>
             <div class="container">
-
-                <!-- Back Buttton -->
-{{--                <a href="{{ route('register') }}" class="btn btn-theme-1 btn-sm rounded shadow">--}}
-{{--                    <img src="{{ asset('assets/assets/icons/back.svg') }}" class="img-fluid btn-icon ml-0 mr-1">Back--}}
-{{--                    to Dashboard--}}
-{{--                </a>--}}
-{{--                <br>--}}
-{{--                <br>--}}
-
                 <!-- Registration Form Card (Start) -->
                 <div class="card border-0 shadow">
 
@@ -27,15 +18,10 @@
                           enctype="multipart/form-data">
                     @csrf
                     <!-- Card Header -->
-                        <div class="card-header bg-white" align="center">
+                        <div class="card-header bg-white" >
                             <h4 class="font-weight-bolder text-theme-1 mt-2">{{ trans('global.fill_the_registration_details') }}</h4>
                         </div>
-
-                        <!-- Card Body (Start) -->
                         <div class="card-body">
-
-                            <!-- Help Center Details (Start) -->
-                            <h5 class="font-weight-bold text-theme-1">{{ trans('global.kv_pro_franchisee_user_details') }}</h5>
                             <div class="card">
                                 <div class="card-body pt-0">
                                     <div class="row">
@@ -120,7 +106,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Company Details</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder" >Company Details</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <label class="font-weight-bolder text-dark" for="company_name">Company Name</label>
@@ -142,7 +128,7 @@
 
                                             </div>
                                             <br>
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Billing Address</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder" >Billing Address</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <label class="font-weight-bolder text-dark"
@@ -197,7 +183,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <br>
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Pickup Address</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder" >Pickup Address</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <div class="form-check">
@@ -266,7 +252,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Documents</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder" >Documents</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <label class="font-weight-bolder text-dark" for="pan_number">PAN Number</label><label
@@ -301,7 +287,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <br>
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Bank Details</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder">Bank Details</h6>
                                             <hr class="w-50 mx-auto">
 
                                             <div class="mt-3">
@@ -352,7 +338,7 @@
                         <!-- Card Body (End) -->
 
                         <!-- Card Footer -->
-                        <div class="card-footer bg-white" align="center">
+                        <div class="card-footer bg-white" >
                             <div class="form-check-inline">
                                 <input type="checkbox" name="terms" class="custom-checkbox mt-n3 mr-2" required>
                                 <p class="description-1">By Registering with us,you agree with our <a href="#"

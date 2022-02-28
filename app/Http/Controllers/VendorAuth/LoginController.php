@@ -29,6 +29,7 @@ class LoginController extends Controller
         {
 
             if (Auth::guard('vendor')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $request->input('remember'))) {
+
                 return redirect()->intended(route('vendor.dashboard'));
             }
             else
@@ -47,4 +48,6 @@ class LoginController extends Controller
         Auth::guard('vendor')->logout();
         return redirect()->route('vendor.login');
     }
+
+
 }
