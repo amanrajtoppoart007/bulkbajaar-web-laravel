@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\ProductOptionImageResource;
 use App\Library\Api\V1\User\BrandList;
 use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
@@ -61,7 +62,14 @@ class ProductController extends BaseController
                 if($option)
                 {
                     $data['product_option_id'] = $option?->id;
-                    $data['images'] = $option->images?->toArray();
+                    $data['images'] =  [];
+                    if($option->images)
+                    {
+                        foreach($option->images as $image)
+                        {
+                            $data['images'][] = $image->original_url;
+                        }
+                    }
                     $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
                 }
                 else

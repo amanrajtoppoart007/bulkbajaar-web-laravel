@@ -17,7 +17,7 @@ class ProductOptionImageResource extends JsonResource
         return [
             'id'=>$this->id,
             'image'=>$this->original_url,
-            'custom_attributes'=>$this->custom_attributes
+            'custom_properties'=>$this->custom_properties
         ];
     }
 }
