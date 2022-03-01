@@ -347,7 +347,7 @@
 @if(isset($vendor) && $vendor->shop_image)
       var file = {!! json_encode($vendor->shop_image) !!}
           this.options.addedfile.call(this, file)
-      this.options.thumbnail.call(this, file, file.preview)
+      this.options.thumbnail.call(this, file, file.original_url)
       file.previewElement.classList.add('dz-complete')
       $('form').append('<input type="hidden" name="shop_image" value="' + file.file_name + '">')
       this.options.maxFiles = this.options.maxFiles - 1

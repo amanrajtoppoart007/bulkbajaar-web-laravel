@@ -163,6 +163,7 @@ class ProductController extends BaseController
                 $data = [
                     'id' => $product->id,
                     'vendor_id' => $product->vendor_id,
+                    'vendor_name'=>$product?->vendor?->name,
                     'name' => $product->name,
                     'sku' => $product->sku,
                     'hsn' => $product->hsn,
