@@ -104,6 +104,7 @@ class Order extends Model
         'discount_amount',
         'charge_percent',
         'charge_amount',
+        'gst',
         'gst_amount',
         'grand_total',
         'amount_paid',
