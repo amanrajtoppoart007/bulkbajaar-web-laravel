@@ -29,6 +29,7 @@ class VendorList
                 $data[$i]['mop'] = getMinimumOrderAmount($vendor['id']);
                 $data[$i]['district'] = $vendor['profile']['pickup_district']['name'] ?? '';
                 $data[$i]['products_count'] = $vendor['products_count'];
+                $data[$i]['shop_image'] = $vendor['shop_image']?$vendor['shop_image']['original_url']: '';
                 $i++;
             }
         }

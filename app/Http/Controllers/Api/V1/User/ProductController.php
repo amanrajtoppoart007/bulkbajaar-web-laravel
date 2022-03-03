@@ -321,8 +321,7 @@ class ProductController extends BaseController
             if ($request->input('max_price')) {
                 $query->where('price','<=', $request->input('max_price'));
             }
-
-//            $query->where('approval_status', 'APPROVED');
+              $query->where('approval_status', 'APPROVED');
 
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(10);
             if (count($products)) {
@@ -359,7 +358,7 @@ class ProductController extends BaseController
     {
         try {
             $products = Product::limit(10)
-//                ->where('approval_status', 'APPROVED')
+            ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->get()->toArray();

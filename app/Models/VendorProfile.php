@@ -63,6 +63,8 @@ class VendorProfile extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
+        'dispatch_delay_time',
+        'minimum_order_value',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

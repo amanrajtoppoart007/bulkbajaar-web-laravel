@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\VendorResource;
 use App\Library\Api\V1\User\VendorList;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -20,9 +21,7 @@ class VendorController extends BaseController
                     $q->where('name', 'LIKE', "%" . $request->input('keyword') . "%");
                 });
             }
-
-//            $query->where('approved', true);
-
+            $query->where('approved', 1);
             $vendors = $query->with(['profile.pickupDistrict'])->withCount('products')->paginate(10);
             if (count($vendors)) {
                 $vendorList = $vendors->toArray();
@@ -63,26 +62,10 @@ class VendorController extends BaseController
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $vendor = Vendor::find($request->input('vendor_id'));
+            $vendor = Vendor::withCount(['products'])->find($request->input('vendor_id'));
             try {
-
                 $vendor->load(['profile','profile.pickupState', 'profile.pickupDistrict']);
-
-                $data = [
-                    'id' => $vendor->id,
-                    'name' => $vendor->name,
-                    'shop_image'=>$vendor->shop_image ? $vendor->shop_image->preview : null,
-                    'company_name' => $vendor->profile->company_name ?? '',
-                    'representative_name' => $vendor->profile->representative_name ?? '',
-                    'gst_number' => $vendor->profile->gst_number ?? '',
-                    'pan_number' => $vendor->profile->pan_number ?? '',
-                    'pickup_address' => $vendor->profile->pickup_address ?? '',
-                    'pickup_address_two' => $vendor->profile->pickup_address_two ?? '',
-                    'pickup_state' => $vendor->profile->pickupState->name ?? '',
-                    'pickup_district' => $vendor->profile->pickupDistrict->name ?? '',
-                    'pickup_pincode' => $vendor->profile->pickup->pincode ?? '',
-                    'mop' => getMinimumOrderAmount($vendor->id),
-                ];
+                $data = new VendorResource($vendor);
                 $result = [
                     'status' => 1,
                     'response' => 'success',

@@ -68,7 +68,7 @@ class VendorController extends Controller
             });
 
             $table->editColumn('approval_status', function ($row) {
-                return $row->approved ? 'Approved' : 'Un Approved';
+                return $row->approved=='1' ? 'Approved' : 'Un Approved';
             });
 
             $table->rawColumns(['actions', 'placeholder']);
