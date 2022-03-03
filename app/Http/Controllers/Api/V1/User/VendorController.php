@@ -22,9 +22,17 @@ class VendorController extends BaseController
                 });
             }
             $query->where('approved', 1);
-            $vendors = $query->with(['profile.pickupDistrict'])->withCount('products')->paginate(10);
+            $vendors = $query->with(['profile.pickupDistrict'])->withCount('products')->paginate(500);
             if (count($vendors)) {
-                $data = new SellerCollection($vendors);
+                $data['list'] = VendorResource::collection($vendors);
+                $meta = [
+                    'current_page' => $vendors?->currentPage(),
+                    'next_page_url' => $vendors?->nextPageUrl(),
+                    'last_page_url' => $vendors?->lastPage(),
+                    'per_page' => $vendors?->perPage(),
+                    'total' => $vendors?->total(),
+                ];
+                $data = array_merge($data,$meta);
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Vendor list fetched successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No category found'];
