@@ -87,13 +87,18 @@ class Product extends Model
         {
             $option = $this->productOptions()->first();
         }
-            $files = $option->getMedia('images');
+        if(!empty($option))
+        {
+           $files = $option->getMedia('images');
             $files->each(function ($item) {
                 $item->url = $item->getUrl();
                 $item->thumbnail = $item->getUrl('thumb');
                 $item->preview = $item->getUrl('preview');
             });
             return $files;
+        }
+        return null;
+
     }
 
       public function getImageListAttribute()
