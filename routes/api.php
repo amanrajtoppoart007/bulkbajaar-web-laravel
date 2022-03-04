@@ -29,6 +29,7 @@ Route::prefix('v1/user')->group(function (){
     Route::middleware('auth:sanctum')->group(function (){
         Route::post('register/step-two/user-address-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepTwo']);
         Route::post('register/step-three/user-document-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepThree']);
+        Route::post('change-password', [\App\Http\Controllers\Api\V1\User\AccountController::class, 'changePassword']);
 
             Route::get('get-user', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getUser']);
             Route::post('update-document',[\App\Http\Controllers\Api\V1\User\ProfileController::class,'updateDocument']);
