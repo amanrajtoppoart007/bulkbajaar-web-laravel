@@ -298,12 +298,11 @@ class ProductController extends BaseController
 
             if ($request->has('brand')) {
                  $query->whereHas('brand', function ($q) use($request){
-                   $q->where('title', 'LIKE', "%".$request->input('vendor')."%");
+                   $q->where('title', 'LIKE', "%".$request->input('brand')."%");
                 });
             }
 
             if ($request->has('brands')) {
-
                 $query->whereHas('brand', function ($q) use($request){
                    $q->whereIn('id', $request->input('brands'));
                 });
