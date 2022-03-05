@@ -28,7 +28,7 @@ class ProductController extends BaseController
     {
         try {
             $products = Product::latest()
-//                ->where('approval_status', 'APPROVED')
+               ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
                 ->limit(10)->get()->toArray();
             if (count($products)) {
@@ -228,32 +228,6 @@ class ProductController extends BaseController
 
     }
 
-    public function getCategories(Request $request)
-    {
-        try {
-            $query = ProductCategory::query();
-
-            if (!empty($request->input('keyword'))) {
-                $query->where(function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%" . $request->input('keyword') . "%");
-                });
-            }
-
-            $categories = $query->get()->toArray();
-            if (count($categories)) {
-                $class = new CategoryList($categories);
-                $data['list'] = $class->execute();
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Category data fetched successfully'];
-            } else {
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No category found'];
-            }
-
-        } catch (\Exception $exception) {
-            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
-        }
-        return response()->json($result, 200);
-    }
-
     public function getSubCategories(Request $request)
     {
         try {
@@ -298,29 +272,51 @@ class ProductController extends BaseController
                 });
             }
 
-            if ($request->input('category_id')) {
-                $query->where('product_category_id', $request->input('category_id'));
-            }
-            if ($request->input('sub_category_id')) {
-                $query->where('product_category_id', $request->input('sub_category_id'));
-            }
-
-            if ($request->input('vendor_id')) {
-                $query->where('vendor_id', $request->input('vendor_id'));
-                $query->orderByDesc('order_count');
+            if ($request->has('category')) {
+                $query->whereHas('productCategory', function ($q) use($request){
+                   $q->where('name', 'LIKE', "%".$request->input('category')."%");
+                });
             }
 
-            if ($request->input('brand_id')) {
-                $query->where('brand_id', $request->input('brand_id'));
+            if ($request->has('categories')) {
+                $query->whereHas('productCategory', function ($q) use($request){
+                   $q->whereIn('id', $request->input('categories'));
+                });
             }
 
-            if ($request->input('min_price')) {
-                $query->where('price','>=', $request->input('min_price'));
+            if ($request->has('subCategory')) {
+                 $query->whereHas('productSubCategory', function ($q) use($request){
+                   $q->where('name', 'LIKE', "%".$request->input('subCategory')."%");
+                });
             }
 
-            if ($request->input('max_price')) {
-                $query->where('price','<=', $request->input('max_price'));
+            if ($request->has('vendor')) {
+                $query->whereHas('vendor', function ($q) use($request){
+                   $q->where('name', 'LIKE', "%".$request->input('vendor')."%");
+                });
             }
+
+            if ($request->has('brand')) {
+                 $query->whereHas('brand', function ($q) use($request){
+                   $q->where('title', 'LIKE', "%".$request->input('vendor')."%");
+                });
+            }
+
+            if ($request->has('brands')) {
+
+                $query->whereHas('brand', function ($q) use($request){
+                   $q->whereIn('id', $request->input('brands'));
+                });
+            }
+
+            if ($request->has('priceRange.min_price')) {
+                $query->where('price','>=', $request->input('priceRange.min_price'));
+            }
+
+            if ($request->has('priceRange.min_price')) {
+                $query->where('price','<=', $request->input('priceRange.min_price'));
+            }
+
               $query->where('approval_status', 'APPROVED');
 
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(10);
