@@ -1,8 +1,7 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
-
-
-    Route::get('/home', 'Admin\HomeController@index')->name('home');
+Route::get('/home', 'Admin\HomeController@index')->name('home');
     Route::get('/dashboard', 'Admin\HomeController@index')->name('dashboard');
     // Permissions
     Route::delete('permissions/destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.massDestroy');

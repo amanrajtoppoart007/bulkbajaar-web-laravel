@@ -1,6 +1,6 @@
-@extends("layouts.admin")
+@extends("vendor.layout.main")
 @section("content")
-    <form id="productOptionForm" action="{{route('admin.productOptions.store')}}" enctype="multipart/form-data">
+    <form id="productOptionForm" action="{{route('vendor.options.store')}}" enctype="multipart/form-data">
         @csrf
         @method("PUT")
         <input type="hidden" name="product_id" id="product_id" value="{{$option->product_id}}">
@@ -125,7 +125,7 @@
     <script>
         let uploadedImagesMap = {}
         Dropzone.options.imagesDropzone = {
-            url: '{{ route('admin.products.storeMedia') }}',
+            url: '{{ route('vendor.options.storeMedia') }}',
             maxFilesize: 2, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
             addRemoveLinks: true,
@@ -149,7 +149,7 @@
                     name = uploadedImagesMap[file.name]
                 }
                 $.ajax({
-                    url: "{{route('admin.productOptions.remove.files')}}",
+                    url: "{{route('vendor.options.remove.files')}}",
                     method: 'POST',
                     data: {
                         filename:name,
@@ -206,7 +206,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: "{{route('admin.productOptions.update',$option->id)}}",
+                url: "{{route('vendor.options.update',$option->id)}}",
                 method:'POST',
                 cache: false,
                 processData: false,

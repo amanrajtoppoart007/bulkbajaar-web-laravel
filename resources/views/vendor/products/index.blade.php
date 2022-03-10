@@ -20,38 +20,17 @@
             <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Product">
                 <thead>
                 <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.category') }}
-                    </th>
-                    <th>
-                        Sub Category
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.image') }}
-                    </th>
-
-                    <th>
-                        &nbsp;
-                    </th>
+                    <th></th>
+                    <th>{{ trans('cruds.product.fields.id') }}</th>
+                    <th>{{ trans('cruds.product.fields.name') }}</th>
+                    <th>{{ trans('cruds.product.fields.category') }}</th>
+                    <th>{{ trans('cruds.product.fields.image') }}</th>
+                    <th></th>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><input class="search" type="text" placeholder="{{ trans('global.search') }}"></td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -60,27 +39,13 @@
                             @endforeach
                         </select>
                     </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($subCategories as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-                    </td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </thead>
             </table>
         </div>
     </div>
-
-
-
 @endsection
 @section('scripts')
     @parent
@@ -93,13 +58,12 @@
                 url: "{{ route('admin.products.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
-                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                    let ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                         return entry.id
                     });
 
                     if (ids.length === 0) {
                         alert('{{ trans('global.datatables.zero_selected') }}')
-
                         return
                     }
 
@@ -130,23 +94,17 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'category', name: 'productCategory.name'},
-                    {data: 'sub_category', name: 'productSubCategory.name'},
-                    {data: null},
-                    {data: 'actions', name: '{{ trans('global.actions') }}'}
-                ],
-                columnDefs: [
-                    {
-                        targets: 5,
-                        orderable: false,
-                        searchable: false,
-                        visible: true,
-                        render: function (type, row, data, meta) {
-                            if(data.image){
-                                return `<img src="${data.image}" />`
-                            }
-                            return '-';
+                    {data: 'image', name: 'image', orderable:false,render: function (data, type,row) {
+                        if(row?.image?.length>0)
+                        {
+                            return`<a href="${row.image}" target="_blank" style="display: inline-block">
+                                <img style="width:80px;height:80px" alt="" src="${row.image}"/>
+                            </a>`;
                         }
-                    },
+                        return data;
+
+                        }},
+                    {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,
                 order: [[1, 'desc']],
@@ -180,6 +138,5 @@
                 });
             })
         });
-
     </script>
 @endsection

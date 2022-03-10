@@ -98,13 +98,12 @@
                 url: "{{ route('admin.products.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
-                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                    let ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                         return entry.id
                     });
 
                     if (ids.length === 0) {
                         alert('{{ trans('global.datatables.zero_selected') }}')
-
                         return
                     }
 
@@ -128,7 +127,7 @@
                 url: "{{ route('admin.products.massApprove') }}",
                 className: 'btn-success',
                 action: function (e, dt, node, config) {
-                    var ids = $.map(dt.rows({selected: true}).data(), function (entry) {
+                    let ids = $.map(dt.rows({selected: true}).data(), function (entry) {
                         return entry.id
                     });
 

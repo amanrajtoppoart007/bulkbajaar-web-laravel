@@ -1,4 +1,4 @@
-@extends("guest.layout.app")
+@extends("layouts.app")
 @section("content")
     <style>
 

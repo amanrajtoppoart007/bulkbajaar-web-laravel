@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vendor;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -12,9 +12,9 @@ class StoreProductOptionRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
-        return auth('admin')->id();
+        return auth('vendor')->id();
     }
 
     /**
@@ -45,6 +45,4 @@ class StoreProductOptionRequest extends FormRequest
 
         throw new HttpResponseException(response()->json($result, 200));
     }
-
-
 }

@@ -258,9 +258,16 @@
 
 @section('scripts')
     <script>
-        $(document).on('submit', '#productForm', function(e) {
-            e.preventDefault();
-            let isReturnable = $('#is_returnable').is(':checked')
+        $(document).ready(function(){
+               $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+            $(document).on('submit', '#productForm', function(e) {
+                e.preventDefault();
+
+                let isReturnable = $('#is_returnable').is(':checked')
             if (isReturnable){
                 const atLeastOneIsChecked = $('.return_conditions:checked').length > 0;
                 if (!atLeastOneIsChecked){
@@ -268,31 +275,51 @@
                     return;
                 }
             }
-            const formData = new FormData($(this)[0]);
-            $.ajax({
-                url: "{{route('vendor.products.store')}}",
-                type: 'POST',
-                dataType: 'json',
-                data: formData,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function(result) {
-                    if (result.status) {
-                        alert(result.msg);
-                        setTimeout(function() {
-                            window.location = "{{ route('vendor.products.index') }}"
-                        }, 100);
-                    } else {
-                        alert(result.msg);
+
+                const form = new FormData(document.getElementById('productForm'));
+                $.ajax({
+                    url: "{{route('vendor.products.store')}}",
+                    method: "POST",
+                    data: form,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        const {message='',nextUrl='',status=0}= result;
+                        if (status === 1) {
+
+                            $.toast({
+                                heading: 'Success',
+                                text: message,
+                                showHideTransition: 'slide',
+                                icon: 'success',
+                                position:'top-right',
+                            });
+                           window.location.href = nextUrl;
+                        } else {
+
+                            $.toast({
+                                heading: 'Error',
+                                text: message,
+                                showHideTransition: 'slide',
+                                icon: "error",
+                                position:'top-right',
+                            });
+
+                        }
+                    },
+                    error: function (jqXHR, textStatus) {
+                        $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                     }
-                },
-                error: function(result) {
-                    console.log(result);
-                }
+                });
             });
-        });
-        let category = "{{ old('product_category_id') }}";
+            let category = "{{ old('product_category_id') }}";
         let subCategory = "{{ old('product_sub_category_id') }}";
 
         setTimeout(() => {
@@ -320,7 +347,13 @@
 
                 },
                 error: function (jqXHR, textStatus) {
-                    console.log(textStatus);
+                     $.toast({
+                            heading: 'Error',
+                            text: textStatus,
+                            showHideTransition: 'slide',
+                            icon: "error",
+                            position: 'top-right',
+                        });
                 }
             });
         });
@@ -335,9 +368,10 @@
             $('#price').val(price);
             $('#charged_price').val(price - ((price * portalChargePercentage) / 100))
         }
-        $(document).on('blur', '#price, #discount', function (){
+        $(document).on('blur', '#display_price, #discount', function (){
             calculatePrice();
         });
         calculatePrice();
+        });
     </script>
 @endsection

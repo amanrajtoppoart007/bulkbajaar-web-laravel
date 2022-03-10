@@ -289,21 +289,22 @@
                     processData: false,
                     contentType: false,
                     success: function (result) {
-                        if (result?.status === 1) {
+                        const {message='',nextUrl='',status=0}= result;
+                        if (status === 1) {
 
                             $.toast({
                                 heading: 'Success',
-                                text: result?.message,
+                                text: message,
                                 showHideTransition: 'slide',
                                 icon: 'success',
                                 position:'top-right',
                             });
-                           window.location.href = result.nextUrl;
+                           window.location.href = nextUrl;
                         } else {
 
                             $.toast({
                                 heading: 'Error',
-                                text: result?.message,
+                                text: message,
                                 showHideTransition: 'slide',
                                 icon: "error",
                                 position:'top-right',
@@ -311,8 +312,7 @@
 
                         }
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
+                    error: function (jqXHR, textStatus) {
                         $.toast({
                             heading: 'Error',
                             text: textStatus,
@@ -350,7 +350,7 @@
                     $('#product_sub_category_id').val(subCategory).trigger('change');
 
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
                      $.toast({
                             heading: 'Error',
                             text: textStatus,
@@ -361,6 +361,6 @@
                 }
             });
         });
-        })
+        });
     </script>
 @endsection

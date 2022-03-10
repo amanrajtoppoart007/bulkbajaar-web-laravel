@@ -1,4 +1,4 @@
-@extends("vendor.layout.app")
+@extends("vendor.layout.main")
 @section("content")
     <div class="card">
         <div class="card-header bg-warning">

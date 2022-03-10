@@ -9,8 +9,9 @@
                 <thead>
                 <tr>
                     <th>
-                        {{ trans('cruds.productPrice.fields.id') }}
+                        Is Default
                     </th>
+                    <th>Images</th>
                     <th>
                         Option
                     </th>
@@ -26,13 +27,24 @@
                     <th>
                         {{ trans('cruds.productPrice.fields.quantity') }}
                     </th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($productOptions as $key => $productOption)
                     <tr data-entry-id="{{ $productOption->id }}">
                         <td>
-                            {{ $productOption->id ?? '' }}
+                            {{ $productOption->is_default==1 ?'Yes':'No' }}
+                        </td>
+                        <td>
+                            <div class="row">
+                                @foreach($productOption->images as $image)
+                                    <div class="col-12 col-md-2 col-lg-12 col-xl-2">
+                                        <img class="img-thumbnail" src="{{$image->thumbnail}}"
+                                             alt="Product option image">
+                                    </div>
+                                @endforeach
+                            </div>
                         </td>
                         <td>
                             {{ $productOption->option ?? '' }}
@@ -48,6 +60,10 @@
                         </td>
                         <td>
                             {{ $productOption->quantity ?? '' }}
+                        </td>
+                        <td>
+                            <a href="{{route('vendor.options.edit',$productOption->id)}}" class="btn btn-info">Edit</a>
+                            <button class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                 @endforeach

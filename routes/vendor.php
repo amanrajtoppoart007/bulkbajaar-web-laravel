@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Vendor\ProductOptionController;
+
 Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class, \App\Http\Middleware\RedirectIfVendorAccountNotActivated::class,])->group(function () {
     Route::get('/', 'Vendor\HomeController@index')->name("dashboard");
     Route::resource('orders', 'Vendor\OrderController');
@@ -13,9 +15,17 @@ Route::middleware([ \App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::clas
     Route::post('profile/update', 'Vendor\HomeController@updateProfile')->name('update.profile');
     Route::get('change-password', 'Vendor\HomeController@showChangePasswordForm')->name('show.change.password.form');
     Route::post('change-password', 'Vendor\HomeController@changePassword')->name('change.password');
+
+
     Route::resource('products', 'Vendor\ProductController');
     Route::post('products/media', 'Vendor\ProductController@storeMedia')->name('products.storeMedia');
     Route::post('products/update', 'Vendor\ProductController@update')->name('products.update');
+
+    Route::resource('options','Vendor\ProductOptionController');
+    Route::post('product/option/media', 'Vendor\ProductOptionController@storeMedia')->name('options.storeMedia');
+    Route::get('product/option/create/{productId}', [ProductOptionController::class,'create'])->name('options.create');
+    Route::get('product/option/list/{id}', [ProductOptionController::class,'index'])->name('options.list');
+    Route::post('product/option/remove/file', [ProductOptionController::class,'removeMedia'])->name('options.remove.files');
 
     Route::get('bank-account', 'Vendor\HomeController@showBankAccountForm')->name('bank-account');
     Route::post('bank-account/update', 'Vendor\HomeController@updateBankAccount')->name('update.bank-account');

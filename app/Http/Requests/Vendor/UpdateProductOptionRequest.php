@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Vendor;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class StoreProductOptionRequest extends FormRequest
+class UpdateProductOptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
-        return auth('admin')->id();
+        return auth('vendor')->id();
     }
 
-    /**
+     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'product_id'=>'numeric|string',
@@ -30,7 +30,7 @@ class StoreProductOptionRequest extends FormRequest
             'size' => 'required|string',
             'unit' => 'required|string',
             'quantity' => 'nullable|numeric',
-            'images.*'=>'required|string'
+            'images.*'=>'nullable|string'
         ];
     }
 
@@ -42,9 +42,6 @@ class StoreProductOptionRequest extends FormRequest
             $msg .= $error."\n";
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
-
         throw new HttpResponseException(response()->json($result, 200));
     }
-
-
 }

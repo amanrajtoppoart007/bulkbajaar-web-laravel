@@ -1,4 +1,4 @@
-@extends("vendor.layout.app")
+@extends("vendor.layout.main")
 @section("content")
     <form id="productOptionForm" action="{{route('admin.productOptions.store')}}" enctype="multipart/form-data">
         @csrf
@@ -123,7 +123,7 @@
     <script>
         let uploadedImagesMap = {}
         Dropzone.options.imagesDropzone = {
-            url: '{{ route('admin.products.storeMedia') }}',
+            url: '{{ route('vendor.products.storeMedia') }}',
             maxFilesize: 2, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
             addRemoveLinks: true,
@@ -148,7 +148,7 @@
                     name = uploadedImagesMap[file.name]
                 }
                 $.ajax({
-                    url: "{{route('admin.productOptions.remove.files')}}",
+                    url: "{{route('vendor.options.remove.files')}}",
                     method: 'POST',
                     data: {
                         filename:name,
@@ -193,7 +193,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: "{{route('admin.productOptions.store')}}",
+                url: "{{route('vendor.options.store')}}",
                 method:'POST',
                 cache: false,
                 processData: false,
@@ -225,7 +225,7 @@
 
                         }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',

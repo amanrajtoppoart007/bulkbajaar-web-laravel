@@ -36,7 +36,6 @@ class StoreProductRequest extends FormRequest
             'is_returnable' => 'nullable|boolean',
             'return_conditions' => 'required_if:is_returnable,1|array',
             'return_conditions.*' => 'numeric',
-
         ];
 
     }

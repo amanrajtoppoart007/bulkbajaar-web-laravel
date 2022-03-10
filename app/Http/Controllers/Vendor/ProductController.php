@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\Vendor\StoreProductRequest;
 use App\Http\Requests\Vendor\UpdateProductRequest;
 use App\Models\Brand;
@@ -12,14 +13,14 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductOption;
 use App\Models\ProductReturnCondition;
-use App\Models\ProductSubCategory;
 use App\Models\UnitType;
 use App\Traits\SlugGeneratorTrait;
-use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Yajra\DataTables\Facades\DataTables;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
@@ -75,8 +76,7 @@ class ProductController extends Controller
 
             $table->editColumn('image', function ($row) {
                 if (!empty($row->images[0])) {
-                    return $row->images[0]->getUrl('thumb');
-                    return '<a href="'.$imageUrl.'" target="_blank" style="display: inline-block"><img src="'.$imageThumbUrl.'"></a>';
+                   return   $row->images[0]->getUrl('thumb');
                 }
                 return "";
             });
@@ -87,19 +87,17 @@ class ProductController extends Controller
         }
 
         $product_categories = ProductCategory::pluck('name', 'id');
-        $subCategories = ProductSubCategory::pluck('name', 'id');
 
-        return view('vendor.products.index', compact('product_categories', 'subCategories'));
+        return view('vendor.products.index', compact('product_categories'));
     }
 
     public function create()
     {
         $categories = ProductCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        $unitTypes = UnitType::select('name')->whereStatus(true)->get();
         $portalChargePercentage = getPortalChargePercentage();
         $returnConditions = ProductReturnCondition::whereActive(true)->pluck('title', 'id');
         $brands = Brand::where('status', true)->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
-        return view('vendor.products.create', compact('categories', 'unitTypes', 'portalChargePercentage', 'returnConditions', 'brands'));
+        return view('vendor.products.create', compact('categories' , 'portalChargePercentage', 'returnConditions', 'brands'));
     }
 
     public function show(Product $product)
@@ -110,80 +108,37 @@ class ProductController extends Controller
         return view('vendor.products.show', compact('product', 'portalChargePercent'));
     }
 
-    public function store(StoreProductRequest $request)
+    /**
+     * @param StoreProductRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function store(StoreProductRequest $request,Product $product)
     {
-//        if (!auth()->user()->approved){
-//            $result = [
-//                'status' => false,
-//                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-//            ];
-//            return response()->json($result, 200);
-//        }
         DB::beginTransaction();
         try {
             $validated = $request->validated();
             $validated['vendor_id'] = auth()->id();
-            $validated['slug'] = $this->generateSlug(Product::class, $request->name);
+            $validated['slug'] = $this->generateSlug(Product::class, $request->input('name'));
             $validated['quantity'] = null;
-            $product = Product::create($validated);
-
-            foreach ($request->input('images', []) as $file) {
-                $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
-            }
+            $product = $product->create($validated);
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-
-            $colors = [];
-            $sizes = [];
-            foreach ($request->product_options as $product_option){
-                if (!in_array($product_option['color'], $colors)){
-                    $colors[] = $product_option['color'];
-                }
-                if (!in_array($product_option['size'], $sizes)){
-                    $sizes[] = $product_option['size'];
-                }
-                ProductOption::create([
-                    'product_id' => $product->id,
-                    'option' => $product_option['option'],
-                    'color' => $product_option['color'],
-                    'size' => $product_option['size'],
-                    'unit' => $product_option['unit'],
-                    'quantity' => $product_option['quantity'],
-                ]);
-            }
-
             if ($request->boolean('is_returnable')){
-                $product->productReturnConditions()->sync($request->return_conditions);
+                $product->productReturnConditions()->sync($request->input('return_conditions'));
             }
-            $product->product_attributes = [
-                [
-                    'key' => 'color',
-                    'values' => $colors
-                ],
-                [
-                    'key' => 'size',
-                    'values' => $sizes
-                ],
-            ];
             $product->save();
-
             DB::commit();
-            $data = array(
-                "status" => true,
-                "msg" => 'Product added successfully'
-            );
-            //Send notification to admin for approval
-//            event(new ProductCreated($product));
-            return json_encode($data);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $data = array(
-                "status" => false,
-                "msg" => 'Something went wrong!!'
-            );
-            return json_encode($data);
+            $nextUrl = route('vendor.options.create',['productId'=>$product->id]);
+            $result = ["status" => 1, "response"=>"success","nextUrl"=>$nextUrl, "message" => "Product added successfully"];
         }
+        catch (\Exception $e) {
+            DB::rollBack();
+            $result = ["status" => 0, "response"=>"exception_error", "message" => $e->getMessage()];
+
+        }
+        return response()->json($result);
     }
 
     public function edit(Product $product)
@@ -206,100 +161,52 @@ class ProductController extends Controller
             ));
     }
 
-    public function update(UpdateProductRequest $request)
+    /**
+     * @param UpdateProductRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function update(UpdateProductRequest $request): \Illuminate\Http\JsonResponse
     {
-//        if (!auth()->user()->approved){
-//            $result = [
-//                'status' => false,
-//                'msg' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-//            ];
-//            return response()->json($result, 200);
-//        }
+
         DB::beginTransaction();
         try {
             $validated = $request->validated();
-            $product = Product::findOrFail($request->id);
+            $product = Product::findOrFail($request->input('id'));
             $validated['quantity'] = null;
-            $validated['approval_status'] = 'PENDING';
             $product->update($validated);
-
-            if (count($product->images) > 0) {
-                foreach ($product->images as $media) {
-                    if (!in_array($media->file_name, $request->input('images', []))) {
-                        $media->delete();
-                    }
-                }
-            }
-
-            $media = $product->images->pluck('file_name')->toArray();
-
-            foreach ($request->input('images', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $product->addMedia(storage_path('tmp/uploads/'.$file))->toMediaCollection('images');
-                }
-            }
-
             if ($media = $request->input('ck-media', false)) {
                 Media::whereIn('id', $media)->update(['model_id' => $product->id]);
             }
-
-            $deleteOptions = [];
-            foreach ($request->product_options as $product_option){
-                $deleteOptions[] = $product_option['id'];
-            }
-            ProductOption::where('product_id', $request->id)->whereNotIn('id', $deleteOptions)->delete();
-
-            $colors = [];
-            $sizes = [];
-            foreach ($request->product_options as $product_option){
-                if (!in_array($product_option['color'], $colors)){
-                    $colors[] = $product_option['color'];
-                }
-                if (!in_array($product_option['size'], $sizes)){
-                    $sizes[] = $product_option['size'];
-                }
-
-                ProductOption::updateOrCreate([
-                    'id' => $product_option['id']
-                ],[
-                    'product_id' => $product->id,
-                    'option' => $product_option['option'],
-                    'color' => $product_option['color'],
-                    'size' => $product_option['size'],
-                    'unit' => $product_option['unit'],
-                    'quantity' => $product_option['quantity'],
-                ]);
-            }
             if ($request->boolean('is_returnable')){
-                $product->productReturnConditions()->sync($request->return_conditions);
+                $product->productReturnConditions()->sync($request->input('return_conditions'));
             }else{
                 $product->productReturnConditions()->sync([]);
             }
 
-            $product->product_attributes = [
-                [
-                    'key' => 'color',
-                    'values' => $colors
-                ],
-                [
-                    'key' => 'size',
-                    'values' => $sizes
-                ],
-            ];
             $product->save();
             DB::commit();
-            $data = array(
-                "status" => true,
-                "msg" => 'Product updated successfully'
-            );
-            return json_encode($data);
+            $result = ["status" => 1,"response"=>"success", "message" => 'Product updated successfully'];
+
         } catch (\Exception $e) {
             DB::rollBack();
-            $data = array(
-                "status" => false,
-                "msg" => 'Something went wrong!!'
-            );
-            return json_encode($data);
+            $result = ["status"=>0,"response"=>"exception_error","message"=>$e->getMessage()];
+
         }
+        return response()->json($result);
+    }
+
+    public function destroy(Product $product)
+    {
+        abort_if(Gate::denies('product_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $product->productOptions()->delete();
+        $product->delete();
+        return back();
+    }
+
+    public function massDestroy(MassDestroyProductRequest $request)
+    {
+        Product::whereIn('id', request('ids'))->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

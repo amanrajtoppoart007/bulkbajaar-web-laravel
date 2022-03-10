@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vendor\StoreProductOptionRequest;
@@ -16,22 +16,21 @@ class ProductOptionController extends Controller
     use MediaUploadingTrait;
     public function __construct()
     {
-             return $this->middleware("auth:admin");
+             return $this->middleware("auth:vendor");
     }
 
     public function index($id)
     {
          $options = ProductOption::where(['product_id'=>$id])->get();
          $product_id = $id;
-         return view("admin.products.options.index",compact("options","product_id"));
+         return view("vendor.products.options.index",compact("options","product_id"));
     }
     public function create($productId)
     {
           $product_id = $productId;
           $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
           $options = ProductOption::where(['product_id'=>$product_id])->get();
-
-          return view("admin.products.options.create",compact('product_id','unitTypes','options'));
+          return view("vendor.products.options.create",compact('product_id','unitTypes','options'));
     }
 
     public function store(StoreProductOptionRequest $request)
@@ -125,7 +124,7 @@ class ProductOptionController extends Controller
           $option = ProductOption::find($id);
           $unitTypes= UnitType::select('name')->whereStatus(true)->get();
           $options = ProductOption::where(['id'=>$id])->get();
-         return view("admin.products.options.edit",compact('option','options','unitTypes'));
+         return view("vendor.products.options.edit",compact('option','options','unitTypes'));
     }
 
     public function update(UpdateProductOptionRequest $request,$id)
