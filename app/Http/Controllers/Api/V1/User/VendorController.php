@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Resources\Api\SellerCollection;
 use App\Http\Resources\Api\VendorResource;
 use App\Models\Vendor;
 use Illuminate\Http\Request;

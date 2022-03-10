@@ -275,7 +275,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             $query->with('vendor')->withCount('orderItems');
             $query->orderByDesc('created_at');
 
-            $orders = $query->paginate(10);
+            $orders = $query->paginate(10000);
             if (count($orders)) {
                 $orderList = $orders->toArray();
                 $data['current_page'] = $orderList['current_page'];

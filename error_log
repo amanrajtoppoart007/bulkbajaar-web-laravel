@@ -1,1 +1,0 @@
-[19-Jan-2022 12:41:34 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.0". You are running 7.4.27. in /home/bulkbajaar/bulkbajaar/vendor/composer/platform_check.php on line 24
