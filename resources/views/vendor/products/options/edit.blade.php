@@ -1,4 +1,4 @@
-@extends("vendor.layout.app")
+@extends("layouts.admin")
 @section("content")
     <form id="productOptionForm" action="{{route('admin.productOptions.store')}}" enctype="multipart/form-data">
         @csrf

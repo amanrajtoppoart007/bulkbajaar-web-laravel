@@ -1,11 +1,9 @@
 @extends('vendor.layout.main')
 @section('content')
-
     <div class="card">
         <div class="card-header">
             {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }}
         </div>
-
         <div class="card-body">
             <form id="productForm" enctype="multipart/form-data">
                 @csrf
@@ -68,7 +66,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label required for="discount">Discount</label>
+                                    <label for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
                                            type="number"
                                            name="discount" id="discount" value="{{ old('discount', 0) }}" required>
@@ -138,6 +136,11 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="product_category_id">{{ trans('cruds.product.fields.category') }}</label>
@@ -190,10 +193,6 @@
                                     @endif
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="description">{{ trans('cruds.product.fields.description') }}</label>
@@ -249,15 +248,12 @@
                 </div>
                 <div class="form-group">
                     <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
+                        {{ trans('global.next') }}
                     </button>
                 </div>
             </form>
         </div>
     </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -323,7 +319,7 @@
                     $('#product_sub_category_id').val(subCategory).trigger('change');
 
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
                     console.log(textStatus);
                 }
             });
@@ -331,11 +327,12 @@
 
         let portalChargePercentage = "{{ $portalChargePercentage }}";
         const calculatePrice = () => {
-            let price = parseFloat($('#price').val());
-            let discount = parseFloat($('#discount').val());
-            if(isNaN(price)) price = 0;
+            let mrp =   Number($('#display_price').val());
+            let discount = Number($('#discount').val());
+            if(isNaN(mrp)) mrp = 0;
             if(isNaN(discount)) discount = 0;
-            $('#display_price').val(price + ((price * discount) / 100))
+            const price = mrp - ((mrp * discount) / 100);
+            $('#price').val(price);
             $('#charged_price').val(price - ((price * portalChargePercentage) / 100))
         }
         $(document).on('blur', '#price, #discount', function (){
