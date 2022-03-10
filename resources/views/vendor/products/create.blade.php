@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label required for="display_price">Display Price</label>
+                                    <label  for="display_price">Display Price</label>
                                     <input class="form-control {{ $errors->has('display_price') ? 'is-invalid' : '' }}"
                                            type="number"
                                            name="display_price" id="display_price" value="{{ old('display_price', 0) }}" readonly>
@@ -104,7 +104,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label required for="charged_price">You will get (after deducting portal charge {{ $portalChargePercentage }}%)</label>
+                                    <label  for="charged_price">You will get (after deducting portal charge {{ $portalChargePercentage }}%)</label>
                                     <input class="form-control {{ $errors->has('charged_price') ? 'is-invalid' : '' }}"
                                            type="number"
                                            name="charged_price" id="charged_price" value="{{ old('charged_price', 0) }}" readonly>
@@ -190,21 +190,6 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="images">{{ trans('cruds.product.fields.images') }}</label>
-                                    <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}"
-                                         id="images-dropzone">
-                                    </div>
-                                    @if($errors->has('images'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('images') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -254,41 +239,6 @@
                                     @endforeach
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group mb-2">
-                                    <label for="color">Select Color</label>
-                                    <select name="" id="color" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::COLOR_SELECT as $color)
-                                            <option value="{{ $color }}">{{ $color }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="size">Select Size</label>
-                                    <select name="" id="size" class="select2" multiple>
-                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
-                                            <option value="{{ $size }}">{{ $size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <button type="button" class="btn btn-primary mb-2" id="generate-option-button">Generate Options</button>
-                            </div>
-                            <div class="col-12 table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Option</th>
-                                        <th>Color</th>
-                                        <th>Size</th>
-                                        <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
-                                        <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -312,153 +262,6 @@
 
 @section('scripts')
     <script>
-        var uploadedImagesMap = {}
-        Dropzone.options.imagesDropzone = {
-            url: '{{ route('vendor.products.storeMedia') }}',
-            maxFilesize: 2, // MB
-            acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 2,
-                width: 4096,
-                height: 4096
-            },
-            success: function (file, response) {
-                $('form').append('<input type="hidden" name="images[]" value="' + response.name + '">')
-                uploadedImagesMap[file.name] = response.name
-            },
-            removedfile: function (file) {
-                console.log(file)
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedImagesMap[file.name]
-                }
-                $('form').find('input[name="images[]"][value="' + name + '"]').remove()
-            },
-            init: function () {
-                @if(isset($product) && $product->images)
-                var files =
-                {!! json_encode($product->images) !!}
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
-                }
-                @endif
-            },
-            error: function (file, response) {
-                if ($.type(response) === 'string') {
-                    var message = response //dropzone sends it's own error messages in string
-                } else {
-                    var message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
-            }
-        }
-
-        let variations = [];
-
-        const generateVariations = (colors, sizes) => {
-            if(colors.length<=0)
-            {
-                alert('Please select at least one color');
-                variations = [];
-                return;
-            }
-
-            colors?.forEach((color, i)=>{
-                if(sizes?.length > 0)
-                {
-                    sizes?.forEach((size, j)=>{
-                        let option = `${color}-${size}`;
-                        const exists = variations.filter(opt => opt.option == option).length > 0;
-                        if (!exists) {
-                            let object = {
-                                option,
-                                color,
-                                size,
-                                quantity: 0,
-                                unit: ''
-                            }
-                            variations.push(object);
-                        }
-                    });
-                }else {
-                    let option = color;
-                    const exists = variations.filter(opt => opt.option == option).length > 0;
-                    if (!exists) {
-                        let object = {
-                            option,
-                            color,
-                            size: '',
-                            quantity: 0,
-                            unit: ''
-                        }
-                        variations.push(object);
-                    }
-                }
-            });
-            createOptions();
-        }
-
-        $('#generate-option-button').click(() => {
-            let colors = $('#color').val()
-            let sizes = $('#size').val();
-            generateVariations(colors, sizes)
-        })
-
-        const createOptions = () => {
-            let template = '';
-            variations?.forEach((variation, index)=>{
-                template += productOptionTemplate(variation, index);
-            });
-            $('table tbody').html(template)
-        }
-
-        const productOptionTemplate = (variation, index) => {
-
-            let unitTypes = <?= json_encode($unitTypes) ?>;
-            let unitSelect = `<select class="form-control" name="product_options[${index}][unit]" style="min-width: 100px">`;
-            $.each(unitTypes, (i, e) => {
-                unitSelect += `<option value="${e.name}" ${variation.unit == e.name ? 'selected' : ''}>${e.name}</option>`;
-            })
-            unitSelect += "</select>";
-
-            return `<tr data-index="${index}">`+
-                `<td><input class="form-control option" type="text" name="product_options[${index}][option]" value="${variation.option}" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control color" type="text" name="product_options[${index}][color]" value="${variation.color}" style="min-width: 100px" required></td>`+
-                `<td><input class="form-control size" type="text" name="product_options[${index}][size]" value="${variation.size}" style="min-width: 100px"></td>`+
-                `<td>${unitSelect}</td>`+
-                `<td><input class="form-control quantity" type="text" name="product_options[${index}][quantity]" value="${variation.quantity}" style="min-width: 100px"></td>`+
-                `<td><button type="button" class="btn btn-sm btn-danger delete-button"><i class="fa fa-times"></i></button></td>`+
-                `</tr>`;
-
-
-        }
-
-        $(document).on('click', '.delete-button', function (){
-            let tr = $(this).closest('tr');
-            let index = $(tr).data('index');
-            variations.splice(index, 1);
-            $(tr).remove()
-        });
-
         $(document).on('submit', '#productForm', function(e) {
             e.preventDefault();
             let isReturnable = $('#is_returnable').is(':checked')
@@ -469,20 +272,7 @@
                     return;
                 }
             }
-            if(variations.length <= 0){
-                alert('Please create variations')
-                return;
-            }
-
-            let isNotEmpty = $('.option, .color').filter(function (){
-                return $.trim($(this).val()).length == 0
-            }).length == 0;
-
-            if(!isNotEmpty){
-                alert('Option or color from any variation cannot be blank')
-                return;
-            }
-            var formData = new FormData($(this)[0]);
+            const formData = new FormData($(this)[0]);
             $.ajax({
                 url: "{{route('vendor.products.store')}}",
                 type: 'POST',
