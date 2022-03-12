@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 
+use App\Models\Cart;
 use App\Models\Wishlist;
 use App\Traits\ProductTrait;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class WishlistController extends BaseController
             return response()->json($result, 200);
         }
 
-        $isExists = Wishlist::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+        $isExists = Wishlist::where(['product_id'=>$request->input('product_id'),'product_option_id', $request->input('product_option_id')])->where('user_id', auth()->id())->exists();
         if ($isExists){
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
             return response()->json($result, 200);
@@ -36,6 +37,12 @@ class WishlistController extends BaseController
             $wishlist->product_option_id = $request->input('product_option_id');
             $wishlist->user_id = auth()->user()->id;
 
+            $cart = Cart::where(['product_id'=>$request->input('product_id'),'product_option_id', $request->input('product_option_id')])->where('user_id', auth()->id())->first();
+
+            if($cart)
+            {
+                $cart->delete();
+            }
             if ($wishlist->save()) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'added', 'message' => 'Product added to wishlist successfully'];
             } else {

@@ -84,6 +84,8 @@ class CartController extends BaseController
                     'id' => $cart->id,
                     'product_id' => $cart->product_id,
                     'product' => $product->name,
+                    'vendor_id'=>$product?->vendor_id,
+                    'vendor_name'=>$product?->vendor?->name??null,
                     'product_option_id' => $cart->product_option_id,
                     'liked' => $this->checkIfProductLiked($cart->product_id),
                     'product_option' => [
