@@ -28,9 +28,9 @@ class VendorResource extends JsonResource
             'pickup_district' => $this->profile->pickupDistrict->name ?? '',
             'pickup_pincode' => $this->profile->pickup->pincode ?? '',
             'mop' => getMinimumOrderAmount($this->id),
-            "product_count" => $this->products_count,
+            "product_count" => $this?->products()?->where(['approval_status'=>'APPROVED'])->count(),
             "dispatch_delay_time" => $this->dispatch_delay_time,
-            "minimum_order_value" => $this->minimum_order_value
+            "minimum_order_value" => $this->minimum_order_value,
         ];
     }
 }

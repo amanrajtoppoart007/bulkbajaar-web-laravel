@@ -27,6 +27,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string',
             'price' => 'required|numeric',
+             'maximum_retail_price'=> 'required|numeric',
             'mop' => 'nullable|numeric',
             'moq' => 'required|numeric',
             'discount' => 'nullable|numeric|max:100',

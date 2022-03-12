@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\ProductResource;
 use App\Http\Resources\Api\VendorResource;
+use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -62,15 +64,17 @@ class VendorController extends BaseController
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $vendor = Vendor::withCount(['products'])->find($request->input('vendor_id'));
+            $vendor = Vendor::with(['products'])->find($request->input('vendor_id'));
             try {
                 $vendor->load(['profile','profile.pickupState', 'profile.pickupDistrict']);
                 $data = new VendorResource($vendor);
+                $products = Product::with(['productOptions'])->where(['vendor_id'=>$request->input('vendor_id'),'approval_status'=>'APPROVED'])->get();
                 $result = [
                     'status' => 1,
                     'response' => 'success',
                     'action' => 'fetched',
                     'data' => $data,
+                    'products'=> ProductResource::collection($products),
                     'message' => 'Vendor fetched successfully.'
                 ];
             } catch (\Exception $exception) {

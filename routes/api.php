@@ -28,7 +28,7 @@ Route::prefix('v1')->group(function () {
         Route::get('get-top-rated-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopRatedProducts']);
         Route::get('get-top-selling-products', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getTopSellingProducts']);
         Route::post('get-product-details', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductDetails']);
-        Route::post('get-production-option-id', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductOptionId']);
+        Route::post('get-product-option-id', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'getProductOptionId']);
 
         Route::get('get-vendors', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendors']);
         Route::get('get-vendor-details', [\App\Http\Controllers\Api\V1\User\VendorController::class, 'getVendorDetails']);

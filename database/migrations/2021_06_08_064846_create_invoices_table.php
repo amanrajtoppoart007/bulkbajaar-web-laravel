@@ -17,15 +17,17 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->char('invoice_number', 15)->unique();
             $table->dateTime('date_time');
-            $table->foreignId('order_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('vendor_id')->nullable()->constrained();
-            $table->foreignId('transaction_id')->nullable()->constrained();
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('vendor_id')->nullable();
+            $table->unsignedBigInteger('transaction_id')->nullable();
             $table->string('payment_type');
-            $table->decimal('amount')->default(0);
-            $table->decimal('discount')->default(0);
-            $table->decimal('charge')->default(0);
-            $table->decimal('total')->default(0);
+            $table->float('amount')->default(0);
+            $table->float('discount')->default(0);
+            $table->float('charge')->default(0);
+            $table->float('total')->default(0);
+            $table->float('gst');
+            $table->string('gst_type');
             $table->timestamps();
         });
     }

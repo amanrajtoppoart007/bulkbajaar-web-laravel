@@ -2,7 +2,7 @@
 
 
 namespace App\Http\Controllers\Api\V1\User;
-
+use App\Http\Controllers\Api\BaseController;
 use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
@@ -21,7 +21,7 @@ use Illuminate\Validation\Rule;
 use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Validator;
 
-class OrderController extends \App\Http\Controllers\Api\BaseController
+class OrderController extends BaseController
 {
     use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait;
 
@@ -40,9 +40,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
         try {
-            if ($request->cart_ids){
+            if ($request->input('cart_ids',[])){
                 $carts = Cart::whereUserId(auth()->id())
-                    ->whereIn('id', $request->cart_ids)
+                    ->whereIn('id', $request->input('cart_ids',[]))
                     ->with(['product'])->get();
             }else{
                 $carts = Cart::whereUserId(auth()->id())->with(['product'])->get();
@@ -68,6 +68,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             $orders = [];
             $orderItems = [];
             $ordersTotal = 0;
+            $totalPortalChargePercent=0;
             foreach ($groupedCarts as $vendorId => $cartGroup) {
                 $orderNo = $this->generateOrderNumber(Order::class);
                 $orderSubTotal = 0;
@@ -80,8 +81,9 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                     $product = $cart->product;
                     $price = $product->price;
                     $gst = $product->gst;
-                    $portalChargePercent = getPortalChargePercentage($product->id);
-                    $discountAmount = getPercentAmount($price * $cart->quantity, $product->discount);
+                    $portalChargePercent =getPortalChargePercentage($product->id);
+                    $totalPortalChargePercent +=$portalChargePercent;
+                    $discountAmount = $price * $cart->quantity;
                     $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
                     $gstAmount = getPercentAmount($price * $cart->quantity, $gst);
                     $totalAmount = ($price * $cart->quantity) + $gstAmount;
@@ -91,11 +93,11 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                         'product_id' => $product->id,
                         'product_option_id' => $cart->product_option_id,
                         'amount' => $price,
-                        'quantity' => $cart->quantity,
-                        'discount' => $product->discount,
-                        'discount_amount' => $discountAmount,
-                        'charge_percent' => $portalChargePercent,
-                        'charge_amount' => $chargeAmount,
+                        'quantity' => $cart->quantity,//order quantity
+                        'discount' => $product->discount, // discount percentage
+                        'discount_amount' => $discountAmount,//
+                        'charge_percent' => $portalChargePercent,//portal charge in %
+                        'charge_amount' => $chargeAmount,//portal charge in amount value
                         'gst' => $gst,
                         'gst_amount' => $gstAmount,
                         'total_amount' => $totalAmount,
@@ -108,15 +110,15 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 }
                 $orders[$vendorId] = [
                     'user_id' => auth()->id(),
-                    'billing_address_id' => $request->billing_address_id,
-                    'shipping_address_id' => $request->shipping_address_id,
+                    'billing_address_id' => $request->input('billing_address_id'),
+                    'shipping_address_id' => $request->input('shipping_address_id'),
                     'order_number' => $orderNo,
                     'order_group_number' => $orderGroupNo,
                     'vendor_id' => $vendorId,
-                    'payment_type' => $request->payment_method,
+                    'payment_type' => $request->input('payment_method'),
                     'sub_total' => $orderSubTotal,
                     'discount_amount' => $orderDiscountTotal,
-                    'charge_percent' => $portalChargePercent,
+                    'charge_percent' => $totalPortalChargePercent,
                     'charge_amount' => $orderChargeAmount,
                     'gst_amount' => $orderGstAmount,
                     'grand_total' => $orderGrandTotal,
@@ -146,7 +148,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
                 }
             }
             //Delete cart items
-            if($request->cart_ids){
+            if($request->input('cart_ids')){
                 Cart::where('user_id', auth()->id())->whereIn('id', $request->cart_ids)->delete();
             }else{
                 Cart::where('user_id', auth()->id())->delete();
@@ -155,17 +157,17 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             DB::commit();
 
             $razorOrder = null;
-            if ($request->payment_method != 'COD') {
-                if ($request->payment_method == 'ONLINE') {
+            if ($request->input('payment_method') != 'COD') {
+                if ($request->input('payment_method') == 'ONLINE') {
                     $razorOrder = $this->createOrder($orderGroupNo, $ordersTotal);
-                } elseif ($request->payment_method == 'HALF') {
+                } elseif ($request->input('payment_method') == 'HALF') {
                     $razorOrder = $this->createOrder($orderGroupNo, $ordersTotal / 2);
                 }
             }
             $result = [
                 'status' => 1,
                 'response' => 'success',
-                'action' => $request->payment_method == 'COD' ? 'placed' : 'pay',
+                'action' => $request->input('payment_method') == 'COD' ? 'placed' : 'pay',
                 'data' => [
                     'order_number' => $orderGroupNo,
                     'razor_order_id' => $razorOrder['data']['id'] ?? null,
@@ -318,7 +320,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
             return response()->json($result, 200);
         }
 
-        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+        if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->id())->exists()) {
             $result = [
                 'status' => 0,
                 'response' => 'error',
@@ -589,7 +591,7 @@ class OrderController extends \App\Http\Controllers\Api\BaseController
         }
 
 
-        if (!Order::whereOrderGroupNumber($request->input('order_number'))->whereUserId(auth()->user()->id)->exists()) {
+        if (!Order::whereOrderGroupNumber($request->input('order_number'))->whereUserId(auth()->id())->exists()) {
             $result = [
                 'status' => 0,
                 'response' => 'error',

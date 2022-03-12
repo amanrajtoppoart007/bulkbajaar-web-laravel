@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Traits;
-
-use App\Models\FranchiseeArea;
 use App\Models\MasterStock;
 use App\Models\Product;
 use App\Models\ProductStock;
@@ -14,21 +12,12 @@ trait ProductTrait
     public function checkProductStock($productId, $pincode = null, $area = null)
     {
         $query = ProductStock::query();
-        $franchiseeIds = FranchiseeArea::wherePincodeId($pincode)->whereAreaId($area)->pluck('franchisee_id');
-        $query->whereIn('franchisee_id', $franchiseeIds);
         return $query->whereProductId($productId)->sum('quantity');
     }
 
     public function checkProductPriceStock($productPriceId, $pincode = null, $web = false, $area = null)
     {
         $query = ProductStock::query();
-        if($web) {
-            $franchiseeIds = FranchiseeArea::wherePincodeId($pincode)->pluck('franchisee_id');
-            $query->whereIn('franchisee_id', $franchiseeIds);
-        }else{
-            $franchiseeIds = FranchiseeArea::wherePincodeId($pincode)->whereAreaId($area)->pluck('franchisee_id');
-            $query->whereIn('franchisee_id', $franchiseeIds);
-        }
         return $query->whereProductPriceId($productPriceId)
             ->sum('quantity');
     }

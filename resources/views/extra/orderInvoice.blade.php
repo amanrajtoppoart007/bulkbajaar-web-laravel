@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ trans('panel.site_title') }}_{{ _('INVOICE') }}_{{ $invoice->invoice_number }}</title>
+    <title>{{ trans('panel.site_title') }}_{{ __('INVOICE')}}_{{ $invoice->invoice_number }}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 

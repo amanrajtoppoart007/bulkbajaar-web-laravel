@@ -27,24 +27,23 @@ class CartController extends BaseController
             return response()->json($result, 200);
         }
 
-        $isExists = Cart::where('product_option_id', $request->product_option_id)->where('user_id', auth()->id())->exists();
+        $isExists = Cart::where('product_option_id', $request->input('product_option_id'))->where('user_id', auth()->id())->exists();
         if ($isExists){
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
             return response()->json($result, 200);
         }
 
         try {
-            $product = Product::find($request->product_id);
+            $product = Product::find($request->input('product_id'));
 
             $quantity = $product->moq;
-            if ($request->quantity && $request->quantity >= $product->moq){
-                $quantity = $request->quantity;
+            if ($request->input('quantity') && $request->input('quantity') >= $product->moq){
+                $quantity = $request->input('quantity');
             }
-
             Cart::create([
                 'user_id' => auth()->id(),
                 'product_id' => $product->id,
-                'product_option_id' => $request->product_option_id,
+                'product_option_id' => $request->input('product_option_id'),
                 'quantity' => $quantity,
             ]);
             $result = ['status' => 1, 'response' => 'success', 'action' => 'added', 'message' => 'Product added to the cart successfully'];
@@ -69,15 +68,15 @@ class CartController extends BaseController
         try {
             $data = [];
             if ($request->cart_ids){
-                $carts = Cart::whereUserId(auth()->user()->id)
+                $carts = Cart::whereUserId(auth()->id())
                     ->whereIn('id', $request->cart_ids)
                     ->with(['product', 'productOption'])->get();
             }else{
-                $carts = Cart::whereUserId(auth()->user()->id)->with(['product', 'productOption'])->get();
+                $carts = Cart::whereUserId(auth()->id())->with(['product', 'productOption'])->get();
             }
             foreach ($carts as $cart) {
                 $product = $cart->product;
-                $price = applyPrice($product->price, $product->discount);
+                $price = $product->price;
                 $discountedPrice = $product->price;
                 $totalPrice = $discountedPrice * $cart->quantity;
 
@@ -131,11 +130,11 @@ class CartController extends BaseController
         }
 
         try {
-            $cart = Cart::find($request->cart_id)->load('product');
-            if ($request->quantity < $cart->product->moq){
+            $cart = Cart::find($request->input('cart_id'))->load('product');
+            if ($request->input('quantity') < $cart->product->moq){
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Quantity is less than minimum order quantity'];
             }else{
-                $cart->quantity = $request->quantity;
+                $cart->quantity = $request->input('quantity');
                 $cart->save();
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Quantity updated successfully'];
             }
@@ -165,6 +164,6 @@ class CartController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 }

@@ -4,15 +4,12 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Resources\Api\ProductOptionImageResource;
 use App\Library\Api\V1\User\BrandList;
-use App\Library\Api\V1\User\CategoryList;
 use App\Library\Api\V1\User\ProductList;
 use App\Library\Api\V1\User\SubCategoryList;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductOption;
-use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Models\Review;
 use App\Traits\ProductTrait;
@@ -48,20 +45,25 @@ class ProductController extends BaseController
     {
         $validator = Validator::make($request->all(),[
             'product_id'=>'required|integer',
-            'color'=>'required|string',
-            'size'=>'required|string'
+            'color'=>'nullable|string',
+            'size'=>'nullable|string'
         ]);
         if(!$validator->fails())
         {
             try {
-                $option = ProductOption::where([
-                    'product_id'=>$request->input('product_id'),
-                    'size'=>$request->input('size'),
-                    'color'=>$request->input('color'),
-                ])->first();
+                $option = ProductOption::where('product_id', $request->input('product_id'));
+                if ($request->has('color')) {
+                    $option->where('color', $request->input('color'));
+                }
+                $option = $option->first();
                 if($option)
                 {
-                    $data['product_option_id'] = $option?->id;
+                    if ($request->has('size')) {
+                        $data['product_option_id'] = $request->has('size') == $option?->size ? $option?->id : null;
+                    } else {
+                        $data['product_option_id'] = null;
+                    }
+
                     $data['images'] =  [];
                     if($option->images)
                     {
@@ -125,7 +127,7 @@ class ProductController extends BaseController
         try {
             $review = new Review();
             $review->product_id = $request->input('product_id');
-            $review->user_id = auth()->user()->id;
+            $review->user_id = auth()->id();
             $review->review = $request->input('review');
             $review->star = $request->input('star');
             if ($review->save()) {
@@ -164,6 +166,12 @@ class ProductController extends BaseController
                     'id' => $product->id,
                     'vendor_id' => $product->vendor_id,
                     'vendor_name'=>$product?->vendor?->name,
+                    'vendor'=>[
+                        'id'=>$product?->vendor_id,
+                        'name'=>$product?->vendor?->name,
+                        'product_count'=>$product?->vendor?->products?->count(),
+                        'minimum_order_price'=>$product?->vendor?->vendor_profile?->mop,
+                    ],
                     'name' => $product->name,
                     'sku' => $product->sku,
                     'hsn' => $product->hsn,
@@ -180,7 +188,6 @@ class ProductController extends BaseController
                     'brand' => $product->brand->title ?? '',
                     'dispatch_time' => $product->dispatch_time,
                     'refund_and_return_policy' => $product->rrp,
-                    'vendor' => $product->vendor->name ?? '',
                     'liked' => $this->checkIfProductLiked($product->id),
                     'return_conditions' => $product->productReturnConditions ?? [],
                     'product_attributes' => $product->product_attributes ?? [],
@@ -223,9 +230,7 @@ class ProductController extends BaseController
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
-
         return response()->json($result, 200);
-
     }
 
     public function getSubCategories(Request $request)
@@ -294,6 +299,11 @@ class ProductController extends BaseController
                 $query->whereHas('vendor', function ($q) use($request){
                    $q->where('name', 'LIKE', "%".$request->input('vendor')."%");
                 });
+            }
+
+            if ($request->has('vendor_id')) {
+                $query->where('vendor_id',$request->input('vendor_id'));
+
             }
 
             if ($request->has('brand')) {

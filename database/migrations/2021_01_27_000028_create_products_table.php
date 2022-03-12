@@ -16,9 +16,10 @@ class CreateProductsTable extends Migration
             $table->longText('description')->nullable();
             $table->float('gst')->nullable();
             $table->string('gst_type')->nullable();
+            $table->float('maximum_retail_price')->nullable();
+            $table->decimal('discount', 5, 2)->default(0);
             $table->decimal('price', 15, 2)->nullable();
             $table->unsignedSmallInteger('moq')->default(4)->comment('Minimum order quantity');
-            $table->decimal('discount', 5, 2)->default(0);
             $table->foreignId('product_category_id')->nullable()->constrained();
             $table->foreignId('product_sub_category_id')->nullable()->constrained();
             $table->string('dispatch_time')->nullable()->comment('Expected Dispatch Time');
