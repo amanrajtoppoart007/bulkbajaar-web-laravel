@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ShipRocketSetting;
 use Illuminate\Http\Request;
 
-class ShiprocketController extends Controller
+class ShipRocketController extends Controller
 {
     public function index()
     {
@@ -26,8 +26,8 @@ class ShiprocketController extends Controller
             $shiprocket = new ShipRocketSetting();
         }
 
-        $shiprocket->email = $request->email;
-        $shiprocket->password = $request->password;
+        $shiprocket->email = $request->input('email');
+        $shiprocket->password = $request->input('password');
         if($shiprocket->save()){
             return redirect()->back()->with('message', 'Setting saved.');
         }

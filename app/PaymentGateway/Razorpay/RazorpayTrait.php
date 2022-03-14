@@ -8,7 +8,7 @@ trait RazorpayTrait {
 
     private function getApiInstance() : Api{
        // return new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
-       return new Api('rzp_test_dEFEKCc7EjchRB', '30TngJly2aUDFln09AFssmF8');
+       return new Api('rzp_test_HpAV516EN6lzZ9', 'NTqdX5MrUkCoGIU5c7GXVjSM');
     }
 
     private function createOrder($receiptNo, $amount, $currency = 'INR')
@@ -56,4 +56,5 @@ trait RazorpayTrait {
             ];
         }
     }
+
 }

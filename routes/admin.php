@@ -284,8 +284,8 @@ Route::get('/home', 'Admin\HomeController@index')->name('home');
     Route::resource('master-stocks', 'Admin\MasterStockController');
     Route::post('master-stocks/update-stock', 'Admin\MasterStockController@updateStock')->name('master-stocks.update.stock');
 
-    Route::get('shiprocket-settings', [\App\Http\Controllers\Admin\ShiprocketController::class, 'index'])->name('shiprocket.settings.index');
-    Route::post('shiprocket-settings/save', [\App\Http\Controllers\Admin\ShiprocketController::class, 'save'])->name('shiprocket.settings.save');
+    Route::get('shiprocket-settings', [\App\Http\Controllers\Admin\ShipRocketController::class, 'index'])->name('shiprocket.settings.index');
+    Route::post('shiprocket-settings/save', [\App\Http\Controllers\Admin\ShipRocketController::class, 'save'])->name('shiprocket.settings.save');
 
     // Product Return Conditions
     Route::delete('product-return-conditions/destroy', 'Admin\ProductReturnConditionController@massDestroy')->name('product-return-conditions.massDestroy');

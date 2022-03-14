@@ -22,41 +22,30 @@
             <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Product">
                 <thead>
                 <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.name') }}
-                    </th>
-                    <th>
-                        Seller
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.category') }}
-                    </th>
-                    <th>
-                        Approval Status
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.image') }}
-                    </th>
-
-                    <th>
-                        &nbsp;
-                    </th>
+                    <th></th>
+                    <th>{{trans('cruds.product.fields.id')}}</th>
+                    <th>{{trans('cruds.product.fields.name')}}</th>
+                    <th>MRP</th>
+                    <th>Price</th>
+                    <th>Seller</th>
+                    <th>{{trans('cruds.product.fields.category')}}</th>
+                    <th>Status</th>
+                    <th>{{trans('cruds.product.fields.image')}}</th>
+                    <th></th>
                 </tr>
                 <tr>
-                    <td>
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td><input class="search" type="text" placeholder="{{ trans('global.search') }}"></td>
+                    <td></td>
                     <td></td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach(\App\Models\Vendor::all() as $vendor)
+                                <option value="{{ $vendor->name }}">{{ $vendor->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <select class="search">
@@ -75,8 +64,7 @@
                         </select>
                     </td>
                     <td></td>
-                    <td>
-                    </td>
+                    <td></td>
                 </tr>
                 </thead>
             </table>
@@ -163,6 +151,8 @@
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
+                    {data: 'maximum_retail_price', name: 'maximum_retail_price'},
+                    {data: 'price', name: 'price'},
                     {data: 'vendor', name: 'vendor.name'},
                     {data: 'category', name: 'productCategory.name'},
                     {data: 'approval_status', name: 'approval_status'},

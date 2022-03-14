@@ -52,18 +52,13 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="required" for="price">Price</label>
-                                    <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
+                                    <label for="maximum_retail_price">MRP</label>
+                                    <input class="form-control {{ $errors->has('maximum_retail_price') ? 'is-invalid' : '' }}"
                                            type="number"
-                                           name="price" id="price" value="{{ old('price', '') }}" required>
-                                    @if($errors->has('price'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('price') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                           name="maximum_retail_price" id="maximum_retail_price" value="{{ old('maximum_retail_price', 0) }}">
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="discount">Discount</label>
@@ -78,6 +73,22 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="price">Price</label>
+                                    <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="price" id="price" value="{{ old('price', '') }}" required>
+                                    @if($errors->has('price'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('price') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="required" for="gst">GST</label>
@@ -92,14 +103,7 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label  for="display_price">Display Price</label>
-                                    <input class="form-control {{ $errors->has('display_price') ? 'is-invalid' : '' }}"
-                                           type="number"
-                                           name="display_price" id="display_price" value="{{ old('display_price', 0) }}" readonly>
-                                </div>
-                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label  for="charged_price">You will get (after deducting portal charge {{ $portalChargePercentage }}%)</label>
@@ -360,7 +364,7 @@
 
         let portalChargePercentage = "{{ $portalChargePercentage }}";
         const calculatePrice = () => {
-            let mrp =   Number($('#display_price').val());
+            let mrp =   Number($('#maximum_retail_price').val());
             let discount = Number($('#discount').val());
             if(isNaN(mrp)) mrp = 0;
             if(isNaN(discount)) discount = 0;
@@ -368,7 +372,7 @@
             $('#price').val(price);
             $('#charged_price').val(price - ((price * portalChargePercentage) / 100))
         }
-        $(document).on('blur', '#display_price, #discount', function (){
+        $(document).on('blur', '#maximum_retail_price, #discount', function (){
             calculatePrice();
         });
         calculatePrice();

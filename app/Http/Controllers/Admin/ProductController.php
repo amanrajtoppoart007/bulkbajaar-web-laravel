@@ -67,6 +67,9 @@ class ProductController extends Controller
                 }
                 return "";
             });
+            $table->editColumn('maximum_retail_price', function ($row) {
+                return $row->maximum_retail_price ?: "";
+            });
             $table->editColumn('price', function ($row) {
                 return $row->price ? $row->price : "";
             });

@@ -41,6 +41,8 @@ Route::prefix('v1')->group(function () {
             Route::post('register/step-three/user-document-detail', [\App\Http\Controllers\Api\V1\User\AuthController::class, 'registrationStepThree']);
             Route::post('change-password', [\App\Http\Controllers\Api\V1\User\AccountController::class, 'changePassword']);
 
+            Route::get('get-checkout-details', [\App\Http\Controllers\Api\V1\User\CheckOutController::class, 'index']);
+
             Route::get('get-user', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getUser']);
             Route::post('update-document', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'updateDocument']);
             Route::post('get-profile-details', [\App\Http\Controllers\Api\V1\User\ProfileController::class, 'getProfileDetails']);

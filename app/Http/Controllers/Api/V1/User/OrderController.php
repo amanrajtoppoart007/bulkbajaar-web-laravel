@@ -149,7 +149,7 @@ class OrderController extends BaseController
             }
             //Delete cart items
             if($request->input('cart_ids')){
-                Cart::where('user_id', auth()->id())->whereIn('id', $request->cart_ids)->delete();
+                Cart::where('user_id', auth()->id())->whereIn('id', $request->input('cart_ids'))->delete();
             }else{
                 Cart::where('user_id', auth()->id())->delete();
             }
@@ -172,7 +172,7 @@ class OrderController extends BaseController
                     'order_number' => $orderGroupNo,
                     'razor_order_id' => $razorOrder['data']['id'] ?? null,
                     'amount' => $razorOrder['data']['amount'] ?? null,
-                    'razorpay_key' => env('RAZOR_KEY') ?? null,
+                    'razorpay_key' => 'rzp_test_dEFEKCc7EjchRB' ?? null,
                     'razorpay_secret' => env('RAZOR_SECRET') ?? null,
                 ],
                 'message' => 'Order placed successfully'
@@ -198,25 +198,27 @@ class OrderController extends BaseController
             return response()->json($result, 200);
         }
 
-        $orderGroupNo = $request->order_number;
-        $razorpayOrderId = $request->razorpay_order_id;
-        $razorpayId = $request->razorpay_payment_id;
+        $orderGroupNo = $request->input('order_number');
+        $razorpayOrderId = $request->input('razorpay_order_id');
+        $razorpayId = $request->input('razorpay_payment_id');
 
-        $generatedSignature = hash_hmac('SHA256', $razorpayOrderId."|".$razorpayId, env('RAZOR_SECRET'));
+        /*$generatedSignature = hash_hmac('SHA256', $razorpayOrderId."|".$razorpayId, 'rzp_test_HpAV516EN6lzZ9');
 
-        if ($generatedSignature != $request->razorpay_signature) {
+
+
+        if ($generatedSignature != $request->input('razorpay_signature')) {
             $result = [
                 'status' => 0,
                 'response' => 'error',
                 'action' => 'retry',
                 'message' => 'Payment Verification failed.'
             ];
-            return response()->json($result, 200);
-        }
+            return response()->json($result);
+        }*/
 
         try {
-            $razorPayApi = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
-            $razorPayment = $razorPayApi->payment->fetch($request->razorpay_payment_id);
+            $razorPayApi = new Api('rzp_test_HpAV516EN6lzZ9', 'NTqdX5MrUkCoGIU5c7GXVjSM');
+            $razorPayment = $razorPayApi->payment->fetch($request->input('razorpay_payment_id'));
 
             Transaction::create([
                 'payment_id' => $razorPayment->id,
@@ -231,7 +233,7 @@ class OrderController extends BaseController
                 'user_id' => auth()->id(),
             ]);
 
-            if ($razorPayment->status != 'failed') {
+            if ($razorPayment->status == 'captured') {
                 DB::transaction(function () use ($orderGroupNo, $razorPayment) {
                     $orders = Order::where('order_group_number', $orderGroupNo)->with('orderItems')->get();
                     foreach ($orders as $order) {
@@ -265,7 +267,7 @@ class OrderController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getOrders()

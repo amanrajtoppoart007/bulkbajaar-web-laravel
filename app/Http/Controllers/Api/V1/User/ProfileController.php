@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Resources\Api\AddressResource;
 use App\Http\Resources\UserApiResource;
 use App\Models\Area;
 use App\Models\Block;
@@ -34,7 +35,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                 'representative_name' => $profile->representative_name ?? '',
                 'gst_number' => $profile->gst_number ?? '',
                 'pan_number' => $profile->pan_number ?? '',
-                'profile_photo' => $profile->profile_photo ? $profile->profile_photo->getUrl() : null,
+                'profile_photo' => $profile?->profile_photo?->getUrl(),
             ];
             if (!empty($data)) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Profile data fetched successfully'];
@@ -350,26 +351,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             if ($request->input('address_type')) {
                 $query->where('address_type', $request->input('address_type'));
             }
-            $addresses = $query->get();
-
-            $data = [];
-            foreach ($addresses as $address) {
-                $data[] = [
-                    'id' => $address->id,
-                    'name' => $address->name,
-                    'address' => $address->address,
-                    'address_line_two' => $address->address_line_two,
-                    'state_id' => $address->state_id,
-                    'state' => $address->state->name ?? null,
-                    'district_id' => $address->district_id,
-                    'district' => $address->district->name ?? null,
-                    'pincode' => $address->pincode ?? null,
-                    'address_type' => $address->address_type,
-                    'is_default' => (bool)$address->is_default,
-                    'checked' => false,
-                ];
-            }
-
+            $data = AddressResource::collection($query->get());
             if ($data) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Addresses fetched successfully'];
             } else {
@@ -469,7 +451,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
         }
         return response()->json($result, 200);
     }
-    
+
     public function updateDocument(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -487,13 +469,13 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
 
             $user = auth()->user();
             $profile = UserProfile::where('user_id',$user->id)->first();
-            
+
             if ($request->hasFile('gst_image') && $request->input('docType')==='gst') {
                 $profile->clearMediaCollection('gst_image');
                 $profile->addMedia($request->file('gst_image'))->toMediaCollection('gst_image');
             }
 
-            
+
 
              if ($request->hasFile('shop_bill_invoice') && $request->input('docType')==='shop_bill_invoice') {
                 $profile->clearMediaCollection('shop_bill_invoice');

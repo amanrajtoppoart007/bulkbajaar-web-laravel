@@ -40,6 +40,7 @@ class Product extends Model
         'price',
         'moq',
         'discount',
+        'maximum_retail_price',
         'gst',
         'gst_type',
         'product_category_id',

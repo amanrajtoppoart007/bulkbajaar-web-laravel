@@ -26,6 +26,38 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="maximum_retail_price">MRP</label>
+                                    <input class="form-control {{ $errors->has('maximum_retail_price') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="maximum_retail_price" id="maximum_retail_price" value="{{ old('maximum_retail_price', $product->maximum_retail_price) }}" required>
+                                    @if($errors->has('discount'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('maximum_retail_price') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="required" for="discount">Discount</label>
+                                    <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
+                                           type="number"
+                                           name="discount" id="discount"
+                                           value="{{ old('discount', $product->discount) }}" required>
+                                    @if($errors->has('discount'))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('discount') }}
+                                        </div>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="required" for="price">Price</label>
@@ -80,21 +112,7 @@
                                     <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="required" for="discount">Discount</label>
-                                    <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
-                                           type="number"
-                                           name="discount" id="discount"
-                                           value="{{ old('discount', $product->discount) }}" required>
-                                    @if($errors->has('discount'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('discount') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
-                                </div>
-                            </div>
+
                             <div class="col-12">
                                 <div class="form-group">
                                     <label class="required" for="gst">GST</label>
@@ -249,8 +267,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-danger" type="submit">
-                        {{ trans('global.save') }}
+                    <button class="btn btn-primary" type="submit">
+                        {{ trans('global.update') }}
                     </button>
                     <a href="{{route('admin.productOptions.list',$product->id)}}" class="btn btn-success">Edit Product Options</a>
                 </div>
@@ -264,6 +282,16 @@
 
 @section('scripts')
     <script>
+
+        $(document).ready(function(){
+             $(document).on("blur",'#maximum_retail_price, #discount',function(){
+                  console.log("hello my name");
+                  const mrp = Number($("#maximum_retail_price").val()??0);
+                  const discount = Number($("#discount").val()??0);
+                  const price = mrp - (mrp*discount)/100;
+                  $("#price").val(price);
+              });
+        });
         $(document).on('submit', '#productForm', function (e) {
             e.preventDefault();
             let isReturnable = $('#is_returnable').is(':checked')

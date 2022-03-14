@@ -2,14 +2,13 @@
 
 
 namespace App\Http\Controllers\Api\V1\User;
-
-
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Cart;
 use App\Models\Wishlist;
 use App\Traits\ProductTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use \App\Http\Controllers\Api\BaseController as BaseController;
+
 class WishlistController extends BaseController
 {
     use ProductTrait;
@@ -25,7 +24,7 @@ class WishlistController extends BaseController
             return response()->json($result, 200);
         }
 
-        $isExists = Wishlist::where(['product_id'=>$request->input('product_id'),'product_option_id', $request->input('product_option_id')])->where('user_id', auth()->id())->exists();
+        $isExists = Wishlist::where(['product_id'=>$request->input('product_id'),'product_option_id'=> $request->input('product_option_id')])->where('user_id', auth()->id())->exists();
         if ($isExists){
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
             return response()->json($result, 200);
@@ -35,14 +34,11 @@ class WishlistController extends BaseController
             $wishlist = new Wishlist();
             $wishlist->product_id = $request->input('product_id');
             $wishlist->product_option_id = $request->input('product_option_id');
-            $wishlist->user_id = auth()->user()->id;
+            $wishlist->user_id = auth()->id();
 
-            $cart = Cart::where(['product_id'=>$request->input('product_id'),'product_option_id', $request->input('product_option_id')])->where('user_id', auth()->id())->first();
+            $cart = Cart::where(['product_id'=>$request->input('product_id'),'product_option_id'=> $request->input('product_option_id')])->where('user_id', auth()->id())->first();
 
-            if($cart)
-            {
-                $cart->delete();
-            }
+            $cart?->delete();
             if ($wishlist->save()) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'added', 'message' => 'Product added to wishlist successfully'];
             } else {

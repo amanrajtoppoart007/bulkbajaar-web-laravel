@@ -62,14 +62,14 @@ class CartController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         try {
             $data = [];
-            if ($request->cart_ids){
+            if ($request->input('cart_ids')){
                 $carts = Cart::whereUserId(auth()->id())
-                    ->whereIn('id', $request->cart_ids)
+                    ->whereIn('id', $request->input('cart_ids'))
                     ->with(['product', 'productOption'])->get();
             }else{
                 $carts = Cart::whereUserId(auth()->id())->with(['product', 'productOption'])->get();

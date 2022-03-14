@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\ProductResource;
 use App\Library\Api\V1\User\BrandList;
 use App\Library\Api\V1\User\ProductList;
 use App\Library\Api\V1\User\SubCategoryList;
@@ -27,10 +28,9 @@ class ProductController extends BaseController
             $products = Product::latest()
                ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
-                ->limit(10)->get()->toArray();
+                ->limit($request->input('limit',100))->get()->toArray();
             if (count($products)) {
-                $class = new ProductList($products);
-                $data['list'] = $class->execute();
+                $data['list'] = ProductResource::collection($products);
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
@@ -85,16 +85,16 @@ class ProductController extends BaseController
         else
         {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getTopRatedProducts(Request $request)
     {
         try {
-            $products = Product::limit(10)
+            $products = Product::limit($request->input('limit',100))
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
                 ->with('productCategory', 'productSubCategory', 'brand', 'vendor', 'productOptions')
@@ -109,7 +109,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function writeReview(Request $request)
@@ -138,7 +138,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 
@@ -176,12 +176,13 @@ class ProductController extends BaseController
                     'sku' => $product->sku,
                     'hsn' => $product->hsn,
                     'description' => $product->description,
-                    'price' => applyPrice($product->price, $product->discount),
+                    'price' => $product?->price,
+                    'discount' => $product->discount,
+                    'maximum_retail_price'=>$product?->maximum_retail_price,
                     'gst' => $product->gst,
                     'gst_type' => $product->gst_type,
                     'threshold_quantity' => $product->moq,
                     'threshold_price' => getMinimumOrderAmount($product->vendor_id),
-                    'discount' => $product->discount,
                     'discounted_price' => $product->price,
                     'category' => $product->productCategory->name ?? '',
                     'sub_category' => $product->productSubCategory->name ?? '',
@@ -230,7 +231,7 @@ class ProductController extends BaseController
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getSubCategories(Request $request)
@@ -264,7 +265,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getProducts(Request $request)
@@ -356,7 +357,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getTopSellingProducts(Request $request)
@@ -377,7 +378,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
 
@@ -412,7 +413,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
 }
