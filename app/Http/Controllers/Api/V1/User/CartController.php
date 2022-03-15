@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\CartResource;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Traits\ProductTrait;
@@ -74,38 +75,7 @@ class CartController extends BaseController
             }else{
                 $carts = Cart::whereUserId(auth()->id())->with(['product', 'productOption'])->get();
             }
-            foreach ($carts as $cart) {
-                $product = $cart->product;
-                $price = $product->price;
-                $discountedPrice = $product->price;
-                $totalPrice = $discountedPrice * $cart->quantity;
-
-                $data[] = [
-                    'id' => $cart->id,
-                    'product_id' => $cart->product_id,
-                    'product' => $product->name,
-                    'vendor_id'=>$product?->vendor_id,
-                    'vendor_name'=>$product?->vendor?->name??null,
-                    'product_option_id' => $cart->product_option_id,
-                    'liked' => $this->checkIfProductLiked($cart->product_id),
-                    'product_option' => [
-                        'option' => $cart->productOption->option ?? null,
-                        'unit' => $cart->productOption->unit ?? null,
-                        'size' => $cart->productOption->size ?? null,
-                        'color' => $cart->productOption->color ?? null,
-                        'quantity' => $cart->productOption->quantity ?? null,
-                        'liked' => $this->checkIfProductOptionLiked($cart->productOption->id ?? null),
-                    ],
-                    'quantity' => $cart->quantity,
-                    'amount' => $price,
-                    'discount' => $cart->product->discount ?? 0,
-                    'gst' => $cart->product->gst ?? 0,
-                    'gst_type' => $cart->product->gst_type ?? 0,
-                    'discounted_amount' => $discountedPrice,
-                    'total' => $totalPrice,
-                    'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null
-                ];
-            }
+                $data = CartResource::collection($carts);
 
             if (count($data)) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Cart data fetched successfully'];
