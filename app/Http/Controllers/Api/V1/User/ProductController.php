@@ -28,7 +28,7 @@ class ProductController extends BaseController
             $products = Product::latest()
                ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
-                ->limit($request->input('limit',100))->get()->toArray();
+                ->limit($request->input('limit',100))->get();
             if (count($products)) {
                 $data['list'] = ProductResource::collection($products);
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
@@ -38,7 +38,7 @@ class ProductController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getProductOptionId(Request $request)
@@ -98,10 +98,9 @@ class ProductController extends BaseController
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
                 ->with('productCategory', 'productSubCategory', 'brand', 'vendor', 'productOptions')
-                ->get()->toArray();
+                ->get();
             if (count($products)) {
-                $class = new ProductList($products);
-                $data['list'] = $class->execute();
+                $data['list'] = ProductResource::collection($products);
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];

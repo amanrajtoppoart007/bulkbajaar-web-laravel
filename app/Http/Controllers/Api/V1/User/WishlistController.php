@@ -95,11 +95,12 @@ class WishlistController extends BaseController
                         'color' => $wishlist->productOption->color ?? null,
                         'quantity' => $wishlist->productOption->quantity ?? null,
                     ],
-                    'price' => applyPrice($product->price, $product->discount),
+                    'price' => $product->price,
+                    'maximum_retail_price'=>$product->maximum_retail_price,
                     'gst' => $product->gst,
                     'gst_type' => $product->gst_type,
                     'discount' => $product->discount,
-                    'discounted_amount' => applyPrice($product->price, null, $product->discount),
+                    'discounted_amount' => $product->price,
                     'thumb_link' => isset($product->images[0]) ? $product->images[0]->thumbnail : null
                 ];
             }

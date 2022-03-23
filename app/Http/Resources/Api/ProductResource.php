@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'maximum_retail_price,' => $this?->maximum_retail_price,
+            'maximum_retail_price' => $this?->maximum_retail_price,
             'price' => $this->price,
             'threshold_price' => getMinimumOrderAmount($this?->vendor_id),
             'threshold_quantity' => $this->moq,
