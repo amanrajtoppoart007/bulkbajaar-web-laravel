@@ -325,10 +325,8 @@ class ProductController extends BaseController
             if ($request->has('priceRange.min_price')) {
                 $query->where('price','<=', $request->input('priceRange.min_price'));
             }
-
               $query->where('approval_status', 'APPROVED');
-
-            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(10);
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(200);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -336,22 +334,10 @@ class ProductController extends BaseController
                 $data['last_page_url'] = $productList['last_page_url'];
                 $data['per_page'] = $productList['per_page'];
                 $data['total'] = $productList['total'];
-                $class = new ProductList($productList['data']);
-                $data['list'] = $class->execute();
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'fetched',
-                    'data' => $data,
-                    'message' => 'Products data fetched successfully'
-                ];
+                $data['list'] = ProductResource::collection($products);
+                $result = ['status'=>1,'response'=>'success','action'=>'fetched','data'=>$data,'message'=>'Products data fetched successfully'];
             } else {
-                $result = [
-                    'status' => 0,
-                    'response' => 'error',
-                    'action' => 'retry',
-                    'message' => 'No product found'
-                ];
+                $result = ['status'=>0,'response'=>'error','action'=>'retry','message'=>'No product found'];
             }
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
