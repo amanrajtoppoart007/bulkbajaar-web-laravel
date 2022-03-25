@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use \DateTimeInterface;
+use DateTimeInterface;
 
 class Order extends Model
 {
@@ -30,26 +30,26 @@ class Order extends Model
     ];
 
     const STATUS_SELECT_FOR_VENDOR = [
-        'PENDING'    => 'Pending',
-        'CONFIRMED'    => 'Confirmed',
-        'REJECTED'    => 'Rejected',
-        'SHIPPED'    => 'Shipped',
-        'OUT_FOR_DELIVERED'    => 'Out For Delivered',
-        'DELIVERED'    => 'Delivered',
-        'RETURN_RECEIVED'    => 'Return - Received',
+        'PENDING'=> 'Pending',
+        'CONFIRMED'=> 'Confirmed',
+        'REJECTED'=> 'Rejected',
+        'SHIPPED'=> 'Shipped',
+        'OUT_FOR_DELIVERED'=> 'Out For Delivered',
+        'DELIVERED'=> 'Delivered',
+        'RETURN_RECEIVED'=> 'Return - Received',
     ];
 
     const STATUS_SELECT = [
-        'PENDING'    => 'Pending',
-        'CONFIRMED'    => 'Confirmed',
-        'REJECTED'    => 'Rejected',
-        'SHIPPED'    => 'Shipped',
-        'OUT_FOR_DELIVERED'    => 'Out For Delivered',
-        'DELIVERED'    => 'Delivered',
-        'RETURN_REQUESTED'    => 'Return - Requested',
-        'RETURN_RECEIVED'    => 'Return - Received',
-        'RETURN_REFUNDED'    => 'Return - Refunded',
-        'CANCELLED'    => 'Cancelled',
+        'PENDING'=> 'Pending',
+        'CONFIRMED'=> 'Confirmed',
+        'REJECTED'=> 'Rejected',
+        'SHIPPED'=> 'Shipped',
+        'OUT_FOR_DELIVERED'=> 'Out For Delivered',
+        'DELIVERED'=> 'Delivered',
+        'RETURN_REQUESTED'=> 'Return - Requested',
+        'RETURN_RECEIVED'=> 'Return - Received',
+        'RETURN_REFUNDED'=> 'Return - Refunded',
+        'CANCELLED'=> 'Cancelled',
     ];
 
     const ADDRESS_DELETE_ALLOWED = [
@@ -65,7 +65,7 @@ class Order extends Model
         'CONFIRMED'
     ];
 
-    const RETURN_FORM_ALLOWEDD = [
+    const RETURN_FORM_ALLOWED = [
         'RETURN_REQUESTED',
         'RETURN_RECEIVED'
     ];

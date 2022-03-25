@@ -21,7 +21,7 @@
             @if($order->status != 'CANCELLED' || $order->status != 'RECEIVED')
                 <button type="button" class="btn btn-sm btn-warning" id="status-button" data-toggle="modal" data-target="#statusModal">{{ trans('global.update_status') }}</button>
             @endif
-            @if(in_array($order->status, \App\Models\Order::RETURN_FORM_ALLOWEDD))
+            @if(in_array($order->status, \App\Models\Order::RETURN_FORM_ALLOWED))
                 <button type="button" class="btn btn-sm btn-warning" id="refund-button" data-toggle="modal" data-target="#refundModal">Refund</button>
             @endif
             @if($order->is_invoice_generated)

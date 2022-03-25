@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderReturnRequest;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\Vendor;
 use App\Models\Transaction;
 use App\PaymentGateway\Razorpay\RazorpayTrait;
@@ -37,10 +38,19 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
         try {
-            if ($request->input('cart_ids',[])){
+
+            $user = User::find(auth()->id());
+            if($user)
+            {
+                if(!$user->approved)
+                {
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'not_approved', 'message' => 'Your account is not approved yet,wait for the admin to approve your account or contact customer care'];
+                    return response()->json($result);
+                }
+                if ($request->input('cart_ids',[])){
                 $carts = Cart::whereUserId(auth()->id())
                     ->whereIn('id', $request->input('cart_ids',[]))
                     ->with(['product'])->get();
@@ -178,10 +188,18 @@ class OrderController extends BaseController
                 'message' => 'Order placed successfully'
             ];
 
+            }
+            else
+            {
+              $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Invalid access attempt'];
+               return response()->json($result);
+            }
+
+
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function makePayment(Request $request)
@@ -459,7 +477,7 @@ class OrderController extends BaseController
                 'action' => 'rejected',
                 'message' => "This order does not belong to you."
             ];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         if (!in_array('PENDING', Order::CANCELLATION_ALLOWED)) {
