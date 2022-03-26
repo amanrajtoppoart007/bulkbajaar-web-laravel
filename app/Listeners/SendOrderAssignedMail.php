@@ -29,6 +29,6 @@ class SendOrderAssignedMail implements ShouldQueue
      */
     public function handle(OrderAssigned $event)
     {
-        return Mail::to($event->order->assignee)->send(new SendOrderCreatedEmailToVendor($event->order));
+         Mail::to($event->order->assignee)->send(new SendOrderCreatedEmailToVendor($event->order));
     }
 }

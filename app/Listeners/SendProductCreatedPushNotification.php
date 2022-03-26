@@ -42,6 +42,5 @@ class SendProductCreatedPushNotification implements ShouldQueue
         if(!empty($deviceTokens)){
             return $this->sendPushNotification($deviceTokens, $message);
         }
-        return false;
     }
 }

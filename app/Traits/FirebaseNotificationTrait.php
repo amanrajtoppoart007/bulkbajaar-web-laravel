@@ -4,13 +4,13 @@ namespace App\Traits;
 
 trait FirebaseNotificationTrait {
 
-    public function sendPushNotification($deviceTokens, $message)
+    public function sendPushNotification($deviceTokens, $inputData)
     {
-        $SERVER_API_KEY = 'AAAAoVJwcTg:APA91bH8XTN_QSAa0QZ5t__QXibBSGjUebRLCJ7hWD4OKu9U-AB76nA5mXR6-dNoKvxI83uS6rMSMbfsax-KZMsK7CHfyWyfykuYXYTj7D4pWJFX87b24jUs2JETa3I-6osw7mXEoE4d';
+        $SERVER_API_KEY = 'AAAApYoDmi0:APA91bF_pCEunI_RtHpvR4B4BPjFn191Fv4vBHu51Mfh5Xk4jdDQWKW0hfizDRyn9cxicpsNE8RDhWP9373hCYG-YXYZZOMa_LJXgahpOxVo6SCisobIv3zWhfqmsqIwn50OFmhS64aB';
 
         $data = [
             "registration_ids" => $deviceTokens,
-            "data" => $message
+            "data" => $inputData
         ];
         $dataString = json_encode($data);
 

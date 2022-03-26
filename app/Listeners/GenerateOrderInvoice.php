@@ -7,7 +7,6 @@ use App\Models\Invoice;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 
 class GenerateOrderInvoice implements ShouldQueue
