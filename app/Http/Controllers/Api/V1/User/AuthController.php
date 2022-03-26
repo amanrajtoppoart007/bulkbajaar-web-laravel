@@ -8,7 +8,7 @@ use App\Models\UserAddress;
 use App\Models\UserProfile;
 use App\Models\Vendor;
 use App\Traits\SmsSenderTrait;
-use App\Traits\UniqueIdentityGeneratorTrait;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Otp;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends BaseController
 {
-    use SmsSenderTrait, UniqueIdentityGeneratorTrait;
+    use SmsSenderTrait;
 
     public function access_step_one(Request $request)
     {
@@ -85,7 +85,7 @@ class AuthController extends BaseController
                     ];
 
                 }
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
@@ -156,7 +156,7 @@ class AuthController extends BaseController
                         'message' => 'Something went wrong ,please try after some time'
                     ];
                 }
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 DB::rollBack();
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
@@ -209,7 +209,7 @@ class AuthController extends BaseController
                     ];
                 }
 
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
@@ -242,7 +242,7 @@ class AuthController extends BaseController
             DB::beginTransaction();
             try {
                 $input = $request->json()->all();
-                $user = auth()->user();
+                $user = User::find(auth()->id());
 
                 $user->name = $input['company_name'];
                 $user->save();
@@ -289,7 +289,7 @@ class AuthController extends BaseController
                     'message' => 'Please upload documents.'
                 ];
                 DB::commit();
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 DB::rollBack();
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
@@ -336,13 +336,13 @@ class AuthController extends BaseController
                     'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
                 ];
                 //Send notification to admin for approval
-                $userData['id'] = auth()->user()->id;
-                $userData['name'] = auth()->user()->name;
-                $userData['username'] = auth()->user()->email;
-                $userData['email'] = auth()->user()->email;
-                $userData['mobile'] = auth()->user()->mobile;
-//                event(new UserRegistered($userData));
-            } catch (\Exception $exception) {
+                /*$userData['id'] = auth()->id();
+                $userData['name'] = auth()->user()?->name;
+                $userData['username'] = auth()->user()?->email;
+                $userData['email'] = auth()->user()?->email;
+                $userData['mobile'] = auth()->user()?->mobile;
+                event(new UserRegistered($userData));*/
+            } catch (Exception $exception) {
                 $result = [
                     'status' => 0,
                     'response' => 'error',
@@ -350,7 +350,6 @@ class AuthController extends BaseController
                 ];
             }
         }
-
         return response()->json($result, 200);
     }
 }
