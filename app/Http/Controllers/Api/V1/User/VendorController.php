@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class VendorController extends BaseController
 {
@@ -57,27 +58,15 @@ class VendorController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            $result = [
-                'status' => 0,
-                'response' => 'validation_error',
-                'action' => 'retry',
-                'message' => $validator->errors()->all()
-            ];
+            $result = ['status' => 0, 'response' => 'validation_error', 'action' => 'retry', 'message' => $validator->errors()->all()];
         } else {
             $vendor = Vendor::with(['products'])->find($request->input('vendor_id'));
             try {
                 $vendor->load(['profile','profile.pickupState', 'profile.pickupDistrict']);
                 $data = new VendorResource($vendor);
                 $products = Product::with(['productOptions'])->where(['vendor_id'=>$request->input('vendor_id'),'approval_status'=>'APPROVED'])->get();
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'fetched',
-                    'data' => $data,
-                    'products'=> ProductResource::collection($products),
-                    'message' => 'Vendor fetched successfully.'
-                ];
-            } catch (\Exception $exception) {
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'products'=> ProductResource::collection($products), 'message' => 'Vendor fetched successfully.'];
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }

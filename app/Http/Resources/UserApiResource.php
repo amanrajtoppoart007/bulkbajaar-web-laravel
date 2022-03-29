@@ -32,7 +32,7 @@ class UserApiResource extends JsonResource
             'email' => $this->email,
             'mobile' => $this->mobile,
             'device_token' => $this->device_token,
-            'image' => $this->image,
+            'image' => $this->userProfile?->profile_photo?->getUrl(),
             'user_profile' => new UserProfileApiResource($this->userProfile),
             'created_at' => $this->created_at->format('d-m-Y'),
             'updated_at' => $this->updated_at->format('d-m-Y'),

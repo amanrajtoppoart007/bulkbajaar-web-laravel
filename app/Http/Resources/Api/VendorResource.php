@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VendorResource extends JsonResource
@@ -14,6 +15,12 @@ class VendorResource extends JsonResource
      */
     public function toArray($request)
     {
+         $brands = [];
+        $products = Product::with(['productOptions'])->where(['vendor_id' => $this?->id, 'approval_status' => 'APPROVED'])->get();
+        foreach ($products as $key=>$product) {
+            $brands[$key]['id'] = $product?->brand?->id;
+            $brands[$key]['title'] = $product?->brand?->title;
+        }
         return [
             "id" => $this?->id,
             "name" => $this?->name,
@@ -28,9 +35,10 @@ class VendorResource extends JsonResource
             'pickup_district' => $this->profile->pickupDistrict->name ?? '',
             'pickup_pincode' => $this->profile->pickup->pincode ?? '',
             'mop' => getMinimumOrderAmount($this->id),
-            "product_count" => $this?->products()?->where(['approval_status'=>'APPROVED'])->count(),
+            "product_count" => count($products),
             "dispatch_delay_time" => $this->dispatch_delay_time,
             "minimum_order_value" => $this->minimum_order_value,
+            "brands"=>$brands,
         ];
     }
 }

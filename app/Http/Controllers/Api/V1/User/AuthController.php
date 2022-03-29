@@ -42,49 +42,30 @@ class AuthController extends BaseController
                         'action' => 'register',
                         'message' => 'Already registered'
                     ];
-                    return response()->json($result, 200);
+                    return response()->json($result);
                 }
                 if (User::where('mobile', $request->input('mobile'))->doesntExist()) {
-                    Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
-                    $otp = rand(1000, 9999);
-                    $data['otp'] = $otp;
                     $data['service_type'] = "registration";
-                    $data['mobile'] = $request->input('mobile');
-//                    $gatewayResponse = $this->sendOtpSms($data);
-                    $otpObj = new Otp();
-                    $otpObj->mobile = $request->input('mobile');
-                    $otpObj->otp = $otp;
-//                    $otpObj->sms_status = $gatewayResponse->status;
-//                    $otpObj->gateway_response = json_encode($gatewayResponse);
-                    $otpObj->save();
-                    $result = [
-                        'response' => 'success',
-                        'action' => 'register',
-                        'otp' => $otp,
-                        'message' => 'Please check your mobile for OTP'
-                    ];
+                    $action = 'register';
+
                 } else {
+                    $data['service_type'] = "login";
+                    $action ='login';
+                }
+
                     Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
                     $otp = rand(1000, 9999);
                     $data['otp'] = $otp;
-                    $data['service_type'] = "login";
                     $data['mobile'] = $request->input('mobile');
-//                    $gatewayResponse = $this->sendOtpSms($data);
+                    $this->sendOtpSms($data);
                     $otpObj = new Otp();
                     $otpObj->mobile = $request->input('mobile');
                     $otpObj->otp = $otp;
-//                    $otpObj->sms_status = $gatewayResponse->status;
-//                    $otpObj->gateway_response = json_encode($gatewayResponse);
+                    $otpObj->sms_status = 1;
+                    $otpObj->gateway_response = json_encode(['status'=>'success']);
                     $otpObj->save();
+                    $result = ['response' => 'success', 'action' => $action, 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
 
-                    $result = [
-                        'response' => 'success',
-                        'action' => 'login',
-                        'otp' => $otp,
-                        'message' => 'Please check your mobile for OTP'
-                    ];
-
-                }
             } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
@@ -109,12 +90,12 @@ class AuthController extends BaseController
         } else {
             DB::beginTransaction();
             try {
-                $otpdata = Otp::where('mobile', $request->input('mobile'))->where('is_expired', '0')->first();
+                $otpData = Otp::where('mobile', $request->input('mobile'))->where('is_expired', '0')->first();
 
-                if (!empty($otpdata)) {
-                    if ($otpdata->otp == $request->input('otp')) {
+                if (!empty($otpData)) {
+                    if ($otpData->otp == $request->input('otp')) {
                         $v_token = rand(100000, 999999);
-                        $obj = Otp::findOrFail($otpdata->id);
+                        $obj = Otp::findOrFail($otpData->id);
                         $obj->v_token = $v_token;
                         $obj->is_expired = '1';
                         $obj->save();
@@ -169,7 +150,7 @@ class AuthController extends BaseController
     public function registrationStepOne(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
-            'name'=>'required',
+            'name'=>'required|string',
             'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
             'email' => 'required|email|unique:users,email|unique:vendors,email',
             'password' => ['required', 'string', 'confirmed'],
@@ -336,20 +317,18 @@ class AuthController extends BaseController
                     'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
                 ];
                 //Send notification to admin for approval
-                /*$userData['id'] = auth()->id();
-                $userData['name'] = auth()->user()?->name;
-                $userData['username'] = auth()->user()?->email;
-                $userData['email'] = auth()->user()?->email;
-                $userData['mobile'] = auth()->user()?->mobile;
-                event(new UserRegistered($userData));*/
+                $user = User::find(auth()->id());
+                $userData['id'] = auth()->id();
+                $userData['name'] = $user?->name;
+                $userData['username'] = $user?->email;
+                $userData['email'] = $user?->email;
+                $userData['mobile'] = $user?->mobile;
+                event(new UserRegistered($userData));
             } catch (Exception $exception) {
-                $result = [
-                    'status' => 0,
-                    'response' => 'error',
-                    'message' => $exception->getMessage()
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()
                 ];
             }
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 }

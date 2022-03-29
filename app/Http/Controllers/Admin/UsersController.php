@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Traits\SmsSenderTrait;
 use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -22,10 +23,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Exception;
 
 class UsersController extends Controller
 {
-    use CsvImportTrait, UniqueIdentityGeneratorTrait;
+    use SmsSenderTrait,CsvImportTrait, UniqueIdentityGeneratorTrait;
 
     public function index(Request $request)
     {
@@ -106,29 +108,29 @@ class UsersController extends Controller
             UserProfile::createProfile(array_merge($request->all(), ['user_id' => $user->id]));
             $billingAddressData = [
                 'user_id' => $user->id,
-                'address' => $request->billing_address,
-                'address_two' => $request->billing_address_two,
-                'state_id' => $request->billing_state_id,
-                'district_id' => $request->billing_district_id,
-                'pincode' => $request->billing_pincode,
+                'address' => $request->input('billing_address'),
+                'address_two' => $request->input('billing_address_two'),
+                'state_id' => $request->input('billing_state_id'),
+                'district_id' => $request->input('billing_district_id'),
+                'pincode' => $request->input('billing_pincode'),
                 'address_type' => 'BILLING',
             ];
             UserAddress::create($billingAddressData);
             if (!$request->boolean('shipping_address_same')){
                 UserAddress::create([
                     'user_id' => $user->id,
-                    'address' => $request->shipping_address,
-                    'address_two' => $request->shipping_address_two,
-                    'state_id' => $request->shipping_state_id,
-                    'district_id' => $request->shipping_district_id,
-                    'pincode' => $request->shipping_pincode,
+                    'address' => $request->input('shipping_address'),
+                    'address_two' => $request->input('shipping_address_two'),
+                    'state_id' => $request->input('shipping_state_id'),
+                    'district_id' => $request->input('shipping_district_id'),
+                    'pincode' => $request->input('shipping_pincode'),
                     'is_default' => 1,
                     'address_type' => 'SHIPPING',
                 ]);
             }else{
                 UserAddress::create(array_merge($billingAddressData, ['address_type' => 'SHIPPING', 'is_default' => 1]));
             }
-//         $user->notify(new RegistrationSuccessSms());
+           $user->notify(new RegistrationSuccessSms());
 
             $data['name'] = $user->name;
             $data['email'] = $user->email;
@@ -138,7 +140,7 @@ class UsersController extends Controller
             DB::commit();
             event(new UserRegistered($data));
             return redirect()->route('admin.users.show', $user->id);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             return back()->withErrors($exception->getMessage());
         }
@@ -233,11 +235,18 @@ class UsersController extends Controller
             $user = User::find($request->input('id'));
             $user->approved = !($request->input('status'));
             $user->save();
+            $user->refresh();
+            if($user->approved)
+            {
+                    $name = $user?->name;
+                    $mobile = $user->mobile;
+                    $this->userApprovalSms($name,$mobile);
+            }
             $result = ["status" => 1, "response" => "success", "message" => "User approval status changed successfully"];
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function changeVerificationStatus(Request $request)
@@ -251,11 +260,16 @@ class UsersController extends Controller
             $user = User::find($request->input('id'));
             $user->verified = !($request->input('status'));
             $user->save();
+            $user->refresh();
+            if($user->verified)
+            {
+
+            }
             $result = ["status" => 1, "response" => "success", "message" => "User verification status changed successfully"];
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function massApprove(MassDestroyUserRequest $request)
@@ -269,6 +283,12 @@ class UsersController extends Controller
     {
         $user->approved = 1;
         $user->save();
-        return back()->with('message' ,'Approved successfully!');
+        $user->refresh();
+        if ($user->approved) {
+            $name = $user?->name;
+            $mobile = $user->mobile;
+            $this->userApprovalSms($name, $mobile);
+        }
+        return back()->with('message', 'Approved successfully!');
     }
 }

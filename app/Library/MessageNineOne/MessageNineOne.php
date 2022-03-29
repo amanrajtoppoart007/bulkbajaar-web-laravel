@@ -42,9 +42,9 @@ class MessageNineOne
         $output = curl_exec($ch);
          //Print error if any
         if (curl_errno($ch)) {
-            echo 'error:' . curl_error($ch);
+             $output = 'error:' . curl_error($ch);
         }
         curl_close($ch);
-        echo $output;
+        return $output;
     }
 }

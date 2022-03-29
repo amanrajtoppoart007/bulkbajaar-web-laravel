@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class OrderController extends BaseController
 {
@@ -282,7 +283,7 @@ class OrderController extends BaseController
                 ];
             }
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -341,13 +342,8 @@ class OrderController extends BaseController
         }
 
         if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->id())->exists()) {
-            $result = [
-                'status' => 0,
-                'response' => 'error',
-                'action' => 'rejected',
-                'message' => "This order does not belong to you."
-            ];
-            return response()->json($result, 200);
+            $result = ['status' => 0, 'response' => 'error', 'action' => 'rejected', 'message' => "This order does not belong to you."];
+            return response()->json($result);
         }
 
         try {
@@ -418,7 +414,8 @@ class OrderController extends BaseController
                     'product_id' => $orderItem->product_id,
                     'product' => $orderItem->product->name,
                     'product_option_id' => $orderItem->product_option_id,
-                    'amount' => applyPrice($orderItem->amount, $orderItem->discount),
+                    'amount' => $orderItem->amount,
+                    'mrp'=>$orderItem->quantity,
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
                     'gst_amount' => $orderItem->gst_amount,
@@ -643,7 +640,7 @@ class OrderController extends BaseController
 
 
             $data = [
-                'order_group_number' => $request->order_number,
+                'order_group_number' => $request->input('order_number'),
                 'items_count' => $itemsCount,
                 'order_date' => $orderDate,
                 'items_total' => $itemsTotal,
@@ -674,7 +671,7 @@ class OrderController extends BaseController
         } catch (\Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
 }

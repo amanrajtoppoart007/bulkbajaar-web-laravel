@@ -12,7 +12,7 @@ class PushNotificationController extends Controller
 {
     public function getPushNotifications()
     {
-        $notifications = PushNotification::latest()->whereHas('users', function ($q){
+        $notifications = PushNotification::whereHas('users', function ($q){
             $q->where('user_id', auth()->id());
         })->get();
 

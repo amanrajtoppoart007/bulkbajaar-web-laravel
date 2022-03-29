@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyUserNotification;
 use App\Traits\Auditable;
 use Carbon\Carbon;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use \DateTimeInterface;
 use Laravel\Sanctum\HasApiTokens;
 

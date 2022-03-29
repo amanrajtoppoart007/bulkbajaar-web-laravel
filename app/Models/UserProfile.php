@@ -23,6 +23,7 @@ class UserProfile extends Model implements HasMedia
         'pan_card',
         'gst_image',
         'pan_card_image',
+        'profile_photo',
     ];
 
     protected $dates = [
@@ -76,7 +77,7 @@ class UserProfile extends Model implements HasMedia
 
     public function getImageAttribute()
     {
-        $file = $this->getMedia('image')->last();
+        $file = $this->getMedia('profile_photo')->last();
 
         if ($file) {
             $file->url       = $file->getUrl();
@@ -86,6 +87,8 @@ class UserProfile extends Model implements HasMedia
 
         return $file;
     }
+
+
 
     public function getGstAttribute()
     {
@@ -120,6 +123,6 @@ class UserProfile extends Model implements HasMedia
             return $image->getFullUrl();
         }
         return null;
-         
+
     }
 }

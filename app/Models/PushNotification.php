@@ -13,6 +13,15 @@ class PushNotification extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
+
+    protected $fillable = [
+        'title',
+        'message'
+    ];
+
+    /**
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50)->keepOriginalImageFormat();
@@ -32,12 +41,12 @@ class PushNotification extends Model implements HasMedia
         return $file;
     }
 
-    protected function serializeDate(DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function users()
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }

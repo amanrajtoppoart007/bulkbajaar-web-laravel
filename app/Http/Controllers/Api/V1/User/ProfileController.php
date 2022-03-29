@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Resources\Api\AddressResource;
 use App\Http\Resources\UserApiResource;
 use App\Models\Area;
@@ -14,13 +15,17 @@ use App\Models\State;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\UserProfile;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Validator;
 
-class ProfileController extends \App\Http\Controllers\Api\BaseController
+
+class ProfileController extends BaseController
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getProfileDetails()
     {
         try {
@@ -42,7 +47,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Profile not found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -56,17 +61,17 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             'name' => 'required|string',
             'company_name' => 'required|string',
             'representative_name' => 'required|string',
-            'gst_number' => 'required|string',
-            'pan_number' => 'required|string',
-            'profile_photo' => 'required|mimes:jpeg,png',
-            'gst'=>'required|mimes:jpeg,png',
-            'pan'=>'required|mimes:jpeg,png',
+            'gst_number' => 'nullable|string',
+            'pan_number' => 'nullable|string',
+            'profile_photo' => 'nullable|mimes:jpeg,png',
+            'gst'=>'mimes:jpeg,png',
+            'pan_card'=>'mimes:jpeg,png',
 
         ]);
 
         if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            $result = ['status' => 0, 'response' => 'validation_error', 'action' => 'retry', 'message' => $validator->errors()->all()];
+            return response()->json($result);
         }
         try {
 
@@ -87,9 +92,9 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                 $profile->addMedia($request->file('profile_photo'))->toMediaCollection('profile_photo');
             }
 
-            if ($request->hasFile('pan')) {
-                $profile->clearMediaCollection('pan');
-                $profile->addMedia($request->file('pan'))->toMediaCollection('pan');
+            if ($request->hasFile('pan_card')) {
+                $profile->clearMediaCollection('pan_card');
+                $profile->addMedia($request->file('pan_card'))->toMediaCollection('pan_card');
             }
 
              if ($request->hasFile('gst')) {
@@ -102,7 +107,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -125,7 +130,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No state found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -151,7 +156,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No District found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -177,7 +182,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No Block found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -203,7 +208,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No Pincode found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -230,7 +235,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No Area found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -252,7 +257,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No address type found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -291,7 +296,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -337,7 +342,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -357,7 +362,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No address found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -391,7 +396,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -424,7 +429,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
@@ -434,7 +439,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     public function getUser()
     {
         try {
-          $user = User::find(auth()->user()->id);
+          $user = User::find(auth()->id());
           if(!empty($user))
           {
               $user = new UserApiResource($user);
@@ -445,7 +450,7 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                $result = ['status' => 0, 'response' => 'error', 'message' => 'User not found'];
           }
         }
-        catch (\Exception $exception)
+        catch (Exception $exception)
         {
              $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
@@ -456,19 +461,18 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
     {
         $validator = Validator::make($request->all(), [
             'docType' => 'required|string',
-            'gst'=>'nullable|mimes:jpeg,png|required_without:shop_bill_invoice',
-            'shop_bill_invoice'=>'nullable|mimes:jpeg,png|required_without:gst',
-
+            'gst'=>'nullable|mimes:jpeg,png',
+            'shop_bill_invoice'=>'nullable|mimes:jpeg,png',
+            'pan_card'=>'nullable|mimes:jpeg,png',
         ]);
 
         if ($validator->fails()) {
-            $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            $result = ['status' => 0, 'response' => 'validation_error', 'action' => 'retry', 'message' => $validator->errors()->all()];
+            return response()->json($result);
         }
         try {
 
-            $user = auth()->user();
-            $profile = UserProfile::where('user_id',$user->id)->first();
+            $profile = UserProfile::where('user_id',auth()->id())->first();
 
             if ($request->hasFile('gst_image') && $request->input('docType')==='gst') {
                 $profile->clearMediaCollection('gst_image');
@@ -482,12 +486,17 @@ class ProfileController extends \App\Http\Controllers\Api\BaseController
                $profile->addMedia($request->file('shop_bill_invoice'))->toMediaCollection('shop_bill_invoice');
             }
 
+              if ($request->hasFile('pan_card') && $request->input('docType')==='pan_card') {
+                $profile->clearMediaCollection('pan_card');
+               $profile->addMedia($request->file('pan_card'))->toMediaCollection('pan_card');
+            }
+
             if ($profile->save()) {
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Profile updated successfully'];
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Document uploaded successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result, 200);
