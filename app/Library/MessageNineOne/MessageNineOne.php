@@ -6,6 +6,11 @@ class MessageNineOne
 {
     public function send($mobile,$message)
     {
+        $mobile = (int)$mobile;
+        if(strlen((string)$mobile)==10)
+        {
+            $mobile = "+91".$mobile;
+        }
         //Your authentication key
         $authKey = "357138AFNNBtCds605824c4P1";
        //Multiple mobiles numbers separated by comma
@@ -15,17 +20,18 @@ class MessageNineOne
         //Your message to send, Add URL encoding here.
         $message = urlencode($message);
        //Define route
-        $route = "default";
+        $route = 4;
        //Prepare you post parameters
         $postData = array(
             'authkey' => $authKey,
             'mobiles' => $mobileNumber,
             'message' => $message,
             'sender' => $senderId,
-            'route' => $route
+            'route' => $route,
+            'response'=>'json'
         );
         //API URL
-        $url = "https://control.msg91.com/api/sendhttp.php";
+        $url = "https://api.msg91.com/api/v2/sendsms?response=json&route=4";
         // init the resource
         $ch = curl_init();
         curl_setopt_array($ch, array(
@@ -45,6 +51,6 @@ class MessageNineOne
              $output = 'error:' . curl_error($ch);
         }
         curl_close($ch);
-        return $output;
+        return json_decode($output);
     }
 }

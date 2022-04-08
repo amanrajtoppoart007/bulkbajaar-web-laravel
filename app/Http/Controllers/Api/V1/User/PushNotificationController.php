@@ -34,8 +34,10 @@ class PushNotificationController extends Controller
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No notification found'];
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
+
+
 
     public function getPushNotification(Request $request)
     {
@@ -45,7 +47,7 @@ class PushNotificationController extends Controller
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
         $notification = PushNotification::find($request->input('id'));
         $imageUrl = $notification->photo ? $notification->photo->getUrl() : asset('assets/assets/images/logo-1.png');
@@ -63,7 +65,7 @@ class PushNotificationController extends Controller
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No notification found'];
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function deletePushNotification(Request $request)
@@ -74,18 +76,18 @@ class PushNotificationController extends Controller
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
 
         $notification = PushNotification::find($request->input('id'));
 
-        if ($notification->users()->detach(auth()->user()->id)) {
+        if ($notification->users()->detach(auth()->id())) {
             $result = ['status' => 1, 'response' => 'success', 'action' => 'delete', 'message' => 'Notification deleted successfully'];
         } else {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong.'];
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 }

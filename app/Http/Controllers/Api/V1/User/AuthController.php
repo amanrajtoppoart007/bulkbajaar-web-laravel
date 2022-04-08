@@ -37,11 +37,7 @@ class AuthController extends BaseController
         } else {
             try {
                 if (Vendor::where('mobile', $request->input('mobile'))->exists()){
-                    $result = [
-                        'response' => 'success',
-                        'action' => 'register',
-                        'message' => 'Already registered'
-                    ];
+                    $result = ['response' => 'success', 'action' => 'register', 'message' => 'Already registered'];
                     return response()->json($result);
                 }
                 if (User::where('mobile', $request->input('mobile'))->doesntExist()) {
@@ -55,14 +51,21 @@ class AuthController extends BaseController
 
                     Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
                     $otp = rand(1000, 9999);
+                /**
+                 * for play store verification , remove in product version
+                 */
+                    if($request->input('mobile')=='1234567890')
+                   {
+                       $otp = 1234;
+                   }
                     $data['otp'] = $otp;
                     $data['mobile'] = $request->input('mobile');
-                    $this->sendOtpSms($data);
+                    $response = $this->sendOtpSms($data);
                     $otpObj = new Otp();
                     $otpObj->mobile = $request->input('mobile');
                     $otpObj->otp = $otp;
-                    $otpObj->sms_status = 1;
-                    $otpObj->gateway_response = json_encode(['status'=>'success']);
+                    $otpObj->sms_status = $response?->type;
+                    $otpObj->gateway_response = json_encode($response);
                     $otpObj->save();
                     $result = ['response' => 'success', 'action' => $action, 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
 

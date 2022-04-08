@@ -3,8 +3,6 @@
 
 namespace App\Library\Api\V1\User;
 
-
-use App\Models\Product;
 use App\Traits\ProductTrait;
 use App\Traits\ReviewTrait;
 

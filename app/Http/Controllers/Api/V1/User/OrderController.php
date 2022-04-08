@@ -27,7 +27,11 @@ class OrderController extends BaseController
 {
     use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait;
 
-    public function placeOrder(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function placeOrder(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'payment_method' => ['required', Rule::in(['ONLINE', 'COD', 'HALF'])],
@@ -65,7 +69,7 @@ class OrderController extends BaseController
                     'action' => 'add',
                     'message' => 'Sorry your cart is empty'
                 ];
-                return response()->json($result, 200);
+                return response()->json($result);
             }
 
             $groupedCarts = collect($carts)->mapToGroups(function ($cart) {
@@ -103,7 +107,10 @@ class OrderController extends BaseController
                         'order_number' => $orderNo.'-'.($index++),
                         'product_id' => $product->id,
                         'product_option_id' => $cart->product_option_id,
-                        'amount' => $price,
+                        'price'=>$product->price,//product price
+                        'mrp'=>$product->maximum_retail_price,//product mrp
+                        'mrp_total'=>(float)$cart->quantity* (float)$product->maximum_retail_price,//mrp total
+                        'amount' => $price,//same as price but may be show other attribute in future
                         'quantity' => $cart->quantity,//order quantity
                         'discount' => $product->discount, // discount percentage
                         'discount_amount' => $discountAmount,//
@@ -141,7 +148,7 @@ class OrderController extends BaseController
                     $vendorName = Vendor::find($vendorId)->name ?? '';
                     $message = "Total amount of order from seller $vendorName must greater than or equal to $minimumOrderAmount, current amount is $orderGrandTotal .";
                     $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $message];
-                    return response()->json($result, 200);
+                    return response()->json($result);
                 }
 
             }
@@ -183,8 +190,6 @@ class OrderController extends BaseController
                     'order_number' => $orderGroupNo,
                     'razor_order_id' => $razorOrder['data']['id'] ?? null,
                     'amount' => $razorOrder['data']['amount'] ?? null,
-                    'razorpay_key' => 'rzp_test_dEFEKCc7EjchRB' ?? null,
-                    'razorpay_secret' => env('RAZOR_SECRET') ?? null,
                 ],
                 'message' => 'Order placed successfully'
             ];
@@ -197,7 +202,7 @@ class OrderController extends BaseController
             }
 
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -214,7 +219,7 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         $orderGroupNo = $request->input('order_number');
@@ -268,19 +273,9 @@ class OrderController extends BaseController
                     }
                 });
 
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'paid',
-                    'message' => 'Your payment was successful..'
-                ];
+                $result = ['status' => 1, 'response' => 'success', 'action' => 'paid', 'message' => 'Your payment was successful.'];
             } else {
-                $result = [
-                    'status' => 1,
-                    'response' => 'error',
-                    'action' => 'retry',
-                    'message' => 'Your payment was failed, please try again.'
-                ];
+                $result = ['status' => 1,'response' => 'error','action' => 'retry','message' => 'Your payment was failed, please try again.'];
             }
 
         } catch (Exception $exception) {
@@ -298,7 +293,7 @@ class OrderController extends BaseController
             $query->with('vendor')->withCount('orderItems');
             $query->orderByDesc('created_at');
 
-            $orders = $query->paginate(10000);
+            $orders = $query->paginate(Order::count());
             if (count($orders)) {
                 $orderList = $orders->toArray();
                 $data['current_page'] = $orderList['current_page'];
@@ -308,26 +303,15 @@ class OrderController extends BaseController
                 $data['total'] = $orderList['total'];
                 $class = new OrderList($orderList['data']);
                 $data['list'] = $class->execute();
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'fetched',
-                    'data' => $data,
-                    'message' => 'Order data fetched successfully'
-                ];
+                $result = ['status' => 1,'response' => 'success','action' => 'fetched','data' => $data, 'message' => 'Order data fetched successfully'];
             } else {
-                $result = [
-                    'status' => 0,
-                    'response' => 'error',
-                    'action' => 'add',
-                    'message' => 'You have no order at the moment'
-                ];
+                $result = ['status' => 0, 'response' => 'error','action' => 'add', 'message' => 'You have no order at the moment'];
             }
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getOrderDetails(Request $request)
@@ -338,7 +322,7 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         if (!Order::whereOrderNumber($request->input('order_number'))->whereUserId(auth()->id())->exists()) {
@@ -410,15 +394,20 @@ class OrderController extends BaseController
                     break;
                 }
                 $data['list'][] = [
+                    'vendor_name'=>$orderItem?->product?->vendor?->name,
                     'id' => $orderItem->id,
                     'product_id' => $orderItem->product_id,
                     'product' => $orderItem->product->name,
                     'product_option_id' => $orderItem->product_option_id,
                     'amount' => $orderItem->amount,
-                    'mrp'=>$orderItem->quantity,
+                    'price'=>$orderItem->price,
+                    'mrp'=>$orderItem->mrp,
+                    'mrp_total'=>$orderItem->mrp_total,
+                    'price_total'=>(float)$orderItem->price*(float)$orderItem->quantity,
                     'quantity' => $orderItem->quantity,
                     'discount_amount' => $orderItem->discount_amount,
                     'gst_amount' => $orderItem->gst_amount,
+                    'gst'=>$orderItem->gst,
                     'total_amount' => $orderItem->total_amount,
                     'is_returnable' => (bool)($orderItem->product->is_returnable ?? 0),
                     'return_conditions' => $orderItem->product->productReturnConditions ?? [],
@@ -433,25 +422,14 @@ class OrderController extends BaseController
                 ];
             }
             if (!empty($data)) {
-                $result = [
-                    'status' => 1,
-                    'response' => 'success',
-                    'action' => 'fetched',
-                    'data' => $data,
-                    'message' => 'Order details fetched successfully'
-                ];
+                $result = ['status'=>1,'response'=>'success','action'=> 'fetched','data'=>$data, 'message' =>'Order details fetched successfully'];
             } else {
-                $result = [
-                    'status' => 0,
-                    'response' => 'error',
-                    'action' => 'add',
-                    'message' => 'Order details not available'
-                ];
+                $result = ['status' =>0,'response' => 'error','action'=> 'add', 'message' => 'Order details not available'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function cancelOrder(Request $request)
@@ -462,7 +440,7 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         $order = Order::whereOrderNumber($request->input('order_number'))->first();
@@ -484,7 +462,7 @@ class OrderController extends BaseController
                 'action' => 'rejected',
                 'message' => "You are not allowed to cancel this order."
             ];
-            return response()->json($result, 200);
+            return response()->json($result);
         } else {
             $currentTime = Carbon::now();
             $orderTime = Carbon::parse($order->created_at);
@@ -495,7 +473,7 @@ class OrderController extends BaseController
                     'action' => 'rejected',
                     'message' => "You are not allowed to cancel this order."
                 ];
-                return response()->json($result, 200);
+                return response()->json($result);
             }
         }
 
@@ -517,10 +495,10 @@ class OrderController extends BaseController
                     'message' => 'Something went wrong'
                 ];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function returnOrderItems(Request $request)
@@ -534,12 +512,12 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         DB::beginTransaction();
         try {
-            foreach ($request->order_items as $order_item) {
+            foreach ($request->input('order_items') as $order_item) {
                 $orderItem = OrderItem::find($order_item['id'])->load(['order', 'product']);
                 $order = $orderItem->order;
                 //Check if condition allowed or not
@@ -550,7 +528,7 @@ class OrderController extends BaseController
                         'action' => 'rejected',
                         'message' => "Return not allowed for this product." . ($orderItem->product->name ?? '')
                     ];
-                    return response()->json($result, 200);
+                    return response()->json($result);
                 }
 
                 if ($order_item['quantity'] > $orderItem->quantity) {
@@ -560,7 +538,7 @@ class OrderController extends BaseController
                         'action' => 'rejected',
                         'message' => "Return quantity must not be greater than ordered quantity."
                     ];
-                    return response()->json($result, 200);
+                    return response()->json($result);
                 }
 
                 OrderReturnRequest::create([
@@ -589,11 +567,11 @@ class OrderController extends BaseController
 
             DB::commit();
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getOrderGroupDetails(Request $request)
@@ -604,7 +582,7 @@ class OrderController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
 
@@ -615,7 +593,7 @@ class OrderController extends BaseController
                 'action' => 'rejected',
                 'message' => "This order does not belong to you."
             ];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         try {
@@ -668,7 +646,7 @@ class OrderController extends BaseController
                     'message' => 'Order details not available'
                 ];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);

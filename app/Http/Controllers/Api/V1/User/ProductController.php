@@ -15,6 +15,7 @@ use App\Models\ProductSubCategory;
 use App\Models\Review;
 use App\Traits\ProductTrait;
 use App\Traits\ReviewTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,16 +27,17 @@ class ProductController extends BaseController
     {
         try {
             $products = Product::latest()
+                ->inRandomOrder()
                ->where('approval_status', 'APPROVED')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
-                ->limit($request->input('limit',100))->get();
+                ->limit($request->input('limit',500))->get();
             if (count($products)) {
                 $data['list'] = ProductResource::collection($products);
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Product data fetched successfully'];
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -78,7 +80,7 @@ class ProductController extends BaseController
                 {
                     $result = ['status' => 0, 'response' => 'failed', 'action' => 'retry', 'message' => 'No data found'];
                 }
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
@@ -94,7 +96,7 @@ class ProductController extends BaseController
     public function getTopRatedProducts(Request $request)
     {
         try {
-            $products = Product::limit($request->input('limit',100))
+            $products = Product::inRandomOrder()->limit($request->input('limit',1000))
                 ->where('approval_status', 'APPROVED')
                 ->withCount('reviews')->orderBy('reviews_count', 'desc')
                 ->with('productCategory', 'productSubCategory', 'brand', 'vendor', 'productOptions')
@@ -105,7 +107,7 @@ class ProductController extends BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -134,7 +136,7 @@ class ProductController extends BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -169,7 +171,8 @@ class ProductController extends BaseController
                         'id'=>$product?->vendor_id,
                         'name'=>$product?->vendor?->name,
                         'product_count'=>$product?->vendor?->products?->count(),
-                        'minimum_order_price'=>$product?->vendor?->vendor_profile?->mop,
+                        'minimum_order_price'=>$product?->vendor?->profile?->mop,
+                        'mop'=>$product?->vendor?->profile?->mop,
                     ],
                     'name' => $product->name,
                     'sku' => $product->sku,
@@ -226,7 +229,7 @@ class ProductController extends BaseController
                     'data' => $data,
                     'message' => 'Product fetched successfully.'
                 ];
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
@@ -247,7 +250,7 @@ class ProductController extends BaseController
                 $query->where('product_category_id', $request->input('category_id'));
             }
 
-            $subCategories = $query->with('category')->paginate(10);
+            $subCategories = $query->with('category')->paginate(ProductSubCategory::count());
             if (count($subCategories)) {
                 $subCategoryList = $subCategories->toArray();
                 $data['current_page'] = $subCategoryList['current_page'];
@@ -261,7 +264,7 @@ class ProductController extends BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No sub category found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -326,7 +329,7 @@ class ProductController extends BaseController
                 $query->where('price','<=', $request->input('priceRange.min_price'));
             }
               $query->where('approval_status', 'APPROVED');
-            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->paginate(200);
+            $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->inRandomOrder()->paginate(1000);
             if (count($products)) {
                 $productList = $products->toArray();
                 $data['current_page'] = $productList['current_page'];
@@ -339,7 +342,7 @@ class ProductController extends BaseController
             } else {
                 $result = ['status'=>0,'response'=>'error','action'=>'retry','message'=>'No product found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -348,7 +351,7 @@ class ProductController extends BaseController
     public function getTopSellingProducts(Request $request)
     {
         try {
-            $products = Product::limit(10)
+            $products = Product::limit(500)
             ->where('approval_status', 'APPROVED')
                 ->orderByDesc('order_count')
                 ->with('productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand')
@@ -360,7 +363,7 @@ class ProductController extends BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No product found'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
@@ -380,7 +383,7 @@ class ProductController extends BaseController
                 });
             }
 
-            $brands = $query->paginate(10);
+            $brands = $query->paginate(Brand::count());
             if (count($brands)) {
                 $brandList = $brands->toArray();
                 $data['current_page'] = $brandList['current_page'];
@@ -395,7 +398,7 @@ class ProductController extends BaseController
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'No brand found'];
             }
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);
