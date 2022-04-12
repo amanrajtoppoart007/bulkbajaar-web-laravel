@@ -109,4 +109,9 @@ class HomeController extends Controller
         $siteSetting = SiteSetting::first();
         return view("guest.company.webViewPrivacyPolicy",compact("contents", 'siteSetting'));
     }
+
+    public function faq()
+    {
+        return view("guest.company.faq");
+    }
 }

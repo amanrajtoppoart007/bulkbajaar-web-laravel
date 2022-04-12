@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="card border-0 shadow">
 
-                    <form class="form-group" id="franchisee_registration_form" method="POST">
+                    <form class="form-group" action="{{route('vendor.register.store')}}" id="franchisee_registration_form" method="POST">
                     @csrf
                     <!-- Card Header -->
                         <div class="card-header bg-white" align="center">

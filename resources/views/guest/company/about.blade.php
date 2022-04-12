@@ -1,27 +1,24 @@
 @extends("guest.layout.app")
 @section("content")
-    <!-- ======= About Us Section ======= -->
-    <main data-aos="fade-in">
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
 
-        <!-- Section First (Start) -->
-        <section class="bg-light" id="about-section">
-            <br>
-            <div class="container">
-                <!-- Introduction Title (Start) -->
-                <div class="text-left page-title">
-                    <h1 class="font-weight-bold display-4 text-theme-1 ml-3">About</h1>
-                </div>
-                <!-- Introduction Title (End) -->
-                <div class="content">
-                    @foreach($contents as $content)
-                        {!! $content->page_text !!}
-                    @endforeach
-                    {!! $siteSetting->about_us ?? '' !!}
+                    <p>Bulkbajaar is a trusted b2b platform for all the retailers across India to purchase directly from
+                        the manufacturer or the reliable source.</p>
+                    <p>
+                    Bulkbajar is a b2b company derived from Innovation & technology, which follows a process driven by
+                    supply chain, targets to cater & partner with millions of retailers & manufacturers, By offering
+                    them a secured platform to become a part of the chain & making it the huge, quick & easiest channel
+                    for their products & services. We intend to design our structure that can help to solve the core
+                    trade problems across india to small, medium & large business scale.</p>
+                    <p>
+                    We aim to build the largest b2b marketplace for all the sectors & markets providing the retailers
+                    across india to purchase directly from the manufacturer or the reliable source.
+                    </p>
                 </div>
             </div>
-            <br>
-        </section>
-        <!-- Section First (End) -->
+        </div>
     </main>
-    <!-- End About Us Section -->
 @endsection

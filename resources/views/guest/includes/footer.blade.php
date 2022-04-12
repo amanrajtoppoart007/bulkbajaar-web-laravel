@@ -1,81 +1,70 @@
-<!-- Footer (Start) -->
-<footer class="bg-white rounded-0" id="footer">
-    <br>
-    <div class="container card-body">
-        <div class="row">
-
-            <div class="col-lg-3 col-md-6 col-sm-12">
-{{--                <img src="{{asset('assets/assets/images/logo-1.png')}}" alt="logo" class="logo img-fluid ml-n2">--}}
-                <p class="text-success font-weight-bolder">
-                    Company Address
-                <a href="mailto:" class="card-link font-weight-bolder text-theme-1">demo@company.com</a>
-                    <br>
-                <a href="tel:" class="card-link font-weight-bolder text-theme-1">+91 1234567890</a>
-                <br>
-                <br>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5 class="text-theme-1 font-weight-bolder">Solutions</h5>
-{{--                <ul>--}}
-{{--                    <li class="d-block my-4"><a href="{{route('solutions','farmer')}}"--}}
-{{--                                                class="card-link text-success font-weight-bolder"><img--}}
-{{--                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Solution--}}
-{{--                            For Farmers</a></li>--}}
-
-{{--                    <li class="d-block my-4"><a href="{{route('solutions','small-business')}}"--}}
-{{--                                                class="card-link text-success font-weight-bolder"><img--}}
-{{--                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Solution--}}
-{{--                            For Business</a></li>--}}
-
-{{--                    <li class="d-block my-4"><a href="{{route('solutions','institutions')}}"--}}
-{{--                                                class="card-link text-success font-weight-bolder"><img--}}
-{{--                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Solution--}}
-{{--                            For Institutions</a></li>--}}
-{{--                </ul>--}}
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5 class="text-theme-1 font-weight-bolder">Company</h5>
-                <ul>
-                    <li class="d-block my-4"><a href="{{route('contact')}}"
-                                                class="card-link text-success font-weight-bolder"><img
-                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Contact
-                            Us</a></li>
-
-                    <li class="d-block my-4"><a href="{{route('terms')}}"
-                                                class="card-link text-success font-weight-bolder"><img
-                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Terms
-                            of service</a></li>
-
-                    <li class="d-block my-4"><a href="{{route('privacy')}}"
-                                                class="card-link text-success font-weight-bolder"><img
-                                src="{{ asset('assets/assets/icons/right-arrow.svg') }}" alt="right-arrow" class="mr-2">Privacy
-                            policy</a></li>
-                </ul>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5 class="text-theme-1 font-weight-bolder">Our Social Networks</h5>
-                <p class="text-theme-1 font-weight-bolder">You are welcome to join us in our social media pages</p>
-                <div>
-                    <a href="https://www.facebook.com" class="btn btn-theme-1 pb-2 rounded"><img
-                            src="{{ asset('assets/assets/icons/facebook.svg') }}" alt="facebook"></a>
-                    <a href="https://www.youtube.com"
-                       class="btn btn-theme-1 pb-2 rounded"><img src="{{ asset('assets/assets/icons/youtube.svg') }}"
-                                                                 alt="youtube"></a>
-                    <a href="#" class="btn btn-theme-1 pb-2 rounded"><img
-                            src="{{ asset('assets/assets/icons/twitter.svg') }}" alt="twitter"></a>
+    <footer class="foi-footer text-white">
+        <div class="container">
+            <div class="row footer-content">
+                <div class="col-xl-6 col-lg-7 col-md-8">
+                    <h2 class="mb-0">Do you want to know more or just have a question? write to us.</h2>
+                </div>
+                <div class="col-md-4 col-lg-5 col-xl-6 py-3 py-md-0 d-md-flex align-items-center justify-content-end">
+                    <a href="contact.html" class="btn btn-danger btn-lg contact-form">Contact form</a>
                 </div>
             </div>
+            <div class="row footer-widget-area">
+                <div class="col-md-3">
+                    <div class="py-3">
+                        <img class="footer-logo" src="{{asset('logo/logo.png')}}" alt="FOI">
+                    </div>
+                    <p class="font-os font-weight-semibold mb3">Get our mobile app</p>
+                    <div>
+                        <button class="btn btn-app-download mr-2"><img src="ui/assets/images/ios.svg" alt="App store"></button>
+                        <button class="btn btn-app-download"><img src="ui/assets/images/android.svg" alt="play store"></button>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <nav>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="{{route('vendor.login')}}" class="nav-link">Seller Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('vendor.register')}}" class="nav-link">Seller Registration</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <nav>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#!" class="nav-link">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('terms')}}" class="nav-link">Terms & Conditions</a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a href="{{route('privacy')}}" class="nav-link">Privacy Policy</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <p>
+                        Info@bulkbajaar.com
+                    </p>
+                    <p>
+                        +91 8368336751
+                    </p>
+                    <p>
+                        &copy; {{now()->format('Y')}}<a href="{{URL::to('/')}}" target="_blank" rel="" class="text-reset">{{trans('panel.site_title')}}</a>.
+                    </p>
+                    <p>All rights reserved.</p>
+                    <nav class="social-menu">
+                        <a target="_blank" href="https://facebook.com/bulkbajaar"><img src="{{asset('ui/assets/images/facebook.svg')}}" alt="facebook"></a>
+                        <a target="_blank" href="https://instagram.com/bulkbajaar"><img src="{{asset('ui/assets/images/instagram.svg')}}" alt="instagram"></a>
+                        <a target="_blank" href="https://twitter.com/bulkbajaar"><img src="{{asset('ui/assets/images/twitter.svg')}}" alt="twitter"></a>
+                    </nav>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="container-fluid card-body d-lg-flex d-md-block d-sm-block justify-content-around bg-theme-1">
-        <h6 class="text-white d-inline mt-2">2021 © Copyright <b>{{ env('APP_NAME', 'Bulk Bajaar') }} </b>. All Rights Reserved</h6>
-        <br>
-        <h6 class="text-white d-inline mt-2"><a href="https://www.softwarefuels.com/" class="card-link text-white">Designed
-                by SOFTWAREFUELS CONSULTANCY SERVICES PRIVATE LIMITED</a></h6>
-    </div>
-</footer>
-<!-- Footer (End) -->
+    </footer>

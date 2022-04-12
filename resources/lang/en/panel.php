@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Bulk Bajaar',
+    'site_title' => 'BulkBajaar',
 ];

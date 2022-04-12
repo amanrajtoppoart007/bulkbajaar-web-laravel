@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VendorUploadDocumentRequest;
 use App\Models\Block;
 use App\Models\District;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\VendorProfile;
 use App\Models\Pincode;
@@ -24,7 +26,11 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view("vendor.dashboard");
+        $data['product_count'] = Product::where(['vendor_id'=>auth('vendor')->id()])->count();
+        $data['pending_orders'] = Order::where(['vendor_id'=>auth('vendor')->id(),'status'=>'PENDING'])->count();
+        $data['received_orders'] = Order::where(['vendor_id'=>auth('vendor')->id(),'status'=>'CONFIRMED'])->count();
+        $data['total_orders'] = Order::where(['vendor_id'=>auth('vendor')->id()])->count();
+        return view("vendor.dashboard",$data);
     }
 
     public function showDocumentsUploadForm()

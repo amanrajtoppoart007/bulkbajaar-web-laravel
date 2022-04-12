@@ -96,9 +96,7 @@
                                     </div>
                                     <h4 class="font-weight-bolder mt-2 text-theme-1">Location</h4>
                                     <p class="text-secondary">
-                                        Creatrix Health Private Limited,
-                                        2nd Floor, Satish Tower, Above Kamla Medicose,
-                                        Near Gharhi Chowk, Supela, Bhilai Nagar, 490023
+
                                     </p>
                                 </div>
                             </div>
@@ -106,7 +104,7 @@
                         <!-- Location Card (End) -->
 
                         <!-- Mail Card (Start) -->
-                        <a href="mailto: info@krishakvikas.com" class="card-link">
+                        <a href="mailto:info@bulkbajaar.com" class="card-link">
                             <div class="card border-0 shadow contact-card" align="center">
                                 <div class="card-body">
                                     <div class="contact-img-div">
@@ -115,7 +113,7 @@
                                     </div>
                                     <h4 class="font-weight-bolder mt-2 text-theme-1">E-Mail</h4>
                                     <p class="text-secondary">
-                                        info@krishakvikas.com
+                                        info@bulkbajaar.com
                                     </p>
                                 </div>
                             </div>
@@ -123,7 +121,7 @@
                         <!-- Mail Card (End) -->
 
                         <!-- Phone Card (Start) -->
-                        <a href="tel: +918815752022" class="card-link">
+                        <a href="tel:+918368336751" class="card-link">
                             <div class="card border-0 shadow contact-card" align="center">
                                 <div class="card-body">
                                     <div class="contact-img-div">
@@ -132,7 +130,7 @@
                                     </div>
                                     <h4 class="font-weight-bolder mt-2 text-theme-1">Phone</h4>
                                     <p class="text-secondary">
-                                        +918815752022
+                                        +918368336751
                                     </p>
                                 </div>
                             </div>

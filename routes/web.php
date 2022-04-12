@@ -1,5 +1,10 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('test/sms/api','TestController');
+Route::get('faq',[App\Http\Controllers\Guest\HomeController::class,'faq'])->name('faq');
 Route::post('submit/enquiry/form','Guest\EnquiryController@store')->name('store.guest.enquiry');
 Route::get('status/view',[\App\Http\Controllers\Guest\HomeController::class,'vendorApproval'])->name('vendor.status.pending');
 
@@ -58,8 +63,6 @@ Auth::routes();
 
 
 Route::prefix('registration')->group(function () {
-     Route::get('/farmer', 'Auth\RegisterController@farmer')->name("farmer.register");
-     Route::post('/farmer/store', 'Auth\RegisterController@storeFarmer')->name("store.farmer.register");
      Route::post('upload/media', 'Auth\RegisterController@storeMedia')->name('registration.storeMedia');
      Route::get('/message/{user}/{entity_id}/{token}', 'Auth\RegisterController@message')->name("registration.message");
 

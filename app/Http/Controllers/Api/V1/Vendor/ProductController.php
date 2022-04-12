@@ -7,24 +7,17 @@ use App\Library\Api\V1\Vendor\ProductList;
 use App\Models\Product;
 use App\Models\ProductOption;
 use App\Traits\SlugGeneratorTrait;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class ProductController extends Controller
 {
     use SlugGeneratorTrait;
 
-    public function storeProduct(Request $request)
+    public function storeProduct(Request $request): JsonResponse
     {
-//        if (!auth()->user()->approved){
-//            $result = [
-//                'status' => 0,
-//                'response' => 'error',
-//                'action' => 'wait',
-//                'message' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-//            ];
-//            return response()->json($result, 200);
-//        }
         $validator = Validator::make($request->json()->all(), [
             'name' => 'required|string',
             'price' => 'required|numeric',
@@ -55,18 +48,18 @@ class ProductController extends Controller
             try {
                 $product = Product::create([
                     'vendor_id' => auth()->id(),
-                    'name' => $request->name,
-                    'slug' => $this->generateSlug(Product::class, $request->name),
-                    'description' => $request->description,
-                    'price' => $request->price,
-                    'mop' => $request->mop,
-                    'moq' => $request->moq,
-                    'discount' => $request->discount,
-                    'product_category_id' => $request->category_id,
-                    'product_sub_category_id' => $request->sub_category_id,
-                    'dispatch_time' => $request->dispatch_time,
-                    'rrp' => $request->rrp,
-                    'quantity' => $request->quantity,
+                    'name' => $request->input('name'),
+                    'slug' => $this->generateSlug(Product::class, $request->input('name')),
+                    'description' => $request->input('description'),
+                    'price' => $request->input('price'),
+                    'mop' => $request->input('mop'),
+                    'moq' => $request->input('moq'),
+                    'discount' => $request->input('discount'),
+                    'product_category_id' => $request->input('category_id'),
+                    'product_sub_category_id' => $request->input('sub_category_id'),
+                    'dispatch_time' => $request->input('dispatch_time'),
+                    'rrp' => $request->input('rrp'),
+                    'quantity' => $request->input('quantity'),
                 ]);
 
                 foreach ($request->options ?? [] as $option){
@@ -85,25 +78,17 @@ class ProductController extends Controller
                     'message' => 'Product added successfully.'
                 ];
                 //Send notification to admin for approval
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
-    public function updateProduct(Request $request)
+    public function updateProduct(Request $request): JsonResponse
     {
-//        if (!auth()->user()->approved){
-//            $result = [
-//                'status' => 0,
-//                'response' => 'error',
-//                'action' => 'wait',
-//                'message' => 'Your account is currently under review. You will be notified in 24-48 hours.'
-//            ];
-//            return response()->json($result, 200);
-//        }
+
         $validator = Validator::make($request->json()->all(), [
             'product_id' => 'required|exists:products,id',
             'name' => 'required|string',
@@ -131,7 +116,7 @@ class ProductController extends Controller
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $product = Product::find($request->product_id);
+            $product = Product::find($request->input('product_id'));
             if ($product->vendor_id != auth()->id()){
                 $result = [
                     'status' => 0,
@@ -142,17 +127,17 @@ class ProductController extends Controller
             }else{
                 try {
                     $product->update([
-                        'name' => $request->name,
-                        'description' => $request->description,
-                        'price' => $request->price,
-                        'mop' => $request->mop,
-                        'moq' => $request->moq,
-                        'discount' => $request->discount,
-                        'product_category_id' => $request->category_id,
-                        'product_sub_category_id' => $request->sub_category_id,
-                        'dispatch_time' => $request->dispatch_time,
-                        'rrp' => $request->rrp,
-                        'quantity' => $request->quantity,
+                        'name' => $request->input('name'),
+                        'description' => $request->input('description'),
+                        'price' => $request->input('price'),
+                        'mop' => $request->input('mop'),
+                        'moq' => $request->input('moq'),
+                        'discount' => $request->input('discount'),
+                        'product_category_id' => $request->input('category_id'),
+                        'product_sub_category_id' => $request->input('sub_category_id'),
+                        'dispatch_time' => $request->input('dispatch_time'),
+                        'rrp' => $request->input('rrp'),
+                        'quantity' => $request->input('quantity'),
                         'approval_status' => 'PENDING',
                     ]);
                     $product->productOptions()->delete();
@@ -173,16 +158,16 @@ class ProductController extends Controller
                         'message' => 'Product updated successfully.'
                     ];
                     //Send notification to admin for approval
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
                 }
             }
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
-    public function getProduct(Request $request)
+    public function getProduct(Request $request): JsonResponse
     {
         $validator = Validator::make($request->json()->all(), [
             'product_id' => 'required|exists:products,id',
@@ -196,7 +181,7 @@ class ProductController extends Controller
                 'message' => $validator->errors()->all()
             ];
         } else {
-            $product = Product::find($request->product_id);
+            $product = Product::find($request->input('product_id'));
             if ($product->vendor_id != auth()->id()){
                 $result = [
                     'status' => 0,
@@ -214,16 +199,16 @@ class ProductController extends Controller
                         'data' => $product,
                         'message' => 'Product fetched successfully.'
                     ];
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
                 }
             }
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
-    public function getProducts(Request $request)
+    public function getProducts(Request $request): JsonResponse
     {
         try {
             $query = Product::query();
@@ -266,9 +251,9 @@ class ProductController extends Controller
                     'message' => 'No product found'
                 ];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 }

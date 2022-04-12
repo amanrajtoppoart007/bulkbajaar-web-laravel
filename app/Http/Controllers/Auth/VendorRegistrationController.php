@@ -32,7 +32,7 @@ class VendorRegistrationController extends Controller
         $validated = $request->validated();
         try {
             $validated['password'] = Hash::make($request->input('password'));
-            $validated['name'] = $request->company_name;
+            $validated['name'] = $request->input('company_name');
             $validated['verified'] = 1;
             $vendor = Vendor::create($validated);
 
@@ -50,7 +50,7 @@ class VendorRegistrationController extends Controller
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 
