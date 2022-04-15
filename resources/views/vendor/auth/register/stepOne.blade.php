@@ -1,30 +1,34 @@
 @extends("guest.layout.app")
-@section("styles")
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>
-@endsection
 @section("content")
     <!-- Main (Start) -->
     <main data-aos="fade-in">
-
         <!-- Section First (Start) -->
         <section class="bg-light" id="registration-form-section">
             <br>
             <div class="container">
                 <div class="card border-0 shadow">
 
-                    <form class="form-group" action="{{route('vendor.register.store')}}" id="franchisee_registration_form" method="POST">
+                    <form class="form-group" action="{{route('vendor.register.store')}}" id="seller_registration_form" method="POST">
                     @csrf
                     <!-- Card Header -->
-                        <div class="card-header bg-white" align="center">
-                            <h4 class="font-weight-bolder text-theme-1 mt-2">{{ trans('global.fill_the_registration_details') }}</h4>
+                        <div class="card-header bg-white text-center">
+                            <h4 class="fw-bolder text-theme-1 mt-2 ">{{ trans('global.fill_the_registration_details') }}</h4>
                         </div>
 
                         <!-- Card Body (Start) -->
                         <div class="card-body">
 
                             <!-- Help Center Details (Start) -->
-                            <h5 class="font-weight-bold text-theme-1">{{ trans('global.kv_pro_franchisee_user_details') }}</h5>
-                            <div class="card">
+
+                            <div class="row justify-content-between w-100">
+                                <div class="col md-2">
+                                    <h6 class="fw-bold">Seller Registration Detail</h6>
+                                </div>
+                                <div class="col md-2 text-right">
+                                    <h6 class="fw-bold">Step 1/3</h6>
+                                </div>
+                            </div>
+                            <div class="card border-0">
                                 <div class="card-body pt-0">
                                     <div class="row">
 
@@ -45,7 +49,7 @@
                                                 <label class="font-weight-bolder text-dark"
                                                        for="mobile">{{ trans('cruds.helpCenter.fields.mobile') }}</label><label
                                                     class="text-danger ml-2 font-weight-bolder">*</label>
-                                                <input type="number" name="mobile" id="mobile"
+                                                <input type="number" minlength="10" maxlength="10" name="mobile" id="mobile"
                                                        class="input-group-text bg-transparent w-100 text-left" required>
                                                 <div class="invalid-feedback"></div>
 
@@ -81,17 +85,20 @@
                         <!-- Card Body (End) -->
 
                         <!-- Card Footer -->
-                        <div class="card-footer bg-white" align="center">
+                        <div class="card-footer bg-white text-center">
                             <div class="form-check-inline">
                                 <input type="checkbox" name="terms" class="custom-checkbox mt-n3 mr-2" required>
-                                <p class="description-1">By Registering with us,you agree with our <a href="#"
-                                                                                                      class="card-link">terms
-                                        & conditions </a>and <a href="#" class="card-link">privacy policy</a></p>
+                                <p class="fw-bold text-secondary">By Registering with us,you agree with our
+                                    <a href="{{route('terms')}}" class="card-link link-text-primary">terms & conditions</a>
+                                    <span>and</span>
+                                    <a href="{{route('privacy')}}" class="card-link link-text-primary">privacy policy</a>
+                                </p>
                             </div>
                             <br>
-                            <button id="submit-button" type="submit" class="btn btn-theme-1 rounded px-4">Submit<img
-                                    src="{{ asset('assets/assets/icons/circle-arrow.svg') }}" alt="submit"
-                                    class="btn-icon"></button>
+                            <button id="submit-button" type="submit" class="btn btn-primary text-white fw-bold">
+                                <span>Next Step</span>
+                                <span class="mx-1"><img src="{{ asset('assets/assets/icons/circle-arrow.svg') }}" alt="submit" class="btn-icon"/></span>
+                            </button>
                         </div>
 
                     </form>
@@ -111,10 +118,18 @@
     <script>
         $(document).ready(function () {
 
-            $("#franchisee_registration_form").on("submit", function (e) {
+              $("#mobile").on("keydown",function(e){
+
+                if(($(this).val()).length>=10)
+                {
+                    e.preventDefault();
+                }
+            });
+
+            $("#seller_registration_form").on("submit", function (e) {
                 e.preventDefault();
                 $('#submit-button').prop('disabled', true);
-                let formData = new FormData(document.getElementById('franchisee_registration_form'));
+                let formData = new FormData(document.getElementById('seller_registration_form'));
 
                 $.ajax({
                     url: "{{route('vendor.register.store')}}",
@@ -135,7 +150,7 @@
                                 timeOut: 2000,
                                 positionClass: 'toast-top-left'
                             });
-                            $("#franchisee_registration_form")[0].reset();
+                            $("#seller_registration_form")[0].reset();
                             window.open(res.url, '_self');
                         } else {
                             // $.notify(res.message, 'white');
@@ -147,14 +162,15 @@
                         }
                         $('#submit-button').prop('disabled', false);
                     },
-                    error: function (jqXhr, json, errorThrown) {
+                    error: function (jqXhr) {
                         $('#submit-button').prop('disabled', false);
                         let data = jqXhr.responseJSON;
 
                         if (data.errors) {
                             $.each(data.errors, function (index, item) {
-                                $(`#${index}`).addClass("is-invalid").tooltip({title: item[0]});
-                                $(`#${index}`).next('.invalid-feedback').text(item[0]);
+                                const errorElement =$(`#${index}`) ;
+                                errorElement.addClass("is-invalid").tooltip({title: item[0]});
+                                errorElement.next('.invalid-feedback').text(item[0]);
                                 // $.notify(item[0], 'white');
                                 toastr.error(item[0], '', {
                                     progressBar: true,

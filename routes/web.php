@@ -66,8 +66,8 @@ Route::prefix('registration')->group(function () {
      Route::post('upload/media', 'Auth\RegisterController@storeMedia')->name('registration.storeMedia');
      Route::get('/message/{user}/{entity_id}/{token}', 'Auth\RegisterController@message')->name("registration.message");
 
-     Route::get('/vendor', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'showRegistrationFormStepOne'])->name("vendor.register");
-     Route::post('/vendor/store', [\App\Http\Controllers\Auth\VendorRegistrationController::class, 'store'])->name("vendor.register.store");
+     Route::get('/vendor', [App\Http\Controllers\Auth\VendorRegistrationController::class, 'showRegistrationFormStepOne'])->name("vendor.register");
+     Route::post('/vendor/store', [App\Http\Controllers\Auth\VendorRegistrationController::class, 'store'])->name("vendor.register.store");
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {

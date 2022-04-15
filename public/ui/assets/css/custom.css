@@ -56,3 +56,8 @@
     border: 3px solid #294B70;
 }
 
+.link-text-primary {
+    color: #294B70 !important;
+    font-weight: bold;
+}
+

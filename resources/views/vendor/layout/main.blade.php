@@ -25,6 +25,7 @@
           rel="stylesheet"/>
     <link href="{{ asset('plugins/toast/jquery.toast.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/vendor.css') }}" rel="stylesheet"/>
     @yield('styles')
 </head>
 

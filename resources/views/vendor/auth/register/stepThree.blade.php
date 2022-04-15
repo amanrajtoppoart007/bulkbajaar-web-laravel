@@ -18,23 +18,13 @@
                           enctype="multipart/form-data">
                     @csrf
                     <!-- Card Header -->
-                        <div class="card-header bg-white" align="center">
-                            <h4 class="font-weight-bolder text-theme-1 mt-2">{{ trans('global.fill_the_registration_details') }}</h4>
+                        <div class="card-header bg-white">
+                            <h4 class="font-weight-bolder text-theme-1 mt-2">Enter your business details</h4>
                         </div>
 
                         <!-- Card Body (Start) -->
                         <div class="card-body">
-
-                            <!-- Business Details (Start) -->
-                            <div class="row mt-3">
-
-                                <!-- Representative Detail (Start) -->
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Documents</h6>
-                                            <hr class="w-50 mx-auto">
-                                            <div class="row">
+                            <div class="row">
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark" for="pan_number">PAN Number</label><label
@@ -75,31 +65,22 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <br>
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Bank Details</h6>
-                                            <hr class="w-50 mx-auto">
-
                                             <div class="row">
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
                                                                for="bank_name">Bank Name</label>
-                                                        <label
-                                                            class="text-danger ml-2 font-weight-bolder">*</label>
                                                         <input type="text" name="bank_name" id="bank_name"
-                                                               class="input-group-text bg-transparent w-100 text-left" required>
+                                                               class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mt-3">
-                                                        <label class="font-weight-bolder text-dark"
-                                                               for="account_number">Account Number</label><label
-                                                            class="text-danger ml-2 font-weight-bolder">*</label>
+                                                        <label class="font-weight-bolder text-dark" for="account_number">Account Number</label>
                                                         <input type="text" name="account_number" id="account_number"
-                                                               class="input-group-text bg-transparent w-100 text-left" required>
+                                                               class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
 
                                                     </div>
@@ -107,38 +88,30 @@
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="account_holder_name">Account Holder Name</label><label
-                                                            class="text-danger ml-2 font-weight-bolder">*</label>
+                                                               for="account_holder_name">Account Holder Name</label>
                                                         <input type="text" name="account_holder_name" id="account_holder_name"
-                                                               class="input-group-text bg-transparent w-100 text-left" required>
+                                                               class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="ifsc_code">IFSC Code</label><label
-                                                            class="text-danger ml-2 font-weight-bolder">*</label>
+                                                               for="ifsc_code">IFSC Code</label>
                                                         <input type="text" name="ifsc_code" id="ifsc_code"
-                                                               class="input-group-text bg-transparent w-100 text-left" required>
+                                                               class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Representative Detail (End) -->
-                            </div>
                         </div>
                         <!-- Card Body (End) -->
 
                         <!-- Card Footer -->
                         <div class="card-footer bg-white" align="center">
-                            <button id="submit-button" type="submit" class="btn btn-theme-1 rounded px-4">Submit<img
-                                    src="{{ asset('assets/assets/icons/circle-arrow.svg') }}" alt="submit"
-                                    class="btn-icon"></button>
+                            <button id="submit-button" type="submit" class="btn btn-primary text-white fw-bolder">
+                                <span>Submit</span>
+                            </button>
                         </div>
 
                     </form>

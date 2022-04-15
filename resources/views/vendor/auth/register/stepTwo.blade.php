@@ -1,7 +1,4 @@
 @extends("guest.layout.app")
-@section("styles")
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet"/>
-@endsection
 @section("content")
     <!-- Main (Start) -->
     <main data-aos="fade-in">
@@ -10,31 +7,25 @@
         <section class="bg-light" id="registration-form-section">
             <br>
             <div class="container">
-
-
                 <div class="card border-0 shadow">
-
-                    <form class="form-group" id="franchisee_registration_form" method="POST"
+                    <form class="form-group" id="seller_registration_form" method="POST"
                           enctype="multipart/form-data">
                     @csrf
                     <!-- Card Header -->
-                        <div class="card-header bg-white" align="center">
-                            <h4 class="font-weight-bolder text-theme-1 mt-2">{{ trans('global.fill_the_registration_details') }}</h4>
+                        <div class="card-header bg-white">
+                            <h5 class="font-weight-bolder text-theme-1 mt-2">{{ trans('global.enter_your_business_details') }}</h5>
                         </div>
 
                         <!-- Card Body (Start) -->
                         <div class="card-body">
 
-                            <!-- Business Details (Start) -->
-                            <h5 class="font-weight-bold text-theme-1">{{ trans('global.enter_your_business_details') }}</h5>
-                            <div class="row mt-3">
+                            <div class="row">
 
-                                <!-- Orginazation Detail (Start) -->
+                                <!-- Organization Detail (Start) -->
                                 <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Company Details</h6>
-                                            <hr class="w-50 mx-auto">
+                                            <h6 class="text-theme-1 font-weight-bolder">Company Details</h6>
                                             <div class="row">
                                                 <div class="col-4">
                                                     <div class="mt-3">
@@ -49,10 +40,10 @@
                                                 <div class="col-4">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="role">User Type</label><label
+                                                               for="user_type">User Type</label><label
                                                             class="text-danger ml-2 font-weight-bolder">*</label>
                                                         <select class="custom-select w-100" name="user_type" id="user_type" required>
-                                                            <option value="" selected disabled>Select User Type</option>
+                                                            <option value="">Select User Type</option>
                                                             @foreach(App\Models\Vendor::USER_TYPE_SELECT as $key => $label)
                                                                 <option
                                                                     value="{{ $key }}">{{ $label }}</option>
@@ -77,11 +68,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Orginazation Detail (End) -->
+                                <!-- Organization Detail (End) -->
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Billing Address</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder">Billing Address</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <label class="font-weight-bolder text-dark"
@@ -131,7 +122,7 @@
                                                        for="billing_pincode">Pincode</label>
                                                 <label
                                                     class="text-danger ml-2 font-weight-bolder">*</label>
-                                                <input type="text" name="billing_pincode"
+                                                <input type="number" name="billing_pincode"
                                                        class="input-group-text bg-transparent w-100 text-left" id="billing_pincode" required>
                                                 <div class="invalid-feedback"></div>
                                             </div>
@@ -144,7 +135,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="text-theme-1 font-weight-bolder" align="center">Pickup Address</h6>
+                                            <h6 class="text-theme-1 font-weight-bolder">Pickup Address</h6>
                                             <hr class="w-50 mx-auto">
                                             <div class="mt-3">
                                                 <div class="form-check">
@@ -200,7 +191,8 @@
                                             <div class="mt-3">
                                                 <label class="font-weight-bolder text-dark"
                                                        for="pickup_pincode">Pincode</label>
-                                                <input type="text" name="pickup_pincode"
+                                                <input type="number" name="pickup_pincode"
+                                                       onkeyup=""
                                                        class="input-group-text bg-transparent w-100 text-left" id="pickup_pincode">
                                                 <div class="invalid-feedback"></div>
                                             </div>
@@ -214,10 +206,11 @@
                         <!-- Card Body (End) -->
 
                         <!-- Card Footer -->
-                        <div class="card-footer bg-white" align="center">
-                            <button id="submit-button" type="submit" class="btn btn-theme-1 rounded px-4">Submit<img
-                                    src="{{ asset('assets/assets/icons/circle-arrow.svg') }}" alt="submit"
-                                    class="btn-icon"></button>
+                        <div class="card-footer bg-white text-center">
+                            <button id="submit-button" type="submit" class="btn btn-primary text-white fw-bold">
+                                <span>Next Step</span>
+                                <span class="mx-1"><img src="{{ asset('assets/assets/icons/circle-arrow.svg') }}" alt="submit" class="btn-icon"></span>
+                            </button>
                         </div>
 
                     </form>
@@ -237,10 +230,18 @@
     <script>
         $(document).ready(function () {
 
-            $("#franchisee_registration_form").on("submit", function (e) {
+              $("#pickup_pincode,#billing_pincode").on("keydown",function(e){
+
+                if(($(this).val()).length>=6)
+                {
+                    e.preventDefault();
+                }
+            });
+
+            $("#seller_registration_form").on("submit", function (e) {
                 e.preventDefault();
                 $('#submit-button').prop('disabled', true);
-                let formData = new FormData(document.getElementById('franchisee_registration_form'));
+                let formData = new FormData(document.getElementById('seller_registration_form'));
 
                 $.ajax({
                     url: "{{route('vendor.register.step-two.store')}}",
@@ -261,7 +262,7 @@
                                 timeOut: 2000,
                                 positionClass: 'toast-top-left'
                             });
-                            $("#franchisee_registration_form")[0].reset();
+                            $("#seller_registration_form")[0].reset();
                             window.open(res.url, '_self');
                         } else {
                             // $.notify(res.message, 'white');
@@ -273,14 +274,15 @@
                         }
                         $('#submit-button').prop('disabled', false);
                     },
-                    error: function (jqXhr, json, errorThrown) {
+                    error: function (jqXhr) {
                         $('#submit-button').prop('disabled', false);
                         let data = jqXhr.responseJSON;
 
                         if (data.errors) {
                             $.each(data.errors, function (index, item) {
-                                $(`#${index}`).addClass("is-invalid").tooltip({title: item[0]});
-                                $(`#${index}`).next('.invalid-feedback').text(item[0]);
+                                const errorElement = $(`#${index}`);
+                                errorElement.addClass("is-invalid").tooltip({title: item[0]});
+                                errorElement.next('.invalid-feedback').text(item[0]);
                                 // $.notify(item[0], 'white');
                                 toastr.error(item[0], '', {
                                     progressBar: true,
@@ -312,7 +314,7 @@
         $(document).ready(function () {
 
             $('.pickup-address-type').change(function (){
-                if(this.value == 1){
+                if(this.value === 1){
                     $('#pickup_address, #pickup_state_id, #pickup_district_id, #pickup_pincode').prop({
                         disabled: true,
                         required: false
@@ -347,7 +349,7 @@
 
 
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus) {
                         console.log(textStatus);
                     }
                 });
@@ -375,7 +377,7 @@
 
 
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus) {
                         console.log(textStatus);
                     }
                 });

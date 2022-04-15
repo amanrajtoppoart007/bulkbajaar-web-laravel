@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Vendor;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RegistrationStepOneRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class RegistrationStepOneRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }

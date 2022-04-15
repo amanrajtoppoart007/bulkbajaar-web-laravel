@@ -5,7 +5,7 @@
                     <h2 class="mb-0">Do you want to know more or just have a question? write to us.</h2>
                 </div>
                 <div class="col-md-4 col-lg-5 col-xl-6 py-3 py-md-0 d-md-flex align-items-center justify-content-end">
-                    <a href="contact.html" class="btn btn-danger btn-lg contact-form">Contact form</a>
+                    <a href="{{route('contact')}}" class="btn btn-danger btn-lg contact-form">Contact form</a>
                 </div>
             </div>
             <div class="row footer-widget-area">
@@ -15,8 +15,8 @@
                     </div>
                     <p class="font-os font-weight-semibold mb3">Get our mobile app</p>
                     <div>
-                        <button class="btn btn-app-download mr-2"><img src="ui/assets/images/ios.svg" alt="App store"></button>
-                        <button class="btn btn-app-download"><img src="ui/assets/images/android.svg" alt="play store"></button>
+                        <a href="https://play.google.com/store/apps/details?id=com.bulkbajaar" target="_blank" class="btn btn-app-download mr-2"><img src="{{asset('ui/assets/images/ios.svg')}}" alt="App store"></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.bulkbajaar" target="_blank" class="btn btn-app-download"><img src="{{asset('ui/assets/images/android.svg')}}" alt="play store"></a>
                     </div>
                 </div>
                 <div class="col-md-3 mt-3 mt-md-0">
@@ -35,7 +35,7 @@
                     <nav>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a href="#!" class="nav-link">About Us</a>
+                                <a href="{{route('about')}}" class="nav-link">About Us</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{route('terms')}}" class="nav-link">Terms & Conditions</a>

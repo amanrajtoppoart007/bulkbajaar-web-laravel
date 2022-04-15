@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Vendor;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RegistrationStepThreeRequest extends FormRequest
 {
@@ -12,27 +11,25 @@ class RegistrationStepThreeRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
-    public function rules()
+   public function rules(): array
     {
         return [
-            'pan_number' => 'required|string',
+            'pan_number' => 'required|alpha_num',
             'pan_card' => 'required|mimes:jpg,png',
-            'gst_number' => 'required|string',
+            'gst_number' => 'required|alpha_num',
             'gst' => 'required|mimes:jpg,png',
-            'bank_name' => 'required|string',
-            'account_number' => 'required|string',
-            'account_holder_name' => 'required|string',
-            'ifsc_code' => 'required|string',
+            'bank_name' => 'nullable|alpha',
+            'account_number' => 'nullable|numeric',
+            'account_holder_name' => 'nullable|alpha',
+            'ifsc_code' => 'nullable|alpha_num',
         ];
     }
 }

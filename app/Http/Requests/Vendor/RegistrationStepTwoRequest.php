@@ -12,7 +12,7 @@ class RegistrationStepTwoRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,23 +22,23 @@ class RegistrationStepTwoRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'company_name' => 'required|string',
+            'company_name' => 'required|alpha',
             'user_type' => ['required', 'string', Rule::in(['MANUFACTURER', 'WHOLESALER'])],
-            'representative_name' => 'required|string',
+            'representative_name' => 'required|alpha',
             'billing_address' => 'required|string',
             'billing_address_two' => 'nullable|string',
-            'billing_state_id' => 'required|exists:states,id',
-            'billing_district_id' => 'required|exists:districts,id',
-            'billing_pincode' => 'required',
+            'billing_state_id' => 'required|numeric|exists:states,id',
+            'billing_district_id' => 'required|numeric|exists:districts,id',
+            'billing_pincode' => 'required|numeric|digits:6',
             'pickup_address_same' => 'required|in:0,1',
             'pickup_address' => 'required_if:pickup_address_same,0|string',
             'pickup_address_two' => 'nullable|string',
             'pickup_state_id' => 'required_if:pickup_address_same,0|exists:states,id',
             'pickup_district_id' => 'required_if:pickup_address_same,0|exists:districts,id',
-            'pickup_pincode' => 'required_if:pickup_address_same,0',
+            'pickup_pincode' => 'required_if:pickup_address_same,0|digits:6',
         ];
     }
 }

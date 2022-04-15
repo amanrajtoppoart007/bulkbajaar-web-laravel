@@ -11,17 +11,16 @@ use App\Http\Requests\VendorRegistrationRequest;
 use App\Models\State;
 use App\Models\Vendor;
 use App\Models\VendorProfile;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class VendorRegistrationController extends Controller
 {
     public function showRegistrationFormStepOne()
     {
-        if (\auth('vendor')->check()){
+        if (auth('vendor')->check()){
             return redirect()->route('vendor.dashboard');
         }
         return view('vendor.auth.register.stepOne');
@@ -40,13 +39,8 @@ class VendorRegistrationController extends Controller
             session()->put('password', request()->input('password'));
             $url = route('vendor.register.step-two');
             Auth::guard('vendor')->login($vendor);
-            $result = [
-                "status" => 1,
-                "response" => "success",
-                "url" => $url,
-                "message" => "Registration Successfully, please add address details.",
-            ];
-        } catch (\Exception $exception) {
+            $result = ["status" => 1,"response" => "success","url" => $url,"message" => "Registration Successfully, please add address details."];
+        } catch (Exception $exception) {
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
 
@@ -56,7 +50,7 @@ class VendorRegistrationController extends Controller
 
     public function showRegistrationFormStepTwo()
     {
-        if (!is_null(\auth()->user()->profile)){
+        if (!is_null(auth('vendor')->user()->profile)){
             return redirect()->route('vendor.register.step-three');
         }
         $states = State::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -69,7 +63,7 @@ class VendorRegistrationController extends Controller
         DB::beginTransaction();
         try {
 
-            $vendor = \auth()->user();
+            $vendor = auth('vendor')->user();
             $vendor->name = $request->company_name;
             $vendor->user_type = $request->user_type;
             $vendor->save();
@@ -90,7 +84,7 @@ class VendorRegistrationController extends Controller
                 $validated['pickup_pincode'] = $request->billing_pincode;
             }
             $vendorProfile = VendorProfile::updateOrCreate([
-                'vendor_id' => \auth()->id()
+                'vendor_id' => auth('vendor')->id()
             ],$validated);
 
             $url = route('vendor.register.step-three');
@@ -101,7 +95,7 @@ class VendorRegistrationController extends Controller
                 "url" => $url,
                 "message" => "Please upload documents",
             ];
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
@@ -112,12 +106,12 @@ class VendorRegistrationController extends Controller
 
     public function showRegistrationFormStepThree()
     {
-        $vendor = \auth()->user();
-        if (is_null($vendor->profile)){
+        $vendor = auth('vendor')->user();
+        if (is_null($vendor?->profile)){
             return redirect()->route('vendor.register.step-two');
         }
 
-        if (!is_null($vendor->profile->pan_number) && !is_null($vendor->profile->gst_number)){
+        if (!is_null($vendor?->profile->pan_number) && !is_null($vendor?->profile->gst_number)){
             return redirect()->route('vendor.dashboard');
         }
         return view('vendor.auth.register.stepThree');
@@ -128,9 +122,9 @@ class VendorRegistrationController extends Controller
         $validated = $request->validated();
         DB::beginTransaction();
         try {
-            $vendor = \auth()->user();
+            $vendor = auth('vendor')->user();
             $vendorProfile = VendorProfile::updateOrCreate([
-                'vendor_id' => \auth()->id()
+                'vendor_id' => auth('vendor')->id()
             ],$validated);
 
             if ($request->hasFile('gst')) {
@@ -140,18 +134,6 @@ class VendorRegistrationController extends Controller
             if ($request->hasFile('pan_card')) {
                 $vendorProfile->addMedia($request->file('pan_card'))->toMediaCollection('pan_card');
             }
-
-//            if ($franchisee->id && $franchisee->email) {
-//                Mail::to($franchisee)->send(new FranchiseeWelcomeMessage());
-//            }
-//
-//            if ($franchisee->id && $franchisee->mobile) {
-//                $data['username'] = $franchisee->email;
-//                $data['password'] = request()->input('password');
-//                $data['mobile'] = $franchisee->mobile;
-//                $this->sendRegisteredFranchiseeSms($data);
-//            }
-
             //Send notification to admin
 
             //Send welcome email to vendor
@@ -162,22 +144,16 @@ class VendorRegistrationController extends Controller
             $data['password'] = session('password');
             $data['mobile'] = $vendor->mobile;
 
-//            event(new VendorRegistered($data));
+             event(new VendorRegistered($data));
 
             $url = route("vendor.dashboard");
             DB::commit();
-            $result = [
-                "status" => 1,
-                "response" => "success",
-                "url" => $url,
-                "message" => "Registration Successfully",
-            ];
-        } catch (\Exception $exception) {
+            $result = ["status" => 1, "response" => "success", "url" => $url, "message" => "Registration Successfully"];
+        } catch (Exception $exception) {
             DB::rollBack();
             $result = ["status" => 0, "response" => "error", "message" => $exception->getMessage()];
         }
-
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 }
