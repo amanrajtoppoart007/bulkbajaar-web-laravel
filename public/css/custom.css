@@ -123,8 +123,20 @@ table.dataTable thead .sorting_desc {
     display: block;
 }
 
+.c-sidebar-brand .c-sidebar-brand-full{
+    font-size: 20px;
+    color: #294B70!important;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .c-sidebar-brand .c-sidebar-brand-full:hover {
-    color: inherit;
+     font-size: 20px;
+    color: #FFA800!important;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* select 2  */
