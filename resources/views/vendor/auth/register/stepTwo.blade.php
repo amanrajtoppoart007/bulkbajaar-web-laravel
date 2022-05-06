@@ -279,26 +279,31 @@
                         let data = jqXhr.responseJSON;
 
                         if (data.errors) {
+                            let errors = '';
                             $.each(data.errors, function (index, item) {
-                                const errorElement = $(`#${index}`);
+                                const errorElement =$(`#${index}`) ;
                                 errorElement.addClass("is-invalid").tooltip({title: item[0]});
                                 errorElement.next('.invalid-feedback').text(item[0]);
-                                // $.notify(item[0], 'white');
-                                toastr.error(item[0], '', {
+
+                                errors +=`${item[0]}\n`;
+
+                            });
+                            toastr.error(errors, '', {
                                     progressBar: true,
                                     timeOut: 2000,
                                     positionClass: 'toast-top-left'
                                 });
-                            })
+                        } else {
+                            if (data.message) {
+                                // $.notify(data.message, 'white');
+                                toastr.error(data.message, '', {
+                                    progressBar: true,
+                                    timeOut: 2000,
+                                    positionClass: 'toast-top-left'
+                                });
+                            }
                         }
-                        if (data.message) {
-                            // $.notify(data.message, 'white');
-                            toastr.error(data.message, '', {
-                                progressBar: true,
-                                timeOut: 2000,
-                                positionClass: 'toast-top-left'
-                            });
-                        }
+
                     },
 
                     complete: function () {

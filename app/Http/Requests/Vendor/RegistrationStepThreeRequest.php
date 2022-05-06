@@ -26,9 +26,9 @@ class RegistrationStepThreeRequest extends FormRequest
             'pan_card' => 'required|mimes:jpg,png',
             'gst_number' => 'required|alpha_num',
             'gst' => 'required|mimes:jpg,png',
-            'bank_name' => 'nullable|alpha',
+            'bank_name' => 'nullable|regex:/^[\pL\s\-]+$/u',
             'account_number' => 'nullable|numeric',
-            'account_holder_name' => 'nullable|alpha',
+            'account_holder_name' => 'nullable|regex:/^[\pL\s\-]+$/u',
             'ifsc_code' => 'nullable|alpha_num',
         ];
     }

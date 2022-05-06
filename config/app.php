@@ -123,6 +123,12 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    /**
+     * RAZORPAY PAYMENT GATEWAY CREDENTIALS
+     *
+     */
+      'razorpay_key'=> env('RAZOR_KEY','rzp_test_HpAV516EN6lzZ9'),
+      'razorpay_secret'=> env('RAZOR_SECRET','NTqdX5MrUkCoGIU5c7GXVjSM'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

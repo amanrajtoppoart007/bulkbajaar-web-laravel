@@ -50,7 +50,7 @@
                                                        for="mobile">{{ trans('cruds.helpCenter.fields.mobile') }}</label><label
                                                     class="text-danger ml-2 font-weight-bolder">*</label>
                                                 <input type="number" minlength="10" maxlength="10" name="mobile" id="mobile"
-                                                       class="input-group-text bg-transparent w-100 text-left" required>
+                                                       class="input-group-text bg-transparent w-100 text-left"  required>
                                                 <div class="invalid-feedback"></div>
 
                                             </div>
@@ -63,7 +63,7 @@
                                                        for="password">{{ trans('cruds.helpCenter.fields.password') }}</label><label
                                                     class="text-danger ml-2 font-weight-bolder">*</label>
                                                 <input type="password" name="password" id="password"
-                                                       class="input-group-text bg-transparent w-100 text-left" required>
+                                                       class="input-group-text bg-transparent w-100 text-left" autocomplete="false" required>
                                                 <div class="invalid-feedback"></div>
 
                                             </div>
@@ -73,7 +73,7 @@
                                                 <label class="font-weight-bolder text-dark"
                                                        for="password_confirmation">Confirm Password</label><label
                                                     class="text-danger ml-2 font-weight-bolder">*</label>
-                                                <input type="password" name="password_confirmation" id="password_confirmation"                                                       class="input-group-text bg-transparent w-100 text-left" required>
+                                                <input type="password" name="password_confirmation" id="password_confirmation" class="input-group-text bg-transparent w-100 text-left" autocomplete="false" required>
                                                 <div class="invalid-feedback"></div>
 
                                             </div>
@@ -116,15 +116,27 @@
 
 @section('script')
     <script>
+
+        $(document).on("keypress","#mobile",function(e){
+            if(!validateNumber(e))
+            {
+                e.preventDefault();
+            }
+        });
+        function validateNumber(event) {
+            let key = window.event ? event.keyCode : event.which;
+            if(event.target.value?.length>=10)
+            {
+                return (event.keyCode === 8 || event.keyCode === 46
+                    || event.keyCode === 37 || event.keyCode === 39);
+
+            }
+            else
+            {
+                 return !(key < 48 || key > 57);
+            }
+        }
         $(document).ready(function () {
-
-              $("#mobile").on("keydown",function(e){
-
-                if(($(this).val()).length>=10)
-                {
-                    e.preventDefault();
-                }
-            });
 
             $("#seller_registration_form").on("submit", function (e) {
                 e.preventDefault();
@@ -167,20 +179,22 @@
                         let data = jqXhr.responseJSON;
 
                         if (data.errors) {
+                            let errors = '';
                             $.each(data.errors, function (index, item) {
                                 const errorElement =$(`#${index}`) ;
                                 errorElement.addClass("is-invalid").tooltip({title: item[0]});
                                 errorElement.next('.invalid-feedback').text(item[0]);
-                                // $.notify(item[0], 'white');
-                                toastr.error(item[0], '', {
+
+                                errors +=`${item[0]}\n`;
+
+                            });
+                            toastr.error(errors, '', {
                                     progressBar: true,
                                     timeOut: 2000,
                                     positionClass: 'toast-top-left'
                                 });
-                            })
                         }
                         if (data.message) {
-                            // $.notify(data.message, 'white');
                             toastr.error(data.message, '', {
                                 progressBar: true,
                                 timeOut: 2000,

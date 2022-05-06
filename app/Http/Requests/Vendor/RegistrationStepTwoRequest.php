@@ -25,9 +25,9 @@ class RegistrationStepTwoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company_name' => 'required|alpha',
+            'company_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'user_type' => ['required', 'string', Rule::in(['MANUFACTURER', 'WHOLESALER'])],
-            'representative_name' => 'required|alpha',
+            'representative_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'billing_address' => 'required|string',
             'billing_address_two' => 'nullable|string',
             'billing_state_id' => 'required|numeric|exists:states,id',

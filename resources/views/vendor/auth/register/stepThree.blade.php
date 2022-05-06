@@ -20,6 +20,12 @@
                     <!-- Card Header -->
                         <div class="card-header bg-white">
                             <h4 class="font-weight-bolder text-theme-1 mt-2">Enter your business details</h4>
+                            <p class="fw-bolder text-success">
+                                Aadhar detail is required for identity validation.
+                                Pan & Gst details are required for  invoice and accounting purpose.
+                                You can fill the bank detail  but it is optional.
+                                Your details are safe with us.
+                            </p>
                         </div>
 
                         <!-- Card Body (Start) -->
@@ -69,7 +75,7 @@
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="bank_name">Bank Name</label>
+                                                               for="bank_name">Bank Name <small>(Optional)</small></label>
                                                         <input type="text" name="bank_name" id="bank_name"
                                                                class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
@@ -78,7 +84,7 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="mt-3">
-                                                        <label class="font-weight-bolder text-dark" for="account_number">Account Number</label>
+                                                        <label class="font-weight-bolder text-dark" for="account_number">Account Number <small>(Optional)</small></label>
                                                         <input type="text" name="account_number" id="account_number"
                                                                class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
@@ -88,7 +94,7 @@
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="account_holder_name">Account Holder Name</label>
+                                                               for="account_holder_name">Account Holder Name <small>(Optional)</small></label>
                                                         <input type="text" name="account_holder_name" id="account_holder_name"
                                                                class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
@@ -97,7 +103,7 @@
                                                 <div class="col-6">
                                                     <div class="mt-3">
                                                         <label class="font-weight-bolder text-dark"
-                                                               for="ifsc_code">IFSC Code</label>
+                                                               for="ifsc_code">IFSC Code <small>(Optional)</small></label>
                                                         <input type="text" name="ifsc_code" id="ifsc_code"
                                                                class="input-group-text bg-transparent w-100 text-left">
                                                         <div class="invalid-feedback"></div>
@@ -130,6 +136,27 @@
 @section('script')
     <script>
         $(document).ready(function () {
+
+
+             $(document).on("keypress","#account_number",function(e){
+            if(!validateNumber(e,16))
+            {
+                e.preventDefault();
+            }
+        });
+        function validateNumber(event,length) {
+            let key = window.event ? event.keyCode : event.which;
+            if(event.target.value?.length>=length)
+            {
+                return (event.keyCode === 8 || event.keyCode === 46
+                    || event.keyCode === 37 || event.keyCode === 39);
+
+            }
+            else
+            {
+                 return !(key < 48 || key > 57);
+            }
+        }
 
             $("#franchisee_registration_form").on("submit", function (e) {
                 e.preventDefault();
@@ -172,24 +199,29 @@
                         let data = jqXhr.responseJSON;
 
                         if (data.errors) {
+                            let errors = '';
                             $.each(data.errors, function (index, item) {
-                                $(`#${index}`).addClass("is-invalid").tooltip({title: item[0]});
-                                $(`#${index}`).next('.invalid-feedback').text(item[0]);
-                                // $.notify(item[0], 'white');
-                                toastr.error(item[0], '', {
+                                const errorElement =$(`#${index}`) ;
+                                errorElement.addClass("is-invalid").tooltip({title: item[0]});
+                                errorElement.next('.invalid-feedback').text(item[0]);
+
+                                errors +=`${item[0]}\n`;
+
+                            });
+                            toastr.error(errors, '', {
                                     progressBar: true,
                                     timeOut: 2000,
                                     positionClass: 'toast-top-left'
                                 });
-                            })
-                        }
-                        if (data.message) {
-                            // $.notify(data.message, 'white');
-                            toastr.error(data.message, '', {
-                                progressBar: true,
-                                timeOut: 2000,
-                                positionClass: 'toast-top-left'
-                            });
+                        } else {
+                            if (data.message) {
+                                // $.notify(data.message, 'white');
+                                toastr.error(data.message, '', {
+                                    progressBar: true,
+                                    timeOut: 2000,
+                                    positionClass: 'toast-top-left'
+                                });
+                            }
                         }
                     },
 
