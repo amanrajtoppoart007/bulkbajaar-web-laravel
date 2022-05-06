@@ -46,6 +46,16 @@
         </button>
 
         <ul class="c-header-nav ml-auto">
+            <li class="c-header-nav-item dropdown d-md-down-none">
+                    <a class="c-header-nav-link fw-bolder brand-text" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        {{ auth('vendor')->user()->name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{route('vendor.profile')}}">Profile</a>
+                        <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logoutform').submit();" href="javascript:void(0)">Log Out</a>
+                    </div>
+                </li>
             @if(count(config('panel.available_languages', [])) > 1)
                 <li class="c-header-nav-item dropdown d-md-down-none">
                     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"

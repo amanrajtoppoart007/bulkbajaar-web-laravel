@@ -184,3 +184,11 @@ table.dataTable thead .sorting_desc {
 .link-text-primary {
     color: #294B70 !important;
 }
+
+.brand-text{
+    font-size: 14px;
+    color: #294B70!important;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
