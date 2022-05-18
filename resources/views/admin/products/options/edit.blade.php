@@ -6,8 +6,7 @@
         <input type="hidden" name="product_id" id="product_id" value="{{$option->product_id}}">
         <input type="hidden" name="id" id="option_id" value="{{$option->id}}">
       <div class="card">
-         <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }} - Create Variation
+         <div class="card-header">Edit Option - {{$option->color}}-{{$option->size}}
         </div>
         <div class="card-body">
               <div class="row">
@@ -60,9 +59,7 @@
                         </div>
                         <div class="form-group">
 
-                            <button type="submit" class="btn btn-primary mb-2">Edit
-                                Options
-                            </button>
+                            <button type="submit" class="btn btn-primary mb-2">{{trans('global.save_changes')}}</button>
                         </div>
 
                             </div>
@@ -73,7 +70,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Option
+            Generated Options
         </div>
         <div class="card-body">
             <div class="row">
@@ -88,29 +85,41 @@
                             <th>Size</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                            @foreach($options as $option)
-                                 <tr>
-                                <td>{{$option?->is_default ? 'Yes':'No'}}</td>
-                                <td>
-                                    <div class="row">
-                                        @foreach($option->images as $image)
-                                          <div class="col-12 col-md-2 col-lg-12 col-xl-2">
-                                              <img class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
-                                          </div>
-                                        @endforeach
-                                    </div>
+                            @foreach($options as $item)
+                                <tr class="{{$item->id==$option->id?'bg-success':''}}">
+                                    <td>{{$option?->is_default ? 'Yes':'No'}}</td>
+                                    <td>
+                                        <div class="row">
+                                            @foreach($item->images as $image)
+                                                <div class="col">
+                                                    <img style="width: 35px;height: 35px" class="img-thumbnail"
+                                                         src="{{$image->thumbnail}}" alt="Product option image">
+                                                </div>
+                                            @endforeach
+                                        </div>
 
-                                </td>
-                                <td>{{$option?->option}}</td>
-                                <td>{{$option?->color}}</td>
-                                <td>{{$option?->size}}</td>
-                                <td>{{$option?->unit}}</td>
-                                <td>{{$option?->quantity}}</td>
+                                    </td>
+                                    <td>{{$item?->option}}</td>
+                                    <td>{{$item?->color}}</td>
+                                    <td>{{$item?->size}}</td>
+                                    <td>{{$item?->unit}}</td>
+                                    <td>{{$item?->quantity}}</td>
+                                    <td>
+                                        @if($item->id!=$option->id)
+                                            <a href="{{route('admin.productOptions.edit',$item->id)}}"
+                                               class="btn btn-info">Edit</a>
+                                        @else
+                                            <button class="btn btn-info disabled">Edit</button>
+                                        @endif
+                                    </td>
                                 </tr>
+
+
                             @endforeach
 
                         </tbody>
@@ -202,6 +211,15 @@
                 return _results
             }
         }
+
+        $(document).ready(function(){
+             $("#color").select2({
+                tags: true
+            });
+             $("#size").select2({
+                tags: true
+            });
+        });
         $(document).on("submit","#productOptionForm",function(e){
             e.preventDefault();
 

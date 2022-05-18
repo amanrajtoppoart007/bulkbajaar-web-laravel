@@ -242,6 +242,7 @@ Route::get('/home', 'Admin\HomeController@index')->name('home');
 
     Route::get('unit', [App\Http\Controllers\Admin\UnitController::class, 'index'])->name('unit.index');
     Route::get('get-unit/{id}', [App\Http\Controllers\Admin\UnitController::class, 'show'])->name('get.unit');
+    Route::post('get-units', [App\Http\Controllers\Admin\UnitController::class, 'getUnits'])->name('get.units');
     Route::post('add-unit', [App\Http\Controllers\Admin\UnitController::class, 'store'])->name('unit.add');
     Route::post('update-unit', [App\Http\Controllers\Admin\UnitController::class, 'update'])->name('unit.update');
     Route::delete('unit/destroy', [App\Http\Controllers\Admin\UnitController::class, 'massDestroy'])->name('unit.massDestroy');

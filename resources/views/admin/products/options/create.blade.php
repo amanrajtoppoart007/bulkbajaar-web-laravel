@@ -9,7 +9,26 @@
         </div>
         <div class="card-body">
               <div class="row">
+                  <input type="hidden" name="unit" id="unit" value="">
                     <div class="col-md-8">
+                        <div class="form-group mb-2">
+                            <label for="unit_type">Select Unit Type</label>
+                            <select name="unit_type" id="unit_type" class="select2" required>
+                                <option value="">Select Unit Type</option>
+                                @foreach($unitTypes as $type)
+                                    <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="size">Select Size</label>
+                            <select name="size" id="size" class="select2" required>
+                                @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
+                                    <option value="{{ $size }}">{{ $size }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                                 <div class="form-group mb-2">
                                     <label for="color">Select Color</label>
                                     <select name="color" id="color" class="select2">
@@ -18,23 +37,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group mb-2">
-                                    <label for="size">Select Size</label>
-                                    <select name="size" id="size" class="select2">
-                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
-                                            <option value="{{ $size }}">{{ $size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
 
-                        <div class="form-group mb-2">
-                            <label for="unit">Select Unit</label>
-                            <select name="unit" id="unit" class="select2">
-                                @foreach($unitTypes as $type)
-                                    <option value="{{ $type->name }}">{{ $type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
+
 
                         <div class="form-group mb-2">
                             <label for="quantity">Quantity</label>
@@ -44,7 +49,7 @@
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default">
+                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default" required>
                                 <label class="form-check-label" for="is_default">
                                     Default Variation
                                 </label>
@@ -71,7 +76,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Options
+            Save Option
         </div>
         <div class="card-body">
             <div class="row">
@@ -86,6 +91,7 @@
                             <th>Size</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,8 +102,10 @@
                                 <td>
                                     <div class="row">
                                         @foreach($option->images as $image)
-                                          <div class="col-12 col-md-2 col-lg-12 col-xl-2">
-                                              <img class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
+                                          <div class="col">
+                                              <a href="{{$image->thumbnail}}" target="_blank">
+                                                 <img style="width: 35px;height: 35px" class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
+                                              </a>
                                           </div>
                                         @endforeach
                                     </div>
@@ -108,6 +116,9 @@
                                 <td>{{$option?->size}}</td>
                                 <td>{{$option?->unit}}</td>
                                 <td>{{$option?->quantity}}</td>
+                                <td>
+                                     <a href="{{route('admin.productOptions.edit',$option->id)}}" class="btn btn-info">Edit</a>
+                                </td>
                                 </tr>
                             @endforeach
 
@@ -180,10 +191,10 @@
                      message = response.errors.file
                 }
                 file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
+               let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+               let  _results = []
+                for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+                   let node = _ref[_i]
                     _results.push(node.textContent = message)
                 }
                 return _results
@@ -235,6 +246,50 @@
                             position: 'top-right',
                         });
                     }
+            });
+        });
+
+        $(document).ready(function(){
+
+            $("#color").select2({
+                tags: true
+            });
+             $("#size").select2({
+                tags: true
+            });
+            $("#unit_type").on("change",function(){
+                $("#unit").val($(this).val());
+
+                $.ajax({
+                    url: "{{route('admin.get.units')}}",
+                    method:"POST",
+                    data: {
+                        'unit_type': $(this).val(),
+                    },
+                    success:function(result)
+                    {
+                       const {response,message} = result;
+                       if(response==="success")
+                       {
+                           const {data} = result;
+                           let options='<option value="">Select Measurement</option>';
+                           data.map(function(item){
+                              options+=`<option value="${item.unit}">${item.unit}</option>`
+                         });
+                           $("#size").html(options);
+                       }
+                       else
+                       {
+                           $.toast({
+                               heading: 'Error',
+                               text: message?.toString(),
+                               showHideTransition: 'slide',
+                               icon: "error",
+                               position: 'top-right',
+                           });
+                       }
+                    }
+                })
             });
         });
 

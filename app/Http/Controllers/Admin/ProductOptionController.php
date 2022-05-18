@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Vendor\StoreProductOptionRequest;
-use App\Http\Requests\Vendor\UpdateProductOptionRequest;
+use App\Http\Requests\StoreProductOptionRequest;
+use App\Http\Requests\UpdateProductOptionRequest;
 use App\Models\Product;
 use App\Models\ProductOption;
 use App\Models\UnitType;
@@ -124,7 +124,7 @@ class ProductOptionController extends Controller
     {
           $option = ProductOption::find($id);
           $unitTypes= UnitType::select('name')->whereStatus(true)->get();
-          $options = ProductOption::where(['id'=>$id])->get();
+          $options = ProductOption::where(['product_id'=>$option->product_id])->get();
          return view("admin.products.options.edit",compact('option','options','unitTypes'));
     }
 

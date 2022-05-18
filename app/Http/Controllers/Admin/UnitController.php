@@ -23,6 +23,35 @@ class UnitController extends Controller
     }
 
 
+    public function getUnits(Request $request)
+    {
+        $validator = Validator::make($request->all(),['unit_type'=>'required']);
+
+        if(!$validator->fails())
+        {
+            try {
+                 $units = Unit::where(['unit_type'=>$request->input('unit_type')])->get();
+                 if($units)
+                 {
+                   $result = ['status'=>1,'response'=>'success','data'=>$units,'message'=>'Units found'];
+                 }
+                 else{
+                     $result = ['status'=>0,'response'=>'error','message'=>'Units not found'];
+                 }
+            }
+            catch (Exception $exception)
+            {
+               $result = ['status'=>0,'response'=>'error','message'=>$exception->getMessage()];
+            }
+        }
+        else
+        {
+             $result = ['status'=>0,'response'=>'validation_error','message'=>$validator->errors()->all()];
+        }
+        return response()->json($result);
+    }
+
+
 
     /**
      * @param Request $request

@@ -30,6 +30,7 @@ return [
     'reset_password'                       => 'पासवर्ड रीसेट',
     'send_password'                        => 'पासवर्ड रीसेट लिंक भेजें',
     'save'                                 => 'सुरक्षित करे',
+    'save_changes'                         =>'परिवर्तन सुरक्षित करे',
     'search'                               => 'खोजें',
     'searching'                            => 'खोज रहे हैं',
     'no_results'                           => 'कोई परिणाम नहीं',
