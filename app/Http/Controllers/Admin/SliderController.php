@@ -7,6 +7,7 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use Illuminate\Support\Facades\Validator;
+
 class SliderController extends Controller
 {
     use MediaUploadingTrait;
@@ -29,7 +30,7 @@ class SliderController extends Controller
             'images.*' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withInput();
         }
 
@@ -54,26 +55,43 @@ class SliderController extends Controller
         return view('admin.sliders.edit', compact('slider'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $request->request->add(['id'=>$id]);
+        $request->request->add(['id' => $id]);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'images.*' => 'required'
         ]);
-        if($validator->fails()){
-            return redirect()->back()->withInput();
-        }
+        if ($validator->fails()) {
+            $result = ['status' => 0, 'response' => 'validation_error', 'message' => $validator->errors()->all()];
+        } else {
+            $slider = Slider::find($id);
 
-        $slider = Slider::find($id);
-        if($slider)
-        {
+            if ($slider) {
+                if (count($slider->images) > 0) {
+                    foreach ($slider->images as $media) {
+                        if (!in_array($media->file_name, $request->input('images', []))) {
+                            $media->delete();
+                        }
+                    }
+                }
+
+                $media = $slider->images->pluck('file_name')->toArray();
+
+                foreach ($request->input('images', []) as $file) {
+                    if (count($media) === 0 || !in_array($file, $media)) {
+                        $slider->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
+                    }
+                }
+                $result = ['status' => 1, 'response' => 'success', 'message' => 'slider updated successfully'];
+
+            } else {
+                $result = ['status' => 0, 'response' => 'error', 'message' => 'slider not found'];
+
+            }
+
 
         }
-        else
-        {
-             return redirect()->back()->withErrors(['not_found'=>'slider not found']);
-        }
-        return redirect()->route('admin.sliders.index');
+        return response()->json($result);
     }
 }

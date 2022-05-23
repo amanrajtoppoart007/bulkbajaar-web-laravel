@@ -7,11 +7,12 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.sliders.update",$slider->id) }}" enctype="multipart/form-data">
+        <form method="POST" id="sliderEditForm" action="{{ route("admin.sliders.update",$slider->id) }}" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.slider.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" disabled>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $slider['name']) }}" readonly>
                 <span class="help-block">{{ trans('cruds.slider.fields.name_helper') }}</span>
             </div>
 
@@ -56,6 +57,7 @@
                 uploadedImagesMap[file.name] = response.name
             },
             removedfile: function (file) {
+                console.log(file);
                 file.previewElement.remove()
                 let name;
                 const {file_name=undefined} = file;
@@ -98,6 +100,36 @@
                 return _results
             }
         }
+
+        $(document).ready(function(){
+
+            $("form#sliderEditForm").on("submit",function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: "{{route('admin.sliders.update',$slider->id)}}",
+                    method:"PUT",
+                    data : $(this).serialize(),
+                    cache: false,
+                    processData: false,
+                    headers : { 'X-CSRF-TOKEN':'{{csrf_token()}}'},
+                    success:function(response)
+                    {
+                        if(response.status===1)
+                        {
+                             window.location.href = "{{route('admin.sliders.index')}}";
+                        }
+                        else
+                        {
+                            alert(JSON.stringify(response?.message));
+                        }
+                    },
+                    error:function(response)
+                    {
+                          alert(JSON.stringify(response));
+                    }
+                });
+            })
+        });
 
 
     </script>
