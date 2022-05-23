@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class ProductReportController extends Controller
 {
-    //
+    public function index()
+    {
+        return view("admin.report.product");
+    }
 }
