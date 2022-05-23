@@ -70,8 +70,9 @@ class Order extends Model
         'RETURN_RECEIVED'
     ];
 
-    public static $searchable = [
+    public static array $searchable = [
         'payment_type',
+        'status',
     ];
 
     protected $dates = [

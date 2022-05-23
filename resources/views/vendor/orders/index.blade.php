@@ -14,19 +14,19 @@
                         {{ trans('cruds.franchiseeOrder.fields.order_number') }}
                     </th>
                     <th>
-                        Buyer
+                        {{ trans('cruds.franchiseeOrderItem.fields.buyer') }}
                     </th>
                     <th>
-                        Payment Status
+                             {{ trans('cruds.franchiseeOrderItem.fields.payment_status') }}
                     </th>
                     <th>
-                        Sub Total
+                       {{ trans('cruds.franchiseeOrderItem.fields.sub_total') }}
                     </th>
                     <th>
                         {{ trans('cruds.franchiseeOrder.fields.discount') }}
                     </th>
                     <th>
-                        Grand Total
+                        {{ trans('cruds.franchiseeOrderItem.fields.grand_total') }}
                     </th>
                     <th>
                         {{ trans('cruds.franchiseeOrder.fields.status') }}
@@ -43,7 +43,7 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <select class="search" strict="true">
+                        <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach(App\Models\Order::PAYMENT_STATUS_SElECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
@@ -54,7 +54,7 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <select class="search" strict="true">
+                        <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach(App\Models\Order::STATUS_SELECT as $key => $item)
                                 <option value="{{ $key }}">{{ $item }}</option>
@@ -98,13 +98,14 @@
                 pageLength: 10,
             };
             let table = $('.datatable-Order').DataTable(dtOverrideGlobals);
-            $('a[data-toggle="tab"]').on('shown.bs.tab click', function (e) {
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function () {
                 $($.fn.dataTable.tables(true)).DataTable()
                     .columns.adjust();
             });
 
             let visibleColumnsIndexes = null;
-            $('.datatable thead').on('input', '.search', function () {
+            const dataTableHead = $('.datatable thead');
+            dataTableHead.on('input', '.search', function () {
                 let strict = $(this).attr('strict') || false
                 let value = strict && this.value ? "^" + this.value + "$" : this.value
 
@@ -118,7 +119,23 @@
                     .search(value, strict)
                     .draw()
             });
-            table.on('column-visibility.dt', function (e, settings, column, state) {
+            dataTableHead.on('change', 'select.search', function () {
+                let strict = $(this).attr('strict') || false
+                let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+                console.log(value);
+
+                let index = $(this).parent().index()
+                if (visibleColumnsIndexes !== null) {
+                    index = visibleColumnsIndexes[index]
+                }
+
+                table
+                    .column(index)
+                    .search(value, strict)
+                    .draw()
+            });
+            table.on('column-visibility.dt', function () {
                 visibleColumnsIndexes = []
                 table.columns(":visible").every(function (colIdx) {
                     visibleColumnsIndexes.push(colIdx);

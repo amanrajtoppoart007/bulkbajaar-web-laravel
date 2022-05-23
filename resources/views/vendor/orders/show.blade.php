@@ -60,7 +60,7 @@
                     <span>{{ \App\Models\Order::PAYMENT_STATUS_SElECT[$order->payment_status] ?? '' }}</span>
                 </div>
                 <div class="col-4">
-                    <label for="" class="font-weight-bolder">Buyer: </label>
+                    <label for="" class="font-weight-bolder">{{ trans('cruds.franchiseeOrderItem.fields.buyer') }}: </label>
                     <span>{{ $order->user->name ?? '' }}</span>
                 </div>
             </div>
@@ -71,12 +71,12 @@
                     <thead>
                     <tr>
                         <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
-                        <th>Display Price</th>
+                        <th>{{ trans('cruds.franchiseeOrderItem.fields.mrp') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.price') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.quantity') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
-                        <th>Portal Charge</th>
-                        <th>GST</th>
+                        <th>{{ trans('cruds.franchiseeOrderItem.fields.portal_charge') }}</th>
+                        <th>{{ trans('cruds.franchiseeOrderItem.fields.gst') }}</th>
                         <th>{{ trans('cruds.franchiseeOrderItem.fields.total_amount') }}</th>
                     </tr>
                     </thead>

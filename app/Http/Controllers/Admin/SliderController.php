@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
-use App\Models\SliderItem;
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-
-
-use Validator;
+use Illuminate\Support\Facades\Validator;
 class SliderController extends Controller
 {
     use MediaUploadingTrait;
@@ -38,27 +34,46 @@ class SliderController extends Controller
         }
 
         $slider = new Slider();
-        $slider->name = $request->name;
-//        $slider->location = '/public/slider/';
+        $slider->name = $request->input('name');
         $slider->save();
 
         foreach ($request->input('images', []) as $file) {
             $slider->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('images');
         }
-
-//        foreach ($request->images as $file) {
-//            $name = strtotime('now') . '_slider_'. rand(00001, 9999) . '.' . $file->extension();
-//            $file->storeAs('/public/slider/', $name);
-//            $sliderItem = new SliderItem();
-//            $sliderItem->slider_id = $slider->id;
-//            $sliderItem->image = $name;
-//            $sliderItem->save();
-//        }
         return redirect()->route('admin.sliders.index');
     }
 
     public function show(Slider $slider)
     {
         return view('admin.sliders.show', compact('slider'));
+    }
+
+    public function edit($id)
+    {
+        $slider = Slider::find($id);
+        return view('admin.sliders.edit', compact('slider'));
+    }
+
+    public function update(Request $request,$id)
+    {
+        $request->request->add(['id'=>$id]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'images.*' => 'required'
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->withInput();
+        }
+
+        $slider = Slider::find($id);
+        if($slider)
+        {
+
+        }
+        else
+        {
+             return redirect()->back()->withErrors(['not_found'=>'slider not found']);
+        }
+        return redirect()->route('admin.sliders.index');
     }
 }

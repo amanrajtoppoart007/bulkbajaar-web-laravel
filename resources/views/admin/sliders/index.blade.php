@@ -19,7 +19,7 @@
                 <table class=" table table-bordered table-striped table-hover datatable datatable-slider">
                     <thead>
                     <tr>
-                        <th width="10">
+                        <th>
 
                         </th>
                         <th>
@@ -48,6 +48,9 @@
                             <td>
                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.sliders.show', $slider->id) }}">
                                     {{ trans('global.view') }}
+                                </a>
+                                 <a class="btn btn-xs btn-secondary" href="{{ route('admin.sliders.edit', $slider->id) }}">
+                                    {{ trans('global.edit') }}
                                 </a>
                             </td>
 

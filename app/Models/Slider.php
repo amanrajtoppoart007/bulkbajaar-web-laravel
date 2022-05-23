@@ -28,9 +28,7 @@ class Slider extends Model implements HasMedia
     {
         $files = $this->getMedia('images');
         $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
+            $item->url       = $item->getFullUrl();
         });
 
         return $files;

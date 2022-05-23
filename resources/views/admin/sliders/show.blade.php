@@ -37,8 +37,8 @@
                         </th>
                         <td>
                             @foreach($slider->images as $key => $media)
-                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $media->getUrl('thumb') }}">
+                                <a href="{{ $media->url }}" target="_blank">
+                                    <img style="height:100px;width: 100px;margin:10px" src="{{ $media->url }}" alt=" {{ $slider->name }} Slider image">
                                 </a>
                             @endforeach
                         </td>

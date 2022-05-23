@@ -7,16 +7,11 @@
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.sliders.store") }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.sliders.update",$slider->id) }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.slider.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
-                @if($errors->has('name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('name') }}
-                    </div>
-                @endif
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" disabled>
                 <span class="help-block">{{ trans('cruds.slider.fields.name_helper') }}</span>
             </div>
 
@@ -61,7 +56,6 @@
                 uploadedImagesMap[file.name] = response.name
             },
             removedfile: function (file) {
-                console.log(file)
                 file.previewElement.remove()
                 let name;
                 const {file_name=undefined} = file;
@@ -78,9 +72,9 @@
                         {!! json_encode($slider->images) !!};
                         for (let i in files) {
                         let file = files[i];
-                        const {preview,file_name} = file;
+                        const {original_url,file_name} = file;
                         this.options.addedfile.call(this, file);
-                        this.options.thumbnail.call(this, file, preview);
+                        this.options.thumbnail.call(this, file, original_url);
                         file.previewElement.classList.add('dz-complete');
                         $('form').append('<input type="hidden" name="images[]" value="' + file_name + '">');
                     }
