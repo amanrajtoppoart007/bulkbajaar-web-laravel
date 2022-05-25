@@ -305,3 +305,8 @@ Route::get('/home', 'Admin\HomeController@index')->name('home');
     Route::get('get-product-return-condition', [App\Http\Controllers\Admin\ProductReturnConditionController::class, 'getCondition'])->name('get.product-return-conditions');
     Route::post('add-product-return-condition', [App\Http\Controllers\Admin\ProductReturnConditionController::class, 'store'])->name('product-return-conditions.add');
     Route::post('update-product-return-condition', [App\Http\Controllers\Admin\ProductReturnConditionController::class, 'update'])->name('product-return-conditions.update');
+
+
+Route::group(['prefix' => 'report'], function () {
+    Route::get('profit', [App\Http\Controllers\Admin\Report\ProfitController::class, 'index'])->name('report.profit');
+});

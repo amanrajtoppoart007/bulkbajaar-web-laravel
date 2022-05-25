@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ProductOption extends Model implements HasMedia
@@ -21,6 +23,7 @@ class ProductOption extends Model implements HasMedia
         'size',
         'color',
         'quantity',
+        'weight',
         'is_default',
         'created_at',
         'updated_at',
@@ -62,7 +65,7 @@ class ProductOption extends Model implements HasMedia
         'LIGHTGREEN',
     ];
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
@@ -76,7 +79,7 @@ class ProductOption extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop',200,200)->nonQueued();
     }
 
-    public function getImagesAttribute()
+    public function getImagesAttribute(): MediaCollection
     {
         $files = $this->getMedia('images');
         $files->each(function ($item) {

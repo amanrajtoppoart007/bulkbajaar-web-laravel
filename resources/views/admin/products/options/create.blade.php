@@ -39,17 +39,20 @@
                                 </div>
 
 
-
+                        <div class="form-group mb-2">
+                            <label for="weight">Weight (In KG)</label>
+                            <input type="text" name="weight" id="weight" class="form-control" value="" required>
+                        </div>
 
                         <div class="form-group mb-2">
                             <label for="quantity">Quantity</label>
-                            <input type="text" name="quantity" id="quantity" class="form-control" value="">
+                            <input type="text" name="quantity" id="quantity" class="form-control" value="" required>
                         </div>
 
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default" required>
+                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default" >
                                 <label class="form-check-label" for="is_default">
                                     Default Variation
                                 </label>
@@ -89,6 +92,7 @@
                             <th>Option</th>
                             <th>Color</th>
                             <th>Size</th>
+                            <th>Weight</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
                             <th>Action</th>
@@ -114,10 +118,15 @@
                                 <td>{{$option?->option}}</td>
                                 <td>{{$option?->color}}</td>
                                 <td>{{$option?->size}}</td>
+                                <td>{{$option?->weight}}</td>
                                 <td>{{$option?->unit}}</td>
                                 <td>{{$option?->quantity}}</td>
                                 <td>
                                      <a href="{{route('admin.productOptions.edit',$option->id)}}" class="btn btn-info">Edit</a>
+                                    <button
+                                            data-redirect-url="{{route('admin.productOptions.list',$option->product_id)}}"
+                                            data-delete-url="{{route('admin.productOptions.destroy',$option->id)}}"
+                                            class="btn btn-danger delete-option-btn">Delete</button>
                                 </td>
                                 </tr>
                             @endforeach
@@ -152,9 +161,11 @@
             },
             removedfile: function (file) {
 
+                const {file_name=undefined} = file;
+
                 let name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
+                if (typeof file_name !== 'undefined') {
+                    name = file_name
                 } else {
                     name = uploadedImagesMap[file.name]
                 }
@@ -221,7 +232,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                          window.location.href=window.location.href;
+                          location.reload();
 
 
                         } else {
@@ -236,7 +247,7 @@
 
                         }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -293,5 +304,68 @@
             });
         });
 
+    </script>
+     <script>
+        $(document).ready(function(){
+           $(document).on('click','.delete-option-btn',function(e){
+               e.preventDefault();
+               const deleteUrl = $(this).attr('data-delete-url');
+               const redirectUrl = $(this).attr('data-redirect-url');
+               Swal.fire({
+                   title: 'Are you want to delete this option?',
+                   showDenyButton: true,
+                   showCancelButton: false,
+                   confirmButtonText: 'Yes',
+                   denyButtonText: `No`,
+               }).then((choice) => {
+                  const {isConfirmed=false,isDenied=true} = choice
+                   if (isConfirmed) {
+                       $.ajax({
+                           url:deleteUrl,
+                           method:'POST',
+                           headers: { 'x-csrf-token':_token},
+                           data: { _method: 'DELETE'},
+                           success:function(response)
+                           {
+                               if(response.status===1)
+                               {
+                                   $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                                   location.href=redirectUrl;
+                               }
+                               else
+                               {
+                                  $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+
+                           },
+                           error:function(jqxHR)
+                           {
+                                $.toast({
+                                       heading: 'Error',
+                                       text: JSON.stringify(jqxHR),
+                                       showHideTransition: 'slide',
+                                       icon: 'error',
+                                       position: 'top-right',
+                                   });
+                           }
+                       })
+                   } else if (isDenied) {
+                       Swal.fire('User action cancelled', '', 'info')
+                   }
+               });
+           });
+        });
     </script>
 @endsection

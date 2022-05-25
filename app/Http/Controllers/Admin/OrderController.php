@@ -68,6 +68,10 @@ class OrderController extends Controller
                 return $row->user ? $row->user->name : '';
             });
 
+            $table->addColumn('vendor_name', function ($row) {
+                return $row->vendor ? $row->vendor->name : '';
+            });
+
             $table->addColumn('grand_total', function ($row) {
                 return $row->grand_total ?? '';
             });
@@ -84,9 +88,6 @@ class OrderController extends Controller
                 return Order::STATUS_SELECT[$row->status] ?? '';
             });
 
-            $table->addColumn('help_center_name', function ($row) {
-                return $row->helpCenter ? $row->helpCenter->name : '';
-            });
 
             $table->editColumn('payment_type', function ($row) {
                 return $row->payment_type ? Order::PAYMENT_TYPE_SELECT[$row->payment_type] : '';
@@ -101,8 +102,9 @@ class OrderController extends Controller
         }
 
         $users          = User::get(['id', 'name']);
+        $sellers        = Vendor::get(['id', 'name']);
 
-        return view('admin.orders.index', compact('users'));
+        return view('admin.orders.index', compact('users','sellers'));
     }
 
     public function create()

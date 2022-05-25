@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductOptionRequest;
 use App\Http\Requests\UpdateProductOptionRequest;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductOption;
 use App\Models\UnitType;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ProductOptionController extends Controller
@@ -43,6 +45,7 @@ class ProductOptionController extends Controller
             $size = $request->input('size');
             $unit = $request->input('unit');
             $qty = $request->input('quantity');
+            $weight = $request->input('weight');
             $isDefault = $request->input('is_default') === 'on'? 1:'0';
             $option = $color.'-'.$size;
             $params = [
@@ -57,6 +60,7 @@ class ProductOptionController extends Controller
                 $params['option'] = $option;
                 $params['unit'] = $unit;
                 $params['quantity'] = $qty ?? 0;
+                $params['weight'] = $weight ?? 0;
                 $params['is_default'] = $isDefault;
                  $productOption = ProductOption::create($params);
                     $colors = [];
@@ -108,19 +112,19 @@ class ProductOptionController extends Controller
             }
 
         }
-        catch (\Exception $exception)
+        catch (Exception $exception)
         {
             DB::rollBack();
             $result = ["status"=>0,"response"=>"exception_error","message"=>$exception->getMessage()];
         }
-        return response()->json($result,200);
+        return response()->json($result);
     }
 
     public function show()
     {
 
     }
-    public function edit($id)
+    public function edit($id): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
           $option = ProductOption::find($id);
           $unitTypes= UnitType::select('name')->whereStatus(true)->get();
@@ -138,6 +142,7 @@ class ProductOptionController extends Controller
             $size = $request->input('size');
             $unit = $request->input('unit');
             $qty = $request->input('quantity');
+            $weight = $request->input('weight');
             $isDefault = $request->input('is_default') === 'on'? 1:'0';
             $option = $color.'-'.$size;
             if(ProductOption::where(['id'=>$request->input('id')])->first())
@@ -148,6 +153,7 @@ class ProductOptionController extends Controller
                 $params['option'] = $option;
                 $params['unit'] = $unit;
                 $params['quantity'] = $qty ?? 0;
+                $params['weight'] = $weight ?? 0;
                 $params['is_default'] = $isDefault;
                 ProductOption::where(['id'=>$request->input('id')])->update($params);
 
@@ -211,15 +217,42 @@ class ProductOptionController extends Controller
             }
 
         }
-        catch (\Exception $exception)
+        catch (Exception $exception)
         {
             DB::rollBack();
             $result = ["status"=>0,"response"=>"exception_error","message"=>$exception->getMessage()];
         }
-        return response()->json($result,200);
+        return response()->json($result);
     }
-    public function destroy()
+    public function destroy($id)
     {
+        DB::beginTransaction();
+        try {
+            $productOption = ProductOption::find($id);
+            if($productOption)
+            {
+                if (!OrderItem::where(['product_option_id'=>$id])->count() > 0) {
+                    $productOption->delete();
+                    DB::commit();
+                    $result = ["status" => 1, "response" => "success", "message" => 'Item deleted successfully'];
+                } else {
+                    DB::rollBack();
+                    $result = ["status" => 0, "response" => "exception_error", "message" => 'Order are in place against this item'];
+                }
+            }
+            else
+            {
+                $result = ["status"=>0,"response"=>"exception_error","message"=>"Option not found"];
+            }
+
+        }
+        catch (Exception $exception)
+        {
+             DB::rollBack();
+            $result = ["status"=>0,"response"=>"exception_error","message"=>$exception->getMessage()];
+        }
+
+        return response()->json($result);
 
     }
 }

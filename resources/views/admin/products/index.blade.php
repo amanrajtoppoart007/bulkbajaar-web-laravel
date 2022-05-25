@@ -6,7 +6,7 @@
                 <a class="btn btn-success" href="{{ route('admin.products.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.product.title_singular') }}
                 </a>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                <button class="btn btn-warning d-none" data-toggle="modal" data-target="#csvImportModal">
                     {{ trans('global.app_csvImport') }}
                 </button>
                 @include('csvImport.modal', ['model' => 'Product', 'route' => 'admin.products.parseCsvImport'])
@@ -28,6 +28,7 @@
                     <th>MRP</th>
                     <th>Price</th>
                     <th>Seller</th>
+                    <th>Order Count</th>
                     <th>{{trans('cruds.product.fields.category')}}</th>
                     <th>Status</th>
                     <th>{{trans('cruds.product.fields.image')}}</th>
@@ -47,6 +48,9 @@
                             @endforeach
                         </select>
                     </td>
+                      <td>
+                          <input type="text" class="form-control search" id="order_count" name="order_count">
+                      </td>
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
@@ -154,6 +158,7 @@
                     {data: 'maximum_retail_price', name: 'maximum_retail_price'},
                     {data: 'price', name: 'price'},
                     {data: 'vendor', name: 'vendor.name'},
+                    {data: 'order_count', name: 'order_count'},
                     {data: 'category', name: 'productCategory.name'},
                     {data: 'approval_status', name: 'approval_status'},
                     {data: 'image', name: 'image', orderable:false},

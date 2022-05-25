@@ -6,8 +6,18 @@
         <input type="hidden" name="product_id" id="product_id" value="{{$option->product_id}}">
         <input type="hidden" name="id" id="option_id" value="{{$option->id}}">
       <div class="card">
-         <div class="card-header">Edit Option - {{$option->color}}-{{$option->size}}
-        </div>
+         <div class="card-header">
+             <div class="row">
+                 <div class="col">
+                     Edit Option - {{$option->color}}-{{$option->size}}
+                 </div>
+                 <div class="col text-right">
+                     <a href="{{route('admin.productOptions.create',$option->product_id)}}" class=" btn btn-success">
+                         Create New Option
+                     </a>
+                 </div>
+             </div>
+         </div>
         <div class="card-body">
               <div class="row">
                     <div class="col-md-8">
@@ -38,8 +48,13 @@
                         </div>
 
                         <div class="form-group mb-2">
+                            <label for="weight">Weight (In KG)</label>
+                            <input type="text" name="weight" id="weight" class="form-control" value="{{$option->weight}}" required>
+                        </div>
+
+                        <div class="form-group mb-2">
                             <label for="quantity">Quantity</label>
-                            <input type="text" name="quantity" id="quantity" class="form-control" value="{{$option->quantity}}">
+                            <input type="text" name="quantity" id="quantity" class="form-control" value="{{$option->quantity}}" required>
                         </div>
 
 
@@ -83,6 +98,7 @@
                             <th>Option</th>
                             <th>Color</th>
                             <th>Size</th>
+                            <th>Weight(In KG)</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
                             <th>Action</th>
@@ -107,6 +123,7 @@
                                     <td>{{$item?->option}}</td>
                                     <td>{{$item?->color}}</td>
                                     <td>{{$item?->size}}</td>
+                                    <td>{{$option?->weight}} kg</td>
                                     <td>{{$item?->unit}}</td>
                                     <td>{{$item?->quantity}}</td>
                                     <td>
@@ -116,6 +133,10 @@
                                         @else
                                             <button class="btn btn-info disabled">Edit</button>
                                         @endif
+                                        <button
+                                            data-redirect-url="{{route('admin.productOptions.list',$item->product_id)}}"
+                                            data-delete-url="{{route('admin.productOptions.destroy',$item->id)}}"
+                                            class="btn btn-danger delete-option-btn">Delete</button>
                                     </td>
                                 </tr>
 
@@ -152,10 +173,11 @@
             },
             removedfile: function (file) {
                 let name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
+                const {file_name=undefined} = file;
+                if (typeof file_name !== 'undefined') {
+                    name = file_name;
                 } else {
-                    name = uploadedImagesMap[file.name]
+                    name = uploadedImagesMap[file.name];
                 }
                 $.ajax({
                     url: "{{route('admin.productOptions.remove.files')}}",
@@ -168,7 +190,7 @@
                          file.previewElement.remove();
                         $('form#productOptionForm').find('input[name="images[]"][value="' + name + '"]').remove()
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -184,13 +206,14 @@
             init: function () {
              @if(isset($option) && $option->images)
                 let files =
-                {!! json_encode($option->images) !!}
+                {!! json_encode($option->images) !!};
                     for (let i in files) {
-                    let file = files[i]
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview_url)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form#productOptionForm').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
+                    let file = files[i];
+                    const {preview_url='',file_name=''}=file;
+                    this.options.addedfile.call(this, file);
+                    this.options.thumbnail.call(this, file, preview_url);
+                    file.previewElement.classList.add('dz-complete');
+                    $('form#productOptionForm').append(`<input type="hidden" name="images[]" value="${file_name}">`);
                 }
             @endif
             },
@@ -202,10 +225,10 @@
                      message = response.errors.file
                 }
                 file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
+                let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                let _results = []
+                for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+                    let node = _ref[_i]
                     _results.push(node.textContent = message)
                 }
                 return _results
@@ -241,9 +264,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                         window.location.href=window.location.href;
-
-
+                         location.reload();
                         } else {
 
                             $.toast({
@@ -256,7 +277,7 @@
 
                         }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -269,6 +290,69 @@
             });
         });
 
+    </script>
+        <script>
+        $(document).ready(function(){
+           $(document).on('click','.delete-option-btn',function(e){
+               e.preventDefault();
+               const deleteUrl = $(this).attr('data-delete-url');
+               const redirectUrl = $(this).attr('data-redirect-url');
+               Swal.fire({
+                   title: 'Are you want to delete this option?',
+                   showDenyButton: true,
+                   showCancelButton: false,
+                   confirmButtonText: 'Yes',
+                   denyButtonText: `No`,
+               }).then((choice) => {
+                  const {isConfirmed=false,isDenied=true} = choice
+                   if (isConfirmed) {
+                       $.ajax({
+                           url:deleteUrl,
+                           method:'POST',
+                           headers: { 'x-csrf-token':_token},
+                           data: { _method: 'DELETE'},
+                           success:function(response)
+                           {
+                               if(response.status===1)
+                               {
+                                   $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                                   location.href=redirectUrl;
+                               }
+                               else
+                               {
+                                  $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+
+                           },
+                           error:function(jqxHR)
+                           {
+                                $.toast({
+                                       heading: 'Error',
+                                       text: JSON.stringify(jqxHR),
+                                       showHideTransition: 'slide',
+                                       icon: 'error',
+                                       position: 'top-right',
+                                   });
+                           }
+                       })
+                   } else if (isDenied) {
+                       Swal.fire('User action cancelled', '', 'info')
+                   }
+               });
+           });
+        });
     </script>
 @endsection
 

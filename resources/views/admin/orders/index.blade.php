@@ -32,6 +32,9 @@
                         {{ trans('cruds.order.fields.order_number') }}
                     </th>
                     <th>
+                        Seller
+                    </th>
+                    <th>
                         Buyer
                     </th>
                     <th>
@@ -53,6 +56,14 @@
                     <td></td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($sellers as $key => $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <select class="search">
@@ -141,6 +152,7 @@
                     {data: 'placeholder', name: 'placeholder'},
                     {data: 'id', name: 'id'},
                     {data: 'order_number', name: 'order_number'},
+                    {data: 'vendor_name', name: 'vendor_id'},
                     {data: 'user_name', name: 'user_id'},
                     {data: 'grand_total', name: 'grand_total'},
                     {data: 'payment_status', name: 'payment_status'},

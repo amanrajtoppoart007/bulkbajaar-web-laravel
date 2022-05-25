@@ -6,7 +6,7 @@
                 <button class="btn btn-success" id="addButton">
                     {{ trans('global.add') }} {{ trans('cruds.brand.title_singular') }}
                 </button>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                <button class="btn btn-warning d-none" data-toggle="modal" data-target="#csvImportModal">
                     {{ trans('global.app_csvImport') }}
                 </button>
                 @include('csvImport.modal', ['model' => 'Brand', 'route' => 'admin.brands.parseCsvImport'])

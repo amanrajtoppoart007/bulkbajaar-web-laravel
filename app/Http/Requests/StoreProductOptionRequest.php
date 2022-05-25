@@ -30,6 +30,7 @@ class StoreProductOptionRequest extends FormRequest
             'size' => 'required|string',
             'unit' => 'required|string',
             'quantity' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
             'images'=>'required|array',
             'images.*'=>'required|string'
         ];

@@ -63,7 +63,7 @@
                         </td>
                         <td>
                             <a href="{{route('admin.productOptions.edit',$productOption->id)}}" class="btn btn-info">Edit</a>
-                            <button class="btn btn-danger">Delete</button>
+                            <button  data-delete-url="{{route('admin.productOptions.destroy',$productOption->id)}}" class="btn btn-danger delete-option-btn">Delete</button>
                         </td>
                     </tr>
                 @endforeach
