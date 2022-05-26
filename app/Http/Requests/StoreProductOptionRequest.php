@@ -45,7 +45,7 @@ class StoreProductOptionRequest extends FormRequest
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
 
-        throw new HttpResponseException(response()->json($result, 200));
+        throw new HttpResponseException(response()->json($result));
     }
 
 

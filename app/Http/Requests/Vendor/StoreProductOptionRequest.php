@@ -30,6 +30,8 @@ class StoreProductOptionRequest extends FormRequest
             'size' => 'required|string',
             'unit' => 'required|string',
             'quantity' => 'nullable|numeric',
+            'weight' => 'nullable|numeric',
+            'images'=>'required|array',
             'images.*'=>'required|string'
         ];
     }
@@ -43,6 +45,6 @@ class StoreProductOptionRequest extends FormRequest
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
 
-        throw new HttpResponseException(response()->json($result, 200));
+        throw new HttpResponseException(response()->json($result));
     }
 }

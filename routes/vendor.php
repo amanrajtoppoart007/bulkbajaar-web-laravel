@@ -32,6 +32,14 @@ Route::middleware([ App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class
     Route::post('bank-account/update', 'Vendor\HomeController@updateBankAccount')->name('update.bank-account');
     Route::get('mop', 'Vendor\HomeController@showMOPForm')->name('mop');
     Route::post('mop/update', 'Vendor\HomeController@updateMOP')->name('update.mop');
+
+    Route::get('unit', [App\Http\Controllers\Vendor\UnitController::class, 'index'])->name('unit.index');
+    Route::get('get-unit/{id}', [App\Http\Controllers\Vendor\UnitController::class, 'show'])->name('get.unit');
+    Route::post('get-units', [App\Http\Controllers\Vendor\UnitController::class, 'getUnits'])->name('get.units');
+    Route::post('add-unit', [App\Http\Controllers\Vendor\UnitController::class, 'store'])->name('unit.add');
+    Route::post('update-unit', [App\Http\Controllers\Vendor\UnitController::class, 'update'])->name('unit.update');
+    Route::delete('unit/destroy', [App\Http\Controllers\Vendor\UnitController::class, 'massDestroy'])->name('unit.massDestroy');
+    Route::delete('unit/destroy/{unit}', [App\Http\Controllers\Vendor\UnitController::class, 'destroy'])->name('unit.destroy');
 });
 
 

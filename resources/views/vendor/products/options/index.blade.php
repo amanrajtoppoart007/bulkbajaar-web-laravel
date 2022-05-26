@@ -15,3 +15,60 @@
         </div>
     </div>
 @endsection
+@section("scripts")
+    <script>
+        $(document).ready(function(){
+           $(document).on('click','.delete-option-btn',function(e){
+               e.preventDefault();
+               const deleteUrl = $(this).attr('data-delete-url');
+               Swal.fire({
+                   title: 'Are you want to delete this option?',
+                   showDenyButton: true,
+                   showCancelButton: false,
+                   confirmButtonText: 'Yes',
+                   denyButtonText: `No`,
+               }).then((choice) => {
+                  const {isConfirmed=false,isDenied=true} = choice
+                   if (isConfirmed) {
+                       $.ajax({
+                           url:deleteUrl,
+                           method:'POST',
+                           headers: { 'x-csrf-token':_token},
+                           data: { _method: 'DELETE'},
+                           success:function(response)
+                           {
+                               if(response.status===1)
+                               {
+                                   $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+                               else
+                               {
+                                  $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+
+                           },
+                           complete:function()
+                           {
+                              location.reload();
+                           }
+                       })
+                   } else if (isDenied) {
+                       Swal.fire('User action cancelled', '', 'info')
+                   }
+               });
+           });
+        });
+    </script>
+@endsection

@@ -5,6 +5,8 @@ namespace App\Http\Requests\Vendor;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use JetBrains\PhpStorm\ArrayShape;
+
 class UpdateProductOptionRequest extends FormRequest
 {
     /**
@@ -22,7 +24,7 @@ class UpdateProductOptionRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    #[ArrayShape(['product_id' => "string", 'color' => "string", 'size' => "string", 'unit' => "string", 'quantity' => "string", 'weight' => "string", 'images.*' => "string"])] public function rules(): array
     {
         return [
             'product_id'=>'numeric|string',
@@ -30,6 +32,7 @@ class UpdateProductOptionRequest extends FormRequest
             'size' => 'required|string',
             'unit' => 'required|string',
             'quantity' => 'nullable|numeric',
+             'weight' => 'nullable|numeric',
             'images.*'=>'nullable|string'
         ];
     }
@@ -42,6 +45,6 @@ class UpdateProductOptionRequest extends FormRequest
             $msg .= $error."\n";
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
-        throw new HttpResponseException(response()->json($result, 200));
+        throw new HttpResponseException(response()->json($result));
     }
 }

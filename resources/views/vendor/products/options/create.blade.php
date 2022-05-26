@@ -1,6 +1,6 @@
 @extends("vendor.layout.main")
 @section("content")
-    <form id="productOptionForm" action="{{route('admin.productOptions.store')}}" enctype="multipart/form-data">
+    <form id="productOptionForm" action="{{route('vendor.options.store')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="product_id" value="{{$product_id}}">
       <div class="card">
@@ -9,7 +9,26 @@
         </div>
         <div class="card-body">
               <div class="row">
+                  <input type="hidden" name="unit" id="unit" value="">
                     <div class="col-md-8">
+                        <div class="form-group mb-2">
+                            <label for="unit_type">Select Unit Type</label>
+                            <select name="unit_type" id="unit_type" class="select2" required>
+                                <option value="">Select Unit Type</option>
+                                @foreach($unitTypes as $type)
+                                    <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <label for="size">Select Size</label>
+                            <select name="size" id="size" class="select2" required>
+                                @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
+                                    <option value="{{ $size }}">{{ $size }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                                 <div class="form-group mb-2">
                                     <label for="color">Select Color</label>
                                     <select name="color" id="color" class="select2">
@@ -18,33 +37,22 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group mb-2">
-                                    <label for="size">Select Size</label>
-                                    <select name="size" id="size" class="select2">
-                                        @foreach(\App\Models\ProductOption::SIZE_SELECT as $size)
-                                            <option value="{{ $size }}">{{ $size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
 
                         <div class="form-group mb-2">
-                            <label for="unit">Select Unit</label>
-                            <select name="unit" id="unit" class="select2">
-                                @foreach($unitTypes as $type)
-                                    <option value="{{ $type->name }}">{{ $type->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="weight">Weight (In KG)</label>
+                            <input type="text" name="weight" id="weight" class="form-control" value="" required>
                         </div>
 
                         <div class="form-group mb-2">
                             <label for="quantity">Quantity</label>
-                            <input type="text" name="quantity" id="quantity" class="form-control" value="">
+                            <input type="text" name="quantity" id="quantity" class="form-control" value="" required>
                         </div>
 
 
                         <div class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default">
+                                <input class="form-check-input form-check" type="checkbox" name="is_default" id="is_default" >
                                 <label class="form-check-label" for="is_default">
                                     Default Variation
                                 </label>
@@ -71,7 +79,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Options
+            Save Option
         </div>
         <div class="card-body">
             <div class="row">
@@ -84,8 +92,10 @@
                             <th>Option</th>
                             <th>Color</th>
                             <th>Size</th>
+                            <th>Weight</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -96,8 +106,10 @@
                                 <td>
                                     <div class="row">
                                         @foreach($option->images as $image)
-                                          <div class="col-12 col-md-2 col-lg-12 col-xl-2">
-                                              <img class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
+                                          <div class="col">
+                                              <a href="{{$image->thumbnail}}" target="_blank">
+                                                 <img style="width: 35px;height: 35px" class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
+                                              </a>
                                           </div>
                                         @endforeach
                                     </div>
@@ -106,8 +118,16 @@
                                 <td>{{$option?->option}}</td>
                                 <td>{{$option?->color}}</td>
                                 <td>{{$option?->size}}</td>
+                                <td>{{$option?->weight}}</td>
                                 <td>{{$option?->unit}}</td>
                                 <td>{{$option?->quantity}}</td>
+                                <td>
+                                     <a href="{{route('vendor.options.edit',$option->id)}}" class="btn btn-info">Edit</a>
+                                    <button
+                                            data-redirect-url="{{route('vendor.options.list',$option->product_id)}}"
+                                            data-delete-url="{{route('vendor.options.destroy',$option->id)}}"
+                                            class="btn btn-danger delete-option-btn">Delete</button>
+                                </td>
                                 </tr>
                             @endforeach
 
@@ -141,14 +161,16 @@
             },
             removedfile: function (file) {
 
+                const {file_name=undefined} = file;
+
                 let name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
+                if (typeof file_name !== 'undefined') {
+                    name = file_name
                 } else {
                     name = uploadedImagesMap[file.name]
                 }
                 $.ajax({
-                    url: "{{route('vendor.options.remove.files')}}",
+                    url: "{{route('vendor.productOptions.remove.files')}}",
                     method: 'POST',
                     data: {
                         filename:name,
@@ -180,10 +202,10 @@
                      message = response.errors.file
                 }
                 file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
+               let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+               let  _results = []
+                for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+                   let node = _ref[_i]
                     _results.push(node.textContent = message)
                 }
                 return _results
@@ -193,7 +215,7 @@
             e.preventDefault();
 
             $.ajax({
-                url: "{{route('vendor.options.store')}}",
+                url: "{{route('vendor.productOptions.store')}}",
                 method:'POST',
                 cache: false,
                 processData: false,
@@ -210,7 +232,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                          window.location.href=window.location.href;
+                          location.reload();
 
 
                         } else {
@@ -238,5 +260,112 @@
             });
         });
 
+        $(document).ready(function(){
+
+            $("#color").select2({
+                tags: true
+            });
+             $("#size").select2({
+                tags: true
+            });
+            $("#unit_type").on("change",function(){
+                $("#unit").val($(this).val());
+
+                $.ajax({
+                    url: "{{route('vendor.get.units')}}",
+                    method:"POST",
+                    data: {
+                        'unit_type': $(this).val(),
+                    },
+                    success:function(result)
+                    {
+                       const {response,message} = result;
+                       if(response==="success")
+                       {
+                           const {data} = result;
+                           let options='<option value="">Select Measurement</option>';
+                           data.map(function(item){
+                              options+=`<option value="${item.unit}">${item.unit}</option>`
+                         });
+                           $("#size").html(options);
+                       }
+                       else
+                       {
+                           $.toast({
+                               heading: 'Error',
+                               text: message?.toString(),
+                               showHideTransition: 'slide',
+                               icon: "error",
+                               position: 'top-right',
+                           });
+                       }
+                    }
+                })
+            });
+        });
+
+    </script>
+     <script>
+        $(document).ready(function(){
+           $(document).on('click','.delete-option-btn',function(e){
+               e.preventDefault();
+               const deleteUrl = $(this).attr('data-delete-url');
+               const redirectUrl = $(this).attr('data-redirect-url');
+               Swal.fire({
+                   title: 'Are you want to delete this option?',
+                   showDenyButton: true,
+                   showCancelButton: false,
+                   confirmButtonText: 'Yes',
+                   denyButtonText: `No`,
+               }).then((choice) => {
+                  const {isConfirmed=false,isDenied=true} = choice
+                   if (isConfirmed) {
+                       $.ajax({
+                           url:deleteUrl,
+                           method:'POST',
+                           headers: { 'x-csrf-token':_token},
+                           data: { _method: 'DELETE'},
+                           success:function(response)
+                           {
+                               if(response.status===1)
+                               {
+                                   $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                                   location.href=redirectUrl;
+                               }
+                               else
+                               {
+                                  $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+
+                           },
+                           error:function(jqxHR)
+                           {
+                                $.toast({
+                                       heading: 'Error',
+                                       text: JSON.stringify(jqxHR),
+                                       showHideTransition: 'slide',
+                                       icon: 'error',
+                                       position: 'top-right',
+                                   });
+                           }
+                       })
+                   } else if (isDenied) {
+                       Swal.fire('User action cancelled', '', 'info')
+                   }
+               });
+           });
+        });
     </script>
 @endsection

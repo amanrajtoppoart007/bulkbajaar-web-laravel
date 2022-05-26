@@ -55,7 +55,7 @@
             let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
             let deleteButton = {
                 text: deleteButtonTrans,
-                url: "{{ route('admin.products.massDestroy') }}",
+                url: "{{ route('vendor.products.massDestroy') }}",
                 className: 'btn-danger',
                 action: function (e, dt, node, config) {
                     let ids = $.map(dt.rows({selected: true}).data(), function (entry) {

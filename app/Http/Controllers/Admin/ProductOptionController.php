@@ -18,7 +18,7 @@ class ProductOptionController extends Controller
     use MediaUploadingTrait;
     public function __construct()
     {
-             return $this->middleware("auth:admin");
+        return $this->middleware("auth:admin");
     }
 
     public function index($id)
@@ -30,9 +30,8 @@ class ProductOptionController extends Controller
     public function create($productId)
     {
           $product_id = $productId;
-          $unitTypes          = UnitType::select('name')->whereStatus(true)->get();
+          $unitTypes  = UnitType::select('name')->whereStatus(true)->get();
           $options = ProductOption::where(['product_id'=>$product_id])->get();
-
           return view("admin.products.options.create",compact('product_id','unitTypes','options'));
     }
 

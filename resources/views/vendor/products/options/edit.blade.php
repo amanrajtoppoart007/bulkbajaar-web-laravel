@@ -7,8 +7,17 @@
         <input type="hidden" name="id" id="option_id" value="{{$option->id}}">
       <div class="card">
          <div class="card-header">
-            {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }} - Create Variation
-        </div>
+             <div class="row">
+                 <div class="col">
+                     Edit Option - {{$option->color}}-{{$option->size}}
+                 </div>
+                 <div class="col text-right">
+                     <a href="{{route('vendor.options.create',$option->product_id)}}" class=" btn btn-success">
+                         Create New Option
+                     </a>
+                 </div>
+             </div>
+         </div>
         <div class="card-body">
               <div class="row">
                     <div class="col-md-8">
@@ -39,8 +48,13 @@
                         </div>
 
                         <div class="form-group mb-2">
+                            <label for="weight">Weight (In KG)</label>
+                            <input type="text" name="weight" id="weight" class="form-control" value="{{$option->weight}}" required>
+                        </div>
+
+                        <div class="form-group mb-2">
                             <label for="quantity">Quantity</label>
-                            <input type="text" name="quantity" id="quantity" class="form-control" value="{{$option->quantity}}">
+                            <input type="text" name="quantity" id="quantity" class="form-control" value="{{$option->quantity}}" required>
                         </div>
 
 
@@ -60,9 +74,7 @@
                         </div>
                         <div class="form-group">
 
-                            <button type="submit" class="btn btn-primary mb-2">Edit
-                                Options
-                            </button>
+                            <button type="submit" class="btn btn-primary mb-2">{{trans('global.save_changes')}}</button>
                         </div>
 
                             </div>
@@ -73,7 +85,7 @@
         </form>
     <div class="card">
         <div class="card-header">
-            Generated Option
+            Generated Options
         </div>
         <div class="card-body">
             <div class="row">
@@ -86,31 +98,49 @@
                             <th>Option</th>
                             <th>Color</th>
                             <th>Size</th>
+                            <th>Weight(In KG)</th>
                             <th>{{ trans('cruds.productPrice.fields.unit_type') }}</th>
                             <th>{{ trans('cruds.productPrice.fields.quantity') }}</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                            @foreach($options as $option)
-                                 <tr>
-                                <td>{{$option?->is_default ? 'Yes':'No'}}</td>
-                                <td>
-                                    <div class="row">
-                                        @foreach($option->images as $image)
-                                          <div class="col-12 col-md-2 col-lg-12 col-xl-2">
-                                              <img class="img-thumbnail" src="{{$image->thumbnail}}" alt="Product option image">
-                                          </div>
-                                        @endforeach
-                                    </div>
+                            @foreach($options as $item)
+                                <tr class="{{$item->id==$option->id?'bg-success':''}}">
+                                    <td>{{$option?->is_default ? 'Yes':'No'}}</td>
+                                    <td>
+                                        <div class="row">
+                                            @foreach($item->images as $image)
+                                                <div class="col">
+                                                    <img style="width: 35px;height: 35px" class="img-thumbnail"
+                                                         src="{{$image->thumbnail}}" alt="Product option image">
+                                                </div>
+                                            @endforeach
+                                        </div>
 
-                                </td>
-                                <td>{{$option?->option}}</td>
-                                <td>{{$option?->color}}</td>
-                                <td>{{$option?->size}}</td>
-                                <td>{{$option?->unit}}</td>
-                                <td>{{$option?->quantity}}</td>
+                                    </td>
+                                    <td>{{$item?->option}}</td>
+                                    <td>{{$item?->color}}</td>
+                                    <td>{{$item?->size}}</td>
+                                    <td>{{$option?->weight}} kg</td>
+                                    <td>{{$item?->unit}}</td>
+                                    <td>{{$item?->quantity}}</td>
+                                    <td>
+                                        @if($item->id!=$option->id)
+                                            <a href="{{route('vendor.productOptions.edit',$item->id)}}"
+                                               class="btn btn-info">Edit</a>
+                                        @else
+                                            <button class="btn btn-info disabled">Edit</button>
+                                        @endif
+                                        <button
+                                            data-redirect-url="{{route('vendor.options.list',$item->product_id)}}"
+                                            data-delete-url="{{route('vendor.options.destroy',$item->id)}}"
+                                            class="btn btn-danger delete-option-btn">Delete</button>
+                                    </td>
                                 </tr>
+
+
                             @endforeach
 
                         </tbody>
@@ -125,7 +155,7 @@
     <script>
         let uploadedImagesMap = {}
         Dropzone.options.imagesDropzone = {
-            url: '{{ route('vendor.options.storeMedia') }}',
+            url: '{{ route('vendor.products.storeMedia') }}',
             maxFilesize: 2, // MB
             acceptedFiles: '.jpeg,.jpg,.png,.gif',
             addRemoveLinks: true,
@@ -143,10 +173,11 @@
             },
             removedfile: function (file) {
                 let name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
+                const {file_name=undefined} = file;
+                if (typeof file_name !== 'undefined') {
+                    name = file_name;
                 } else {
-                    name = uploadedImagesMap[file.name]
+                    name = uploadedImagesMap[file.name];
                 }
                 $.ajax({
                     url: "{{route('vendor.options.remove.files')}}",
@@ -159,7 +190,7 @@
                          file.previewElement.remove();
                         $('form#productOptionForm').find('input[name="images[]"][value="' + name + '"]').remove()
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -175,13 +206,14 @@
             init: function () {
              @if(isset($option) && $option->images)
                 let files =
-                {!! json_encode($option->images) !!}
+                {!! json_encode($option->images) !!};
                     for (let i in files) {
-                    let file = files[i]
-                    this.options.addedfile.call(this, file)
-                    this.options.thumbnail.call(this, file, file.preview_url)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form#productOptionForm').append('<input type="hidden" name="images[]" value="' + file.file_name + '">')
+                    let file = files[i];
+                    const {preview_url='',file_name=''}=file;
+                    this.options.addedfile.call(this, file);
+                    this.options.thumbnail.call(this, file, preview_url);
+                    file.previewElement.classList.add('dz-complete');
+                    $('form#productOptionForm').append(`<input type="hidden" name="images[]" value="${file_name}">`);
                 }
             @endif
             },
@@ -193,15 +225,24 @@
                      message = response.errors.file
                 }
                 file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
+                let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                let _results = []
+                for (let _i = 0, _len = _ref.length; _i < _len; _i++) {
+                    let node = _ref[_i]
                     _results.push(node.textContent = message)
                 }
                 return _results
             }
         }
+
+        $(document).ready(function(){
+             $("#color").select2({
+                tags: true
+            });
+             $("#size").select2({
+                tags: true
+            });
+        });
         $(document).on("submit","#productOptionForm",function(e){
             e.preventDefault();
 
@@ -223,9 +264,7 @@
                                 icon: 'success',
                                 position:'top-right',
                             });
-                         window.location.href=window.location.href;
-
-
+                         location.reload();
                         } else {
 
                             $.toast({
@@ -238,7 +277,7 @@
 
                         }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus) {
 
                         $.toast({
                             heading: 'Error',
@@ -251,6 +290,69 @@
             });
         });
 
+    </script>
+        <script>
+        $(document).ready(function(){
+           $(document).on('click','.delete-option-btn',function(e){
+               e.preventDefault();
+               const deleteUrl = $(this).attr('data-delete-url');
+               const redirectUrl = $(this).attr('data-redirect-url');
+               Swal.fire({
+                   title: 'Are you want to delete this option?',
+                   showDenyButton: true,
+                   showCancelButton: false,
+                   confirmButtonText: 'Yes',
+                   denyButtonText: `No`,
+               }).then((choice) => {
+                  const {isConfirmed=false,isDenied=true} = choice
+                   if (isConfirmed) {
+                       $.ajax({
+                           url:deleteUrl,
+                           method:'POST',
+                           headers: { 'x-csrf-token':_token},
+                           data: { _method: 'DELETE'},
+                           success:function(response)
+                           {
+                               if(response.status===1)
+                               {
+                                   $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                                   location.href=redirectUrl;
+                               }
+                               else
+                               {
+                                  $.toast({
+                                       heading: 'Success',
+                                       text: response?.message,
+                                       showHideTransition: 'slide',
+                                       icon: 'success',
+                                       position: 'top-right',
+                                   });
+                               }
+
+                           },
+                           error:function(jqxHR)
+                           {
+                                $.toast({
+                                       heading: 'Error',
+                                       text: JSON.stringify(jqxHR),
+                                       showHideTransition: 'slide',
+                                       icon: 'error',
+                                       position: 'top-right',
+                                   });
+                           }
+                       })
+                   } else if (isDenied) {
+                       Swal.fire('User action cancelled', '', 'info')
+                   }
+               });
+           });
+        });
     </script>
 @endsection
 
