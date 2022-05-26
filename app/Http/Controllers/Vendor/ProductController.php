@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroyProductRequest;
+use App\Http\Requests\Vendor\MassDestroyProductRequest;
 use App\Http\Requests\Vendor\StoreProductRequest;
 use App\Http\Requests\Vendor\UpdateProductRequest;
 use App\Models\Brand;
@@ -26,6 +26,9 @@ class ProductController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait, SlugGeneratorTrait;
 
+    /**
+     * @throws \Exception
+     */
     public function index(Request $request)
     {
         if ($request->ajax()) {

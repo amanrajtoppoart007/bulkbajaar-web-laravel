@@ -161,7 +161,7 @@
                     {data: 'order_count', name: 'order_count'},
                     {data: 'category', name: 'productCategory.name'},
                     {data: 'approval_status', name: 'approval_status'},
-                    {data: 'image', name: 'image', orderable:false},
+                    {data: 'image', name: 'image', orderable:false,searchable:false},
                     {data: 'actions', name: '{{ trans('global.actions') }}'}
                 ],
                 orderCellsTop: true,

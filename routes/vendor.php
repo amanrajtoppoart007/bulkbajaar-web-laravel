@@ -21,6 +21,7 @@ Route::middleware([ App\Http\Middleware\CheckIfVendorDocumentsAreUploaded::class
     Route::resource('products', 'Vendor\ProductController');
     Route::post('products/media', 'Vendor\ProductController@storeMedia')->name('products.storeMedia');
     Route::post('products/update', 'Vendor\ProductController@update')->name('products.update');
+    Route::delete('products/multiple/delete', 'Vendor\ProductController@massDestroy')->name('products.massDestroy');
 
     Route::resource('options','Vendor\ProductOptionController');
     Route::post('product/option/media', 'Vendor\ProductOptionController@storeMedia')->name('options.storeMedia');

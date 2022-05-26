@@ -57,8 +57,7 @@ class Handler extends ExceptionHandler
         $guard = Arr::get($exception->guards(), 0);
         $route = match ($guard) {
             'admin' => 'admin.login',
-            'help_center' => 'helpCenter.login',
-            'franchisee' => 'franchisee.login',
+            'vendor' => 'vendor.login',
             'logistics' => 'logistics.login',
             default => 'login',
         };

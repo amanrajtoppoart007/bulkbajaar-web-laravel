@@ -11,13 +11,13 @@ class RedirectIfVendor
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Closure $next
      * @param string $guard
      * @return mixed
      */
-     public function handle(Request $request, Closure $next, $guard = 'vendor')
-    {
+     public function handle(Request $request, Closure $next, string $guard = 'vendor'): mixed
+     {
 
         if (Auth::guard($guard)->check())
         {

@@ -94,7 +94,7 @@
                     {data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'category', name: 'productCategory.name'},
-                    {data: 'image', name: 'image', orderable:false,render: function (data, type,row) {
+                    {data: 'image', name: 'image', orderable:false,searchable:false,render: function (data, type,row) {
                         if(row?.image?.length>0)
                         {
                             return`<a href="${row.image}" target="_blank" style="display: inline-block">
