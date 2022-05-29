@@ -12,9 +12,9 @@ class StoreProductRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return auth()->id();
+        return auth('vendor')->id();
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string',
@@ -55,6 +55,6 @@ class StoreProductRequest extends FormRequest
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
 
-        throw new HttpResponseException(response()->json($result, 200));
+        throw new HttpResponseException(response()->json($result));
     }
 }

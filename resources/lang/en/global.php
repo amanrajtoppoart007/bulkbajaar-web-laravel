@@ -346,6 +346,7 @@ return [
     'print_kisan_card' => 'Print Kisan Card',
     'cancel' => 'Cancel',
     'sub_total' => 'Sub Total',
+    'mrp_total' => 'MRP Total',
     'gst' => 'GST',
     'discount' => 'Discount',
     'grand_total' => 'Grand Total',
@@ -373,5 +374,4 @@ return [
     'required' => 'Required',
     'update_stock' => 'Update Stock',
     'handling' => 'Handling',
-    'assigned_to' => 'Assigned To',
 ];

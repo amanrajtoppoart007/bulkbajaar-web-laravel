@@ -69,75 +69,105 @@
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.franchiseeOrderItem.fields.product') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.mrp') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.price') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.quantity') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.discount') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.portal_charge') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.gst') }}</th>
-                        <th>{{ trans('cruds.franchiseeOrderItem.fields.total_amount') }}</th>
-                    </tr>
-                    </thead>
+                <tr>
+                    <th style="min-width: 150px; max-width: 200px">{{ trans('cruds.orderItem.fields.product') }}</th>
+                    <th>Mrp</th>
+                    <th>Discount</th>
+                    <th>Price</th>
+                    <th>{{ trans('cruds.orderItem.fields.quantity') }}</th>
+                    <th>SubTotal</th>
+                    <th colspan="2">Charge</th>
+                    <th colspan="2">GST</th>
+                    <th>{{ trans('cruds.orderItem.fields.total_amount') }}</th>
+                </tr>
+                </thead>
                     <tbody>
-                    @foreach($order->orderItems  as $orderItem)
-                        <tr>
-                            <td>
-                                {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}, {{ $orderItem->productOption->color ?? '' }}, {{ $orderItem->productOption->size ?? '' }}
-                            </td>
-                            <td>
-                                &#8377;{{ applyPrice($orderItem->amount, $orderItem->discount) }}
-                            </td>
-                            <td>
-                                &#8377;{{ $orderItem->amount }}
-                            </td>
-                            <td>
-                                {{ $orderItem->quantity }}
-                            </td>
+                @php $mrp_total=0; $discount_total=0; @endphp
+                @foreach($order->orderItems  as $orderItem)
 
-                            <td>
-                                &#8377;{{ $orderItem->discount_amount }} ({{ $orderItem->discount }}%)
-                            </td>
-                            <td>
-                                &#8377;{{ $orderItem->charge_amount }} ({{ $orderItem->charge_percent }}%)
-                            </td>
-                            <td>
-                                &#8377;{{ $orderItem->gst_amount }} ({{ $orderItem->gst }}%)
-                            </td>
+                    @php
+                        $mrp = ($orderItem?->product?->maximum_retail_price??0)*$orderItem->quantity;
+                        $mrp_total+=$mrp;
+                        $discount_total+= getPercentAmount($mrp,$orderItem->discount??0);
+                        @endphp
+                    <tr>
 
-                            <td>
-                                &#8377;{{ $orderItem->total_amount }}
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total + $order->discount_amount }}</span></th>
+                        <td>
+                            {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}, {{ $orderItem->productOption->color ?? '' }}, {{ $orderItem->productOption->size ?? '' }}
+                        </td>
+                        <td>
+
+                            {{ $orderItem?->product?->maximum_retail_price }}
+                        </td>
+                        <td>
+                            {{ $orderItem->discount }}%
+                        </td>
+                        <td>
+                            &#8377;{{ $orderItem->amount }}
+                        </td>
+                        <td>
+                            {{ $orderItem->quantity }}
+                        </td>
+                        <td>
+                            {{$orderItem->amount}}*{{ $orderItem->quantity }}=₹{{$orderItem->discount_amount}}
+                        </td>
+                        <td>
+                            {{ $orderItem->charge_percent }}%
+                        </td>
+                        <td>
+                            &#8377;{{ $orderItem->charge_amount }}
+                        </td>
+                        <td>
+                            {{ $orderItem->gst }}%
+                        </td>
+                        <td>
+                            &#8377;{{ $orderItem->gst_amount }}
+                        </td>
+                        <td>
+                            &#8377;{{ $orderItem->total_amount }}
+                        </td>
                     </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">Discount: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">GST: <span class="text-danger pull-right">+ &#8377;{{ $order->gst_amount }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">Total: <span class="pull-right">&#8377;{{ $order->grand_total }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">Portal Charge: <span class="text-danger pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th colspan="4">You receive: <span class="pull-right">&#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
-                    </tr>
-                    </tfoot>
+                @endforeach
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.mrp_total') }}: <span class="pull-right">&#8377;{{ $mrp_total }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $discount_total }}</span></th>
+                </tr>
+                 <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.total') }}: <span class="pull-right"> &#8377;{{ $order->sub_total }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.gst') }}: <span class="text-danger pull-right">+ &#8377;{{ $order->gst_amount }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.grand_total') }}: <span class="pull-right">&#8377;{{ $order->grand_total }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">Paid: <span class="pull-right">&#8377;{{ $order->amount_paid }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">Balance: <span class="pull-right">&#8377;{{ $order->grand_total - $order->amount_paid }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">Portal Charge: <span class="text-danger pull-right">- &#8377;{{ $order->charge_amount }}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">Vendor receive: <span class="pull-right">&#8377;{{ $order->grand_total - $order->charge_amount }}</span></th>
+                </tr>
+
+                </tfoot>
                 </table>
             </div>
         </div>

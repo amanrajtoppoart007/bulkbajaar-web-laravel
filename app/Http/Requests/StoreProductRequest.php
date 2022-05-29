@@ -4,8 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-
-
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreProductRequest extends FormRequest
@@ -50,6 +48,6 @@ class StoreProductRequest extends FormRequest
         }
         $result = ["status"=>0,"response"=>"validation_error","message"=>$msg];
 
-        throw new HttpResponseException(response()->json($result, 200));
+        throw new HttpResponseException(response()->json($result));
     }
 }

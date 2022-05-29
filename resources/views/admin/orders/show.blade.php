@@ -116,13 +116,21 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php $mrp_total=0; $discount_total=0; @endphp
                 @foreach($order->orderItems  as $orderItem)
+
+                    @php
+                        $mrp = ($orderItem?->product?->maximum_retail_price??0)*$orderItem->quantity;
+                        $mrp_total+=$mrp;
+                        $discount_total+= getPercentAmount($mrp,$orderItem->discount??0);
+                        @endphp
                     <tr>
 
                         <td>
                             {{ $orderItem->product->name }} - {{ $orderItem->productOption->option ?? '' }}, {{ $orderItem->productOption->color ?? '' }}, {{ $orderItem->productOption->size ?? '' }}
                         </td>
                         <td>
+
                             {{ $orderItem?->product?->maximum_retail_price }}
                         </td>
                         <td>
@@ -158,11 +166,15 @@
                 <tfoot>
                 <tr>
                     <th colspan="6"></th>
-                    <th colspan="5">{{ trans('global.sub_total') }}: <span class="pull-right">&#8377;{{ $order->sub_total }}</span></th>
+                    <th colspan="5">{{ trans('global.mrp_total') }}: <span class="pull-right">&#8377;{{ $mrp_total }}</span></th>
                 </tr>
                 <tr>
                     <th colspan="6"></th>
-                    <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $order->discount_amount }}</span></th>
+                    <th colspan="5">{{ trans('global.discount') }}: <span class="text-success pull-right">- &#8377;{{ $discount_total }}</span></th>
+                </tr>
+                 <tr>
+                    <th colspan="6"></th>
+                    <th colspan="5">{{ trans('global.total') }}: <span class="pull-right"> &#8377;{{ $order->sub_total }}</span></th>
                 </tr>
                 <tr>
                     <th colspan="6"></th>

@@ -15,6 +15,7 @@ use App\Models\ProductPortalCharge;
 use App\Models\ProductReturnCondition;
 use App\Models\Vendor;
 use App\Traits\SlugGeneratorTrait;
+use Exception;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -130,12 +131,12 @@ class ProductController extends Controller
             $nextUrl = route('admin.productOptions.create',['productId'=>$product->id]);
             $result = ["status" => 1, "response"=>"success","nextUrl"=>$nextUrl, "message" => "Product added successfully"];
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             DB::rollBack();
             $result = ["status" => 0, "response"=>"exception_error", "message" => $e->getMessage()];
 
         }
-        return response()->json($result,200);
+        return response()->json($result);
     }
 
     public function edit(Product $product)
@@ -233,16 +234,16 @@ class ProductController extends Controller
 
         try {
             ProductPortalCharge::updateOrCreate([
-                'product_id' => $request->product_id,
+                'product_id' => $request->input('product_id'),
             ], [
-                'charge' => $request->charge,
+                'charge' => $request->input('charge'),
             ]);
             $data = array(
                 "status" => true,
                 "msg" => 'Product charge updated successfully'
             );
             return json_encode($data);
-        }catch (\Exception $e) {
+        }catch (Exception $e) {
             $data = array(
                 "status" => false,
                 "msg" => $e->getMessage()

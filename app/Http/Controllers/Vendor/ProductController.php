@@ -15,6 +15,7 @@ use App\Models\ProductOption;
 use App\Models\ProductReturnCondition;
 use App\Models\UnitType;
 use App\Traits\SlugGeneratorTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -136,7 +137,7 @@ class ProductController extends Controller
             $nextUrl = route('vendor.options.create',['productId'=>$product->id]);
             $result = ["status" => 1, "response"=>"success","nextUrl"=>$nextUrl, "message" => "Product added successfully"];
         }
-        catch (\Exception $e) {
+        catch (Exception $e) {
             DB::rollBack();
             $result = ["status" => 0, "response"=>"exception_error", "message" => $e->getMessage()];
 
@@ -191,7 +192,7 @@ class ProductController extends Controller
             DB::commit();
             $result = ["status" => 1,"response"=>"success", "message" => 'Product updated successfully'];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             $result = ["status"=>0,"response"=>"exception_error","message"=>$e->getMessage()];
 
