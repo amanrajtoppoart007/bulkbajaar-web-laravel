@@ -122,8 +122,10 @@ class OrderController extends Controller
         $order = Order::whereOrderNumber($orderNumber)->firstOrFail()->load('user.userProfile', 'orderItems.product', 'orderItems.productOption', 'shippingAddress');
         abort_if($order->vendor_id != auth()->id(), 401);
         $itemName = "";
+        $weight=0;
         foreach ($order->orderItems as $orderItem){
             $itemName .= ($orderItem->product->name ?? '') . ' - ' . ($orderItem->productOption->option ?? '') . ', ';
+            $weight+=$orderItem->weight??0;
         }
 
         $itemName = rtrim($itemName, ', ');
@@ -163,7 +165,7 @@ class OrderController extends Controller
             $toAddress .= ($shippingAddress->state->name ?? '');
         }
 
-        return view('vendor.orders.shipmentForm', compact('order', 'vendor', 'profile', 'user', 'userProfile', 'shippingAddress', 'fromAddress', 'toAddress', 'itemName'));
+        return view('vendor.orders.shipmentForm', compact('order', 'vendor', 'profile', 'user', 'userProfile', 'shippingAddress', 'fromAddress', 'toAddress', 'itemName','weight'));
     }
 
     public function updateStatus(Request $request)

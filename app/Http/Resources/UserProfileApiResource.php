@@ -15,22 +15,22 @@ class UserProfileApiResource extends JsonResource
     public function toArray($request)
     {
         $isDocUploaded = false;
-        $varification_doc_type = '';
+        $verification_doc_type = '';
         if($this->gst_image || $this->shop_bill_invoice)
         {
             $isDocUploaded = true;
         }
-        
+
         if($this->gst_image)
         {
-            $varification_doc_type = 'gst';
+            $verification_doc_type = 'gst';
         }
-        
+
         if($this->shop_bill_invoice)
         {
-            $varification_doc_type = 'shop_bill_invoice';
+            $verification_doc_type = 'shop_bill_invoice';
         }
-    
+
         return [
             "user_id"=> $this->user_id,
             "company_name"=>  $this->company_name,
@@ -42,7 +42,7 @@ class UserProfileApiResource extends JsonResource
             'gst_image'=>$this->gst_image,
             'pan_card_image'=>$this->pan_card_image,
             'isDocUploaded'=>$isDocUploaded,
-            'varification_doc_type'=>$varification_doc_type
+            'varification_doc_type'=>$verification_doc_type
         ];
     }
 }

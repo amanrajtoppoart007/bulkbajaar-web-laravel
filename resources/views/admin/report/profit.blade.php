@@ -9,7 +9,7 @@
                     <div class="input-group">
                         <select name="year" id="year" class="form-control">
                             @for($i=2020;$i<=now()->format('Y');$i++)
-                                <option value="{{$i}}">{{$i}}</option>
+                                <option value="{{$i}}" {{$i==request()->input('year',2022)?'selected':''}}>{{$i}}</option>
                             @endfor
                         </select>
                         <button type="submit" class="btn btn-primary">Submit</button>

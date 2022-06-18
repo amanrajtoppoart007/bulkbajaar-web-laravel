@@ -20,6 +20,7 @@ class OrderItem extends Model
         'mrp_total',
         'quantity',
         'discount',
+        'weight',
         'discount_amount',
         'charge_percent',
         'charge_amount',

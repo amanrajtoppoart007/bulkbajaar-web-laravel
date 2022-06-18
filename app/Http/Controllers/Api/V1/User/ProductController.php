@@ -274,7 +274,7 @@ class ProductController extends BaseController
     {
         try {
             $query = Product::query();
-            if ($request->input('keyword')) {
+            if ($request->has('keyword')) {
                 $query->where(function ($q) use ($request) {
                     $q->where('name', 'LIKE', "%".$request->input('keyword')."%");
                 });
@@ -297,6 +297,8 @@ class ProductController extends BaseController
                    $q->where('name', 'LIKE', "%".$request->input('subCategory')."%");
                 });
             }
+
+
 
             if ($request->has('vendor')) {
                 $query->whereHas('vendor', function ($q) use($request){
@@ -328,6 +330,15 @@ class ProductController extends BaseController
             if ($request->has('priceRange.min_price')) {
                 $query->where('price','<=', $request->input('priceRange.min_price'));
             }
+
+             if ($request->has('latest-products')) {
+                 $query->orderBy('created_at', 'DESC');
+            }
+
+               if ($request->has('trending-products')) {
+                 $query->withCount('reviews')->orderBy('reviews_count', 'desc');
+            }
+
               $query->where('approval_status', 'APPROVED');
             $products = $query->with(['productCategory', 'productSubCategory', 'vendor', 'productOptions', 'brand'])->inRandomOrder()->paginate(1000);
             if (count($products)) {

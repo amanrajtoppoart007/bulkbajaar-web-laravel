@@ -107,7 +107,7 @@ class UserProfile extends Model implements HasMedia
 
     public function getGstImageAttribute()
     {
-         $image =  $this->getMedia('gst')->last();
+         $image =  $this->getMedia('gst_image')->last();
         if($image)
         {
             return $image->getFullUrl();

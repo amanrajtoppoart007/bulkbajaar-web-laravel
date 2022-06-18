@@ -3,12 +3,12 @@
 namespace App\PaymentGateway\Razorpay;
 
 use Razorpay\Api\Api;
+use Exception;
 
 trait RazorpayTrait {
 
     private function getApiInstance() : Api{
-       // return new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
-       return new Api('rzp_test_HpAV516EN6lzZ9', 'NTqdX5MrUkCoGIU5c7GXVjSM');
+       return new Api(config('app.razorpay_key'), config('app.razorpay_secret'));
     }
 
     private function createOrder($receiptNo, $amount, $currency = 'INR')
@@ -27,7 +27,7 @@ trait RazorpayTrait {
                 'data' => $order,
                 'message' => 'Order created.'
             ];
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             return [
                 'status' => false,
                 'message' => $exception->getMessage()
@@ -49,7 +49,7 @@ trait RazorpayTrait {
                 'data' => $refund,
                 'message' => 'Refund initiated.'
             ];
-        }catch (\Exception $exception){
+        }catch (Exception $exception){
             return [
                 'status' => false,
                 'message' => $exception->getMessage()

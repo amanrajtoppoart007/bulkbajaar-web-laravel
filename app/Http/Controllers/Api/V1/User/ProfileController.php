@@ -30,17 +30,17 @@ class ProfileController extends BaseController
     {
         try {
             $user = auth()->user();
-            $profile = $user->userProfile;
+            $userProfile = UserProfile::where(['user_id'=>auth()->id()])->first();
 
             $data = [
                 'name' => $user->name ?? '',
                 'email' => $user->email ?? '',
                 'mobile' => $user->mobile ?? '',
-                'company_name' => $profile->company_name ?? '',
-                'representative_name' => $profile->representative_name ?? '',
-                'gst_number' => $profile->gst_number ?? '',
-                'pan_number' => $profile->pan_number ?? '',
-                'profile_photo' => $profile?->profile_photo?->getUrl(),
+                'company_name' => $userProfile->company_name ?? '',
+                'representative_name' => $userProfile->representative_name ?? '',
+                'gst_number' => $userProfile->gst_number ?? '',
+                'pan_number' => $userProfile->pan_number ?? '',
+                'profile_photo' => $userProfile?->profile_photo?->getUrl(),
             ];
             if (!empty($data)) {
                 $result = ['status' => 1, 'response' => 'success', 'action' => 'fetched', 'data' => $data, 'message' => 'Profile data fetched successfully'];
@@ -461,7 +461,7 @@ class ProfileController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'docType' => 'required|string',
-            'gst'=>'nullable|mimes:jpeg,png',
+            'gst_image'=>'nullable|mimes:jpeg,png',
             'shop_bill_invoice'=>'nullable|mimes:jpeg,png',
             'pan_card'=>'nullable|mimes:jpeg,png',
         ]);

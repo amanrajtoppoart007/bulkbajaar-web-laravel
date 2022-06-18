@@ -204,7 +204,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label class="required" for="item_weight">Weight (KG)</label>
-                                    <input class="form-control {{ $errors->has('item_weight') ? 'is-invalid' : '' }}" type="number" name="item_weight" id="item_weight" value="{{ old('item_weight') }}" required>
+                                    <input class="form-control {{ $errors->has('item_weight') ? 'is-invalid' : '' }}" type="number" name="item_weight" id="item_weight" value="{{ old('item_weight',$weight) }}" required>
                                     @if($errors->has('item_weight'))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('item_weight') }}

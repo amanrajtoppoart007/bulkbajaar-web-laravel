@@ -56,7 +56,7 @@ class OrderController extends BaseController
                     return response()->json($result);
                 }
                 if ($request->input('cart_ids',[])){
-                $carts = Cart::whereUserId(auth()->id())
+                $carts = Cart::where(['user_id'=>auth()->id()])
                     ->whereIn('id', $request->input('cart_ids',[]))
                     ->with(['product'])->get();
             }else{
@@ -98,7 +98,7 @@ class OrderController extends BaseController
                     $gst = $product->gst;
                     $portalChargePercent =getPortalChargePercentage($product->id);
                     $totalPortalChargePercent +=$portalChargePercent;
-                    $discountAmount = $price * $cart->quantity;
+                    $orderItemPrice = $price * $cart->quantity;
                     $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
                     $gstAmount = getPercentAmount($price * $cart->quantity, $gst);
                     $totalAmount = ($price * $cart->quantity) + $gstAmount;
@@ -113,15 +113,17 @@ class OrderController extends BaseController
                         'amount' => $price,//same as price but may be show other attribute in future
                         'quantity' => $cart->quantity,//order quantity
                         'discount' => $product->discount, // discount percentage
-                        'discount_amount' => $discountAmount,//
+                        'discount_amount' => $orderItemPrice,//
+                        'item_price'=>$orderItemPrice,
                         'charge_percent' => $portalChargePercent,//portal charge in %
                         'charge_amount' => $chargeAmount,//portal charge in amount value
                         'gst' => $gst,
                         'gst_amount' => $gstAmount,
+                        'weight' => $cart->weight,
                         'total_amount' => $totalAmount,
                     ];
                     $orderSubTotal += ($price * $cart->quantity);
-                    $orderDiscountTotal += $discountAmount;
+                    $orderDiscountTotal += $orderItemPrice;
                     $orderChargeAmount += $chargeAmount;
                     $orderGstAmount += $gstAmount;
                     $orderGrandTotal += $totalAmount;
@@ -241,7 +243,7 @@ class OrderController extends BaseController
         }*/
 
         try {
-            $razorPayApi = new Api('rzp_test_HpAV516EN6lzZ9', 'NTqdX5MrUkCoGIU5c7GXVjSM');
+            $razorPayApi = new Api(config('app.razorpay_key'), config('app.razorpay_secret'));
             $razorPayment = $razorPayApi->payment->fetch($request->input('razorpay_payment_id'));
 
             Transaction::create([
@@ -597,8 +599,8 @@ class OrderController extends BaseController
         }
 
         try {
-            $orders = Order::whereOrderGroupNumber($request->order_number)->withCount('orderItems')->get();
-            $transaction = Transaction::where('order_group', $request->order_number)->first();
+            $orders = Order::whereOrderGroupNumber($request->input('order_number'))->withCount('orderItems')->get();
+            $transaction = Transaction::where('order_group', $request->input('order_number'))->first();
 
             $orderDate = "";
             $itemsCount = 0;
