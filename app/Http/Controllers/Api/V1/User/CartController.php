@@ -7,7 +7,9 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Resources\Api\CartResource;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductOption;
 use App\Traits\ProductTrait;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,33 +27,39 @@ class CartController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         $isExists = Cart::where('product_option_id', $request->input('product_option_id'))->where('user_id', auth()->id())->exists();
         if ($isExists){
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Product is already in cart'];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         try {
             $product = Product::find($request->input('product_id'));
+            $productOption = ProductOption::find($request->input('product_option_id'));
+
+
 
             $quantity = $product->moq;
             if ($request->input('quantity') && $request->input('quantity') >= $product->moq){
                 $quantity = $request->input('quantity');
             }
-            Cart::create([
+             $weight = (float)$productOption->weight * (float)$quantity;
+           $cart = Cart::create([
                 'user_id' => auth()->id(),
                 'product_id' => $product->id,
+                'vendor_id'=>$product->vendor_id,
                 'product_option_id' => $request->input('product_option_id'),
                 'quantity' => $quantity,
+                'weight'=>$weight
             ]);
-            $result = ['status' => 1, 'response' => 'success', 'action' => 'added', 'message' => 'Product added to the cart successfully'];
-        } catch (\Exception $exception) {
+            $result = ['status' => 1, 'response' => 'success', 'action' => 'added','data'=>$cart, 'message' => 'Product added to the cart successfully'];
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function getCarts(Request $request)
@@ -67,7 +75,6 @@ class CartController extends BaseController
         }
 
         try {
-            $data = [];
             if ($request->input('cart_ids')){
                 $carts = Cart::whereUserId(auth()->id())
                     ->whereIn('id', $request->input('cart_ids'))
@@ -82,10 +89,10 @@ class CartController extends BaseController
             } else {
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Your cart is empty'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 
@@ -98,22 +105,23 @@ class CartController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
         }
-
-        try {
-            $cart = Cart::find($request->input('cart_id'))->load('product');
-            if ($request->input('quantity') < $cart->product->moq){
-                $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Quantity is less than minimum order quantity'];
-            }else{
-                $cart->quantity = $request->input('quantity');
-                $cart->save();
-                $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Quantity updated successfully'];
+        else
+        {
+            try {
+                $cart = Cart::find($request->input('cart_id'))->load('product');
+                if ($request->input('quantity') < $cart->product->moq) {
+                    $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Quantity is less than minimum order quantity'];
+                } else {
+                    $cart->quantity = $request->input('quantity');
+                    $cart->save();
+                    $result = ['status' => 1, 'response' => 'success', 'action' => 'updated', 'message' => 'Quantity updated successfully'];
+                }
+            } catch (Exception $exception) {
+                $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
             }
-        } catch (\Exception $exception) {
-            $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function removeFromCart(Request $request)
@@ -124,7 +132,7 @@ class CartController extends BaseController
 
         if ($validator->fails()) {
             $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => $validator->errors()];
-            return response()->json($result, 200);
+            return response()->json($result);
         }
 
         try {
@@ -133,7 +141,7 @@ class CartController extends BaseController
             }else{
                 $result = ['status' => 0, 'response' => 'error', 'action' => 'retry', 'message' => 'Something went wrong'];
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
         }
         return response()->json($result);

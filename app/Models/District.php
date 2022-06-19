@@ -34,16 +34,6 @@ class District extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function districtBlocks()
-    {
-        return $this->hasMany(Block::class, 'district_id', 'id');
-    }
-
-    public function districtCities()
-    {
-        return $this->hasMany(City::class, 'district_id', 'id');
-    }
-
     public function state()
     {
         return $this->belongsTo(State::class, 'state_id');

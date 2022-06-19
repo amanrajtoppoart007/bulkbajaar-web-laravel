@@ -4,6 +4,7 @@ namespace App\Shipment\ShipRocket;
 
 use App\Models\ShipRocketSetting;
 use Illuminate\Support\Facades\Http;
+use Mockery\Exception;
 
 trait ShipRocketTrait {
 
@@ -72,8 +73,9 @@ trait ShipRocketTrait {
     private function getTrackingUsingAWB($awb){
         $token = $this->getAuthToken();
         if (empty($token)) return [];
-        $response = Http::withToken($token)->get($this->baseUrl . 'courier/track/awb/' . $awb)
+         $response = Http::withToken($token)->get($this->baseUrl . 'courier/track/awb/' . $awb)
             ->json();
+         return $response;
     }
 
     private function createOrder($data){
@@ -88,5 +90,54 @@ trait ShipRocketTrait {
             ];
         }
         return false;
+    }
+
+    public function calculateShippingCharge($pickup_pin_code,$drop_pin_code,$weight,$cod=false)
+    {
+        try {
+            $params = [
+           "pickup_postcode"=>$pickup_pin_code,
+           "delivery_postcode"=>$drop_pin_code,
+           "cod"=>$cod,
+           "weight"=>$weight,
+        ];
+        $token = $this->getAuthToken();
+        if (empty($token)) return [];
+        $response = Http::withToken($token)->get($this->baseUrl . 'courier/serviceability/', $params)
+            ->json();
+
+
+        if($response['status']===200)
+        {
+             if($response['data'] && $response['data']['available_courier_companies'])
+             {
+                 $couriers = $response['data']['available_courier_companies'];
+
+                 $recommended_id = $response['data']['shiprocket_recommended_courier_id'];
+
+                 return  $this->selectCourierService($couriers,$recommended_id);
+             }
+        }
+
+        return $response;
+        }
+        catch (Exception $exception)
+        {
+            return [];
+        }
+
+    }
+
+    private function selectCourierService($couriers , $recommended_id)
+    {
+        $selected = null;
+          foreach($couriers as $courier)
+          {
+              if($courier['courier_company_id']===$recommended_id)
+              {
+                  $selected = $courier;
+              }
+          }
+          return $selected;
     }
 }
