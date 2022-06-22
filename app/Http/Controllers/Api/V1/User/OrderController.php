@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Resources\Api\AddressResource;
 use App\Library\Api\V1\User\OrderList;
 use App\Models\Cart;
 use App\Models\Order;
@@ -10,9 +11,11 @@ use App\Models\OrderItem;
 use App\Models\OrderReturnRequest;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\Vendor;
 use App\Models\Transaction;
 use App\PaymentGateway\Razorpay\RazorpayTrait;
+use App\Shipment\ShippingTrait;
 use App\Traits\FirebaseNotificationTrait;
 use App\Traits\UniqueIdentityGeneratorTrait;
 use Carbon\Carbon;
@@ -25,7 +28,7 @@ use Exception;
 
 class OrderController extends BaseController
 {
-    use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait;
+    use UniqueIdentityGeneratorTrait, RazorpayTrait, FirebaseNotificationTrait,ShippingTrait;
 
     /**
      * @param Request $request
@@ -72,6 +75,19 @@ class OrderController extends BaseController
                 return response()->json($result);
             }
 
+                $drop_pincode =0;
+                $defaultShippingAddress = UserAddress::find($request->input('shipping_address_id'));
+                $addresses = AddressResource::collection(UserAddress::where('user_id', auth()->id())->get());
+                if (!$defaultShippingAddress) {
+                    foreach ($addresses as $address) {
+                        if ($address->address_type == "SHIPPING") {
+                            $defaultShippingAddress = $address;
+                        }
+                    }
+                }
+
+                $drop_pincode = $defaultShippingAddress->pincode;
+
             $groupedCarts = collect($carts)->mapToGroups(function ($cart) {
                 return [
                     $cart->product->vendor_id => $cart
@@ -84,6 +100,7 @@ class OrderController extends BaseController
             $orderItems = [];
             $ordersTotal = 0;
             $totalPortalChargePercent=0;
+            $total_shipping_charge=0;
             foreach ($groupedCarts as $vendorId => $cartGroup) {
                 $orderNo = $this->generateOrderNumber(Order::class);
                 $orderSubTotal = 0;
@@ -92,16 +109,31 @@ class OrderController extends BaseController
                 $orderChargeAmount = 0;
                 $orderGstAmount = 0;
                 $index = 1;
+
                 foreach ($cartGroup as $cart) {
                     $product = $cart->product;
                     $price = $product->price;
+                    $shipping_charge=0;
+                    $cart_price = (float) $price* (float) $cart->quantity;
                     $gst = $product->gst;
+                    $gstAmount = getPercentAmount($cart_price, $gst);
                     $portalChargePercent =getPortalChargePercentage($product->id);
                     $totalPortalChargePercent +=$portalChargePercent;
                     $orderItemPrice = $price * $cart->quantity;
                     $chargeAmount = getPercentAmount($price * $cart->quantity, $portalChargePercent);
-                    $gstAmount = getPercentAmount($price * $cart->quantity, $gst);
-                    $totalAmount = ($price * $cart->quantity) + $gstAmount;
+
+
+                    if($drop_pincode)
+                    {
+                        $courier = $this->shippingCharge($cart->vendor_id,$drop_pincode,$cart->weight,false);
+                        if(!empty($courier) && is_array($courier))
+                        {
+                            $shipping_charge = (float)$courier['freight_charge'];
+                            $total_shipping_charge += (float)$courier['freight_charge'];
+                        }
+                    }
+
+                    $totalAmount = $cart_price + $gstAmount + $shipping_charge;
 
                     $orderItems[$vendorId][] = [
                         'order_number' => $orderNo.'-'.($index++),
@@ -144,7 +176,6 @@ class OrderController extends BaseController
                     'grand_total' => $orderGrandTotal,
                 ];
                 $ordersTotal += $orderGrandTotal;
-
                 $minimumOrderAmount = getMinimumOrderAmount($vendorId);
                 if ($orderGrandTotal < $minimumOrderAmount) {
                     $vendorName = Vendor::find($vendorId)->name ?? '';

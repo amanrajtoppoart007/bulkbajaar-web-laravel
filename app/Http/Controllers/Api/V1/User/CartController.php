@@ -39,9 +39,6 @@ class CartController extends BaseController
         try {
             $product = Product::find($request->input('product_id'));
             $productOption = ProductOption::find($request->input('product_option_id'));
-
-
-
             $quantity = $product->moq;
             if ($request->input('quantity') && $request->input('quantity') >= $product->moq){
                 $quantity = $request->input('quantity');

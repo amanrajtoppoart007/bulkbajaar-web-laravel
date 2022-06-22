@@ -78,7 +78,7 @@ trait ShipRocketTrait {
          return $response;
     }
 
-    private function createOrder($data){
+    private function createShippingOrder($data){
         $token = $this->getAuthToken();
         if (empty($token)) return [];
         $response = Http::withToken($token)->post($this->baseUrl . 'orders/create/adhoc', $data)

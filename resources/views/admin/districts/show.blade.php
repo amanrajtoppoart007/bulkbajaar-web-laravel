@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="card">
     <div class="card-header">
         {{ trans('global.show') }} {{ trans('cruds.district.title') }}
@@ -57,5 +56,4 @@
         </div>
     </div>
 </div>
-
 @endsection

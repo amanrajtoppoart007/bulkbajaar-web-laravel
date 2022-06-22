@@ -24,6 +24,7 @@ class OrderItem extends Model
         'discount_amount',
         'charge_percent',
         'charge_amount',
+        'shipping_charge',
         'gst',
         'gst_amount',
         'total_amount',
