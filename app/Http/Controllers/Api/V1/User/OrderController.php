@@ -128,8 +128,8 @@ class OrderController extends BaseController
                         $courier = $this->shippingCharge($cart->vendor_id,$drop_pincode,$cart->weight,false);
                         if(!empty($courier) && is_array($courier))
                         {
-                            $shipping_charge = (float)$courier['freight_charge'];
-                            $total_shipping_charge += (float)$courier['freight_charge'];
+                            $shipping_charge = (float)$courier['rate'];
+                            $total_shipping_charge += (float)$courier['rate'];
                         }
                     }
 

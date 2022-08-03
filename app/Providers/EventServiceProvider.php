@@ -22,7 +22,6 @@ use App\Listeners\SendOrderNotAssignedMail;
 use App\Listeners\SendProductCreatedPushNotification;
 use App\Listeners\PushNotificationCreatedListener;
 use App\Listeners\SendUserRegisteredMessage;
-use App\Listeners\SendHelpCenterRegisteredMessage;
 use App\Listeners\SendVendorRegisteredMessage;
 use App\Listeners\SendOrderCreatedMessage;
 use App\Listeners\GenerateOrderInvoice;
@@ -59,11 +58,7 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
+
     public function boot()
     {
         Order::observe(OrderObserver::class);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Events\UserRegistered;
 use App\Http\Controllers\Api\BaseController;
+use App\Mail\UserWelcomeMessage;
 use App\Models\UserAddress;
 use App\Models\UserProfile;
 use App\Models\Vendor;
@@ -15,7 +16,9 @@ use App\Models\Otp;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AuthController extends BaseController
 {
@@ -36,7 +39,7 @@ class AuthController extends BaseController
             ];
         } else {
             try {
-                if (Vendor::where('mobile', $request->input('mobile'))->exists()){
+                if (Vendor::where('mobile', $request->input('mobile'))->exists()) {
                     $result = ['response' => 'success', 'action' => 'register', 'message' => 'Already registered'];
                     return response()->json($result);
                 }
@@ -46,28 +49,27 @@ class AuthController extends BaseController
 
                 } else {
                     $data['service_type'] = "login";
-                    $action ='login';
+                    $action = 'login';
                 }
 
-                    Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
-                    $otp = rand(1000, 9999);
+                Otp::where('mobile', $request->input('mobile'))->update(['is_expired' => '1']);
+                $otp = rand(1000, 9999);
                 /**
                  * for play store verification , remove in product version
                  */
-                    if($request->input('mobile')=='1234567890')
-                   {
-                       $otp = 1234;
-                   }
-                    $data['otp'] = $otp;
-                    $data['mobile'] = $request->input('mobile');
-                    $response = $this->sendOtpSms($data);
-                    $otpObj = new Otp();
-                    $otpObj->mobile = $request->input('mobile');
-                    $otpObj->otp = $otp;
-                    $otpObj->sms_status = $response?->type;
-                    $otpObj->gateway_response = json_encode($response);
-                    $otpObj->save();
-                    $result = ['response' => 'success', 'action' => $action, 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
+                if ($request->input('mobile') == '1234567890') {
+                    $otp = 1234;
+                }
+                $data['otp'] = $otp;
+                $data['mobile'] = $request->input('mobile');
+                $response = $this->sendOtpSms($data);
+                $otpObj = new Otp();
+                $otpObj->mobile = $request->input('mobile');
+                $otpObj->otp = $otp;
+                $otpObj->sms_status = $response?->type;
+                $otpObj->gateway_response = json_encode($response);
+                $otpObj->save();
+                $result = ['response' => 'success', 'action' => $action, 'otp' => $otp, 'message' => 'Please check your mobile for OTP'];
 
             } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()];
@@ -75,7 +77,7 @@ class AuthController extends BaseController
         }
 
 
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 
@@ -147,15 +149,15 @@ class AuthController extends BaseController
         }
 
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function registrationStepOne(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
-            'name'=>'required|string',
-            'mobile' => 'required|numeric|digits:10|unique:users,mobile|unique:vendors,mobile',
-            'email' => 'required|email|unique:users,email|unique:vendors,email',
+            'name' => 'required|string',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile,NULL,id,deleted_at,NULL|unique:vendors,mobile,NULL,id,deleted_at,NULL',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL|unique:vendors,email,NULL,id,deleted_at,NULL',
             'password' => ['required', 'string', 'confirmed'],
             'device_token' => 'nullable',
         ]);
@@ -170,8 +172,7 @@ class AuthController extends BaseController
                 $user->mobile = $input['mobile'];
                 $user->password = Hash::make($input['password']);
                 $user->device_token = $input['device_token'];
-                if($request->has('name'))
-                {
+                if ($request->has('name')) {
                     $user->name = $input['name'];
                 }
                 if ($user->save()) {
@@ -198,7 +199,7 @@ class AuthController extends BaseController
             }
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
 
     }
 
@@ -240,24 +241,24 @@ class AuthController extends BaseController
 
                 $billingAddressData = [
                     'user_id' => $user->id,
-                    'address' => $request->billing_address,
-                    'address_two' => $request->billing_address_two,
-                    'state_id' => $request->billing_state_id,
+                    'address' => $request->input('billing_address'),
+                    'address_two' => $request->input('billing_address_two'),
+                    'state_id' => $request->input('billing_state_id'),
 //                    'district_id' => $request->billing_district_id,
-                    'pincode' => $request->billing_pincode,
+                    'pincode' => $request->input('billing_pincode'),
                     'address_type' => 'BILLING',
                 ];
 
                 UserAddress::create($billingAddressData);
 
-                if ($request->shipping_address_same == 0) {
+                if ($request->input('shipping_address_same') == 0) {
                     UserAddress::create([
                         'user_id' => $user->id,
-                        'address' => $request->shipping_address,
-                        'address_two' => $request->shipping_address_two,
-                        'state_id' => $request->shipping_state_id,
+                        'address' => $request->input('shipping_address'),
+                        'address_two' => $request->input('shipping_address_two'),
+                        'state_id' => $request->input('shipping_state_id'),
 //                        'district_id' => $request->shipping_district_id,
-                        'pincode' => $request->shipping_pincode,
+                        'pincode' => $request->input('shipping_pincode'),
                         'is_default' => 1,
                         'address_type' => 'SHIPPING',
                     ]);
@@ -279,7 +280,7 @@ class AuthController extends BaseController
             }
         }
 
-        return response()->json($result, 200);
+        return response()->json($result);
     }
 
     public function registrationStepThree(Request $request)
@@ -313,20 +314,14 @@ class AuthController extends BaseController
                 if ($request->hasFile('pan')) {
                     $profile->addMedia($request->file('pan'))->toMediaCollection('pan_card');
                 }
+                $this->sendNewRegistrationNotification();
                 $result = [
                     'status' => 1,
                     'response' => 'success',
                     'action' => 'registered',
                     'message' => 'Registration completed. Your account is currently under review. You will be notified in 24-48 hours.'
                 ];
-                //Send notification to admin for approval
-                $user = User::find(auth()->id());
-                $userData['id'] = auth()->id();
-                $userData['name'] = $user?->name;
-                $userData['username'] = $user?->email;
-                $userData['email'] = $user?->email;
-                $userData['mobile'] = $user?->mobile;
-                event(new UserRegistered($userData));
+
             } catch (Exception $exception) {
                 $result = ['status' => 0, 'response' => 'error', 'message' => $exception->getMessage()
                 ];
@@ -334,4 +329,24 @@ class AuthController extends BaseController
         }
         return response()->json($result);
     }
+
+    public function sendNotification()
+    {
+        $this->sendNewRegistrationNotification();
+    }
+
+    private function sendNewRegistrationNotification()
+    {
+        //Send notification to admin for approval
+        $user = User::find(auth()->id());
+        $userData['id'] = auth()->id();
+        $userData['name'] = $user?->name;
+        $userData['username'] = $user?->email;
+        $userData['email'] = $user?->email;
+        $userData['mobile'] = $user?->mobile;
+        event(new UserRegistered($userData));
+
+
+    }
+
 }

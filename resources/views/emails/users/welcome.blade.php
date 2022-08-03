@@ -9,7 +9,7 @@ You can now use our portal, credentials are given below. <br>
 
 Mobile :- {{ $data['mobile'] }}<br>
 Email :- {{ $data['email'] }}<br>
-@if(!empty($data['password']))
+@if(isset($data['password']))
 Password :- {{ $data['password'] ?? ''  }}<br>
 @endif
 Please don't share these credentials to anyone.
