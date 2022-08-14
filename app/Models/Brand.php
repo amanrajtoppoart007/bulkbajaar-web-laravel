@@ -37,12 +37,12 @@ class Brand extends Model implements  HasMedia
         'image',
     ];
 
-    protected function serializeDate(DateTimeInterface $date)
+    protected function serializeDate(DateTimeInterface $date): string
     {
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function brandProducts()
+    public function brandProducts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class, 'brand_id', 'id');
     }
@@ -51,8 +51,8 @@ class Brand extends Model implements  HasMedia
      * @return mixed
      */
 
-      public function getImageAttribute()
-    {
+      public function getImageAttribute(): mixed
+      {
         $file = $this->getMedia('image')->last();
         if ($file) {
             $file->url       = $file->getUrl();
@@ -64,11 +64,12 @@ class Brand extends Model implements  HasMedia
 
     /**
      * @param Media|null $media
+     * @return void
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')->fit('crop',50,50)->nonQueued();;
-        $this->addMediaConversion('preview')->fit('crop', 120, 120)->nonQueued();;
+        $this->addMediaConversion('thumb')->fit('crop',50,50)->nonQueued();
+        $this->addMediaConversion('preview')->fit('crop', 120, 120)->nonQueued();
     }
 }

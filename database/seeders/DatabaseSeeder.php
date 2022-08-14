@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             RoleAdminTableSeeder::class,
             RoleLogisticsTableSeeder::class,
             RoleVendorTableSeeder::class,
-            StateDistrictTableSeeder::class
+            StateDistrictTableSeeder::class,
+            ProductReturnConditionsTableSeeder::class,
         ]);
     }
 }

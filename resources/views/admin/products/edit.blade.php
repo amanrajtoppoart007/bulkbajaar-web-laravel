@@ -31,7 +31,7 @@
                                 <div class="form-group">
                                     <label class="required" for="maximum_retail_price">MRP</label>
                                     <input class="form-control {{ $errors->has('maximum_retail_price') ? 'is-invalid' : '' }}"
-                                           type="number"
+                                           type="text"
                                            name="maximum_retail_price" id="maximum_retail_price" value="{{ old('maximum_retail_price', $product->maximum_retail_price) }}" required>
                                     @if($errors->has('discount'))
                                         <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                                 <div class="form-group">
                                     <label class="required" for="discount">Discount</label>
                                     <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}"
-                                           type="number"
+                                           type="text"
                                            name="discount" id="discount"
                                            value="{{ old('discount', $product->discount) }}" required>
                                     @if($errors->has('discount'))
@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label class="required" for="price">Price</label>
                                     <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}"
-                                           type="number"
+                                           type="text"
                                            name="price" id="price" value="{{ old('price', $product->price) }}" required>
                                     @if($errors->has('price'))
                                         <div class="invalid-feedback">
