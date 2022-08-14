@@ -117,6 +117,7 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         try {
+            $request->request->add(['status'=>1]);
             $brand = Brand::create($request->all());
 
             if ($request->input('image', false)) {
