@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\SendAdminLoginNotification;
+use App\Listeners\SendAdminLoginNotificationListener;
 use App\Models\Order;
 use App\Models\PushNotification;
 use App\Observers\OrderObserver;
@@ -26,6 +28,7 @@ use App\Listeners\SendVendorRegisteredMessage;
 use App\Listeners\SendOrderCreatedMessage;
 use App\Listeners\GenerateOrderInvoice;
 
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -34,11 +37,17 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        SendAdminLoginNotification::class =>[
+            SendAdminLoginNotificationListener::class
+        ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
         OrderNotAssigned::class => [
             SendOrderNotAssignedMail::class
+        ],
+        OrderAssigned::class => [
+            SendOrderAssignedMail::class
         ],
         ProductCreated::class => [
             SendProductCreatedPushNotification::class
@@ -59,7 +68,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
 
-    public function boot()
+    public function boot():void
     {
         Order::observe(OrderObserver::class);
         PushNotification::observe(PushNotificationObserver::class);
