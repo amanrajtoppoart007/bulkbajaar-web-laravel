@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <th>
-                        Display Price
+                        MRP
                     </th>
                     <td>
                         &#8377;{{ applyPrice($product->price, $product->discount) }}
